@@ -14,7 +14,8 @@
 }
 
 .right-container{
-    width: auto;
+    display: flex;
+    align-items: center;
 }
 
 .logo {
@@ -47,6 +48,18 @@
     padding-top: 5px;
     position: absolute;
     right: 40px;
+}
 
+.arrow-down{
+    cursor: pointer;
+    margin-right: 30px;
 
+    &:hover{
+        scale: 1.1;
+    }
+}
+
+.username{
+    font-size: 32px;
+    font-weight: 700;
 }
