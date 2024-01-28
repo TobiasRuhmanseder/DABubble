@@ -1,25 +1,41 @@
 <div class="card main-content">
   <div class="header">
-    <div># Channelname</div>
+    <div class="channel-title">
+      <img class="icon title-hover" src=".\assets\icons\tag.png" />
+      <div class="title-hover">{{ channel1.name }}</div>
+      <img class="icon title-hover" src=".\assets\icons\expand_more.png" />
+    </div>
     <div class="header-users-nav">
-      <div class="header-users-img">
-        <div>user1</div>
-        <div>user2</div>
+      <div class="header-profil-number">
+        <div class="header-users-img">
+          <div
+            class="header-pic-container"
+            *ngFor="let pic of channelUserPics; let i = index"
+          >
+            <img class="header-pic" src=".\assets\pics\{{ pic }}" />
+          </div>
+        </div>
+        <div class="header-number">{{ channel1.users.length }}</div>
       </div>
-      <img src=".\assets\icons\person_add.png" />
+      <div class="header-add-icon icon"></div>
     </div>
   </div>
 
   <div class="main-messages"></div>
 
-  <div class="main-input-container">
-    <textarea class="main-input-field" placeholder="Nachricht an #(channelName)"></textarea>
-    <div class="main-input-icons-nav">
-      <img class="icon" src=".\assets\icons\add.png">
-      <div class="stroke-icons-nav"></div>
-      <img class="icon" src=".\assets\icons\sentiment_satisfied.png">
-      <img class="icon" src=".\assets\icons\alternate_email.png">
+  <div class="main-input-container" >
+      <textarea 
+      class="main-input-field"
+      placeholder="Nachricht an # {{ channel1.name }}"
+    ></textarea>
+    <div class="main-inputfield-container">
+      <div class="main-input-icons-nav">
+        <button class="icon-add inputfield-icon icon"></button>
+        <div class="stroke-icons-nav"></div>
+        <button class="icon-smile inputfield-icon icon"></button>
+        <button class="icon-ad inputfield-icon icon"></button>
+      </div>
+      <button class="main-input-confirm inputfield-icon"></button>
     </div>
-    <img class="main-input-confirm" src=".\assets\icons\send.png">
   </div>
 </div>
