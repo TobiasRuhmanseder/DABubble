@@ -1,5 +1,5 @@
-import { CommonModule, ViewportScroller } from '@angular/common';
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -10,24 +10,6 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './main-content.component.scss',
 })
 export class MainContentComponent {
-  @ViewChild('scroller') private scroller!: ElementRef;
-
-  ngAfterViewInit(): void {
-    const scrollingElement = this.scroller.nativeElement;
-    const config = { childList: true };
-    const callback = (mutationsList: any, observer: any) => {
-      for (let mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-          window.scrollTo(0, document.body.scrollHeight);
-        }
-      }
-    };
-    const observer = new MutationObserver(callback);
-    observer.observe(scrollingElement, config);
-  }
-
-  // constructor(public scroller: ViewportScroller) {}
-
   usersTest = {
     user: [
       'Max Mustermann',
@@ -50,18 +32,18 @@ export class MainContentComponent {
     name: 'coolster Channel',
     users: ['Max Mustermann', 'Amarna Miller', 'Luke Skywalker'],
   };
-  channel1Msg = [
-    { name: 'Luke Skywalker', msg: 'hallo welt!', time: '1706455925320' },
-    { name: 'Amarna Miller', msg: 'hei da welt!', time: '1706455925320' },
+  channel1Msg: { name: string; msg: string; time: number }[] = [
+    { name: 'Luke Skywalker', msg: 'hallo welt!', time: 1706455915320 },
+    { name: 'Amarna Miller', msg: 'hei da welt!', time: 1705455425320 },
     {
       name: 'Max Mustermann',
       msg: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
-      time: '1706455925320',
+      time: 1707435925320,
     },
     {
       name: 'Amarna Miller',
       msg: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
-      time: '1706455925320',
+      time: 1709995925320,
     },
   ];
 
@@ -70,6 +52,37 @@ export class MainContentComponent {
   textareaContent: string = '';
   eingeloggterUser: string = 'Max Mustermann';
 
+  sortByTime() {
+    this.channel1Msg.sort((b, a) => b.time - a.time);
+    return this.channel1Msg;
+  }
+
+  checkNextDay(index: number) {
+    const currentTimestamp = new Date(this.channel1Msg[index].time);
+    const nextTimestamp = new Date(this.channel1Msg[index + 1].time);
+
+    if (nextTimestamp.getDate() > currentTimestamp.getDate()) {
+      console.log('Ein neuer Tag hat begonnen!');
+      return true;
+    }
+    return false;
+  }
+
+  checkaNextDay(index: number) {
+    let nextDay: any = this.startNextDay(index);
+    let day1 = this.channel1Msg[index].time;
+    if (this.channel1Msg[index].time > this.channel1Msg[index - 1].time) {
+      return true;
+    }
+    return false;
+  }
+
+  startNextDay(index: number) {
+    const naechsterTag = new Date(this.channel1Msg[index].time);
+    naechsterTag.setDate(naechsterTag.getDate() + 1);
+    return naechsterTag;
+  }
+
   renderMessagePic(index: number) {
     let user = this.usersTest.user.indexOf(this.channel1Msg[index].name);
     let pic = this.usersTest.picURL[user];
@@ -77,36 +90,18 @@ export class MainContentComponent {
   }
 
   getTimeStamp() {
-    // Create a new Date object
     let now = new Date();
-    // Get the timestamp in milliseconds
     let timestamp = now.getTime();
 
     let date = new Date();
     let timedatestamp = date.getDate();
     return timestamp;
-    // let hour =  now.getHours();
-    // let minutes =  now.getMinutes();
-    // console.log(hour, minutes);
-
-    // // Das Datum in lesbarer Form erhalten (z.B. "Monat Tag, Jahr")
-    // let readableDate = date.toLocaleDateString();
-    // console.log(readableDate);
-    // // Die Uhrzeit in lesbarer Form erhalten (z.B. "Stunde:Minute:Sekunde")
-    // let readableTime = date.toLocaleTimeString();
-
-    // console.log(readableTime);
-    // // Kombinieren Sie Datum und Uhrzeit nach Bedarf
-    // let readableDateTime = date.toLocaleString();
-    // console.log(readableDateTime);
   }
 
   sendMessages() {
     let msg = this.textareaContent;
     let time = this.getTimeStamp();
     this.textareaContent = '';
-    let newMsgKey = 'msg' + (Object.keys(this.channel1Msg).length + 1); // Erzeugt den Schlüssel für die neue Nachricht (z.B. 'msg3')
-    let newMsg = { name: this.eingeloggterUser, msg: msg, time: time };
     console.log(msg, time, this.eingeloggterUser);
   }
 
@@ -116,19 +111,42 @@ export class MainContentComponent {
     return this.usersTest.picURL[index];
   }
 
-  getMessageTime(timeInString: string) {
-    let timestampInMs = parseInt(timeInString);
-    let now = new Date(timestampInMs);
-    let hour = now.getHours();
-    let minutes = now.getMinutes();
-    let text = hour + ':' + minutes;
-    return text;
+  getMessageTime(timestamp: number) {
+    let date = new Date(timestamp);
+    let timeText = date.getHours() + ':' + date.getMinutes();
+    return timeText;
   }
 
-  // scrollToAnchor(anchorId: string): void {
-  //   const element = document.getElementById(anchorId);
-  //   if (element) {
-  //     this.scroller.scrollToAnchor(anchorId);
-  //   }
-  // }
+  getFormattedDate(timestamp: number) {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    const days = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
+
+    let date = new Date(timestamp);
+    let day = days[date.getDay()];
+    let dateOfMonth = date.getDate();
+    let month = months[date.getMonth()];
+
+    return `${day} ${dateOfMonth}. ${month}`;
+  }
 }

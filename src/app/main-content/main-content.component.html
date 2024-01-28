@@ -25,34 +25,51 @@
   </div>
 
   <div class="main-messages" #messagesContent>
-    <div
-      class="message-container"
-      [ngStyle]="{
-        'flex-direction': msg.name === eingeloggterUser ? 'row-reverse' : 'row'
-      }"
-      *ngFor="let msg of channel1Msg; let i = index"
-    >
-      <img class="message-pic" src=".\assets\pics\{{ renderMessagePic(i) }}" />
-      <div class="message-body">
-        <div class="message-nav" [ngStyle]="{
-          'flex-direction': msg.name === eingeloggterUser ? 'row-reverse' : 'row'
-        }">
-          <div class="message-name">{{ msg.name }}</div>
-          <div class="message-time">{{ getMessageTime(msg.time) }} Uhr</div>
-        </div>
-        <div
-          [ngClass]="{
-            'message-text-owner': msg.name === eingeloggterUser,
-            'message-text': msg.name !== eingeloggterUser
-          }"
-        >
-          {{ msg.msg }}
-        </div>
-        <div class="message-nav" [ngStyle]="{
-          'flex-direction': msg.name === eingeloggterUser ? 'row-reverse' : 'row'
-        }">
-          <div class="message-answer">2 answer</div>
-          <div class="message-time">last message</div>
+    <div *ngFor="let msg of sortByTime(); let i = index">
+      <div>
+        <div>{{ getFormattedDate(msg.time) }}</div>
+        <div class="stroke"></div>
+      </div>
+      <div
+        class="message-container"
+        [ngStyle]="{
+          'flex-direction':
+            msg.name === eingeloggterUser ? 'row-reverse' : 'row'
+        }"
+      >
+        <img
+          class="message-pic"
+          src=".\assets\pics\{{ renderMessagePic(i) }}"
+        />
+        <div class="message-body">
+          <div
+            class="message-nav"
+            [ngStyle]="{
+              'flex-direction':
+                msg.name === eingeloggterUser ? 'row-reverse' : 'row'
+            }"
+          >
+            <div class="message-name">{{ msg.name }}</div>
+            <div class="message-time">{{ getMessageTime(msg.time) }} Uhr</div>
+          </div>
+          <div
+            [ngClass]="{
+              'message-text-owner': msg.name === eingeloggterUser,
+              'message-text': msg.name !== eingeloggterUser
+            }"
+          >
+            {{ msg.msg }}
+          </div>
+          <div
+            class="message-nav"
+            [ngStyle]="{
+              'flex-direction':
+                msg.name === eingeloggterUser ? 'row-reverse' : 'row'
+            }"
+          >
+            <div class="message-answer">2 answer</div>
+            <div class="message-time">last message</div>
+          </div>
         </div>
       </div>
     </div>
@@ -74,7 +91,7 @@
       </div>
       <button
         class="main-input-confirm inputfield-icon"
-        (click)="getTimeStamp()"
+        (click)="checkaNextDay(1705455425320)"
       ></button>
     </div>
   </div>

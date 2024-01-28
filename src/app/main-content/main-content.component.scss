@@ -112,7 +112,6 @@ button {
 
 .main-messages {
   height: 100%;
-  padding: 0 45px 38px 45px;
   display: block;
   overflow-y: scroll;
   overflow-anchor: none;
@@ -120,8 +119,15 @@ button {
   .message-container {
     display: flex;
     flex-direction: row;
+    margin: 10px 0;
     gap: 30px;
-    padding: 10px 0;
+    padding: 10px 45px;
+    &:hover {
+      background-color: #eceefe;
+    }
+  }
+  .message-container:hover .message-text {
+    background-color: #fff;
   }
   .message-pic {
     height: 70px;
@@ -184,7 +190,7 @@ button {
       line-height: normal;
       cursor: pointer;
       &:hover {
-        color: #444DF2;
+        color: #444df2;
         font-weight: bold;
       }
     }
