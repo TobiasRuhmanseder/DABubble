@@ -1,6 +1,52 @@
-.header-menu{
+.header-menu {
     padding-left: 30px;
     padding-top: 5px;
     padding-bottom: 30px;
     padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-container {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 505px);
+}
+
+.right-container{
+    width: auto;
+}
+
+.logo {
+    margin-right: 81px;
+}
+
+.input-container {
+    position: relative;
+    width: calc(100% - 243px);
+    display: flex;
+    align-items: center;
+
+    input {
+        width: calc(100% + 105px);
+        height: 70px;
+        padding-left: 30px;
+        padding-right: 75px;
+        font-size: 24px;
+        color: #686868;
+        border-color: rgba(255, 255, 255, 0);
+        border-radius: 35px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.search-logo{
+    padding-top: 5px;
+    position: absolute;
+    right: 40px;
+
+
 }
