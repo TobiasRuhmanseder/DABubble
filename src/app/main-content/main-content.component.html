@@ -10,9 +10,12 @@
         <div class="header-users-img">
           <div
             class="header-pic-container"
-            *ngFor="let pic of channelUserPics; let i = index"
+            *ngFor="let user of channel1.users; let i = index"
           >
-            <img class="header-pic" src=".\assets\pics\{{ pic }}" />
+            <img
+              class="header-pic"
+              src=".\assets\pics\{{ getUserPic(user) }}"
+            />
           </div>
         </div>
         <div class="header-number">{{ channel1.users.length }}</div>
@@ -21,10 +24,44 @@
     </div>
   </div>
 
-  <div class="main-messages"></div>
+  <div class="main-messages" #messagesContent>
+    <div
+      class="message-container"
+      [ngStyle]="{
+        'flex-direction': msg.name === eingeloggterUser ? 'row-reverse' : 'row'
+      }"
+      *ngFor="let msg of channel1Msg; let i = index"
+    >
+      <img class="message-pic" src=".\assets\pics\{{ renderMessagePic(i) }}" />
+      <div class="message-body">
+        <div class="message-nav" [ngStyle]="{
+          'flex-direction': msg.name === eingeloggterUser ? 'row-reverse' : 'row'
+        }">
+          <div class="message-name">{{ msg.name }}</div>
+          <div class="message-time">{{ getMessageTime(msg.time) }} Uhr</div>
+        </div>
+        <div
+          [ngClass]="{
+            'message-text-owner': msg.name === eingeloggterUser,
+            'message-text': msg.name !== eingeloggterUser
+          }"
+        >
+          {{ msg.msg }}
+        </div>
+        <div class="message-nav" [ngStyle]="{
+          'flex-direction': msg.name === eingeloggterUser ? 'row-reverse' : 'row'
+        }">
+          <div class="message-answer">2 answer</div>
+          <div class="message-time">last message</div>
+        </div>
+      </div>
+    </div>
+    <div #anchor id="anchor"></div>
+  </div>
 
-  <div class="main-input-container" >
-      <textarea 
+  <div class="main-input-container">
+    <textarea
+      [(ngModel)]="textareaContent"
       class="main-input-field"
       placeholder="Nachricht an # {{ channel1.name }}"
     ></textarea>
@@ -35,7 +72,10 @@
         <button class="icon-smile inputfield-icon icon"></button>
         <button class="icon-ad inputfield-icon icon"></button>
       </div>
-      <button class="main-input-confirm inputfield-icon"></button>
+      <button
+        class="main-input-confirm inputfield-icon"
+        (click)="getTimeStamp()"
+      ></button>
     </div>
   </div>
 </div>
