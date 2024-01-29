@@ -26,8 +26,9 @@
 
   <div class="main-messages" #messagesContent>
     <div *ngFor="let msg of sortByTime(); let i = index">
-      <div>
-        <div>{{ getFormattedDate(msg.time) }}</div>
+      <div class="message-header" *ngIf="checkNextDay(i)">
+        <div class="stroke"></div>
+        <div class="message-header-time">{{ getFormattedDate(msg.time, i) }}</div>
         <div class="stroke"></div>
       </div>
       <div
@@ -91,7 +92,7 @@
       </div>
       <button
         class="main-input-confirm inputfield-icon"
-        (click)="checkaNextDay(1705455425320)"
+        (click)="sendMessages()"
       ></button>
     </div>
   </div>

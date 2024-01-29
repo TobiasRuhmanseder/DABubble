@@ -111,6 +111,30 @@ button {
 }
 
 .main-messages {
+  .message-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 35px;
+    .stroke {
+      border: 0.5px solid #adb0d9;
+      width: 100%;
+    }
+    .message-header-time {
+      display: flex;
+      justify-content: center;
+      flex: 1;
+      white-space: nowrap;
+      padding: 5px 15px;
+      border-radius: 30px;
+      border: 1px solid #adb0d9;
+      font-family: Nunito;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
   height: 100%;
   display: block;
   overflow-y: scroll;

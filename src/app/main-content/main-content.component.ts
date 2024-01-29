@@ -33,17 +33,17 @@ export class MainContentComponent {
     users: ['Max Mustermann', 'Amarna Miller', 'Luke Skywalker'],
   };
   channel1Msg: { name: string; msg: string; time: number }[] = [
-    { name: 'Luke Skywalker', msg: 'hallo welt!', time: 1706455915320 },
-    { name: 'Amarna Miller', msg: 'hei da welt!', time: 1705455425320 },
+    { name: 'Luke Skywalker', msg: 'hallo welt!', time: 1106455915320 },
+    { name: 'Amarna Miller', msg: 'hei da welt!', time: 1709894925310 },
     {
       name: 'Max Mustermann',
       msg: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
-      time: 1707435925320,
+      time: 1709995915320,
     },
     {
       name: 'Amarna Miller',
       msg: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
-      time: 1709995925320,
+      time: 1709995925340,
     },
   ];
 
@@ -51,36 +51,11 @@ export class MainContentComponent {
   msgOwner: string = '';
   textareaContent: string = '';
   eingeloggterUser: string = 'Max Mustermann';
+  disblay = true;
 
   sortByTime() {
     this.channel1Msg.sort((b, a) => b.time - a.time);
     return this.channel1Msg;
-  }
-
-  checkNextDay(index: number) {
-    const currentTimestamp = new Date(this.channel1Msg[index].time);
-    const nextTimestamp = new Date(this.channel1Msg[index + 1].time);
-
-    if (nextTimestamp.getDate() > currentTimestamp.getDate()) {
-      console.log('Ein neuer Tag hat begonnen!');
-      return true;
-    }
-    return false;
-  }
-
-  checkaNextDay(index: number) {
-    let nextDay: any = this.startNextDay(index);
-    let day1 = this.channel1Msg[index].time;
-    if (this.channel1Msg[index].time > this.channel1Msg[index - 1].time) {
-      return true;
-    }
-    return false;
-  }
-
-  startNextDay(index: number) {
-    const naechsterTag = new Date(this.channel1Msg[index].time);
-    naechsterTag.setDate(naechsterTag.getDate() + 1);
-    return naechsterTag;
   }
 
   renderMessagePic(index: number) {
@@ -92,9 +67,6 @@ export class MainContentComponent {
   getTimeStamp() {
     let now = new Date();
     let timestamp = now.getTime();
-
-    let date = new Date();
-    let timedatestamp = date.getDate();
     return timestamp;
   }
 
@@ -107,7 +79,6 @@ export class MainContentComponent {
 
   getUserPic(user: string) {
     let index = this.usersTest.user.indexOf(user);
-
     return this.usersTest.picURL[index];
   }
 
@@ -117,36 +88,62 @@ export class MainContentComponent {
     return timeText;
   }
 
-  getFormattedDate(timestamp: number) {
+  checkNextDay(index: number) {
+    if (index === 0) {
+      return true;
+    }
+    const currentTimestamp = new Date(this.channel1Msg[index].time);
+    const previousTimestamp = new Date(this.channel1Msg[index - 1].time);
+    return this.checkNextTime(currentTimestamp, previousTimestamp);
+  }
+
+  checkNextTime(currentTimestamp: Date, previousTimestamp: Date) {
+    if (currentTimestamp.getFullYear() > previousTimestamp.getFullYear()) {
+      return true + 'Year';
+    }
+    if (currentTimestamp.getMonth() > previousTimestamp.getMonth()) {
+      return true + 'Month';
+    }
+    if (currentTimestamp.getDate() > previousTimestamp.getDate()) {
+      return true + 'Day';
+    }
+    return false;
+  }
+
+  getFormattedDate(timestamp: number, index: number) {
     const months = [
-      'January',
-      'February',
-      'March',
+      'Januar',
+      'Februar',
+      'März',
       'April',
-      'May',
-      'June',
-      'July',
+      'Mai',
+      'Juni',
+      'Juli',
       'August',
       'September',
-      'October',
+      'Oktober',
       'November',
-      'December',
+      'Dezember',
     ];
     const days = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
+      'Sonntag',
+      'Montag',
+      'Dienstag',
+      'Mittwoch',
+      'Donnerstag',
+      'Freitag',
+      'Samstag',
     ];
 
     let date = new Date(timestamp);
     let day = days[date.getDay()];
     let dateOfMonth = date.getDate();
     let month = months[date.getMonth()];
-
+    let year = date.getFullYear();
+    
+    if (this.checkNextTime(date, new Date(this.channel1Msg[index + 1].time))) {
+      return `${day} ${dateOfMonth}. ${month} ${year}`;
+    }
     return `${day} ${dateOfMonth}. ${month}`;
   }
 }
