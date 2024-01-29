@@ -12,6 +12,7 @@ section{
         border: none;
         padding: 20px;
         border-radius: 16px;
+        resize: none;
 
         &:focus-visible{
             outline: none;
@@ -29,6 +30,12 @@ section{
             justify-content: center;
             align-items: center;
             gap: 10px;
+
+            .seperator{
+                height: 40px;
+                width: 2px;
+                background-color: rgb(173, 176, 217);
+            }
         }
     }
 }
