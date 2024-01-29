@@ -1,0 +1,39 @@
+.headline-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+}
+
+.channel-name-container{
+    padding: 8px;
+    border-radius: 20px;
+    border: 2px solid rgb(173, 176, 217);
+    width: 50vw;
+
+    .head{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+    .channel-name{
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .edit{
+        color: blue;
+    }
+    }
+
+} 
+
+::ng-deep .mat-mdc-dialog-container 
+.mdc-dialog__surface{
+    border-radius: 30px;
+    border-top-left-radius: 0px;
+    padding: 20px;
+}
+
