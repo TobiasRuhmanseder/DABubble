@@ -28,11 +28,11 @@ export class MainContentComponent {
       'Elise_Roth.png',
     ],
   };
-  channel1 = {
+  channel1Test = {
     name: 'coolster Channel',
     users: ['Max Mustermann', 'Amarna Miller', 'Luke Skywalker'],
   };
-  channel1Msg: { name: string; msg: string; time: number }[] = [
+  channel1MsgTest: { name: string; msg: string; time: number }[] = [
     { name: 'Luke Skywalker', msg: 'hallo welt!', time: 1106455915320 },
     { name: 'Amarna Miller', msg: 'hei da welt!', time: 1709894925310 },
     {
@@ -47,19 +47,16 @@ export class MainContentComponent {
     },
   ];
 
-  channelUserPics: any = [];
-  msgOwner: string = '';
   textareaContent: string = '';
   eingeloggterUser: string = 'Max Mustermann';
-  disblay = true;
 
   sortByTime() {
-    this.channel1Msg.sort((b, a) => b.time - a.time);
-    return this.channel1Msg;
+    this.channel1MsgTest.sort((b, a) => b.time - a.time);
+    return this.channel1MsgTest;
   }
 
   renderMessagePic(index: number) {
-    let user = this.usersTest.user.indexOf(this.channel1Msg[index].name);
+    let user = this.usersTest.user.indexOf(this.channel1MsgTest[index].name);
     let pic = this.usersTest.picURL[user];
     return pic;
   }
@@ -92,8 +89,8 @@ export class MainContentComponent {
     if (index === 0) {
       return true;
     }
-    const currentTimestamp = new Date(this.channel1Msg[index].time);
-    const previousTimestamp = new Date(this.channel1Msg[index - 1].time);
+    const currentTimestamp = new Date(this.channel1MsgTest[index].time);
+    const previousTimestamp = new Date(this.channel1MsgTest[index - 1].time);
     return this.checkNextTime(currentTimestamp, previousTimestamp);
   }
 
@@ -140,8 +137,8 @@ export class MainContentComponent {
     let dateOfMonth = date.getDate();
     let month = months[date.getMonth()];
     let year = date.getFullYear();
-    
-    if (this.checkNextTime(date, new Date(this.channel1Msg[index + 1].time))) {
+
+    if (this.checkNextTime(date, new Date(this.channel1MsgTest[index + 1].time))) {
       return `${day} ${dateOfMonth}. ${month} ${year}`;
     }
     return `${day} ${dateOfMonth}. ${month}`;

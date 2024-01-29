@@ -2,7 +2,7 @@
   <div class="header">
     <div class="channel-title">
       <img class="icon title-hover" src=".\assets\icons\tag.png" />
-      <div class="title-hover">{{ channel1.name }}</div>
+      <div class="title-hover">{{ channel1Test.name }}</div>
       <img class="icon title-hover" src=".\assets\icons\expand_more.png" />
     </div>
     <div class="header-users-nav">
@@ -10,7 +10,7 @@
         <div class="header-users-img">
           <div
             class="header-pic-container"
-            *ngFor="let user of channel1.users; let i = index"
+            *ngFor="let user of channel1Test.users; let i = index"
           >
             <img
               class="header-pic"
@@ -18,7 +18,7 @@
             />
           </div>
         </div>
-        <div class="header-number">{{ channel1.users.length }}</div>
+        <div class="header-number">{{ channel1Test.users.length }}</div>
       </div>
       <div class="header-add-icon icon"></div>
     </div>
@@ -81,7 +81,7 @@
     <textarea
       [(ngModel)]="textareaContent"
       class="main-input-field"
-      placeholder="Nachricht an # {{ channel1.name }}"
+      placeholder="Nachricht an # {{ channel1Test.name }}"
     ></textarea>
     <div class="main-inputfield-container">
       <div class="main-input-icons-nav">
