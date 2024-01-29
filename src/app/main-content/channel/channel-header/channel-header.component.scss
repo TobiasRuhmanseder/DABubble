@@ -1,0 +1,61 @@
+section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 45px;
+    padding-block: 25px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
+
+
+    .channel-description-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4px;
+        font-size: 24px;
+        gap: 10px;
+
+        &:hover{
+            background-color: rgb(173, 176, 217);
+            color: rgb(68, 77, 242);
+            border-radius: 16px;
+        }
+
+        .mark{
+            font-weight: 900;
+        }
+
+        .name{
+            font-weight: 900;
+        }
+
+        .arrow-down{
+            height: 8px;
+            width: 14px;
+        }
+    }
+
+
+    .channel-member-container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .members-box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .add-member-btn{
+            
+        }
+    }
+}
+
+.user-pic-size{
+    display: flex;
+    height: 40px;
+    width: 40px;
+}
+
