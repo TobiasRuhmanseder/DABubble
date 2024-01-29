@@ -27,6 +27,9 @@
 }
 
 .google-btn {
+    font-family: inherit;
+    font-size: inherit;
+    color: #444DF2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,24 +39,12 @@
     border: #ECEEFE solid 1px;
     transition: ease-out 100ms;
     gap: 10px;
-    width: calc(100% - 64px);
+    width: 100%;
+    cursor: pointer;
 
     &:hover {
         border: #444DF2 solid 1px;
-    }
-
-    button {
-        font-family: inherit;
-        font-size: inherit;
-        font-weight: 400;
-        color: #444DF2;
-        background-color: #ECEEFE;
-        border: none;
-        transition: ease-out 100ms;
-
-        &:hover {
-            font-weight: 700;
-        }
+        font-weight: 700;
     }
 }
 

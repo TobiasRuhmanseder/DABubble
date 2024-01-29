@@ -4,7 +4,6 @@ body {
     background-color: #ECEEFE;
     font-family: 'Nunito', sans-serif;
     font-size: 18px;
-    font-family: 'Nunito';
 }
 
 .card {
@@ -12,19 +11,20 @@ body {
     border-radius: 30px;
 }
 
-.overlay{
+.overlay {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 2;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
-.btn-blue, .btn-white {
+.btn-blue,
+.btn-white {
+    font-family: 'Nunito', sans-serif;
     box-sizing: border-box;
-    font-family: 'Nunito';
     font-weight: 700;
     font-size: 18px;
     transition: ease-out 100ms;
@@ -53,7 +53,9 @@ body {
     }
 }
 
+
 /* Start Screen Component */
+
 .login-container {
     position: absolute;
     top: 50%;
@@ -114,6 +116,7 @@ body {
 }
 
 
+/* Fonts +/
 
 /* nunito-regular - latin */
 @font-face {
@@ -133,6 +136,28 @@ body {
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
-    src: url('./assets/fonts/nunito-v26-latin-regular.woff2') format('woff2');
+    src: url('./assets/fonts/nunito-v26-latin-700.woff2') format('woff2');
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* figtree-regular - latin */
+@font-face {
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Figtree';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./assets/fonts/figtree-v5-latin-regular.woff2') format('woff2');
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* figtree-500 - latin */
+@font-face {
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Figtree';
+    font-style: normal;
+    font-weight: 500;
+    src: url('./assets/fonts/figtree-v5-latin-500.woff2') format('woff2');
     /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
