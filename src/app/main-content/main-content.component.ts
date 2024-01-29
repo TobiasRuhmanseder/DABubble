@@ -33,17 +33,17 @@ export class MainContentComponent {
     users: ['Max Mustermann', 'Amarna Miller', 'Luke Skywalker'],
   };
   channel1MsgTest: { name: string; msg: string; time: number }[] = [
-    { name: 'Luke Skywalker', msg: 'hallo welt!', time: 1106455915320 },
-    { name: 'Amarna Miller', msg: 'hei da welt!', time: 1709894925310 },
+    { name: 'Luke Skywalker', msg: 'hallo welt!', time: 1506562826977 },
+    { name: 'Amarna Miller', msg: 'hei da welt!', time: 1706562826977 },
     {
       name: 'Max Mustermann',
       msg: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
-      time: 1709995915320,
+      time: 1706562826977,
     },
     {
       name: 'Amarna Miller',
       msg: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
-      time: 1709995925340,
+      time: 1706562826977,
     },
   ];
 
@@ -104,7 +104,32 @@ export class MainContentComponent {
     if (currentTimestamp.getDate() > previousTimestamp.getDate()) {
       return true + 'Day';
     }
+
     return false;
+  }
+
+  renderDate(
+    index: number,
+    date: Date,
+    day: string,
+    dateOfMonth: number,
+    month: string,
+    year: number
+  ) {
+    if (index < this.channel1MsgTest.length) {
+      let checkNextTime = this.checkNextTime(
+        new Date(this.channel1MsgTest[index + 1].time),
+        date
+      );
+      if (checkNextTime === 'trueYear') {
+        return `${day} ${dateOfMonth}. ${month} ${year}`;
+      }
+    }
+    let today = new Date();
+    if (date.getDate() === today.getDate()) {
+      return 'Heute';
+    }
+    return `${day} ${dateOfMonth}. ${month}`;
   }
 
   getFormattedDate(timestamp: number, index: number) {
@@ -137,10 +162,6 @@ export class MainContentComponent {
     let dateOfMonth = date.getDate();
     let month = months[date.getMonth()];
     let year = date.getFullYear();
-
-    if (this.checkNextTime(date, new Date(this.channel1MsgTest[index + 1].time))) {
-      return `${day} ${dateOfMonth}. ${month} ${year}`;
-    }
-    return `${day} ${dateOfMonth}. ${month}`;
+    return this.renderDate(index, date, day, dateOfMonth, month, year);
   }
 }
