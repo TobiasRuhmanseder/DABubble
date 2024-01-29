@@ -1,4 +1,30 @@
 .side-menu {
     min-width: 336px;
     height: 100%;
+    padding: 30px;
+}
+
+.workspace-section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.workspace-description{
+    display: flex;
+    align-items: center;
+}
+
+.logo{
+    margin-right: 15px;
+}
+
+.new-message-logo{
+    cursor: pointer;
+
+    &:hover{
+        scale: 1.1;
+    }
 }
