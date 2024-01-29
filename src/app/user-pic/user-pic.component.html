@@ -1,0 +1,10 @@
+<div class="user-pic">
+    <img class="user-image" src="../../assets/img/user_pics/{{userImageName}}" alt="">
+    @if (status) {
+        @if (online) {
+        <img class="point-status" src="../../assets/img/online.svg" alt="">
+        }@else {
+        <img class="point-status" src="../../assets/img/offline.svg" alt="">
+        }
+    }
+</div>
