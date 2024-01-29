@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-start-screen',
   standalone: true,
-  imports: [ RouterLink],
+  imports: [
+    LoginComponent
+  ],
   templateUrl: './start-screen.component.html',
   styleUrl: './start-screen.component.scss'
 })
