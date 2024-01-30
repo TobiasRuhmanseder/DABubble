@@ -1,0 +1,60 @@
+.forgot-password-btn {
+    display: flex;
+    justify-content: center;
+    
+    a {
+        font-family: 'Figtree', sans-serif;
+        font-weight: 400;
+        color: #797EF3;
+        padding: 5px 15px;
+        text-decoration: none;
+        transition: ease-in 100ms;
+
+        &:hover {
+            font-weight: 500;
+            background-color: #ECEEFE;
+            border-radius: 30px;
+        }
+    }
+}
+
+.login-divider {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #ADB0D9;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+
+    span {
+        background: white;
+        padding: 0 10px;
+    }
+}
+
+.google-btn {
+    font-family: inherit;
+    font-size: inherit;
+    color: #444DF2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 11px 32px;
+    background-color: #ECEEFE;
+    border-radius: 100px;
+    border: #ECEEFE solid 1px;
+    transition: ease-out 100ms;
+    gap: 10px;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+        border: #444DF2 solid 1px;
+        font-weight: 700;
+    }
+}
+
+.submit-btns {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}

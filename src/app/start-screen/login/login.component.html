@@ -1,0 +1,39 @@
+<div class="header">
+    <img src="./../../assets/img/logo_small.svg" alt="DABubble Logo">
+    <div>
+        <span>Neu bei DABubble?</span>
+        <a class="link-btn" routerLink="sign-in" >Konto erstellen</a>
+    </div>
+</div>
+<div class="login-container">
+    <h1>Anmeldung</h1>
+    <div class="info-text">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</div>
+    <form [formGroup]="profileForm">
+        <div class="inputfield-container">
+            <img src="./../../../assets/img/mail_icon.svg">
+            <input id="email" type="email" formControlName="email" placeholder="beispielname@email.com">
+        </div>
+        <div class="inputfield-container">
+            <img src="./../../../assets/img/password_icon.svg">
+            <input id="password" type="password" formControlName="password" placeholder="Passwort">
+        </div>
+    </form>
+    <div class="forgot-password-btn">
+        <a  href="#">Passwort vergessen?</a>
+    </div>
+    <div class="login-divider">
+        <span>ODER</span>
+    </div>
+    <button class="google-btn">
+        <img src="./../../../assets/img/google_logo.svg">
+        <span>Anmelden mit Google</span>
+    </button>
+    <div class="submit-btns">
+        <button class="btn-blue">Anmelden</button>
+        <button class="btn-white" routerLink="/home">Gäste-Login</button>
+    </div>
+</div>
+<div class="footer">
+    <a class="link-btn" routerLink="legal-notice">Impressum</a>
+    <a class="link-btn" routerLink="privacy-policy">Datenschutz</a>
+</div>

@@ -1,0 +1,44 @@
+<div class="headline-container" mat-dialog-title>
+    <div>
+        # Angular
+    </div>
+    <div class="close-btn" (click)="onNoClick()">
+        Close
+    </div>
+</div>
+
+<div mat-dialog-content>
+    <div class="channel-name-container mb-16" >
+        <div class="head">
+            <span class="channel-name">Channel name</span>
+            <span class="edit">Bearbeiten</span>
+        </div>
+    
+        <div class="name-container-title">
+            # <span>Angular</span>
+        </div>
+    </div>
+    
+    <div class="channel-name-container">
+        <div class="head">
+            <span class="channel-name">Channel description</span>
+            <span class="edit">Bearbeiten</span>
+        </div>
+    
+        <div class="name-container-title">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Nesciunt suscipit eligendi id velit doloribus voluptate porro quisquam tempore quaerat 
+            molestiae cum repudiandae necessitatibus quia, earum fuga provident exercitationem. Tempore, ullam.
+        </div>
+    
+        <div class="seperator"></div>
+    
+        <div class="creator-container">
+            <span class="channel-name">Erstellt von</span>
+            <span class="creator-text">Noah Braun</span>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions class="actions-container">
+    <button mat-button cdkFocusInitial class="leave-channel-btn">Channel verlassen</button>
+</div>

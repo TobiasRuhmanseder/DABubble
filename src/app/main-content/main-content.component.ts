@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { ChannelComponent } from './channel/channel.component';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-main-content',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    ChannelComponent
+  CommonModule, FormsModule],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })

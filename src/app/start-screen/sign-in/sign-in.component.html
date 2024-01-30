@@ -1,0 +1,35 @@
+<div class="header">
+    <img src="./../../assets/img/logo_small.svg" alt="DABubble Logo">
+</div>
+<div class="login-container">
+    <h1>Konto erstellen</h1>
+    <div class="info-text">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</div>
+    <form [formGroup]="profileForm">
+        <div class="inputfield-container">
+            <img src="./../../../assets/img/user_icon.svg">
+            <input id="name" type="name" formControlName="name" placeholder="Name und Nachname">
+        </div>
+        <div class="inputfield-container">
+            <img src="./../../../assets/img/mail_icon.svg">
+            <input id="email" type="email" formControlName="email" placeholder="beispielname@email.com">
+        </div>
+        <div class="inputfield-container">
+            <img src="./../../../assets/img/password_icon.svg">
+            <input id="password" type="password" formControlName="password" placeholder="Passwort">
+        </div>
+        <div>
+            <label class="checkbox-container">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+            <span class="privacy-link">Ich stimme der <a (click)="navigateToPrivacyPolicy()">Datenschutzerklärung</a> zu.</span>
+        </div>
+    </form>
+    <div class="submit-btn">
+        <button class="btn-blue">Weiter</button>
+    </div>
+</div>
+<div class="footer">
+    <a class="link-btn" (click)="navigateToLegalNotice()">Impressum</a>
+    <a class="link-btn" (click)="navigateToPrivacyPolicy()">Datenschutz</a>
+</div>
