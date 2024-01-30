@@ -6,7 +6,7 @@ import { Router, RouterLink } from '@angular/router';
   selector: 'app-sign-in',
   standalone: true,
   imports: [
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     RouterLink
   ],
   templateUrl: './sign-in.component.html',
@@ -14,12 +14,18 @@ import { Router, RouterLink } from '@angular/router';
 })
 
 export class SignInComponent {
-constructor(private router: Router) {}
+
+  constructor(private router: Router) { }
+
   profileForm = new FormGroup({
     name: new FormControl(''),
     email: new FormControl(''),
     password: new FormControl(''),
   });
+
+  navigateToLogin() {
+    this.router.navigate(['']);
+  }
 
   navigateToLegalNotice() {
     this.router.navigate(['/legal-notice']);

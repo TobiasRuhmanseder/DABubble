@@ -1,3 +1,10 @@
+.arrow-back {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+}
+
 .submit-btn {
     display: flex;
     justify-content: flex-end;
@@ -35,11 +42,11 @@
         }
     }
 
-    &:hover input ~ .checkmark {
+    &:hover input~.checkmark {
         background-color: #ECEEFE;
     }
 
-    input:checked ~ .checkmark {
+    input:checked~.checkmark {
         background-color: white;
 
         &:after {
