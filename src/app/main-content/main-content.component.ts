@@ -109,17 +109,11 @@ export class MainContentComponent {
   }
 
   checkNextTime(currentTimestamp: Date, previousTimestamp: Date) {
-    if (currentTimestamp.getFullYear() > previousTimestamp.getFullYear()) {
-      return true + 'Year';
-    }
-    if (currentTimestamp.getMonth() > previousTimestamp.getMonth()) {
-      return true + 'Month';
-    }
-    if (currentTimestamp.getDate() > previousTimestamp.getDate()) {
-      return true + 'Day';
-    }
-
-    return false;
+    return (
+      currentTimestamp.getFullYear() > previousTimestamp.getFullYear() ||
+      currentTimestamp.getMonth() > previousTimestamp.getMonth() ||
+      currentTimestamp.getDate() > previousTimestamp.getDate()
+    );
   }
 
   renderDate(
