@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 import { ChannelComponent } from './channel/channel.component';
 import { FormsModule } from '@angular/forms';
 
@@ -10,7 +10,17 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })
-export class MainContentComponent {
+export class MainContentComponent implements AfterViewInit {
+  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
+
+  ngAfterViewInit() {
+    this.scrollDown();
+  }
+
+  scrollDown() {
+    const element = this.elementRef.nativeElement.querySelector('#messagesContent');
+    this.renderer.setProperty(element, 'scrollTop', 9999);
+  }
   usersTest = {
     user: [
       'Max Mustermann',
@@ -81,8 +91,10 @@ export class MainContentComponent {
       msg: msg,
       time: time,
     });
-    // console.log('Aktueller Stand vom Channel = ' + JSON.stringify(this.channel1MsgTest));
-  }
+    setTimeout(() => {
+      this.scrollDown();
+    }, 1);
+    }
 
   getUserPic(user: string) {
     let index = this.usersTest.user.indexOf(user);
