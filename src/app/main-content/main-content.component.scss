@@ -90,6 +90,7 @@ button {
     flex-direction: row;
     gap: 10px;
     padding: 3px 10px;
+    cursor: pointer;
     &:hover {
       background-color: #eceefe;
       border-radius: 30px;

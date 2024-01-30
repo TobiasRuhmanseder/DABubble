@@ -34,17 +34,17 @@ export class MainContentComponent {
     users: ['Max Mustermann', 'Amarna Miller', 'Luke Skywalker'],
   };
   channel1MsgTest: { name: string; msg: string; time: number }[] = [
-    { name: 'Luke Skywalker', msg: 'hallo welt!', time: 1506562826977 },
-    { name: 'Amarna Miller', msg: 'hei da welt!', time: 1706562826977 },
+    { name: 'Luke Skywalker', msg: '1', time: 1506562826977 },
+    { name: 'Amarna Miller', msg: '2', time: 1706562826977 },
     {
       name: 'Max Mustermann',
-      msg: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
-      time: 1706562826977,
+      msg: '3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
+      time: 1706562826978,
     },
     {
       name: 'Amarna Miller',
-      msg: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
-      time: 1706562826977,
+      msg: '4 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
+      time: 1706562826979,
     },
   ];
 
@@ -53,6 +53,9 @@ export class MainContentComponent {
 
   sortByTime() {
     this.channel1MsgTest.sort((b, a) => b.time - a.time);
+    // this.channel1MsgTest.forEach((element, index) => {
+    //   console.log(index, element)
+    // })
     return this.channel1MsgTest;
   }
 
@@ -72,7 +75,17 @@ export class MainContentComponent {
     let msg = this.textareaContent;
     let time = this.getTimeStamp();
     this.textareaContent = '';
-    console.log(msg, time, this.eingeloggterUser);
+    console.log(
+      'Dies wird in den Channel gepusht = ' + msg,
+      time,
+      this.eingeloggterUser
+    );
+    this.channel1MsgTest.push({
+      name: this.eingeloggterUser,
+      msg: msg,
+      time: time,
+    });
+    // console.log('Aktueller Stand vom Channel = ' + JSON.stringify(this.channel1MsgTest));
   }
 
   getUserPic(user: string) {
@@ -118,11 +131,9 @@ export class MainContentComponent {
     year: number
   ) {
     if (index < this.channel1MsgTest.length) {
-      let checkNextTime = this.checkNextTime(
-        new Date(this.channel1MsgTest[index + 1].time),
-        date
-      );
-      if (checkNextTime === 'trueYear') {
+      let now = new Date();
+      let oneYear = now.getFullYear() - year;
+      if (oneYear > 0) {
         return `${day} ${dateOfMonth}. ${month} ${year}`;
       }
     }
