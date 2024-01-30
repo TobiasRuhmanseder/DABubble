@@ -131,8 +131,7 @@ export class MainContentComponent {
         return `${day} ${dateOfMonth}. ${month} ${year}`;
       }
     }
-    let today = new Date();
-    if (date.getDate() === today.getDate()) {
+    if (date.getDate() === new Date().getDate()) {
       return 'Heute';
     }
     return `${day} ${dateOfMonth}. ${month}`;
