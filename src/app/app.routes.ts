@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { StartScreenComponent } from './start-screen/start-screen.component';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
+import { LoginComponent } from './start-screen/login/login.component';
 
 export const routes: Routes = [
-    { path: '', component: StartScreenComponent },
+    { path: '', component: LoginComponent },
     { path: 'home', component: HomeScreenComponent },
 ];
