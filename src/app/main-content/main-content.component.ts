@@ -53,9 +53,6 @@ export class MainContentComponent {
 
   sortByTime() {
     this.channel1MsgTest.sort((b, a) => b.time - a.time);
-    // this.channel1MsgTest.forEach((element, index) => {
-    //   console.log(index, element)
-    // })
     return this.channel1MsgTest;
   }
 
@@ -66,8 +63,7 @@ export class MainContentComponent {
   }
 
   getTimeStamp() {
-    let now = new Date();
-    let timestamp = now.getTime();
+    let timestamp = new Date().getTime();
     return timestamp;
   }
 
