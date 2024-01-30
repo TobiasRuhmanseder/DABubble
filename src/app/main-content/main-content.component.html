@@ -24,11 +24,13 @@
     </div>
   </div>
 
-  <div class="main-messages" #messagesContent>
+  <div class="main-messages" id="messagesContent">
     <div *ngFor="let msg of sortByTime(); let i = index">
       <div class="message-header" *ngIf="checkNextDay(i)">
         <div class="stroke"></div>
-        <div class="message-header-time">{{ getFormattedDate(msg.time, i) }}</div>
+        <div class="message-header-time">
+          {{ getFormattedDate(msg.time, i) }}
+        </div>
         <div class="stroke"></div>
       </div>
       <div
@@ -74,7 +76,6 @@
         </div>
       </div>
     </div>
-    <div #anchor id="anchor"></div>
   </div>
 
   <div class="main-input-container">
