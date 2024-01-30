@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
 button {
   border: none;
   background-color: transparent;
@@ -36,10 +37,8 @@ button {
   .channel-title {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    gap: 10px;
     align-items: center;
-    color: #535af1;
-    filter: brightness(0);
     font-family: Nunito;
     font-size: 24px;
     font-style: normal;
@@ -49,10 +48,33 @@ button {
     padding: 6px 10px;
     text-wrap: nowrap;
     cursor: pointer;
+    transition: all 0.3s;
     &:hover {
-      filter: brightness(1);
+      background-color: #eceefe;
+      color: #535af1;
+    }
+    &:hover .icon-tag {
+      background-image: url("/assets/icons/tag_hover.png");
+      border-radius: 50%;
       background-color: #eceefe;
     }
+    &:hover .icon-expand {
+      background-image: url("/assets/icons/expand_more.png");
+      border-radius: 50%;
+      background-color: #eceefe;
+    }
+  }
+  .icon-tag {
+    background-image: url("/assets/icons/tag.png");
+    transition: all 0.3s;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .icon-expand {
+    background-image: url("/assets/icons/keyboard_arrow_down.png");
+    transition: all 0.3s;
+    background-repeat: no-repeat;
+    background-position: center;
   }
   .header-pic-container {
     width: 1px;
@@ -90,6 +112,7 @@ button {
     gap: 10px;
     padding: 3px 10px;
     cursor: pointer;
+    transition: all 0.3s;
     &:hover {
       background-color: #eceefe;
       border-radius: 30px;
@@ -104,6 +127,7 @@ button {
     background-position: center;
     width: 24px;
     height: 24px;
+    transition: all 0.3s;
     &:hover {
       background-image: url("/assets/icons/person_add_hover.png");
     }
@@ -146,12 +170,31 @@ button {
     margin: 10px 0;
     gap: 30px;
     padding: 10px 45px;
+    transition: all 0.3s;
     &:hover {
       background-color: #eceefe;
     }
   }
   .message-container:hover .message-text {
     background-color: #fff;
+  }
+  .message-container:hover .message-icon-nav {
+    opacity: 1;
+    transform: translate(0, -25px);
+  }
+  .message-icon-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 15px 3px 20px;
+    border-radius: 25px 25px 0px 25px;
+    border: 1px solid #adb0d9;
+    background: #fff;
+    opacity: 0;
+    transition: all 0.3s;
+    transform: translate(50px, -25px);
+    top: 0;
   }
   .message-pic {
     height: 70px;
@@ -162,10 +205,16 @@ button {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
     .message-nav {
       display: flex;
-      gap: 20px;
       align-items: center;
+      justify-content: space-between;
+      .message-name-nav {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
       .message-name {
         color: #000;
         font-family: Nunito;
@@ -173,6 +222,12 @@ button {
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-wrap: nowrap;
+        &:hover {
+          color: #444df2;
+        }
       }
       .message-time {
         color: #686868;
@@ -181,6 +236,46 @@ button {
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+        text-wrap: nowrap;
+      }
+
+      .icon-message {
+        transition: all 0.3s;
+        background-repeat: no-repeat;
+        background-position: center;
+        padding: 4px;
+        height: 24px;
+        width: 24px;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover{
+          border-radius: 20px;
+          background-color: #eceefe;
+        }
+      }
+      .icon-check {
+        background-image: url("/assets/icons/emoji _white heavy check mark_.png");
+      }
+      .icon-raising {
+        background-image: url("/assets/icons/emoji _person raising both hands in celebration_.png");
+      }
+      .icon-emoji {
+        background-image: url("/assets/icons/add_reaction.png");
+        &:hover{
+          background-image: url("/assets/icons/add_reaction_hover.png");
+        }
+      }
+      .icon-comment {
+        background-image: url("/assets/icons/comment.png");
+        &:hover{
+          background-image: url("/assets/icons/comment_hover.png");
+        }
+      }
+      .icon-more {
+        background-image: url("/assets/icons/more_vert.png");
+        &:hover{
+          background-image: url("/assets/icons/more_vert_hover.png");
+        }
       }
     }
     .message-text {
@@ -193,6 +288,8 @@ button {
       font-style: normal;
       font-weight: 400;
       line-height: normal;
+      transition: all 0.3s;
+      width: fit-content;
     }
     .message-text-owner {
       padding: 15px;
@@ -204,6 +301,12 @@ button {
       font-style: normal;
       font-weight: 400;
       line-height: normal;
+      transition: all 0.3s;
+    }
+    .message-nav-footer {
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
     .message-answer {
       color: #535af1;
@@ -213,6 +316,7 @@ button {
       font-weight: 400;
       line-height: normal;
       cursor: pointer;
+      transition: all 0.3s;
       &:hover {
         color: #444df2;
         font-weight: bold;
@@ -260,6 +364,7 @@ button {
     padding: 8px;
     background-image: url("/assets/icons/send.png");
     cursor: pointer;
+    transition: all 0.3s;
     &:hover {
       background-image: url("/assets/icons/send_hover.png");
     }
@@ -286,6 +391,7 @@ button {
   }
   .icon-add {
     background-image: url("/assets/icons/add.png");
+    transition: all 0.3s;
     &:hover {
       background-image: url("/assets/icons/add_hover.png");
       border-radius: 50%;
@@ -294,6 +400,7 @@ button {
   }
   .icon-smile {
     background-image: url("/assets/icons/sentiment_satisfied.png");
+    transition: all 0.3s;
     &:hover {
       background-image: url("/assets/icons/sentiment_satisfied_hover.png");
       border-radius: 50%;
@@ -301,9 +408,8 @@ button {
     }
   }
   .icon-ad {
-    width: 24px;
-    height: 24px;
     background-image: url("/assets/icons/alternate_email.png");
+    transition: all 0.3s;
     &:hover {
       background-image: url("/assets/icons/alternate_email_hover.png");
       border-radius: 50%;

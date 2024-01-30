@@ -1,9 +1,10 @@
+dclass
 <div class="card main-content">
   <div class="header">
     <div class="channel-title">
-      <img class="icon title-hover" src=".\assets\icons\tag.png" />
+      <div class="icon icon-tag" src=".\assets\icons\tag.png"></div>
       <div class="title-hover">{{ channel1Test.name }}</div>
-      <img class="icon title-hover" src=".\assets\icons\expand_more.png" />
+      <div class="icon icon-expand"></div>
     </div>
     <div class="header-users-nav">
       <div class="header-profil-number">
@@ -52,8 +53,20 @@
                 msg.name === eingeloggterUser ? 'row-reverse' : 'row'
             }"
           >
-            <div class="message-name">{{ msg.name }}</div>
-            <div class="message-time">{{ getMessageTime(msg.time) }} Uhr</div>
+            <div class="message-name-nav" [ngStyle]="{
+              'flex-direction':
+                msg.name === eingeloggterUser ? 'row-reverse' : 'row'
+            }">
+              <div class="message-name">{{ msg.name }}</div>
+              <div class="message-time">{{ getMessageTime(msg.time) }} Uhr</div>
+            </div>
+            <div class="message-icon-nav">
+              <div class="icon-check icon-message"></div>
+              <div class="icon-raising icon-message"></div>
+              <div class="icon-emoji icon-message"></div>
+              <div class="icon-comment icon-message"></div>
+              <div *ngIf="msg.name === eingeloggterUser" class="icon-more icon-message"></div>
+            </div>
           </div>
           <div
             [ngClass]="{
@@ -64,7 +77,7 @@
             {{ msg.msg }}
           </div>
           <div
-            class="message-nav"
+            class="message-nav-footer"
             [ngStyle]="{
               'flex-direction':
                 msg.name === eingeloggterUser ? 'row-reverse' : 'row'
