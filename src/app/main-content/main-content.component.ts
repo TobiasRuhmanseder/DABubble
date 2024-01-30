@@ -6,9 +6,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-main-content',
   standalone: true,
-  imports: [
-    ChannelComponent
-  CommonModule, FormsModule],
+  imports: [ChannelComponent, CommonModule, FormsModule],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })
