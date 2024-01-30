@@ -193,7 +193,7 @@ button {
     background: #fff;
     opacity: 0;
     transition: all 0.3s;
-    transform: translate(50px, -25px);
+    transform: translate(25px, -25px);
     top: 0;
   }
   .message-pic {
@@ -290,6 +290,7 @@ button {
       line-height: normal;
       transition: all 0.3s;
       width: fit-content;
+      white-space: break-spaces;
     }
     .message-text-owner {
       padding: 15px;
@@ -302,6 +303,9 @@ button {
       font-weight: 400;
       line-height: normal;
       transition: all 0.3s;
+      width: fit-content;
+      float: right;
+      white-space: break-spaces;
     }
     .message-nav-footer {
       display: flex;

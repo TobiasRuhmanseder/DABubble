@@ -53,10 +53,13 @@ dclass
                 msg.name === eingeloggterUser ? 'row-reverse' : 'row'
             }"
           >
-            <div class="message-name-nav" [ngStyle]="{
-              'flex-direction':
-                msg.name === eingeloggterUser ? 'row-reverse' : 'row'
-            }">
+            <div
+              class="message-name-nav"
+              [ngStyle]="{
+                'flex-direction':
+                  msg.name === eingeloggterUser ? 'row-reverse' : 'row'
+              }"
+            >
               <div class="message-name">{{ msg.name }}</div>
               <div class="message-time">{{ getMessageTime(msg.time) }} Uhr</div>
             </div>
@@ -65,16 +68,21 @@ dclass
               <div class="icon-raising icon-message"></div>
               <div class="icon-emoji icon-message"></div>
               <div class="icon-comment icon-message"></div>
-              <div *ngIf="msg.name === eingeloggterUser" class="icon-more icon-message"></div>
+              <div
+                *ngIf="msg.name === eingeloggterUser"
+                class="icon-more icon-message"
+              ></div>
             </div>
           </div>
-          <div
-            [ngClass]="{
-              'message-text-owner': msg.name === eingeloggterUser,
-              'message-text': msg.name !== eingeloggterUser
-            }"
-          >
-            {{ msg.msg }}
+          <div>
+            <div
+              [ngClass]="{
+                'message-text-owner': msg.name === eingeloggterUser,
+                'message-text': msg.name !== eingeloggterUser
+              }"
+            >
+              {{ msg.msg }}
+            </div>
           </div>
           <div
             class="message-nav-footer"
