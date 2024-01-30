@@ -16,6 +16,7 @@ section{
         padding: 4px;
         font-size: 24px;
         gap: 10px;
+        cursor: pointer;
 
         &:hover{
             background-color: rgb(173, 176, 217);
@@ -42,11 +43,21 @@ section{
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 20px;
 
         .members-box{
+            cursor: pointer;
+            background-color: aqua;
+            height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+
+           .pic-overlay{
+
+           }
+
         }
 
         .add-member-btn{
