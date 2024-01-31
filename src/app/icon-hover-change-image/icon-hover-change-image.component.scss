@@ -1,0 +1,18 @@
+.icon {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.icon img:nth-child(2) {
+    display: none;
+}
+
+.icon:hover img:nth-child(1) {
+    display: none;
+}
+
+.icon:hover img:nth-child(2) {
+    display: block;
+}
