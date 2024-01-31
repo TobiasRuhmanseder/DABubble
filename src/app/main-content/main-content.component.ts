@@ -111,7 +111,7 @@ export class MainContentComponent implements AfterViewInit {
     let timestamp = new Date().getTime();
     return timestamp;
   }
-
+  // hier ist noch ein console.log befehl!!!
   sendMessages() {
     let msg = this.textareaContent;
     let time = this.getTimeStamp();
