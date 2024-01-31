@@ -4,7 +4,8 @@
             <img class="logo" src="../../assets/img/workspace_logo.svg" alt="">
             <span>Code learning</span>
         </div>
-        <img class="new-message-logo" src="../../assets/img/new_messages_global.svg" alt="">
+        <app-icon-hover-change-image [unhovered]="'../../../assets/img/new_message_g.svg'"
+        [hovered]="'../../../assets/img/new_message_g_hover.svg'" [onClick]="'../../../assets/img/new_message_g_click.svg'" ></app-icon-hover-change-image>
     </div>
 <app-channel-view></app-channel-view>
 </div>
