@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Renderer2,
+} from '@angular/core';
 import { ChannelComponent } from './channel/channel.component';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -21,7 +27,18 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 })
 export class MainContentComponent implements AfterViewInit {
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
-
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (
+      this.editFlagg &&
+      !(event.target as HTMLElement).closest('.message-text-edit')
+    ) {
+      this.channel1MsgTest.forEach((element) => {
+        element.editing = false;
+      });
+      this.editFlagg = false;
+    }
+  }
   ngAfterViewInit() {
     this.scrollDown();
   }
@@ -77,6 +94,7 @@ export class MainContentComponent implements AfterViewInit {
 
   textareaContent: string = '';
   eingeloggterUser: string = 'Max Mustermann';
+  editFlagg: boolean = false;
 
   sortByTime() {
     this.channel1MsgTest.sort((b, a) => b.time - a.time);
@@ -197,12 +215,19 @@ export class MainContentComponent implements AfterViewInit {
   }
   editMessage(index: number) {
     this.channel1MsgTest[index].editing = true;
+    setTimeout(() => {
+      this.editFlagg = true;
+    }, 1);
   }
   abortEditMessage(index: number) {
     this.channel1MsgTest[index].editing = false;
+    this.editFlagg = false;
   }
   saveEditMessage(index: number) {
-    this.channel1MsgTest[index].msg = (document.getElementById('input_' + index) as HTMLTextAreaElement).value;
+    this.channel1MsgTest[index].msg = (
+      document.getElementById('input_' + index) as HTMLTextAreaElement
+    ).value;
     this.channel1MsgTest[index].editing = false;
+    this.editFlagg = false;
   }
 }

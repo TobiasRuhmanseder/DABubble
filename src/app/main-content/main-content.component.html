@@ -63,7 +63,7 @@ dclass
               <div class="message-name">{{ msg.name }}</div>
               <div class="message-time">{{ getMessageTime(msg.time) }} Uhr</div>
             </div>
-            <div class="message-icon-nav">
+            <div class="message-icon-nav" *ngIf="!msg.editing">
               <div class="icon-check icon-message"></div>
               <div class="icon-raising icon-message"></div>
               <div class="icon-emoji icon-message"></div>
