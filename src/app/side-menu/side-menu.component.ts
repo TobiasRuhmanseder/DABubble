@@ -10,5 +10,4 @@ import { IconHoverChangeImageComponent } from '../icon-hover-change-image/icon-h
   styleUrl: './side-menu.component.scss'
 })
 export class SideMenuComponent {
-
 }

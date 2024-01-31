@@ -1,10 +1,16 @@
 <div class="channel-section">
-    <div class="category">
-        <img class="dropdown-arrow" src="../../../assets/img/dropdown_arrow.svg" alt="">
-        <img class="channel-logo" src="../../../assets/img/channel_logo.svg" alt="">
-        <span>Channels</span>
-    </div>
+    <div class="headline">
+        <div class="category">
+            <img [class.dropdown-arrow-open]="dropdownOpen" [class.dropdown-arrow-close]="!dropdownOpen" (click)="toggleDropdownMenu()" src="../../../assets/img/dropdown_arrow.svg" alt="">
+            <img class="channel-logo" src="../../../assets/img/channel_logo.svg" alt="">
+            <span>Channels</span>
+        </div>
 
-    <app-icon-hover-change-image [unhovered]="'../../../assets/img/plus-unhovered.svg'"
-        [hovered]="'../../../assets/img/plus-hovered.svg'" [onClick]="'../../../assets/img/plus-onclick.svg'" ></app-icon-hover-change-image>
+        <app-icon-hover-change-image [unhovered]="'../../../assets/img/plus-unhovered.svg'"
+            [hovered]="'../../../assets/img/plus-hovered.svg'"
+            [onClick]="'../../../assets/img/plus-onclick.svg'"></app-icon-hover-change-image>
+    </div>
+    <div [class.dropdown-menu-open]="dropdownOpen" [class.dropdown-menu-close]="!dropdownOpen">
+        
+    </div>
 </div>
