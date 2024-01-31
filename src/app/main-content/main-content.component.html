@@ -71,17 +71,36 @@ dclass
               <div
                 *ngIf="msg.name === eingeloggterUser"
                 class="icon-more icon-message"
+                (click)="editMessage(i)"
               ></div>
             </div>
           </div>
           <div>
             <div
+              *ngIf="!msg.editing"
               [ngClass]="{
                 'message-text-owner': msg.name === eingeloggterUser,
                 'message-text': msg.name !== eingeloggterUser
               }"
             >
               {{ msg.msg }}
+            </div>
+            <div class="message-text-edit" *ngIf="msg.editing">
+              <textarea
+                class="main-input-edit-field"
+                cdkTextareaAutosize
+                [id]="'input_' + i"
+                >{{ msg.msg }}</textarea
+              >
+              <div class="edit-nav">
+                <div class="edit-icon"></div>
+                <div class="message-text-edit-nav">
+                  <div class="abort" (click)="abortEditMessage(i)">
+                    Abbrechen
+                  </div>
+                  <div class="save" (click)="saveEditMessage(i)">Speichern</div>
+                </div>
+              </div>
             </div>
           </div>
           <div

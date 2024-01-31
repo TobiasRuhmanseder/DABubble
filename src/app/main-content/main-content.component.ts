@@ -2,13 +2,22 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 import { ChannelComponent } from './channel/channel.component';
 import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'app-main-content',
   standalone: true,
-  imports: [ChannelComponent, CommonModule, FormsModule],
+  imports: [
+    ChannelComponent,
+    CommonModule,
+    FormsModule,
+    MatInputModule,
+    TextFieldModule,
+  ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
+  template: ` <textarea cdkTextareaAutosize></textarea> `,
 })
 export class MainContentComponent implements AfterViewInit {
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
@@ -18,7 +27,8 @@ export class MainContentComponent implements AfterViewInit {
   }
 
   scrollDown() {
-    const element = this.elementRef.nativeElement.querySelector('#messagesContent');
+    const element =
+      this.elementRef.nativeElement.querySelector('#messagesContent');
     this.renderer.setProperty(element, 'scrollTop', 9999);
   }
   usersTest = {
@@ -43,18 +53,25 @@ export class MainContentComponent implements AfterViewInit {
     name: 'coolster Channel',
     users: ['Max Mustermann', 'Amarna Miller', 'Luke Skywalker'],
   };
-  channel1MsgTest: { name: string; msg: string; time: number }[] = [
-    { name: 'Luke Skywalker', msg: '1', time: 1506562826977 },
-    { name: 'Amarna Miller', msg: '2', time: 1706562826977 },
+  channel1MsgTest: {
+    name: string;
+    msg: string;
+    time: number;
+    editing: boolean;
+  }[] = [
+    { name: 'Luke Skywalker', msg: '1', time: 1506562826977, editing: false },
+    { name: 'Amarna Miller', msg: '2', time: 1706562826977, editing: false },
     {
       name: 'Max Mustermann',
-      msg: '3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
+      msg: '3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
       time: 1706562826978,
+      editing: false,
     },
     {
       name: 'Amarna Miller',
       msg: '4 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
       time: 1706562826979,
+      editing: false,
     },
   ];
 
@@ -90,11 +107,12 @@ export class MainContentComponent implements AfterViewInit {
       name: this.eingeloggterUser,
       msg: msg,
       time: time,
+      editing: false,
     });
     setTimeout(() => {
       this.scrollDown();
     }, 1);
-    }
+  }
 
   getUserPic(user: string) {
     let index = this.usersTest.user.indexOf(user);
@@ -176,5 +194,15 @@ export class MainContentComponent implements AfterViewInit {
     let month = months[date.getMonth()];
     let year = date.getFullYear();
     return this.renderDate(index, date, day, dateOfMonth, month, year);
+  }
+  editMessage(index: number) {
+    this.channel1MsgTest[index].editing = true;
+  }
+  abortEditMessage(index: number) {
+    this.channel1MsgTest[index].editing = false;
+  }
+  saveEditMessage(index: number) {
+    this.channel1MsgTest[index].msg = (document.getElementById('input_' + index) as HTMLTextAreaElement).value;
+    this.channel1MsgTest[index].editing = false;
   }
 }
