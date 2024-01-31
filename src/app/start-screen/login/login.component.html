@@ -11,7 +11,7 @@
     <form [formGroup]="profileForm">
         <div class="inputfield-container">
             <img src="./../../../assets/icons/mail_icon.svg">
-            <input id="email" type="email" formControlName="email" placeholder="beispielname@email.com">
+            <input id="email" type="email" formControlName="email" required placeholder="beispielname@email.com">
         </div>
         <div class="inputfield-container">
             <img src="./../../../assets/icons/password_icon.svg">
@@ -29,7 +29,7 @@
         <span>Anmelden mit Google</span>
     </button>
     <div class="submit-btns">
-        <button class="btn-blue">Anmelden</button>
+        <button class="btn-blue" (click)="login()" >Anmelden</button>
         <button class="btn-white" routerLink="/home">Gäste-Login</button>
     </div>
 </div>
