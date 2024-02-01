@@ -17,17 +17,25 @@ export class LoginComponent {
   constructor(public loginService: LoginService) { }
 
   profileForm = new FormGroup({
-    email: new FormControl<string>('', [Validators.required]),
-    password: new FormControl<string>('', [Validators.required]),
+    email: new FormControl<string>(''),
+    password: new FormControl<string>(''),
   });
 
   login() {
     const email = this.profileForm.get('email')?.value;
     const password = this.profileForm.get('password')?.value;
+    console.log('button clicked');
     
     if (email && password) {
       this.loginService.login(email, password);
     }
   }
 
+  get email() {
+    return this.profileForm.get('email');
+  }
+  
+  get password() {
+    return this.profileForm.get('password');
+  }
 }

@@ -1,34 +1,55 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../../services/login.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    CommonModule
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
 })
 
 export class SignInComponent {
+  inputFocused = false;
+
   constructor(private router: Router, public LoginService: LoginService) { }
 
   profileForm = new FormGroup({
-    name: new FormControl<string>(''),
-    email: new FormControl<string>(''),
-    password: new FormControl<string>(''),
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
+
+  get name() {
+    return this.profileForm.get('name');
+  }
+
+  get email() {
+    return this.profileForm.get('email');
+  }
+
+  get password() {
+    return this.profileForm.get('password');
+  }
+
+  onInputFocus() {
+    this.inputFocused = true;
+  }
 
   signIn() {
     const email = this.profileForm.get('email')?.value;
     const password = this.profileForm.get('password')?.value;
   
-    if (email && password) {
+    if (email && password && this.profileForm.valid) {
       this.LoginService.signIn(email, password);
+      this.router.navigate(['/choose-avatar']);
     } 
   }
 

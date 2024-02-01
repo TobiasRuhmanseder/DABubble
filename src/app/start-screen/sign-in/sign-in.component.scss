@@ -10,6 +10,11 @@
     justify-content: flex-end;
 }
 
+.btn-blue.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .checkbox-container {
     display: block;
     position: relative;

@@ -8,26 +8,36 @@
     <form [formGroup]="profileForm">
         <div class="inputfield-container">
             <img src="./../../../assets/icons/user_icon.svg">
-            <input id="name" type="name" formControlName="name" placeholder="Name und Nachname">
+            <input id="name" type="name" formControlName="name" placeholder="Name und Nachname" (focus)="onInputFocus()">
+        </div>
+        <div class="alert" *ngIf="name?.errors?.['required'] && inputFocused">
+            * Bitte gib deinen vollständigen Namen an.
         </div>
         <div class="inputfield-container">
             <img src="./../../../assets/icons/mail_icon.svg">
             <input id="email" type="email" formControlName="email" placeholder="beispielname@email.com">
         </div>
+        <div class="alert" *ngIf="email?.errors?.['pattern']">
+            * Bitte verwende eine gültige Email-Adresse.
+        </div>
         <div class="inputfield-container">
             <img src="./../../../assets/icons/password_icon.svg">
             <input id="password" type="password" formControlName="password" placeholder="Passwort">
+        </div>
+        <div class="alert" *ngIf="password?.errors?.['minlength']">
+            * Das Passwort muss mindestens acht Zeichen lang sein.
         </div>
         <div>
             <label class="checkbox-container">
                 <input type="checkbox">
                 <span class="checkmark"></span>
             </label>
-            <span class="privacy-link">Ich stimme der <a (click)="navigateToPrivacyPolicy()">Datenschutzerklärung</a> zu.</span>
+            <span class="privacy-link">Ich stimme der <a (click)="navigateToPrivacyPolicy()">Datenschutzerklärung</a>
+                zu.</span>
         </div>
     </form>
     <div class="submit-btn">
-        <button class="btn-blue" (click)="signIn()">Weiter</button>
+        <button class="btn-blue" [class.disabled]="!profileForm.valid" (click)="signIn()">Weiter</button>
     </div>
 </div>
 <div class="footer">
