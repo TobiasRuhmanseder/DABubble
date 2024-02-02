@@ -11,9 +11,7 @@
             [onClick]="'../../../assets/img/plus-onclick.svg'"></app-icon-hover-change-image>
     </div>
     <div [class.dropdown-menu-open]="dropdownOpen" [class.dropdown-menu-close]="!dropdownOpen">
-        <app-channel-list-element></app-channel-list-element>
-        <app-channel-list-element></app-channel-list-element>
-        <app-channel-list-element></app-channel-list-element>
-        <app-channel-list-element></app-channel-list-element>
+        <app-channel-list-element *ngFor="let channel of this.firebaseService.channels" [channel]="channel" ></app-channel-list-element>
+
     </div>
 </div>

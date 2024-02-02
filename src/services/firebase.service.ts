@@ -1,7 +1,8 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
-import { Firestore, onSnapshot } from '@angular/fire/firestore/firebase';
+import { Firestore, onSnapshot } from '@angular/fire/firestore';
 import { collection, doc } from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
+
 
 @Injectable({
   providedIn: 'root'
@@ -26,12 +27,22 @@ export class FirebaseService implements OnDestroy {
       this.channels = [];
       list.forEach(element => {
         this.channels.push(this.idToChannel(element.data(), element.id))
+        console.log(this.channels);
       });
     });
+
   }
   // Add the id for the local Array Channels by onSnapshot
   idToChannel(obj: any, id: string): Channel {
-    return new Channel(obj, id);
+    let channel: any ={
+      id: id,
+      name: obj.name || '',
+      description: obj.description || '',
+      creator: obj.creator || '',
+      users: obj.users || '',
+      messages: obj.messages || []
+  }
+  return channel
   }
 
   getCollRef(colId: string) {

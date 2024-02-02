@@ -18,7 +18,7 @@ export class Channel {
     }
 
 
-    public toJSON():any {
+    public toJSON() {
         return {
             name: this.name,
             description: this.description,
