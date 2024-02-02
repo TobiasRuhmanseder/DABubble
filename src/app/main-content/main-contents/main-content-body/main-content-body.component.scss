@@ -1,0 +1,279 @@
+.main-messages {
+    .message-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 0 35px;
+      .stroke {
+        border: 0.5px solid #adb0d9;
+        width: 100%;
+      }
+      .message-header-time {
+        display: flex;
+        justify-content: center;
+        flex: 1;
+        white-space: nowrap;
+        padding: 5px 15px;
+        border-radius: 30px;
+        border: 1px solid #adb0d9;
+        font-family: Nunito;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+    height: 100%;
+    display: block;
+    .message-container {
+      display: flex;
+      flex-direction: row;
+      margin: 10px 0;
+      gap: 30px;
+      padding: 10px 45px;
+      transition: all 0.3s;
+      &:hover {
+        background-color: #eceefe;
+      }
+    }
+    .message-container:hover .message-text {
+      background-color: #fff;
+    }
+    .message-container:hover .message-icon-nav {
+      opacity: 1;
+      transform: translate(0, -25px);
+    }
+    .message-icon-nav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 15px 3px 20px;
+      border-radius: 25px 25px 0px 25px;
+      border: 1px solid #adb0d9;
+      background: #fff;
+      opacity: 0;
+      transition: all 0.3s;
+      transform: translate(25px, -25px);
+      top: 0;
+    }
+    .message-pic {
+      height: 70px;
+      width: 70px;
+      border-radius: 50%;
+    }
+    .message-body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      .message-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .message-name-nav {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+        }
+        .message-name {
+          color: #000;
+          font-family: Nunito;
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+          cursor: pointer;
+          transition: all 0.3s;
+          text-wrap: nowrap;
+          &:hover {
+            color: #444df2;
+          }
+        }
+        .message-time {
+          color: #686868;
+          font-family: Nunito;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          text-wrap: nowrap;
+        }
+  
+        .icon-message {
+          transition: all 0.3s;
+          background-repeat: no-repeat;
+          background-position: center;
+          padding: 4px;
+          height: 24px;
+          width: 24px;
+          cursor: pointer;
+          transition: all 0.3s;
+          &:hover {
+            border-radius: 20px;
+            background-color: #eceefe;
+          }
+        }
+        .icon-check {
+          background-image: url("/assets/icons/emoji _white heavy check mark_.png");
+        }
+        .icon-raising {
+          background-image: url("/assets/icons/emoji _person raising both hands in celebration_.png");
+        }
+        .icon-emoji {
+          background-image: url("/assets/icons/add_reaction.png");
+          &:hover {
+            background-image: url("/assets/icons/add_reaction_hover.png");
+          }
+        }
+        .icon-comment {
+          background-image: url("/assets/icons/comment.png");
+          &:hover {
+            background-image: url("/assets/icons/comment_hover.png");
+          }
+        }
+        .icon-more {
+          background-image: url("/assets/icons/more_vert.png");
+          &:hover {
+            background-image: url("/assets/icons/more_vert_hover.png");
+          }
+        }
+      }
+      .message-text {
+        padding: 15px;
+        border-radius: 0px 30px 30px 30px;
+        background: #eceefe;
+        color: #000;
+        font-family: Nunito;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        transition: all 0.3s;
+        width: fit-content;
+        white-space: break-spaces;
+      }
+      .message-text-owner {
+        position: relative;
+        padding: 15px;
+        border-radius: 30px 0px 30px 30px;
+        background: #797ef3;
+        color: #000;
+        font-family: Nunito;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        transition: all 0.3s;
+        width: fit-content;
+        float: right;
+        white-space: break-spaces;
+      }
+      .edit-nav{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .main-input-edit-field {
+        width: 100%;
+        border: none;
+        resize: none;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        outline: none;
+        font-family: Nunito;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        overflow: hidden;
+      }
+      .abort {
+        cursor: pointer;
+        padding: 12px 25px;
+        border-radius: 50px;
+        border: 1px solid #797ef3;
+        color: #444df2;
+        text-align: center;
+        font-family: Nunito;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        transition: all 0.3s;
+        &:hover {
+          background-color: #535af1;
+          color: #fff;
+        }
+      }
+      .save {
+        cursor: pointer;
+        padding: 12px 25px;
+        border-radius: 50px;
+        background: #444df2;
+        color: #fff;
+        font-family: Nunito;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        transition: all 0.3s;
+  
+        &:hover {
+          background-color: #797ef3;
+        }
+      }
+      .edit-icon{
+        background-image: url("/assets/icons/sentiment_satisfied.png");
+        transition: all 0.3s;
+        padding: 8px;
+        cursor: pointer;
+        height: 24px;
+        width: 24px;
+        padding: 8px;
+        background-repeat: no-repeat;
+        background-position: center;
+        &:hover {
+          background-image: url("/assets/icons/sentiment_satisfied_hover.png");
+          border-radius: 50%;
+          background-color: #eceefe;
+        }
+      }
+      .message-text-edit {
+        display: flex;
+        border-radius: 20px;
+        border: 1px solid #adb0d9;
+        background: #fff;
+        padding: 20px;
+        flex-direction: column;
+        gap: 16px;
+        white-space: break-spaces;
+      }
+      .message-text-edit-nav {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: row;
+        gap: 32px;
+        width: 100%;
+      }
+      .message-nav-footer {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .message-answer {
+        color: #535af1;
+        font-family: Nunito;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover {
+          color: #444df2;
+          font-weight: bold;
+        }
+      }
+    }
+  }

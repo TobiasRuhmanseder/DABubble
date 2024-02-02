@@ -1,0 +1,19 @@
+<div class="main-input-container">
+    <textarea
+      [(ngModel)]="textareaContent"
+      class="main-input-field"
+      placeholder="Nachricht an # {{ chatService.channel1Test.name }}"
+    ></textarea>
+    <div class="main-inputfield-container">
+      <div class="main-input-icons-nav">
+        <button class="icon-add inputfield-icon icon"></button>
+        <div class="stroke-icons-nav"></div>
+        <button class="icon-smile inputfield-icon icon"></button>
+        <button class="icon-ad inputfield-icon icon"></button>
+      </div>
+      <button
+        class="main-input-confirm inputfield-icon"
+        (click)="sendMessages()"
+      ></button>
+    </div>
+  </div>

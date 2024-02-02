@@ -1,0 +1,92 @@
+<div class="main-messages" id="messagesContent">
+    <div *ngFor="let msg of chatService.sortMessagesByTime(); let i = index">
+      <div class="message-header" *ngIf="chatService.checkNextDay(i)">
+        <div class="stroke"></div>
+        <div class="message-header-time">
+          {{ chatService.getFormattedDate(msg.time, i) }}
+        </div>
+        <div class="stroke"></div>
+      </div>
+      <div
+        class="message-container"
+        [ngStyle]="{
+          'flex-direction':
+            msg.name === this.chatService.eingeloggterUser ? 'row-reverse' : 'row'
+        }"
+      >
+        <img
+          class="message-pic"
+          src=".\assets\pics\{{ chatService.renderMessagePic(i) }}"
+        />
+        <div class="message-body">
+          <div
+            class="message-nav"
+            [ngStyle]="{
+              'flex-direction':
+                msg.name === this.chatService.eingeloggterUser ? 'row-reverse' : 'row'
+            }"
+          >
+            <div
+              class="message-name-nav"
+              [ngStyle]="{
+                'flex-direction':
+                  msg.name === this.chatService.eingeloggterUser ? 'row-reverse' : 'row'
+              }"
+            >
+              <div class="message-name">{{ msg.name }}</div>
+              <div class="message-time">{{ chatService.getMessageTime(msg.time) }} Uhr</div>
+            </div>
+            <div class="message-icon-nav" *ngIf="!msg.editing">
+              <div class="icon-check icon-message"></div>
+              <div class="icon-raising icon-message"></div>
+              <div class="icon-emoji icon-message"></div>
+              <div class="icon-comment icon-message"></div>
+              <div
+                *ngIf="msg.name === this.chatService.eingeloggterUser"
+                class="icon-more icon-message"
+                (click)="editMessage(i)"
+              ></div>
+            </div>
+          </div>
+          <div>
+            <div
+              *ngIf="!msg.editing"
+              [ngClass]="{
+                'message-text-owner': msg.name === this.chatService.eingeloggterUser,
+                'message-text': msg.name !== this.chatService.eingeloggterUser
+              }"
+            >
+              {{ msg.msg }}
+            </div>
+            <div class="message-text-edit" *ngIf="msg.editing">
+              <textarea
+                class="main-input-edit-field"
+                cdkTextareaAutosize
+                [id]="'input_' + i"
+                >{{ msg.msg }}</textarea
+              >
+              <div class="edit-nav">
+                <div class="edit-icon"></div>
+                <div class="message-text-edit-nav">
+                  <div class="abort" (click)="abortEditMessage(i)">
+                    Abbrechen
+                  </div>
+                  <div class="save" (click)="saveEditMessage(i)">Speichern</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="message-nav-footer"
+            [ngStyle]="{
+              'flex-direction':
+                msg.name === this.chatService.eingeloggterUser ? 'row-reverse' : 'row'
+            }"
+          >
+            <div class="message-answer">2 answer</div>
+            <div class="message-time">last message</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
