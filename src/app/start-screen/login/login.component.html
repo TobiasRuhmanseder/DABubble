@@ -2,7 +2,7 @@
     <img src="./../../assets/img/logo_small.svg" alt="DABubble Logo">
     <div>
         <span>Neu bei DABubble?</span>
-        <a class="link-btn" routerLink="sign-in" >Konto erstellen</a>
+        <a class="link-btn" routerLink="sign-in">Konto erstellen</a>
     </div>
 </div>
 <div class="login-container">
@@ -11,15 +11,18 @@
     <form [formGroup]="profileForm">
         <div class="inputfield-container">
             <img src="./../../../assets/icons/mail_icon.svg">
-            <input id="email" type="email" formControlName="email" required placeholder="beispielname@email.com">
+            <input id="email" type="email" formControlName="email" required placeholder="beispielname@email.com" (focus)="inputFocusOn()">
         </div>
         <div class="inputfield-container">
             <img src="./../../../assets/icons/password_icon.svg">
-            <input id="password" type="password" formControlName="password" placeholder="Passwort">
+            <input id="password" type="password" formControlName="password" placeholder="Passwort" (focus)="inputFocusOn()">
+        </div>
+        <div class="alert">
+            {{ this.loginService.wrongMailOrPassword }}
         </div>
     </form>
     <div class="forgot-password-btn">
-        <a  href="#">Passwort vergessen?</a>
+        <a href="#">Passwort vergessen?</a>
     </div>
     <div class="login-divider">
         <span>ODER</span>
@@ -29,7 +32,7 @@
         <span>Anmelden mit Google</span>
     </button>
     <div class="submit-btns">
-        <button class="btn-blue" (click)="login()" >Anmelden</button>
+        <button class="btn-blue" [class.btn-inactive]="!profileForm.valid" (click)="login()">Anmelden</button>
         <button class="btn-white" routerLink="/home">Gäste-Login</button>
     </div>
 </div>

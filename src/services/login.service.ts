@@ -6,6 +6,8 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } f
   providedIn: 'root'
 })
 export class LoginService {
+  wrongMailOrPassword: string = '';
+  mailInUse: string = '';
   firestore: Firestore = inject(Firestore);
 
   constructor() { }
@@ -20,10 +22,11 @@ export class LoginService {
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        if (error.code == 'auth/invalid-credential') {
+          this.wrongMailOrPassword = 'Falsche E-Mail oder falsches Passwort.';
+        }
       });
-    
+
   }
 
   signIn(email: string, password: string) {
@@ -35,9 +38,9 @@ export class LoginService {
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
+        if (error.code == 'auth/email-already-in-use') {
+          this.mailInUse = 'Diese Emailadresse ist bereits vergeben.';
+        }
       });
   }
 

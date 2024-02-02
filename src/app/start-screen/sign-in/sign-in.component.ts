@@ -22,9 +22,10 @@ export class SignInComponent {
   constructor(private router: Router, public LoginService: LoginService) { }
 
   profileForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]),
+    name: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-ZäöüÄÖÜß]+ [a-zA-ZäöüÄÖÜß]+$/)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    acceptTerms: new FormControl (false, Validators.required)
   });
 
   get name() {
@@ -39,15 +40,17 @@ export class SignInComponent {
     return this.profileForm.get('password');
   }
 
-  onInputFocus() {
+  // hides the alert message as long as the input field is not selected
+  inputFocusOn() {
     this.inputFocused = true;
+    this.LoginService.mailInUse = '';
   }
 
   signIn() {
     const email = this.profileForm.get('email')?.value;
     const password = this.profileForm.get('password')?.value;
   
-    if (email && password && this.profileForm.valid) {
+    if (email && password) {
       this.LoginService.signIn(email, password);
       this.router.navigate(['/choose-avatar']);
     } 

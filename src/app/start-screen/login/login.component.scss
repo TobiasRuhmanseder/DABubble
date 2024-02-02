@@ -58,3 +58,8 @@
     justify-content: center;
     gap: 30px;
 }
+
+.btn-inactive {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
