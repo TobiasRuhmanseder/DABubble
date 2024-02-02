@@ -3,17 +3,19 @@ import { MessageService } from '../../services/message.service';
 import { MainContentBodyComponent } from './main-contents/main-content-body/main-content-body.component';
 import { MainContentFooterComponent } from './main-contents/main-content-footer/main-content-footer.component';
 import { MainContentHeaderComponent } from './main-contents/main-content-header/main-content-header.component';
+import { ChannelComponent } from "./channel/channel.component";
 
 @Component({
-  selector: 'app-main-content',
-  standalone: true,
-  templateUrl: './main-content.component.html',
-  styleUrl: './main-content.component.scss',
-  imports: [
-    MainContentBodyComponent,
-    MainContentFooterComponent,
-    MainContentHeaderComponent,
-  ],
+    selector: 'app-main-content',
+    standalone: true,
+    templateUrl: './main-content.component.html',
+    styleUrl: './main-content.component.scss',
+    imports: [
+        MainContentBodyComponent,
+        MainContentFooterComponent,
+        MainContentHeaderComponent,
+        ChannelComponent
+    ]
 })
 export class MainContentComponent {
   constructor(
