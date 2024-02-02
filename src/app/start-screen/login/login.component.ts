@@ -24,7 +24,6 @@ export class LoginComponent {
   login() {
     const email = this.profileForm.get('email')?.value;
     const password = this.profileForm.get('password')?.value;
-    console.log('button clicked');
 
     if (email && password) {
       this.loginService.login(email, password);
