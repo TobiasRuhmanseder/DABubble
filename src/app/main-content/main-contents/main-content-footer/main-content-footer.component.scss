@@ -89,8 +89,16 @@
       background-color: #eceefe;
     }
   }
+
 }
 button {
   border: none;
   background-color: transparent;
+}
+.icon {
+  transition: all 0.3s;
+  &:hover{
+    border-radius: 50%;
+    background-color: #eceefe;
+  }
 }

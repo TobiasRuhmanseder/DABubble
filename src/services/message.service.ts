@@ -60,6 +60,11 @@ export class MessageService {
 
   eingeloggterUser: string = 'Max Mustermann';
   editFlagg: boolean = false;
+  threadIsOpen = true;
+
+  toggleThread(){
+    this.threadIsOpen = !this.threadIsOpen;
+  }
 
   getTimeStamp() {
     let timestamp = new Date().getTime();

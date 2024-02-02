@@ -4,6 +4,7 @@ import { MainContentBodyComponent } from './main-contents/main-content-body/main
 import { MainContentFooterComponent } from './main-contents/main-content-footer/main-content-footer.component';
 import { MainContentHeaderComponent } from './main-contents/main-content-header/main-content-header.component';
 import { ChannelComponent } from "./channel/channel.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-main-content',
@@ -11,6 +12,7 @@ import { ChannelComponent } from "./channel/channel.component";
     templateUrl: './main-content.component.html',
     styleUrl: './main-content.component.scss',
     imports: [
+      CommonModule,
         MainContentBodyComponent,
         MainContentFooterComponent,
         MainContentHeaderComponent,

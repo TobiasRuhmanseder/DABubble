@@ -4,5 +4,5 @@
     <app-main-content-body id="messagesContent"></app-main-content-body>
     <app-main-content-footer></app-main-content-footer>
   </div>
-  <app-channel></app-channel>
+  <app-channel *ngIf="chatService.threadIsOpen"></app-channel>
 </div>

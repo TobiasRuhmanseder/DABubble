@@ -40,7 +40,7 @@
               <div class="icon-check icon-message"></div>
               <div class="icon-raising icon-message"></div>
               <div class="icon-emoji icon-message"></div>
-              <div class="icon-comment icon-message"></div>
+              <div class="icon-comment icon-message" (click)="chatService.toggleThread()"></div>
               <div
                 *ngIf="msg.name === this.chatService.eingeloggterUser"
                 class="icon-more icon-message"
@@ -83,7 +83,7 @@
                 msg.name === this.chatService.eingeloggterUser ? 'row-reverse' : 'row'
             }"
           >
-            <div class="message-answer">2 answer</div>
+            <div class="message-answer" (click)="chatService.toggleThread()">2 answer</div>
             <div class="message-time">last message</div>
           </div>
         </div>
