@@ -1,9 +1,55 @@
 import { Injectable } from '@angular/core';
+import { FirebaseServiceService } from './firebase-service.service';
+import { Channel } from '../models/channel.class';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageService {
+  constructor(public fire: FirebaseServiceService) {}
+
+  allChannels: any[] = [];
+  currentChannel: Channel[] = [];
+  allUsers: any[] = [];
+
+  async getAllChannels() {
+    this.allChannels = [];
+    const QuerySnapshot = await this.fire.getDocsRef('channels');
+    QuerySnapshot.forEach((doc) => {
+      this.allChannels.push(
+        new Channel({ id: doc.id, ...doc.data() }).toJSON()
+      );
+    });
+    console.log('from getAllChannels()', this.allChannels);
+    return this.allChannels;
+  }
+  async getCurrentChannel() {
+    this.allChannels = await this.getAllChannels();
+    this.currentChannel = await this.getChannel('kShBVOfrw9cz8gkKWjOq');
+  }
+
+  async getChannel(channelId: string) {
+    this.currentChannel = this.allChannels.find(
+      (channel) => channel.id === channelId
+    );
+    console.log('from getChannel', this.currentChannel);
+    return this.currentChannel;
+  }
+
+  async getAllUsers() {
+    this.allUsers = [];
+    const QuerySnapshot = await this.fire.getDocsRef('users');
+    QuerySnapshot.forEach((doc) => {
+      this.allUsers.push(new Channel({ id: doc.id, ...doc.data() }).toJSON());
+    });
+    console.log('from getAllUsers()', this.allUsers);
+  }
+  loadMsg() {
+    let channel = this.fire.getMsgRef();
+    console.log('load Messages',channel)
+
+ 
+  }
   usersTest = {
     user: [
       'Max Mustermann',
@@ -22,8 +68,10 @@ export class MessageService {
       'Elise_Roth.png',
     ],
   };
+
+  // die users werden codiert in ID nummern
   channel1Test = {
-    name: 'coolster Channel',
+    name: 'coolster TestChannel',
     users: ['Max Mustermann', 'Amarna Miller', 'Luke Skywalker'],
   };
   channel1MsgTest: {
@@ -62,7 +110,7 @@ export class MessageService {
   editFlagg: boolean = false;
   threadIsOpen = true;
 
-  toggleThread(){
+  toggleThread() {
     this.threadIsOpen = !this.threadIsOpen;
   }
 

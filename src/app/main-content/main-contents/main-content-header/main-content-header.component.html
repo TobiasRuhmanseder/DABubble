@@ -1,17 +1,22 @@
 <div class="header">
   <div class="channel-title">
     <div class="icon icon-tag" src=".\assets\icons\tag.png"></div>
-    <div class="title-hover">{{ chatService.channel1Test.name }}</div>
+    <div class="title-hover" >{{ chatService.channel1Test.name }}</div>
     <div class="icon icon-expand"></div>
+    <div>
+      <div *ngFor="let channel of chatService.allChannels">
+        {{ channel.name }}
+      </div>
+    </div>
   </div>
   <div class="header-users-nav">
     <div class="header-profil-number">
       <div class="header-users-img">
         <div
           class="header-pic-container"
-          *ngFor="let user of chatService.channel1Test.users; let i = index"
+          *ngFor="let users of chatService.channel1Test.users; let i = index"
         >
-          <img class="header-pic" src=".\assets\pics\{{ getUserPic(user) }}" />
+          <img class="header-pic" src=".\assets\pics\{{ getUserPic(users) }}" />
         </div>
       </div>
       <div class="header-number">
