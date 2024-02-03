@@ -1,4 +1,7 @@
 <div class="channel-list-element">
-<img src="../../../../assets/img/tag.svg" alt="">
-<span>Channelname</span>
+    <div class="button" (click)="chooseChannel()" [class.button-active]="active">
+        <img src=" ../../../../assets/img/tag.svg" alt="">
+        <img src="../../../../assets/img/tag_active.svg" alt="">
+        <span>{{ channel.name }}</span>
+    </div>
 </div>
