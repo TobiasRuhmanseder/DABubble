@@ -11,6 +11,7 @@ export const routes: Routes = [
     { path: 'sign-in', component: SignInComponent },
     { path: 'choose-avatar', component: ChooseAvatarComponent },
     { path: 'home/:id', component: HomeScreenComponent },
+    { path: 'home', component: HomeScreenComponent },
     { path: 'legal-notice', component: LegalNoticeComponent },
     { path: 'privacy-policy', component: PrivacyPolicyComponent }
 ];
