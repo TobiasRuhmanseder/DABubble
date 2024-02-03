@@ -1,0 +1,17 @@
+<div class="direct-message-section">
+    <div class="headline">
+        <div class="category" (click)="toggleDropdownMenu()">
+            <img [class.dropdown-arrow-open]="dropdownOpen" [class.dropdown-arrow-close]="!dropdownOpen"
+                src="../../../assets/img/dropdown_arrow.svg" alt="">
+            <img [class.dropdown-arrow-open]="dropdownOpen" [class.dropdown-arrow-close]="!dropdownOpen"
+                src="../../../assets/img/dropdown_arrow_color.svg" alt="">
+            <img class="direct-message-logo" src="../../../assets/img/direct_message_logo.svg" alt="">
+            <img class="direct-message-logo" src="../../../assets/img/direct_message_logo_color.svg" alt="">
+            <span>Direktnachrichten</span>
+        </div>
+    </div>
+    <div [class.dropdown-menu-open]="dropdownOpen" [class.dropdown-menu-close]="!dropdownOpen">
+
+
+    </div>
+</div>

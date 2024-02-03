@@ -27,7 +27,6 @@ export class FirebaseService implements OnDestroy {
       this.channels = [];
       list.forEach(element => {
         this.channels.push(this.idToChannel(element.data(), element.id))
-        console.log(this.channels);
       });
     });
 

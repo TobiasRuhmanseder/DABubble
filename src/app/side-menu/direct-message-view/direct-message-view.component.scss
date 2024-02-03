@@ -1,7 +1,8 @@
-.channel-section {
+.direct-message-section {
+    margin-top: 18px;
+    margin-bottom: 18px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
 
 .headline {
@@ -43,7 +44,6 @@ img:nth-child(4) {
     display: none;
 }
 
-
 .dropdown-arrow-open {
     margin-right: 25px;
     cursor: pointer;
@@ -57,27 +57,19 @@ img:nth-child(4) {
     transition: all 225ms ease-in-out;
 }
 
-.channel-logo {
+.direct-message-logo {
     margin-right: 10px;
 }
 
-
 .dropdown-menu-open {
     overflow: hidden;
-    margin-top: 0%;
     width: 100%;
-    opacity: 1;
-    transition: all 800ms ease-in;
+    transition: all 500ms ease-in-out;
 }
 
 .dropdown-menu-close {
     overflow: hidden;
-    margin-top: -100%;
+    height: 0px;
     width: 100%;
-    opacity: 0;
-    transition: all 800ms ease-in;
-}
-
-.list-container {
-    overflow: hidden;
+    transition: all 500ms ease-in-out;
 }

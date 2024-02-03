@@ -1,8 +1,12 @@
 <div class="channel-section">
     <div class="headline">
-        <div class="category">
-            <img [class.dropdown-arrow-open]="dropdownOpen" [class.dropdown-arrow-close]="!dropdownOpen" (click)="toggleDropdownMenu()" src="../../../assets/img/dropdown_arrow.svg" alt="">
+        <div class="category" (click)="toggleDropdownMenu()">
+            <img [class.dropdown-arrow-open]="dropdownOpen" [class.dropdown-arrow-close]="!dropdownOpen"
+                src="../../../assets/img/dropdown_arrow.svg" alt="">
+            <img [class.dropdown-arrow-open]="dropdownOpen" [class.dropdown-arrow-close]="!dropdownOpen"
+                src="../../../assets/img/dropdown_arrow_color.svg" alt="">
             <img class="channel-logo" src="../../../assets/img/channel_logo.svg" alt="">
+            <img class="channel-logo" src="../../../assets/img/channel_logo_color.svg" alt="">
             <span>Channels</span>
         </div>
 
@@ -10,8 +14,10 @@
             [hovered]="'../../../assets/img/plus-hovered.svg'"
             [onClick]="'../../../assets/img/plus-onclick.svg'"></app-icon-hover-change-image>
     </div>
-    <div [class.dropdown-menu-open]="dropdownOpen" [class.dropdown-menu-close]="!dropdownOpen">
-        <app-channel-list-element *ngFor="let channel of this.firebaseService.channels" [channel]="channel" ></app-channel-list-element>
-
+    <div class="list-container">
+        <div [class.dropdown-menu-open]="dropdownOpen" [class.dropdown-menu-close]="!dropdownOpen">
+            <app-channel-list-element *ngFor="let channel of this.firebaseService.channels" [channel]="channel"
+                [currentCollectionId]="this.currentCollectionId"></app-channel-list-element>
+        </div>
     </div>
 </div>

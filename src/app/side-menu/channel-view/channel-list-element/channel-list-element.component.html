@@ -1,6 +1,7 @@
 <div class="channel-list-element">
-    <div class="button" (click)="chooseChannel()" [class.button-active]="active">
+    <div class="button" (click)="chooseChannel()" [class.button-active]="channel.id == currentCollectionId">
         <img src=" ../../../../assets/img/tag.svg" alt="">
+        <img src="../../../../assets/img/tag_click.svg" alt="">
         <img src="../../../../assets/img/tag_active.svg" alt="">
         <span>{{ channel.name }}</span>
     </div>
