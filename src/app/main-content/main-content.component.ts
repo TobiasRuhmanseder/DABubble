@@ -3,28 +3,33 @@ import { MessageService } from '../../services/message.service';
 import { MainContentBodyComponent } from './main-contents/main-content-body/main-content-body.component';
 import { MainContentFooterComponent } from './main-contents/main-content-footer/main-content-footer.component';
 import { MainContentHeaderComponent } from './main-contents/main-content-header/main-content-header.component';
-import { ChannelComponent } from "./channel/channel.component";
+import { ChannelComponent } from './channel/channel.component';
 import { CommonModule } from '@angular/common';
+import { FirebaseServiceService } from '../../services/firebase-service.service';
 
 @Component({
-    selector: 'app-main-content',
-    standalone: true,
-    templateUrl: './main-content.component.html',
-    styleUrl: './main-content.component.scss',
-    imports: [
-      CommonModule,
-        MainContentBodyComponent,
-        MainContentFooterComponent,
-        MainContentHeaderComponent,
-        ChannelComponent
-    ]
+  selector: 'app-main-content',
+  standalone: true,
+  templateUrl: './main-content.component.html',
+  styleUrl: './main-content.component.scss',
+  imports: [
+    CommonModule,
+    MainContentBodyComponent,
+    MainContentFooterComponent,
+    MainContentHeaderComponent,
+    ChannelComponent,
+  ],
 })
 export class MainContentComponent {
   constructor(
+    public fire: FirebaseServiceService,
     public chatService: MessageService,
     public elementRef: ElementRef,
     public renderer: Renderer2
-  ) {}
+  ) {
+    this.chatService.getAllUsers();
+    this.chatService.getCurrentChannel();
+  }
   ngAfterViewInit() {
     this.scrollDown();
   }

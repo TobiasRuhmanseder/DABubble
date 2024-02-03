@@ -3,6 +3,7 @@ export class Message {
     timestamp: string;
     content: string;
     answers: any[];
+    reactions: any[];
 
 
     constructor(obj: any) {
@@ -10,6 +11,7 @@ export class Message {
         this.timestamp = obj ? obj.timestamp : '';
         this.content = obj ? obj.content : '';
         this.answers = obj ? obj.answers : [];
+        this.reactions = obj ? obj.reactions : [];
     }
 
     public toJSON() {
@@ -17,7 +19,8 @@ export class Message {
             senderId: this.senderId,
             timestamp: Date.now(),
             content: this.content,
-            answers: this.answers
+            answers: this.answers,
+            reactions: this.reactions
         }
     }
 }
