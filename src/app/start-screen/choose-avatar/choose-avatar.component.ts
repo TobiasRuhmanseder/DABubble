@@ -25,18 +25,23 @@ export class ChooseAvatarComponent {
     './../../../assets/img/user_pics/male4.svg',
   ]
 
-  constructor(private router: Router, public LoginService: LoginService) { }
+  constructor(private router: Router, public LoginService: LoginService) {
+    console.log(this.LoginService.userName);
+   }
 
   chooseAvatar(avatar: string) {
     this.defaultAvatar = avatar;
+    this.LoginService.userImg = avatar;
   }
 
   saveAvatar() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['']);
+    this.LoginService.saveUserDetails();
   }
 
   navigateToLogin() {
     this.router.navigate(['']);
+    
   }
 
   navigateToLegalNotice() {

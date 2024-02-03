@@ -47,10 +47,12 @@ export class SignInComponent {
   }
 
   signIn() {
+    const name = this.profileForm.get('name')?.value;
     const email = this.profileForm.get('email')?.value;
     const password = this.profileForm.get('password')?.value;
   
-    if (email && password) {
+    if (name && email && password) {
+      this.LoginService.userName = name;
       this.LoginService.signIn(email, password);
       this.router.navigate(['/choose-avatar']);
     } 
