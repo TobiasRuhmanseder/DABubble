@@ -20,6 +20,7 @@ export class Channel {
 
     public toJSON() {
         return {
+            id: '',
             name: this.name,
             description: this.description,
             creator: this.creator,
