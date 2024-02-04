@@ -17,11 +17,11 @@ export class HeaderMenuComponent implements OnInit {
   activeUser: ActiveUser = { displayName: "", photoURL: "" };
 
   ngOnInit(): void {
+    console.log('test');
     let user: any = this.currentUserService.getDataFromActiveUser();
     user = this.setActiceUser(user);
     user.photoURL = this.filterImgName(user.photoURL);
     this.activeUser = user;
-
   }
 
   filterImgName(path: string) {
@@ -30,9 +30,20 @@ export class HeaderMenuComponent implements OnInit {
   }
 
   setActiceUser(user: any): ActiveUser {
-    return {
-      displayName: user.displayName || "no User",
-      photoURL: user.photoURL || ""
+    let activeUser = user;
+    if (activeUser == null) {
+      activeUser = {
+        displayName: "noUser",
+        photoURL: ""
+      }
     }
+    else {
+      activeUser = {
+        displayName: user.displayName,
+        photoURL: user.photoURL
+      }
+    }
+    return activeUser;
   }
 }
+
