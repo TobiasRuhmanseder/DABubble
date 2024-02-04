@@ -1,6 +1,6 @@
 <section>
     <div class="header">
-      <div class="user-info">
+      <div class="user-info" (click)="openUserDetails()">
         <app-user-pic class="user-pic-size" [status]="true" [online]="true" [userImageName]="'male1.svg'"></app-user-pic>
         <span>Username</span>
       </div>
@@ -12,11 +12,9 @@
                 <img class="user-pic-chat" src="assets/img/user_pics/male2.svg" alt="">
                 <span class="user-name-chat">Username</span>
             </div>
-            <span class="info-text">Diese Unterhalung findet nur zwischen <span>Username</span> und dir statt.</span>
+            <span class="info-text">Diese Unterhalung findet nur zwischen <span class="receiver-name-chat"(click)="openUserDetails()">&commat;Username</span> und dir statt.</span>
         </div>
     </div>
-
-
 
     <app-main-content-footer class="footer-input"></app-main-content-footer>
   </section>

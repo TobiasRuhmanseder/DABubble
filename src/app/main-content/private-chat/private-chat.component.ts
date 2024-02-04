@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { UserPicComponent } from '../../user-pic/user-pic.component';
 import { MainContentFooterComponent } from '../main-contents/main-content-footer/main-content-footer.component';
+import { DialogUserInfoComponent } from './dialog-user-info/dialog-user-info.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-private-chat',
@@ -15,4 +17,13 @@ import { MainContentFooterComponent } from '../main-contents/main-content-footer
 })
 export class PrivateChatComponent {
 
+
+  constructor(public dialog: MatDialog) {
+
+  }
+
+
+  openUserDetails() {
+    this.dialog.open(DialogUserInfoComponent, {});
+  }
 }

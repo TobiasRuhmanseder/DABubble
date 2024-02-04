@@ -1,0 +1,91 @@
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 30px;
+    padding: 40px;
+}
+
+.headline-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    font-size: 24px;
+    font-weight: 700;
+
+    .close-btn{
+        position: absolute;
+        right: 0px;
+        background-color: aqua;
+        cursor: pointer;
+    }
+}
+
+.content-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 420px;
+    margin-top: 40px;
+
+    .user-img{
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+    }
+
+    .user-info-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+
+        .name{
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .active-container{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 5px;
+            color: green;
+
+            .point{
+                height: 6px;
+                width: 6px;
+                border-radius: 50%;
+                background-color: green;
+            }
+        }
+    }
+
+    .user-mail-container{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+}
+
+.user-dialog-footer-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+
+    .footer-btn{
+        padding: 12px 25px 12px 25px;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: 700;
+        background-color: rgba(68, 77, 242, 1);
+        color: rgba(255, 255, 255, 1) !important;
+    }
+}
+
+
+
+

@@ -1,4 +1,4 @@
-section{
+section {
     display: flex;
     flex-direction: column;
     height: calc(100vh - 99px - 40px);
@@ -19,33 +19,34 @@ section{
     align-items: center;
 
     .user-info {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      padding: 4px 8px;
-      border-radius: 30px;
-      cursor: pointer;
-      width: fit-content;
-      position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        padding: 4px 8px;
+        border-radius: 30px;
+        cursor: pointer;
+        width: fit-content;
+        position: relative;
 
-      &:hover {
-        background-color: blue;
-      }
+        &:hover {
+            background-color: #eceefe;
 
-      span {
-        font-size: 24px;
-        font-weight: 700;
-      }
+        }
+
+        span {
+            font-size: 24px;
+            font-weight: 700;
+        }
     }
-  }
+}
 
-  .chat-container{
+.chat-container {
     height: 100%;
     position: relative;
 
-    .empty-chat-opener{
+    .empty-chat-opener {
         position: absolute;
         bottom: 45px;
         left: 45px;
@@ -55,34 +56,43 @@ section{
         align-items: flex-start;
         gap: 20px;
 
-        .user-box{
+        .user-box {
             display: flex;
             justify-content: flex-start;
             align-items: flex-end;
             gap: 25px;
-        
 
-            .user-pic-chat{
+
+            .user-pic-chat {
                 height: 70px;
                 width: 70px;
                 border-radius: 50%;
             }
-    
-            .user-name-chat{
+
+            .user-name-chat {
                 font-size: 24px;
                 font-weight: 700;
             }
         }
 
-        .info-text{
+        .info-text {
             font-size: 20px;
             color: rgba(104, 104, 104, 1);
-            
+
         }
     }
-  }
 
-  .user-pic-size{
+    .receiver-name-chat {
+        color: rgba(83, 90, 241, 1);
+        cursor: pointer;
+
+        &:hover {
+            font-weight: 700;
+        }
+    }
+}
+
+.user-pic-size {
     height: 50px;
     width: 50px;
-  }
+}
