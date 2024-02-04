@@ -220,6 +220,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+app-main-content {
+  width: 100%;
+}
+
 // menu style for editing message
 .mat-mdc-menu-panel {
   border-radius: 0 20px 20px 20px !important;

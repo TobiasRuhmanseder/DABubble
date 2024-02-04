@@ -21,20 +21,20 @@ export class MainContentBodyComponent {
   ) {}
 
   editMessage(index: number) {
-    this.chatService.channel1MsgTest[index].editing = true;
+    this.chatService.sortedMessages[index].editing = true;
     setTimeout(() => {
       this.chatService.editFlagg = true;
     }, 1);
   }
   abortEditMessage(index: number) {
-    this.chatService.channel1MsgTest[index].editing = false;
+    this.chatService.sortedMessages[index].editing = false;
     this.chatService.editFlagg = false;
   }
   saveEditMessage(index: number) {
-    this.chatService.channel1MsgTest[index].msg = (
+    this.chatService.sortedMessages[index].msg = (
       document.getElementById('input_' + index) as HTMLTextAreaElement
     ).value;
-    this.chatService.channel1MsgTest[index].editing = false;
+    this.chatService.sortedMessages[index].editing = false;
     this.chatService.editFlagg = false;
   }
 }

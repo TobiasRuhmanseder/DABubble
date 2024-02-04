@@ -1,114 +1,40 @@
 import { Injectable } from '@angular/core';
-import { FirebaseServiceService } from './firebase-service.service';
 import { Channel } from '../models/channel.class';
+import { FirebaseService } from './firebase.service';
+import { getDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageService {
-  constructor(public fire: FirebaseServiceService) {}
+  constructor(private fire: FirebaseService) {}
 
-  allChannels: any[] = [];
-  currentChannel: Channel[] = [];
-  allUsers: any[] = [];
-
-  async getAllChannels() {
-    this.allChannels = [];
-    const QuerySnapshot = await this.fire.getDocsRef('channels');
-    QuerySnapshot.forEach((doc) => {
-      this.allChannels.push(
-        new Channel({ id: doc.id, ...doc.data() }).toJSON()
-      );
-    });
-    console.log('from getAllChannels()', this.allChannels);
-    return this.allChannels;
-  }
-  async getCurrentChannel() {
-    this.allChannels = await this.getAllChannels();
-    this.currentChannel = await this.getChannel('kShBVOfrw9cz8gkKWjOq');
-  }
-
-  async getChannel(channelId: string) {
-    this.currentChannel = this.allChannels.find(
-      (channel) => channel.id === channelId
-    );
-    console.log('from getChannel', this.currentChannel);
-    return this.currentChannel;
-  }
-
-  async getAllUsers() {
-    this.allUsers = [];
-    const QuerySnapshot = await this.fire.getDocsRef('users');
-    QuerySnapshot.forEach((doc) => {
-      this.allUsers.push(new Channel({ id: doc.id, ...doc.data() }).toJSON());
-    });
-    console.log('from getAllUsers()', this.allUsers);
-  }
-  loadMsg() {
-    let channel = this.fire.getMsgRef();
-    console.log('load Messages',channel)
-
- 
-  }
-  usersTest = {
-    user: [
-      'Max Mustermann',
-      'Luke Skywalker',
-      'Amarna Miller',
-      'Max Mustermann',
-      'Luke Skywalker',
-      'Amarna Miller',
-    ],
-    picURL: [
-      'Frederik_Beck.png',
-      'Noah_Braun.png',
-      'Elise_Roth.png',
-      'Frederik_Beck.png',
-      'Noah_Braun.png',
-      'Elise_Roth.png',
-    ],
-  };
-
-  // die users werden codiert in ID nummern
-  channel1Test = {
-    name: 'coolster TestChannel',
-    users: ['Max Mustermann', 'Amarna Miller', 'Luke Skywalker'],
-  };
-  channel1MsgTest: {
-    name: string;
-    msg: string;
-    time: number;
-    editing: boolean;
-  }[] = [
-    {
-      name: 'Luke Skywalker',
-      msg: 'Hallo Welt!',
-      time: 1506562826977,
-      editing: false,
-    },
-    {
-      name: 'Amarna Miller',
-      msg: 'Hei, wie gehts?',
-      time: 1706562826977,
-      editing: false,
-    },
-    {
-      name: 'Max Mustermann',
-      msg: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
-      time: 1706562826978,
-      editing: false,
-    },
-    {
-      name: 'Amarna Miller',
-      msg: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit odio efficitur lectus vestibulum, quis accumsan ante vulputate. Quisque tristique iaculis erat, eu faucibus lacus iaculis ac',
-      time: 1706562826979,
-      editing: false,
-    },
-  ];
-
-  eingeloggterUser: string = 'Max Mustermann';
+  currentChannel: any;
+  messagesList: any[] = [];
+  sortedMessages: any[] = [];
   editFlagg: boolean = false;
   threadIsOpen = true;
+
+  eingeloggterUser: string = 'Max Mustermann';
+
+  resetValues() {
+    this.messagesList = [];
+    this.sortedMessages = [];
+  }
+
+  async getChannel(id: string) {
+    let docRef = this.fire.getDocRef('channels', id);
+    let docSnap = await getDoc(docRef);
+    let data = docSnap.data() as Channel;
+    this.currentChannel = [];
+    this.currentChannel.push(data);
+  }
+  async getMessagesFromChannel(id: string) {
+    this.messagesList = await this.fire.getChannelMessages(id);
+    return this.messagesList;
+  }
+
+  saveMessage() {}
 
   toggleThread() {
     this.threadIsOpen = !this.threadIsOpen;
@@ -118,24 +44,42 @@ export class MessageService {
     let timestamp = new Date().getTime();
     return timestamp;
   }
-
+  getChannelName() {
+    if (this.currentChannel === undefined) {
+      return '';
+    }
+    return this.currentChannel[0].name;
+  }
+  getChannelUsers() {
+    if (this.currentChannel === undefined) {
+      return '';
+    }
+    return this.currentChannel[0].users;
+  }
   renderMessagePic(index: number) {
-    let user = this.usersTest.user.indexOf(this.channel1MsgTest[index].name);
-    let pic = this.usersTest.picURL[user];
-    return pic;
+    // let user = this.usersTest.user.indexOf(this.sortedMessages[index].name);
+    // let pic = this.usersTest.picURL[user];
+    // return pic;
   }
 
+  getSortMessages() {
+    this.sortedMessages = this.sortMessagesByTime();
+    return this.sortedMessages;
+  }
   sortMessagesByTime() {
-    this.channel1MsgTest.sort((b, a) => b.time - a.time);
-    return this.channel1MsgTest;
+    this.messagesList.sort(
+      (b: { timestamp: number }, a: { timestamp: number }) =>
+        b.timestamp - a.timestamp
+    );
+    return this.messagesList;
   }
 
   checkNextDay(index: number) {
     if (index === 0) {
       return true;
     }
-    const currentTimestamp = new Date(this.channel1MsgTest[index].time);
-    const previousTimestamp = new Date(this.channel1MsgTest[index - 1].time);
+    const currentTimestamp = new Date(this.sortedMessages[index].time);
+    const previousTimestamp = new Date(this.sortedMessages[index - 1].time);
     return this.checkNextTime(currentTimestamp, previousTimestamp);
   }
 
@@ -155,7 +99,7 @@ export class MessageService {
     month: string,
     year: number
   ) {
-    if (index < this.channel1MsgTest.length) {
+    if (index < this.sortedMessages.length) {
       let now = new Date();
       let oneYear = now.getFullYear() - year;
       if (oneYear > 0) {
@@ -168,7 +112,7 @@ export class MessageService {
     return `${day} ${dateOfMonth}. ${month}`;
   }
 
-  getFormattedDate(timestamp: number, index: number) {
+  getFormattedDate(timestamp: string, index: number) {
     const months = [
       'Januar',
       'Februar',
@@ -193,15 +137,15 @@ export class MessageService {
       'Samstag',
     ];
 
-    let date = new Date(timestamp);
+    let date = new Date(Number(timestamp));
     let day = days[date.getDay()];
     let dateOfMonth = date.getDate();
     let month = months[date.getMonth()];
     let year = date.getFullYear();
     return this.renderDate(index, date, day, dateOfMonth, month, year);
   }
-  getMessageTime(timestamp: number) {
-    let date = new Date(timestamp);
+  getMessageTime(timestamp: string) {
+    let date = new Date(Number(timestamp));
     let timeText = date.getHours() + ':' + date.getMinutes();
     return timeText;
   }

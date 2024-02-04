@@ -5,8 +5,10 @@ import { MainContentFooterComponent } from './main-contents/main-content-footer/
 import { MainContentHeaderComponent } from './main-contents/main-content-header/main-content-header.component';
 import { ChannelComponent } from './channel/channel.component';
 import { CommonModule } from '@angular/common';
-import { FirebaseServiceService } from '../../services/firebase-service.service';
 import { PrivateChatComponent } from './private-chat/private-chat.component';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-main-content',
@@ -19,19 +21,30 @@ import { PrivateChatComponent } from './private-chat/private-chat.component';
     MainContentFooterComponent,
     MainContentHeaderComponent,
     ChannelComponent,
-    PrivateChatComponent
+    PrivateChatComponent,
   ],
 })
 export class MainContentComponent {
+  private routeSub!: Subscription;
   constructor(
-    public fire: FirebaseServiceService,
     public chatService: MessageService,
     public elementRef: ElementRef,
-    public renderer: Renderer2
-  ) {
-    this.chatService.getAllUsers();
-    this.chatService.getCurrentChannel();
+    public renderer: Renderer2,
+    private route: ActivatedRoute,
+    private fire: FirebaseService
+  ) {}
+
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
   }
+  ngOnInit() {
+    this.routeSub = this.route.params.subscribe((params) => {
+      this.chatService.resetValues();
+      this.chatService.getChannel(params['id']);
+      this.chatService.getMessagesFromChannel(params['id']);
+    });
+  }
+
   ngAfterViewInit() {
     this.scrollDown();
   }
@@ -46,7 +59,7 @@ export class MainContentComponent {
       this.chatService.editFlagg &&
       !(event.target as HTMLElement).closest('.message-text-edit')
     ) {
-      this.chatService.channel1MsgTest.forEach((element) => {
+      this.chatService.sortedMessages.forEach((element) => {
         element.editing = false;
       });
       this.chatService.editFlagg = false;

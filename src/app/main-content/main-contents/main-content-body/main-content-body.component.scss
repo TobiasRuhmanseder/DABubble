@@ -1,4 +1,12 @@
 .main-messages {
+  .main-messages-container {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+  }
+  .message-content {
+    width: 100%;
+  }
   .message-header {
     display: flex;
     flex-direction: row;
@@ -100,7 +108,6 @@
         line-height: normal;
         text-wrap: nowrap;
       }
-
 
       .icon-message {
         transition: all 0.3s;
