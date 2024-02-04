@@ -12,7 +12,7 @@ export class MessageService {
   currentChannel: any;
   messagesList: any[] = [];
   sortedMessages: any[] = [];
-  editFlagg: boolean = false;
+  editFlaggIndex: number = -1;
   threadIsOpen = true;
 
   eingeloggterUser: string = 'Max Mustermann';

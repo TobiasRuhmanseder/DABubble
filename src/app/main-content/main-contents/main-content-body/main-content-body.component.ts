@@ -21,20 +21,17 @@ export class MainContentBodyComponent {
   ) {}
 
   editMessage(index: number) {
-    this.chatService.sortedMessages[index].editing = true;
     setTimeout(() => {
-      this.chatService.editFlagg = true;
+      this.chatService.editFlaggIndex = index;
     }, 1);
   }
-  abortEditMessage(index: number) {
-    this.chatService.sortedMessages[index].editing = false;
-    this.chatService.editFlagg = false;
+  abortEditMessage() {
+    this.chatService.editFlaggIndex = -1;
   }
   saveEditMessage(index: number) {
     this.chatService.sortedMessages[index].msg = (
       document.getElementById('input_' + index) as HTMLTextAreaElement
     ).value;
-    this.chatService.sortedMessages[index].editing = false;
-    this.chatService.editFlagg = false;
+    this.chatService.editFlaggIndex = -1;
   }
 }

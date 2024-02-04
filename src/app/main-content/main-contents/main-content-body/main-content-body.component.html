@@ -48,7 +48,10 @@
                 {{ chatService.getMessageTime(msg.timestamp) }} Uhr
               </div>
             </div>
-            <div class="message-icon-nav" *ngIf="!msg.editing">
+            <div
+              class="message-icon-nav"
+              *ngIf="chatService.editFlaggIndex === -1"
+            >
               <div class="icon-check icon-message"></div>
               <div class="icon-raising icon-message"></div>
               <div class="icon-emoji icon-message"></div>
@@ -79,7 +82,7 @@
           </div>
           <div>
             <div
-              *ngIf="!msg.editing"
+              *ngIf="chatService.editFlaggIndex === -1"
               [ngClass]="{
                 'message-text-owner':
                   msg.user === this.chatService.eingeloggterUser,
@@ -98,7 +101,7 @@
               <div class="edit-nav">
                 <div class="edit-icon"></div>
                 <div class="message-text-edit-nav">
-                  <div class="abort" (click)="abortEditMessage(i)">
+                  <div class="abort" (click)="abortEditMessage()">
                     Abbrechen
                   </div>
                   <div class="save" (click)="saveEditMessage(i)">Speichern</div>
