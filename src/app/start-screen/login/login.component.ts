@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { LoginService } from '../../../services/login.service';
+import { CurrentUserService } from '../../../services/current-user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ import { LoginService } from '../../../services/login.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  constructor(public loginService: LoginService) { }
+  constructor(public loginService: LoginService, private CurrentUserService: CurrentUserService) { }
 
   profileForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -27,6 +28,8 @@ export class LoginComponent {
 
     if (email && password) {
       this.loginService.login(email, password);
+      // show avtice user
+      this.CurrentUserService.activeUser();
     }
   }
 
