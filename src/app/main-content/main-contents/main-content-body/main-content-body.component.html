@@ -59,10 +59,6 @@
                 class="icon-comment icon-message"
                 (click)="chatService.toggleThread()"
               ></div>
-              <!-- <div
-              *ngIf="msg.name === this.chatService.eingeloggterUser"
-              class="icon-more icon-message"
-            ></div> -->
               <div
                 mat-button
                 [matMenuTriggerFor]="editMsg"
@@ -82,7 +78,7 @@
           </div>
           <div>
             <div
-              *ngIf="chatService.editFlaggIndex === -1"
+              *ngIf="chatService.editFlaggIndex != i"
               [ngClass]="{
                 'message-text-owner':
                   msg.senderId === this.chatService.eingeloggterUser,
@@ -91,7 +87,7 @@
             >
               {{ msg.content }}
             </div>
-            <div class="message-text-edit" *ngIf="msg.editing">
+            <div class="message-text-edit" *ngIf="chatService.editFlaggIndex === i">
               <textarea
                 class="main-input-edit-field"
                 cdkTextareaAutosize
