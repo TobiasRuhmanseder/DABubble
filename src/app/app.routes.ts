@@ -5,11 +5,13 @@ import { SignInComponent } from './start-screen/sign-in/sign-in.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ChooseAvatarComponent } from './start-screen/choose-avatar/choose-avatar.component';
+import { ResetPasswordComponent } from './start-screen/reset-password/reset-password.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
     { path: 'sign-in', component: SignInComponent },
     { path: 'choose-avatar', component: ChooseAvatarComponent },
+    { path: 'reset-password', component: ResetPasswordComponent },
     { path: 'home/:id', component: HomeScreenComponent },
     { path: 'home', component: HomeScreenComponent },
     { path: 'legal-notice', component: LegalNoticeComponent },
