@@ -26,9 +26,4 @@ export class MainContentHeaderComponent {
     // return this.chatService.usersTest.picURL[index];
   }
 
-  getCurrentChannel() {
-    // return this.chatService.getChannel('NME25IW6lIFNuqfo4IrP');
-  }
-
-  async getCurrentChannelProberty() {}
 }

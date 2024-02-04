@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MainContentComponent } from '../../main-content.component';
 import { IconHoverChangeImageComponent } from '../../../icon-hover-change-image/icon-hover-change-image.component';
+import { FirebaseService } from '../../../../services/firebase.service';
+import { Message } from '../../../../models/message.class';
 
 @Component({
   selector: 'app-main-content-footer',
@@ -15,7 +17,8 @@ import { IconHoverChangeImageComponent } from '../../../icon-hover-change-image/
 export class MainContentFooterComponent {
   constructor(
     public chatService: MessageService,
-    public mainContent: MainContentComponent
+    public mainContent: MainContentComponent,
+    private fire: FirebaseService
   ) {}
 
   textareaContent: string = '';
@@ -30,13 +33,15 @@ export class MainContentFooterComponent {
       'timestamp: ' + time,
       'currentUserId: ' + this.chatService.eingeloggterUser
     );
-    this.chatService.sortedMessages.push({
-      name: this.chatService.eingeloggterUser,
-      message: msg,
-      time: time,
-      editing: false,
+    let message = new Message({
+      senderId: this.chatService.eingeloggterUser,
+      timestamp: time,
+      content: msg,
+      answers: [],
+      reactions: [],
     });
-    this.chatService.saveMessage();
+    this.chatService.sortedMessages.push(message);
+    this.fire.saveMessage(this.chatService.currentChannel[0].id, message);
     setTimeout(() => {
       this.mainContent.scrollDown();
     }, 1);

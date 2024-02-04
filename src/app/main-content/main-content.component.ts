@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { PrivateChatComponent } from './private-chat/private-chat.component';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-main-content',
@@ -31,7 +30,6 @@ export class MainContentComponent {
     public elementRef: ElementRef,
     public renderer: Renderer2,
     private route: ActivatedRoute,
-    private fire: FirebaseService
   ) {}
 
   ngOnDestroy() {

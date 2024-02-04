@@ -1,7 +1,13 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
-import { Firestore, getDocs, onSnapshot } from '@angular/fire/firestore';
+import {
+  Firestore,
+  addDoc,
+  getDocs,
+  onSnapshot,
+} from '@angular/fire/firestore';
 import { DocumentData, collection, doc } from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
+import { Message } from '../models/message.class';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +34,13 @@ export class FirebaseService implements OnDestroy {
         this.channels.push(this.idToChannel(element.data(), element.id));
       });
     });
+  }
+
+  saveMessage(id: string, msg: Message) {
+    return addDoc(
+      collection(this.firestore, 'channels', id, 'messages'),
+      msg.toJSON()
+    );
   }
 
   async getChannelMessages(id: string) {

@@ -34,8 +34,6 @@ export class MessageService {
     return this.messagesList;
   }
 
-  saveMessage() {}
-
   toggleThread() {
     this.threadIsOpen = !this.threadIsOpen;
   }
@@ -78,8 +76,10 @@ export class MessageService {
     if (index === 0) {
       return true;
     }
-    const currentTimestamp = new Date(this.sortedMessages[index].time);
-    const previousTimestamp = new Date(this.sortedMessages[index - 1].time);
+    const currentTimestamp = new Date(Number(this.sortedMessages[index].timestamp));
+    const previousTimestamp = new Date(
+      Number(this.sortedMessages[index - 1].timestamp)
+    );
     return this.checkNextTime(currentTimestamp, previousTimestamp);
   }
 

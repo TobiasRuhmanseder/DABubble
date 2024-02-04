@@ -15,7 +15,7 @@
         class="message-container"
         [ngStyle]="{
           'flex-direction':
-            msg.user === this.chatService.eingeloggterUser
+            msg.senderId === this.chatService.eingeloggterUser
               ? 'row-reverse'
               : 'row'
         }"
@@ -29,7 +29,7 @@
             class="message-nav"
             [ngStyle]="{
               'flex-direction':
-                msg.user === this.chatService.eingeloggterUser
+                msg.senderId === this.chatService.eingeloggterUser
                   ? 'row-reverse'
                   : 'row'
             }"
@@ -38,12 +38,12 @@
               class="message-name-nav"
               [ngStyle]="{
                 'flex-direction':
-                  msg.user === this.chatService.eingeloggterUser
+                  msg.senderId === this.chatService.eingeloggterUser
                     ? 'row-reverse'
                     : 'row'
               }"
             >
-              <div class="message-name">{{ msg.user }}</div>
+              <div class="message-name">{{ msg.senderId }}</div>
               <div class="message-time">
                 {{ chatService.getMessageTime(msg.timestamp) }} Uhr
               </div>
@@ -66,7 +66,7 @@
               <div
                 mat-button
                 [matMenuTriggerFor]="editMsg"
-                *ngIf="msg.user === this.chatService.eingeloggterUser"
+                *ngIf="msg.senderId === this.chatService.eingeloggterUser"
                 class="icon-more icon-message"
               ></div>
               <mat-menu #editMsg="matMenu">
@@ -85,18 +85,18 @@
               *ngIf="chatService.editFlaggIndex === -1"
               [ngClass]="{
                 'message-text-owner':
-                  msg.user === this.chatService.eingeloggterUser,
-                'message-text': msg.user !== this.chatService.eingeloggterUser
+                  msg.senderId === this.chatService.eingeloggterUser,
+                'message-text': msg.senderId !== this.chatService.eingeloggterUser
               }"
             >
-              {{ msg.message }}
+              {{ msg.content }}
             </div>
             <div class="message-text-edit" *ngIf="msg.editing">
               <textarea
                 class="main-input-edit-field"
                 cdkTextareaAutosize
                 [id]="'input_' + i"
-                >{{ msg.message }}</textarea
+                >{{ msg.content }}</textarea
               >
               <div class="edit-nav">
                 <div class="edit-icon"></div>
@@ -113,7 +113,7 @@
             class="message-nav-footer"
             [ngStyle]="{
               'flex-direction':
-                msg.user === this.chatService.eingeloggterUser
+                msg.senderId === this.chatService.eingeloggterUser
                   ? 'row-reverse'
                   : 'row'
             }"
