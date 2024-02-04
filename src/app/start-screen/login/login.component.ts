@@ -15,7 +15,7 @@ import { CurrentUserService } from '../../../services/current-user.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  constructor(public loginService: LoginService, private CurrentUserService: CurrentUserService) { }
+  constructor(public loginService: LoginService, public CurrentUserService: CurrentUserService) { }
 
   profileForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -28,7 +28,7 @@ export class LoginComponent {
 
     if (email && password) {
       this.loginService.login(email, password);
-      // show avtice user
+      // show active user
       this.CurrentUserService.activeUser();
     }
   }
