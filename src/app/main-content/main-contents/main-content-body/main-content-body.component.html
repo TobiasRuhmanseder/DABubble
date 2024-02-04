@@ -50,11 +50,14 @@
               class="icon-comment icon-message"
               (click)="chatService.toggleThread()"
             ></div>
-            <div
+            <!-- <div
               *ngIf="msg.name === this.chatService.eingeloggterUser"
               class="icon-more icon-message"
-              (click)="editMessage(i)"
-            ></div>
+            ></div> -->
+            <div mat-button [matMenuTriggerFor]="editMsg" *ngIf="msg.name === this.chatService.eingeloggterUser" class="icon-more icon-message"></div>
+            <mat-menu #editMsg="matMenu">
+              <button mat-menu-item  (click)="editMessage(i)" class="edit-menu">Nachricht bearbeiten</button>
+            </mat-menu>
           </div>
         </div>
         <div>

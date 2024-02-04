@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { MessageService } from '../../../../services/message.service';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MainContentComponent } from '../../main-content.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-main-content-body',
   standalone: true,
-  imports: [CommonModule, TextFieldModule],
+  imports: [CommonModule, TextFieldModule, MatMenuModule],
   templateUrl: './main-content-body.component.html',
   template: ` <textarea cdkTextareaAutosize></textarea> `,
 
