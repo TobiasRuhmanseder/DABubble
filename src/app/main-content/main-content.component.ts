@@ -6,6 +6,7 @@ import { MainContentHeaderComponent } from './main-contents/main-content-header/
 import { ChannelComponent } from './channel/channel.component';
 import { CommonModule } from '@angular/common';
 import { FirebaseServiceService } from '../../services/firebase-service.service';
+import { PrivateChatComponent } from './private-chat/private-chat.component';
 
 @Component({
   selector: 'app-main-content',
@@ -18,6 +19,7 @@ import { FirebaseServiceService } from '../../services/firebase-service.service'
     MainContentFooterComponent,
     MainContentHeaderComponent,
     ChannelComponent,
+    PrivateChatComponent
   ],
 })
 export class MainContentComponent {
