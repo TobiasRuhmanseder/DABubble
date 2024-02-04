@@ -29,6 +29,7 @@ export class MessageService {
     this.currentChannel = [];
     this.currentChannel.push(data);
   }
+
   async getMessagesFromChannel(id: string) {
     this.messagesList = await this.fire.getChannelMessages(id);
     return this.messagesList;
@@ -38,22 +39,30 @@ export class MessageService {
     this.threadIsOpen = !this.threadIsOpen;
   }
 
+  getUserById(id:string){
+    let users
+    return 
+  }
+
   getTimeStamp() {
     let timestamp = new Date().getTime();
     return timestamp;
   }
+
   getChannelName() {
     if (this.currentChannel === undefined) {
       return '';
     }
     return this.currentChannel[0].name;
   }
+
   getChannelUsers() {
     if (this.currentChannel === undefined) {
       return '';
     }
     return this.currentChannel[0].users;
   }
+
   renderMessagePic(index: number) {
     // let user = this.usersTest.user.indexOf(this.sortedMessages[index].name);
     // let pic = this.usersTest.picURL[user];
@@ -64,6 +73,7 @@ export class MessageService {
     this.sortedMessages = this.sortMessagesByTime();
     return this.sortedMessages;
   }
+
   sortMessagesByTime() {
     this.messagesList.sort(
       (b: { timestamp: number }, a: { timestamp: number }) =>
