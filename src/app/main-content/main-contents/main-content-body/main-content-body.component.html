@@ -1,6 +1,9 @@
 <div class="main-messages" id="messagesContent">
   <div class="main-messages-container">
-    <div *ngFor="let msg of chatService.getSortMessages(); let i = index" class="message-content">
+    <div
+      *ngFor="let msg of chatService.getSortMessages(); let i = index"
+      class="message-content"
+    >
       <div class="message-header" *ngIf="chatService.checkNextDay(i)">
         <div class="stroke"></div>
         <div class="message-header-time">
@@ -120,6 +123,16 @@
           </div>
         </div>
       </div>
+    </div>
+    <div
+      *ngIf="chatService.sortedMessages.length === 0"
+      class="message-no-content"
+    >
+      <div># {{ chatService.getChannelName() }}</div>
+      <span
+        >Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
+        # {{ chatService.getChannelName() }}</span
+      >
     </div>
   </div>
 </div>

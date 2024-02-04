@@ -1,12 +1,14 @@
 .main-messages {
   .main-messages-container {
     display: flex;
-    align-items: flex-end;
     height: 100%;
     flex-direction: column-reverse;
   }
   .message-content {
     width: 100%;
+  }
+  .message-no-content{
+    padding: 20px 45px;
   }
   .message-header {
     display: flex;
