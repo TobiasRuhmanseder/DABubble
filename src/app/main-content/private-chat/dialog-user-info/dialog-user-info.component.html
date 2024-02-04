@@ -21,15 +21,21 @@
 
         <div class="user-info-container">
             <div class="mail-headline-container">
+                <img src="assets/icons/mail.png" alt="">
                 <span class="mail-headline">E-mail Adresse</span>
             </div>
-            <span>mail.hmail.com</span>
+            <span class="mail">mail.hmail.com</span>
         </div>
     </div>
 </div>
 
 <div mat-dialog-actions>
     <div class="user-dialog-footer-container">
-        <button class="footer-btn" mat-button (click)="goToPrivateChannel()">Nachricht</button>
+        <button class="dialog-footer-btn" mat-button (click)="goToPrivateChannel()">
+            <div class="flex-container">
+                <img src="assets/icons/comment_white.png" alt="">
+                <span>Nachricht</span>
+            </div>
+        </button>
     </div>
 </div>
