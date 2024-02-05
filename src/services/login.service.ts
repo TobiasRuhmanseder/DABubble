@@ -65,8 +65,9 @@ export class LoginService {
       updateProfile(auth.currentUser, {
         displayName: this.userName, photoURL: this.userImg
       }).then(() => {
-        console.log('Profile updatet: ', auth.currentUser);
+        this.showConfirmationMessage = true;
         this.sendConfirmationMail();
+        this.backToLogin();
       }).catch((error) => {
         console.log(error.code);
       });
@@ -96,13 +97,20 @@ export class LoginService {
     return sendPasswordResetEmail(auth, email)
       .then(() => {
         this.showConfirmationMessage = true;
-        setTimeout(() => {
-          this.router.navigate(['']);
-        }, 5000);
+        this.backToLogin();
       })
       .catch((error) => {
         console.log(error.code);
       });
   }
+
+  // back to login
+  backToLogin() {
+    setTimeout(() => {
+      this.router.navigate(['']);
+    }, 4000);
+  }
+
 }
+
 

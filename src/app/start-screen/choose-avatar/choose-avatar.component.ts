@@ -35,13 +35,11 @@ export class ChooseAvatarComponent {
   }
 
   saveAvatar() {
-    this.router.navigate(['']);
     this.LoginService.saveUserDetails();
   }
 
   navigateToLogin() {
     this.router.navigate(['']);
-    
   }
 
   navigateToLegalNotice() {

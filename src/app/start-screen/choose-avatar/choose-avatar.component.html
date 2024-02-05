@@ -30,3 +30,6 @@
     <a class="link-btn" (click)="navigateToLegalNotice()">Impressum</a>
     <a class="link-btn" (click)="navigateToPrivacyPolicy()">Datenschutz</a>
 </div>
+<div class="confirmation-message" *ngIf="this.LoginService.showConfirmationMessage">
+    Konto erfolgreich erstellt!
+</div>
