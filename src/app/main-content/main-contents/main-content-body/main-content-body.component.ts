@@ -23,15 +23,6 @@ export class MainContentBodyComponent implements AfterViewInit {
     private fire: FirebaseService
   ) {}
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.mainContent.scrollDown();
-    }, 300);
-    setTimeout(() => {
-      this.mainContent.scrollDown();
-    }, 600);
-    setTimeout(() => {
-      this.mainContent.scrollDown();
-    }, 1000);
   }
 
   getUserName(userName: string, reaction: string, msg: any) {

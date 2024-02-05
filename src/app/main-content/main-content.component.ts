@@ -29,7 +29,7 @@ export class MainContentComponent {
     public chatService: MessageService,
     public elementRef: ElementRef,
     public renderer: Renderer2,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnDestroy() {
@@ -40,11 +40,13 @@ export class MainContentComponent {
       this.chatService.resetValues();
       this.chatService.getChannel(params['id']);
       this.chatService.getMessagesFromChannel(params['id']);
+      setTimeout(() => {
+        this.scrollDown();
+      }, 300);
     });
   }
 
   ngAfterViewInit() {
-    this.scrollDown();
   }
   scrollDown() {
     const element =

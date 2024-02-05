@@ -120,6 +120,9 @@ export class MessageService {
     if (date.getDate() === new Date().getDate()) {
       return 'Heute';
     }
+    if (date.getDate() - new Date().getDate() === 1){
+      return 'Gestern'
+    }
     return `${day} ${dateOfMonth}. ${month}`;
   }
 
