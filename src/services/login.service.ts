@@ -1,7 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+  sendPasswordResetEmail
+} from "firebase/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +18,13 @@ export class LoginService {
   mailInUse: string = '';
   userName: string = '';
   userImg: string = '';
+  showConfirmationMessage: boolean = false;
 
   firestore: Firestore = inject(Firestore);
 
   constructor(private router: Router) { }
 
+  // login user
   login(email: string, password: string) {
     const auth = getAuth();
     return signInWithEmailAndPassword(auth, email, password)
@@ -32,6 +41,7 @@ export class LoginService {
       });
   }
 
+  // sign in user
   signIn(email: string, password: string) {
     const auth = getAuth();
     return createUserWithEmailAndPassword(auth, email, password)
@@ -46,7 +56,6 @@ export class LoginService {
         }
       });
   }
-
 
   saveUserDetails() {
     const auth = getAuth();
@@ -69,12 +78,31 @@ export class LoginService {
   sendConfirmationMail() {
     const auth = getAuth();
     const user = auth.currentUser;
-    
+
     if (user) {
       sendEmailVerification(auth.currentUser)
         .then(() => {
           console.log('Email verification sent!');
-        });
+        }).catch((error) => {
+          console.log(error.code);
+        }
+        );
     }
   }
+
+  // reset password
+  resetPassword(email: string) {
+    const auth = getAuth();
+    return sendPasswordResetEmail(auth, email)
+      .then(() => {
+        this.showConfirmationMessage = true;
+        setTimeout(() => {
+          this.router.navigate(['']);
+        }, 5000);
+      })
+      .catch((error) => {
+        console.log(error.code);
+      });
+  }
 }
+

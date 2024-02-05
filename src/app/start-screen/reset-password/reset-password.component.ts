@@ -1,16 +1,31 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { LoginService } from '../../../services/login.service';
 @Component({
   selector: 'app-reset-password',
   standalone: true,
   imports: [
+    ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss'
 })
 export class ResetPasswordComponent {
-  constructor(private router: Router) { }
+  constructor(private router: Router, public LoginService: LoginService) { }
+
+  emailControl = new FormControl('', [Validators.required, Validators.email]);
+
+  resetPassword() {
+    const email = this.emailControl.value;
+    if (email) {
+      this.LoginService.resetPassword(email);
+      this.emailControl.setValue('');
+    }
+  }
+  
 
   navigateToLogin() {
     this.router.navigate(['']);
