@@ -35,13 +35,13 @@ export class MessageService {
     return this.messagesList;
   }
 
-  toggleThread(index:number) {
+  toggleThread(index: number) {
     this.threadIsOpen = !this.threadIsOpen;
   }
 
-  getUserById(id:string){
-    let users
-    return 
+  getUserById(id: string) {
+    let users;
+    return;
   }
 
   getTimeStamp() {
@@ -75,18 +75,19 @@ export class MessageService {
   }
 
   sortMessagesByTime() {
-    this.messagesList.sort(
-      (b: { timestamp: number }, a: { timestamp: number }) =>
-        b.timestamp - a.timestamp
+    return this.messagesList.sort(
+      (a: { timestamp: number }, b: { timestamp: number }) =>
+        a.timestamp - b.timestamp
     );
-    return this.messagesList;
   }
 
   checkNextDay(index: number) {
     if (index === 0) {
       return true;
     }
-    const currentTimestamp = new Date(Number(this.sortedMessages[index].timestamp));
+    const currentTimestamp = new Date(
+      Number(this.sortedMessages[index].timestamp)
+    );
     const previousTimestamp = new Date(
       Number(this.sortedMessages[index - 1].timestamp)
     );
@@ -122,7 +123,7 @@ export class MessageService {
     return `${day} ${dateOfMonth}. ${month}`;
   }
 
-  getFormattedDate(timestamp: string, index: number) {
+  getFormattedDate(timestamp: number, index: number) {
     const months = [
       'Januar',
       'Februar',
@@ -147,15 +148,15 @@ export class MessageService {
       'Samstag',
     ];
 
-    let date = new Date(Number(timestamp));
+    let date = new Date(timestamp);
     let day = days[date.getDay()];
     let dateOfMonth = date.getDate();
     let month = months[date.getMonth()];
     let year = date.getFullYear();
     return this.renderDate(index, date, day, dateOfMonth, month, year);
   }
-  getMessageTime(timestamp: string) {
-    let date = new Date(Number(timestamp));
+  getMessageTime(timestamp: number) {
+    let date = new Date(timestamp);
     let timeText = date.getHours() + ':' + date.getMinutes();
     return timeText;
   }

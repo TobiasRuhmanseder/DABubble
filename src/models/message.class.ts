@@ -1,6 +1,6 @@
 export class Message {
   senderId: string;
-  timestamp: string;
+  timestamp: number;
   content: string;
   answers: any[];
   reactionNerd: any[];
@@ -10,7 +10,7 @@ export class Message {
 
   constructor(obj: any) {
     this.senderId = obj ? obj.senderId : '';
-    this.timestamp = obj ? obj.timestamp : '';
+    this.timestamp = obj ? obj.timestamp : 0;
     this.content = obj ? obj.content : '';
     this.answers = obj ? obj.answers : [];
     this.reactionNerd = obj ? obj.reactionNerd : [];
@@ -22,7 +22,7 @@ export class Message {
   public toJSON() {
     return {
       senderId: this.senderId,
-      timestamp: Date.now(),
+      timestamp: this.timestamp,
       content: this.content,
       answers: this.answers,
       reactionNerd: this.reactionNerd,
