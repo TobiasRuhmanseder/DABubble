@@ -4,6 +4,7 @@ import {
   addDoc,
   getDocs,
   onSnapshot,
+  setDoc,
 } from '@angular/fire/firestore';
 import { DocumentData, collection, doc } from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
@@ -36,6 +37,13 @@ export class FirebaseService implements OnDestroy {
     });
   }
 
+  updateMessage(channelId: string, messageId: string, msg: Message) {
+    return setDoc(
+      doc(this.firestore, 'channels', channelId, 'messages', messageId),
+      msg.toJSON()
+    );
+  }
+
   saveMessage(id: string, msg: Message) {
     return addDoc(
       collection(this.firestore, 'channels', id, 'messages'),
@@ -49,7 +57,7 @@ export class FirebaseService implements OnDestroy {
       collection(this.firestore, 'channels', id, 'messages')
     );
     querySnapshot.forEach((doc) => {
-      let messageData = doc.data();
+      let messageData = { id: doc.id, ...doc.data() };
       messagesList.push(messageData);
     });
     return messagesList;

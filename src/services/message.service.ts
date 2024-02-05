@@ -15,7 +15,7 @@ export class MessageService {
   editFlaggIndex: number = -1;
   threadIsOpen = true;
 
-  eingeloggterUser: string = 'Max Mustermann';
+  eingeloggterUser: string = 'h4w3Cntmu2BmDuWSxKqt';
 
   resetValues() {
     this.messagesList = [];
@@ -35,7 +35,7 @@ export class MessageService {
     return this.messagesList;
   }
 
-  toggleThread() {
+  toggleThread(index:number) {
     this.threadIsOpen = !this.threadIsOpen;
   }
 

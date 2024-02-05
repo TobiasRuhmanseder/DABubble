@@ -11,6 +11,9 @@ app-main-content-body {
   overflow-y: scroll;
   scroll-behavior: smooth;
   height: 100%;
+  overflow-x: hidden;
+  z-index: 0;
+  position: relative;
 }
 .chat-containers {
   display: flex;

@@ -27,18 +27,15 @@ export class MainContentFooterComponent {
     let msg = this.textareaContent;
     let time = this.chatService.getTimeStamp();
     this.textareaContent = '';
-    console.log(
-      'Dies wird in den Channel gepusht:',
-      'Message: ' + msg,
-      'timestamp: ' + time,
-      'currentUserId: ' + this.chatService.eingeloggterUser
-    );
     let message = new Message({
       senderId: this.chatService.eingeloggterUser,
       timestamp: time,
       content: msg,
       answers: [],
-      reactions: [],
+      reactionNerd: [],
+      reactionCheck: [],
+      reactionRaising: [],
+      reactionRocket: [],
     });
     this.chatService.sortedMessages.push(message);
     this.fire.saveMessage(this.chatService.currentChannel[0].id, message);
@@ -47,3 +44,4 @@ export class MainContentFooterComponent {
     }, 1);
   }
 }
+
