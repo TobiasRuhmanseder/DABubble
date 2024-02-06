@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { UserPicComponent } from '../user-pic/user-pic.component';
 import { CurrentUserService } from '../../services/current-user.service';
 import { ActiveUser } from '../../interfaces/active-user.interface';
-
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-header-menu',
   standalone: true,
@@ -16,12 +16,14 @@ export class HeaderMenuComponent implements OnInit {
 
   activeUser: ActiveUser = { displayName: "", photoURL: "" };
 
-  ngOnInit(): void {
-    let user: any = this.currentUserService.getDataFromActiveUser();
-    user = this.setActiceUser(user);
-    user.photoURL = this.filterImgName(user.photoURL);
-    this.activeUser = user;
 
+  ngOnInit(): void {
+    this.currentUserService.currentUser.subscribe(user => {
+      let currentUser;
+      currentUser = this.setActiceUser(user);
+      this.activeUser = currentUser;
+    });
+    this.currentUserService.activeUser();
   }
 
   filterImgName(path: string) {
@@ -30,9 +32,25 @@ export class HeaderMenuComponent implements OnInit {
   }
 
   setActiceUser(user: any): ActiveUser {
-    return {
-      displayName: user.displayName || "no User",
-      photoURL: user.photoURL || ""
+    let activeUser = user;
+    if (activeUser == null) {
+      activeUser = {
+        displayName: "noUser",
+        photoURL: "male1.svg"
+      }
     }
+    else {
+      activeUser = {
+        displayName: user.displayName,
+        photoURL: user.photoURL
+      }
+    }
+    return activeUser;
+  }
+
+  signOutUser(){
+    setTimeout(()=>{this.currentUserService.signOut();},1500)
+    
   }
 }
+
