@@ -17,16 +17,15 @@ export class HeaderMenuComponent implements OnInit {
   activeUser: ActiveUser = { displayName: "", photoURL: "" };
 
 
-  obs = new Observable<any>(observer => {
-    observer.next(Math.random());
-  })
-
-
   ngOnInit(): void {
-    let user: any = this.currentUserService.getDataFromActiveUser();
-    user = this.setActiceUser(user);
-    user.photoURL = this.filterImgName(user.photoURL);
-    this.activeUser = user;
+    this.currentUserService.currentUser.subscribe(user => {
+      let currentUser;
+      currentUser = this.setActiceUser(user);
+      currentUser.photoURL = this.filterImgName(currentUser.photoURL);
+      this.activeUser = currentUser;
+    });
+
+    this.currentUserService.activeUser();
   }
 
   filterImgName(path: string) {
@@ -50,13 +49,5 @@ export class HeaderMenuComponent implements OnInit {
     }
     return activeUser;
   }
-
-
-
-
-
-
-
-
 }
 
