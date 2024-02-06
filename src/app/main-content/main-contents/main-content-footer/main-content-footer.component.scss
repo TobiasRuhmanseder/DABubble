@@ -97,6 +97,7 @@ button {
 }
 .icon {
   transition: all 0.3s;
+  cursor: pointer;
   &:hover{
     border-radius: 50%;
     background-color: #eceefe;

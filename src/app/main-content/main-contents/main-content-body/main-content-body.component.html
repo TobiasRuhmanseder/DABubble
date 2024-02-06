@@ -35,6 +35,7 @@
             }"
           >
             <div
+              *ngIf="chatService.editFlaggIndex != i"
               class="message-name-nav"
               [ngStyle]="{
                 'flex-direction':
@@ -43,7 +44,9 @@
                     : 'row'
               }"
             >
-              <div class="message-name">{{ msg.senderId }}</div>
+              <div class="message-name" (click)="openUserDetails()">
+                {{ msg.senderId }}
+              </div>
               <div class="message-time">
                 {{ chatService.getMessageTime(msg.timestamp) }} Uhr
               </div>
@@ -152,6 +155,7 @@
             </div>
           </div>
           <div
+          *ngIf="chatService.editFlaggIndex != i"
             class="message-nav-footer"
             [ngStyle]="{
               'flex-direction':

@@ -6,6 +6,8 @@ import { MainContentComponent } from '../../main-content.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { FirebaseService } from '../../../../services/firebase.service';
 import { Message } from '../../../../models/message.class';
+import { DialogUserInfoComponent } from '../../private-chat/dialog-user-info/dialog-user-info.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-main-content-body',
@@ -18,13 +20,15 @@ import { Message } from '../../../../models/message.class';
 })
 export class MainContentBodyComponent implements AfterViewInit {
   constructor(
+    public dialog: MatDialog,
     public chatService: MessageService,
     public mainContent: MainContentComponent,
     private fire: FirebaseService
   ) {}
-  ngAfterViewInit(): void {
+  ngAfterViewInit(): void {}
+  openUserDetails() {
+    this.dialog.open(DialogUserInfoComponent, {});
   }
-
   getUserName(userName: string, reaction: string, msg: any) {
     if (userName === this.chatService.eingeloggterUser) {
       if (msg[`reaction${reaction}`].length > 1) {
@@ -60,8 +64,10 @@ export class MainContentBodyComponent implements AfterViewInit {
     let editContent = (
       document.getElementById('input_' + index) as HTMLTextAreaElement
     ).value;
-    this.chatService.sortedMessages[index].content = editContent;
-    this.setMessageAndUpdate(index);
+    if (this.chatService.sortedMessages[index].content != editContent) {
+      this.chatService.sortedMessages[index].content = editContent;
+      this.setMessageAndUpdate(index);
+    }
     this.chatService.editFlaggIndex = -1;
   }
 
