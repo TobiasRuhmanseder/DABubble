@@ -107,6 +107,7 @@ export class LoginService {
   // back to login
   backToLogin() {
     setTimeout(() => {
+      this.showConfirmationMessage = false;
       this.router.navigate(['']);
     }, 4000);
   }

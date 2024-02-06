@@ -26,7 +26,6 @@ export class ChooseAvatarComponent {
   ]
 
   constructor(private router: Router, public LoginService: LoginService) {
-    console.log(this.LoginService.userName);
    }
 
   chooseAvatar(avatar: string) {
