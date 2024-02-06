@@ -15,14 +15,14 @@ import { CommonModule } from '@angular/common';
 })
 
 export class ChooseAvatarComponent {
-  defaultAvatar: string = './../../../assets/img/user_pics/default_user.svg';
+  defaultAvatar: string = 'default_user.svg';
   avatars: string[] = [
-    './../../../assets/img/user_pics/female1.svg',
-    './../../../assets/img/user_pics/male1.svg',
-    './../../../assets/img/user_pics/male2.svg',
-    './../../../assets/img/user_pics/female2.svg',
-    './../../../assets/img/user_pics/male3.svg',
-    './../../../assets/img/user_pics/male4.svg',
+    'female1.svg',
+    'male1.svg',
+    'male2.svg',
+    'female2.svg',
+    'male3.svg',
+    'male4.svg',
   ]
 
   constructor(private router: Router, public LoginService: LoginService) {
