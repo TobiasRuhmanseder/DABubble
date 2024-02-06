@@ -5,14 +5,14 @@
     <img (click)="navigateToLogin()" class="arrow-back" src="./../../../assets/img/arrow_back.svg">
     <h1>Wähle deinen Avatar</h1>
     <div class="user-info">
-        <img src="./../../../assets/img/user_pics/{{ defaultAvatar }}" alt="">
+        <img src="{{ defaultAvatar }}" alt="">
         <span>{{ this.LoginService.userName }}</span>
     </div>
     <div class="avatars-container">
         <span>Aus der Liste wählen</span>
         <div class="image-container">
             <div *ngFor="let avatar of avatars, index as i" (click)="chooseAvatar(avatar)">
-                <img [src]="'./../../../assets/img/user_pics/' + avatar">
+                <img [src]="avatar">
             </div>
         </div>
         <div class="upload-container">
