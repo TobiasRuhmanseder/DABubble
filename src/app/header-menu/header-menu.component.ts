@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { UserPicComponent } from '../user-pic/user-pic.component';
 import { CurrentUserService } from '../../services/current-user.service';
 import { ActiveUser } from '../../interfaces/active-user.interface';
-
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-header-menu',
   standalone: true,
@@ -16,8 +16,13 @@ export class HeaderMenuComponent implements OnInit {
 
   activeUser: ActiveUser = { displayName: "", photoURL: "" };
 
+
+  obs = new Observable<any>(observer => {
+    observer.next(Math.random());
+  })
+
+
   ngOnInit(): void {
-    console.log('test');
     let user: any = this.currentUserService.getDataFromActiveUser();
     user = this.setActiceUser(user);
     user.photoURL = this.filterImgName(user.photoURL);
@@ -34,7 +39,7 @@ export class HeaderMenuComponent implements OnInit {
     if (activeUser == null) {
       activeUser = {
         displayName: "noUser",
-        photoURL: ""
+        photoURL: "male1.svg"
       }
     }
     else {
@@ -45,5 +50,13 @@ export class HeaderMenuComponent implements OnInit {
     }
     return activeUser;
   }
+
+
+
+
+
+
+
+
 }
 

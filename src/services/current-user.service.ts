@@ -34,16 +34,16 @@ export class CurrentUserService {
 
   getDataFromActiveUser() {
     const auth = getAuth();
+    console.log(auth);
     const user = auth.currentUser;
+    console.log(user);
     if (user !== null) {
       const displayName = user.displayName;
       const email = user.email;
       const photoURL = user.photoURL;
       const emailVerified = user.emailVerified;
       const uid = user.uid;
-
-    } else console.log(user);
+    }
     return user;
-
   }
 }

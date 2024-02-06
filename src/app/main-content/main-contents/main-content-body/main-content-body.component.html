@@ -1,104 +1,231 @@
-<div class="main-messages" id="messagesContent">
-  <div *ngFor="let msg of chatService.sortMessagesByTime(); let i = index">
-    <div class="message-header" *ngIf="chatService.checkNextDay(i)">
-      <div class="stroke"></div>
-      <div class="message-header-time">
-        {{ chatService.getFormattedDate(msg.time, i) }}
-      </div>
-      <div class="stroke"></div>
-    </div>
+<div class="main-messages">
+  <div class="main-messages-container" id="messagesContent" #messagesContent>
     <div
-      class="message-container"
-      [ngStyle]="{
-        'flex-direction':
-          msg.name === this.chatService.eingeloggterUser ? 'row-reverse' : 'row'
-      }"
+      *ngFor="let msg of chatService.getSortMessages(); let i = index"
+      class="message-content"
     >
-      <img
-        class="message-pic"
-        src=".\assets\pics\{{ chatService.renderMessagePic(i) }}"
-      />
-      <div class="message-body">
-        <div
-          class="message-nav"
-          [ngStyle]="{
-            'flex-direction':
-              msg.name === this.chatService.eingeloggterUser
-                ? 'row-reverse'
-                : 'row'
-          }"
-        >
+      <div class="message-header" *ngIf="chatService.checkNextDay(i)">
+        <div class="stroke"></div>
+        <div class="message-header-time">
+          {{ chatService.getFormattedDate(msg.timestamp, i) }}
+        </div>
+        <div class="stroke"></div>
+      </div>
+      <div
+        class="message-container"
+        [ngStyle]="{
+          'flex-direction':
+            msg.senderId === this.chatService.eingeloggterUser
+              ? 'row-reverse'
+              : 'row'
+        }"
+      >
+        <img
+          class="message-pic"
+          src=".\assets\pics\{{ chatService.renderMessagePic(i) }}"
+        />
+        <div class="message-body">
           <div
-            class="message-name-nav"
+            class="message-nav"
             [ngStyle]="{
               'flex-direction':
-                msg.name === this.chatService.eingeloggterUser
+                msg.senderId === this.chatService.eingeloggterUser
                   ? 'row-reverse'
                   : 'row'
             }"
           >
-            <div class="message-name">{{ msg.name }}</div>
-            <div class="message-time">
-              {{ chatService.getMessageTime(msg.time) }} Uhr
+            <div
+              class="message-name-nav"
+              [ngStyle]="{
+                'flex-direction':
+                  msg.senderId === this.chatService.eingeloggterUser
+                    ? 'row-reverse'
+                    : 'row'
+              }"
+            >
+              <div class="message-name">{{ msg.senderId }}</div>
+              <div class="message-time">
+                {{ chatService.getMessageTime(msg.timestamp) }} Uhr
+              </div>
+            </div>
+            <div
+              class="message-icon-nav"
+              *ngIf="chatService.editFlaggIndex === -1"
+            >
+              <div
+                class="icon-check icon-message"
+                (click)="addReaction('Check', i)"
+              ></div>
+              <div
+                class="icon-raising icon-message"
+                (click)="addReaction('Raising', i)"
+              ></div>
+              <div
+                class="icon-emoji icon-message"
+                mat-button
+                [matMenuTriggerFor]="emojiMenu"
+              ></div>
+              <mat-menu #emojiMenu="matMenu">
+                <div style="display: flex; flex-direction: row">
+                  <div
+                    mat-menu-item
+                    class="icon-check icon-message"
+                    (click)="addReaction('Check', i)"
+                  >
+                    <img src=".\assets\icons\check.png" />
+                  </div>
+                  <div
+                    mat-menu-item
+                    class="icon-check icon-message"
+                    (click)="addReaction('Raising', i)"
+                  >
+                    <img src=".\assets\icons\raising.png" />
+                  </div>
+                  <div
+                    mat-menu-item
+                    class="icon-check icon-message"
+                    (click)="addReaction('Rocket', i)"
+                  >
+                    <img src=".\assets\icons\rocket.png" />
+                  </div>
+                  <div
+                    mat-menu-item
+                    class="icon-check icon-message"
+                    (click)="addReaction('Nerd', i)"
+                  >
+                    <img src=".\assets\icons\nerd.png" />
+                  </div>
+                </div>
+              </mat-menu>
+              <div
+                class="icon-comment icon-message"
+                (click)="chatService.toggleThread(i)"
+              ></div>
+              <div
+                mat-button
+                [matMenuTriggerFor]="editMsg"
+                *ngIf="msg.senderId === this.chatService.eingeloggterUser"
+                class="icon-more icon-message"
+              ></div>
+              <mat-menu #editMsg="matMenu">
+                <button
+                  mat-menu-item
+                  (click)="editMessage(i)"
+                  class="edit-menu"
+                >
+                  Nachricht bearbeiten
+                </button>
+              </mat-menu>
             </div>
           </div>
-          <div class="message-icon-nav" *ngIf="!msg.editing">
-            <div class="icon-check icon-message"></div>
-            <div class="icon-raising icon-message"></div>
-            <div class="icon-emoji icon-message"></div>
+          <div>
             <div
-              class="icon-comment icon-message"
-              (click)="chatService.toggleThread()"
-            ></div>
+              *ngIf="chatService.editFlaggIndex != i"
+              [ngClass]="{
+                'message-text-owner':
+                  msg.senderId === this.chatService.eingeloggterUser,
+                'message-text':
+                  msg.senderId !== this.chatService.eingeloggterUser
+              }"
+            >
+              {{ msg.content }}
+            </div>
             <div
-              *ngIf="msg.name === this.chatService.eingeloggterUser"
-              class="icon-more icon-message"
-              (click)="editMessage(i)"
-            ></div>
+              class="message-text-edit"
+              *ngIf="chatService.editFlaggIndex === i"
+            >
+              <textarea
+                class="main-input-edit-field"
+                cdkTextareaAutosize
+                [id]="'input_' + i"
+                >{{ msg.content }}</textarea
+              >
+              <div class="edit-nav">
+                <div class="edit-icon"></div>
+                <div class="message-text-edit-nav">
+                  <div class="abort" (click)="abortEditMessage()">
+                    Abbrechen
+                  </div>
+                  <div class="save" (click)="saveEditMessage(i)">Speichern</div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div>
           <div
-            *ngIf="!msg.editing"
-            [ngClass]="{
-              'message-text-owner':
-                msg.name === this.chatService.eingeloggterUser,
-              'message-text': msg.name !== this.chatService.eingeloggterUser
+            class="message-nav-footer"
+            [ngStyle]="{
+              'flex-direction':
+                msg.senderId === this.chatService.eingeloggterUser
+                  ? 'row-reverse'
+                  : 'row'
             }"
           >
-            {{ msg.msg }}
-          </div>
-          <div class="message-text-edit" *ngIf="msg.editing">
-            <textarea
-              class="main-input-edit-field"
-              cdkTextareaAutosize
-              [id]="'input_' + i"
-              >{{ msg.msg }}</textarea
-            >
-            <div class="edit-nav">
-              <div class="edit-icon"></div>
-              <div class="message-text-edit-nav">
-                <div class="abort" (click)="abortEditMessage(i)">Abbrechen</div>
-                <div class="save" (click)="saveEditMessage(i)">Speichern</div>
+            <!-- <div class="message-answer" (click)="chatService.toggleThread()"> -->
+            <div class="message-answer" (click)="chatService.toggleThread(i)">
+              2 answer
+            </div>
+            <div class="message-time">last message</div>
+            <div *ngIf="msg.reactionCheck.length > 0" class="reaction-icon">
+              <img src=".\assets\icons\check.png" /><span>{{
+                msg.reactionCheck.length
+              }}</span>
+              <div class="tooltip-emoji">
+                <img src=".\assets\icons\check.png" />
+                <div *ngFor="let userName of setSelfToLast(msg, 'Check')">
+                  <strong>{{ getUserName(userName, "Check", msg) }}</strong>
+                </div>
+                <span>hat reagiert</span>
+              </div>
+            </div>
+            <div *ngIf="msg.reactionRaising.length > 0" class="reaction-icon">
+              <img src=".\assets\icons\raising.png" /><span>{{
+                msg.reactionRaising.length
+              }}</span>
+              <div class="tooltip-emoji">
+                <img src=".\assets\icons\raising.png" />
+                <div *ngFor="let userName of setSelfToLast(msg, 'Raising')">
+                  <strong>{{ getUserName(userName, "Raising", msg) }}</strong>
+                </div>
+                <span>hat reagiert</span>
+              </div>
+            </div>
+            <div *ngIf="msg.reactionRocket.length > 0" class="reaction-icon">
+              <img src=".\assets\icons\rocket.png" /><span>{{
+                msg.reactionRocket.length
+              }}</span>
+              <div class="tooltip-emoji">
+                <img src=".\assets\icons\rocket.png" />
+                <div *ngFor="let userName of setSelfToLast(msg, 'Rocket')">
+                  <strong>{{ getUserName(userName, "Rocket", msg) }}</strong>
+                </div>
+                <span>hat reagiert</span>
+              </div>
+            </div>
+            <div *ngIf="msg.reactionNerd.length > 0" class="reaction-icon">
+              <img src=".\assets\icons\nerd.png" /><span>{{
+                msg.reactionNerd.length
+              }}</span>
+              <div class="tooltip-emoji">
+                <img src=".\assets\icons\nerd.png" />
+                <div *ngFor="let userName of setSelfToLast(msg, 'Nerd')">
+                  <strong>{{ getUserName(userName, "Nerd", msg) }}</strong>
+                </div>
+                <span>hat reagiert</span>
               </div>
             </div>
           </div>
         </div>
-        <div
-          class="message-nav-footer"
-          [ngStyle]="{
-            'flex-direction':
-              msg.name === this.chatService.eingeloggterUser
-                ? 'row-reverse'
-                : 'row'
-          }"
-        >
-          <div class="message-answer" (click)="chatService.toggleThread()">
-            2 answer
-          </div>
-          <div class="message-time">last message</div>
-        </div>
       </div>
+    </div>
+    <div
+      *ngIf="chatService.sortedMessages.length === 0"
+      class="message-no-content"
+    >
+      <div># {{ chatService.getChannelName() }}</div>
+      <span
+        >Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
+        # {{ chatService.getChannelName() }}</span
+      >
     </div>
   </div>
 </div>

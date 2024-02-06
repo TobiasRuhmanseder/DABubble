@@ -23,10 +23,9 @@ export class ChooseAvatarComponent {
     './../../../assets/img/user_pics/female2.svg',
     './../../../assets/img/user_pics/male3.svg',
     './../../../assets/img/user_pics/male4.svg',
-  ]
+  ];
 
   constructor(private router: Router, public LoginService: LoginService) {
-    console.log(this.LoginService.userName);
    }
 
   chooseAvatar(avatar: string) {
@@ -35,13 +34,11 @@ export class ChooseAvatarComponent {
   }
 
   saveAvatar() {
-    this.router.navigate(['']);
     this.LoginService.saveUserDetails();
   }
 
   navigateToLogin() {
     this.router.navigate(['']);
-    
   }
 
   navigateToLegalNotice() {

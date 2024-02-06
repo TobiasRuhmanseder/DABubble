@@ -41,6 +41,11 @@ export class LoginComponent {
     return this.profileForm.get('password');
   }
 
+  // googlelogin
+loginWithGoogle() {
+  this.loginService.signInWithGoogle();
+}
+
   // hides the alert message after selecting input again
   inputFocusOn() {
     this.loginService.wrongMailOrPassword = '';
