@@ -42,7 +42,13 @@ export class MainContentComponent {
       this.chatService.getMessagesFromChannel(params['id']);
       setTimeout(() => {
         this.scrollDown();
-      }, 300);
+      }, 330);
+      setTimeout(() => {
+        this.scrollDown();
+      }, 660);
+      setTimeout(() => {
+        this.scrollDown();
+      }, 1000);
     });
   }
 
