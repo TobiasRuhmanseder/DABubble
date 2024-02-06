@@ -7,8 +7,11 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   sendEmailVerification,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  GoogleAuthProvider,
+  signInWithPopup
 } from "firebase/auth";
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +23,30 @@ export class LoginService {
   userImg: string = '';
   showConfirmationMessage: boolean = false;
 
+
   firestore: Firestore = inject(Firestore);
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+
+  }
+
+  // google login
+  signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const user = result.user;
+        console.log('button works', user);
+        this.router.navigate(['/home']);
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('Sign In With Google Errors', errorCode, errorMessage)
+      });
+  }
 
   // login user
   login(email: string, password: string) {
@@ -107,6 +131,7 @@ export class LoginService {
   // back to login
   backToLogin() {
     setTimeout(() => {
+      this.showConfirmationMessage = false;
       this.router.navigate(['']);
     }, 4000);
   }
