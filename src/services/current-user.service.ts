@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { collectionGroup } from 'firebase/firestore';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -9,6 +11,7 @@ import { Subject } from 'rxjs';
 
 export class CurrentUserService {
   firestore: Firestore = inject(Firestore);
+  router: Router = inject(Router);
   currentUser = new Subject;
 
   constructor() { }
@@ -17,7 +20,7 @@ export class CurrentUserService {
     const auth = getAuth();
     return onAuthStateChanged(auth, (user) => {
       if (user) {
-        this.currentUser.next(this.getDataFromActiveUser());
+        this.currentUser.next(this.getDataFromActiveUser(auth));
         // User is signed in.
         console.log('User', user.displayName, 'is signed in with the ID', user.uid);
       } else {
@@ -29,17 +32,16 @@ export class CurrentUserService {
   signOut() {
     const auth = getAuth();
     signOut(auth).then(() => {
+      this.router.navigateByUrl('');
       // Sign-out successful.
     }).catch((error) => {
       // An error happened.
     });
   }
 
-  getDataFromActiveUser() {
-    const auth = getAuth();
-    console.log(auth);
+  getDataFromActiveUser(obj: any) {
+    const auth = obj;
     const user = auth.currentUser;
-    console.log(user);
     if (user !== null) {
       const displayName = user.displayName;
       const email = user.email;
@@ -47,6 +49,7 @@ export class CurrentUserService {
       const emailVerified = user.emailVerified;
       const uid = user.uid;
     }
+    console.log(user); 
     return user;
   }
 

@@ -21,10 +21,8 @@ export class HeaderMenuComponent implements OnInit {
     this.currentUserService.currentUser.subscribe(user => {
       let currentUser;
       currentUser = this.setActiceUser(user);
-      currentUser.photoURL = this.filterImgName(currentUser.photoURL);
       this.activeUser = currentUser;
     });
-
     this.currentUserService.activeUser();
   }
 
@@ -48,6 +46,11 @@ export class HeaderMenuComponent implements OnInit {
       }
     }
     return activeUser;
+  }
+
+  signOutUser(){
+    setTimeout(()=>{this.currentUserService.signOut();},1500)
+    
   }
 }
 
