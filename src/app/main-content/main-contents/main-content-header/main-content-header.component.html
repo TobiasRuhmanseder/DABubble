@@ -1,23 +1,59 @@
 <div class="header">
-  <div class="channel-title">
+  <div class="channel-title" (click)="openChannelData()">
     <div class="icon icon-tag" src=".\assets\icons\tag.png"></div>
-    <div class="title-hover" >{{ chatService.getChannelName() }}</div>
+    <div class="title-hover">{{ chatService.getChannelName() }}</div>
     <div class="icon icon-expand"></div>
   </div>
   <div class="header-users-nav">
-    <div class="header-profil-number">
-      <div class="header-users-img">
-        <div
-          class="header-pic-container"
-          *ngFor="let users of chatService.getChannelUsers() let i = index"
-        >
-          <img class="header-pic" src=".\assets\pics\{{ getUserPic(users) }}" />
+    <div class="header-profil-position">
+      <div>
+        <div class="header-profil-number" (click)="openUserDialog()">
+          <div class="header-users-img">
+            <div
+              class="header-pic-container"
+              *ngFor="let users of chatService.getChannelUsers(); let i = index"
+            >
+              <img
+                class="header-pic"
+                src=".\assets\pics\{{ getUserPic(users) }}"
+              />
+            </div>
+          </div>
+          <div class="header-number">
+            {{ getChannelUsersLength() }}
+          </div>
         </div>
       </div>
-      <div class="header-number">
-        {{ getChannelUsersLength() }}
+      <div class="user-dialog-container" *ngIf="userDialog">
+        <div class="dialog-title">
+          <div class="title">Mitglieder</div>
+          <div class="close-button" (click)="closeAllDialog()"></div>
+        </div>
+        <div>Frederik Beck (du)</div>
+        <div class="dialog-title">
+          <div class="header-add-icon icon"></div>
+          <span class="add-user-button-text">Mitglieder hinzufügen</span>
+        </div>
       </div>
     </div>
-    <div class="header-add-icon icon"></div>
+    <div class="header-profil-position">
+      <div>
+        <div class="header-add-icon icon" (click)="addUser()"></div>
+      </div>
+      <div class="header-dialog-container" *ngIf="addUserDialog">
+        <div class="dialog-title">
+          <div class="title">Leute hinzufügen</div>
+          <div class="close-button" (click)="closeAllDialog()"></div>
+        </div>
+        <div class="sub-title"># Entwicklerteam</div>
+        <div class="dialog-input">
+          <div class="input">Name eingeben</div>
+        </div>
+        <div class="dialog-button-container">
+          <div class="add-button">Hinzufügen</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+<div *ngIf="showBg" class="dialog-background" (click)="closeAllDialog()"></div>

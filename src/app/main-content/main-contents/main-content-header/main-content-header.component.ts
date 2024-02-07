@@ -10,11 +10,33 @@ import { CommonModule } from '@angular/common';
   styleUrl: './main-content-header.component.scss',
 })
 export class MainContentHeaderComponent {
+  showBg: boolean = false;
+  addUserDialog: boolean = false;
+  userDialog: boolean = false;
   constructor(public chatService: MessageService) {}
 
- 
 
-  getChannelUsersLength(){
+  closeAllDialog() {
+    this.showBg = false;
+    this.addUserDialog = false;
+    this.userDialog = false;
+  }
+
+  addUser() {
+    this.showBg = !this.showBg;
+    this.addUserDialog = true;
+  }
+
+  openUserDialog() {
+    this.showBg = !this.showBg;
+    this.userDialog = true;
+  }
+
+  openChannelData() {
+    this.showBg = !this.showBg;
+  }
+
+  getChannelUsersLength() {
     if (this.chatService.currentChannel === undefined) {
       return '';
     }
@@ -25,5 +47,4 @@ export class MainContentHeaderComponent {
     // let index = this.chatService.usersTest.user.indexOf(user);
     // return this.chatService.usersTest.picURL[index];
   }
-
 }

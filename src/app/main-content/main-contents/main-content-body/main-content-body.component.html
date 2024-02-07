@@ -108,8 +108,8 @@
                 mat-button
                 [matMenuTriggerFor]="editMsg"
                 *ngIf="msg.senderId === this.chatService.eingeloggterUser"
-                class="icon-more icon-message"
-              ></div>
+                
+              ><div class="icon-more icon-message"></div></div>
               <mat-menu #editMsg="matMenu">
                 <button
                   mat-menu-item
