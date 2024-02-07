@@ -28,8 +28,6 @@ export class LoginComponent {
 
     if (email && password) {
       this.loginService.login(email, password);
-      // show active user
-      this.CurrentUserService.activeUser();
     }
   }
 
