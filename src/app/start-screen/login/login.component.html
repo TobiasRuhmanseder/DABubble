@@ -33,7 +33,7 @@
     </button>
     <div class="submit-btns">
         <button [disabled]="!profileForm.valid" class="btn-blue" [class.btn-inactive]="!profileForm.valid" (click)="login()">Anmelden</button>
-        <button class="btn-white" routerLink="/home">Gäste-Login</button>
+        <button class="btn-white" (click)="loginGuestUser()">Gäste-Login</button>
     </div>
 </div>
 <div class="footer">
