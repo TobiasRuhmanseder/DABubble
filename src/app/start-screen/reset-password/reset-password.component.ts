@@ -19,6 +19,7 @@ export class ResetPasswordComponent {
   emailControl = new FormControl('', [Validators.required, Validators.email]);
 
   resetPassword() {
+    console.log('Button works');
     const email = this.emailControl.value;
     if (email) {
       this.LoginService.resetPassword(email);

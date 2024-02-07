@@ -28,8 +28,6 @@ export class LoginComponent {
 
     if (email && password) {
       this.loginService.login(email, password);
-      // show active user
-      this.CurrentUserService.activeUser();
     }
   }
 
@@ -41,10 +39,15 @@ export class LoginComponent {
     return this.profileForm.get('password');
   }
 
+  // login guest
+  loginGuestUser() {
+    this.loginService.login('guest@guest.de', 'guest123');
+  }
+
   // googlelogin
-loginWithGoogle() {
-  this.loginService.signInWithGoogle();
-}
+  loginWithGoogle() {
+    this.loginService.signInWithGoogle();
+  }
 
   // hides the alert message after selecting input again
   inputFocusOn() {

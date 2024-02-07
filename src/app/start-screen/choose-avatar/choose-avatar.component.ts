@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../../services/login.service';
 import { CommonModule } from '@angular/common';
@@ -25,12 +25,13 @@ export class ChooseAvatarComponent {
     './../../../assets/img/user_pics/male4.svg',
   ];
 
-  constructor(private router: Router, public LoginService: LoginService) {
-   }
+  constructor(private router: Router, public LoginService: LoginService) { }
 
   chooseAvatar(avatar: string) {
-    this.defaultAvatar = avatar;
-    this.LoginService.userImg = avatar;
+    if (avatar) {
+      this.defaultAvatar = avatar;
+      this.LoginService.userImg = avatar;
+    }
   }
 
   saveAvatar() {

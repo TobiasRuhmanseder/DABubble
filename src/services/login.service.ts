@@ -20,14 +20,13 @@ export class LoginService {
   wrongMailOrPassword: string = '';
   mailInUse: string = '';
   userName: string = '';
-  userImg: string = '';
+  userImg: string = './../../../assets/img/user_pics/default_user.svg';
   showConfirmationMessage: boolean = false;
-
+  saveAvatarBtnDisabled: boolean = false;
 
   firestore: Firestore = inject(Firestore);
 
   constructor(private router: Router) {
-
   }
 
   // google login
@@ -71,7 +70,7 @@ export class LoginService {
     return createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log('Signed in: ', user);
+        this.router.navigate(['/choose-avatar']);
       })
       .catch((error) => {
         console.log(error.code);
@@ -82,6 +81,7 @@ export class LoginService {
   }
 
   saveUserDetails() {
+    this.saveAvatarBtnDisabled = true;
     const auth = getAuth();
     const user = auth.currentUser;
 
@@ -93,10 +93,9 @@ export class LoginService {
         this.sendConfirmationMail();
         this.backToLogin();
       }).catch((error) => {
+        this.saveAvatarBtnDisabled = false;
         console.log(error.code);
       });
-    } else {
-      console.log('No user signed in');
     }
   }
 
@@ -132,6 +131,7 @@ export class LoginService {
   backToLogin() {
     setTimeout(() => {
       this.showConfirmationMessage = false;
+      this.saveAvatarBtnDisabled = false;
       this.router.navigate(['']);
     }, 4000);
   }

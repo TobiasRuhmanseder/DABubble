@@ -47,6 +47,7 @@ export class SignInComponent {
   }
 
   signIn() {
+    console.log('Button works');
     const name = this.profileForm.get('name')?.value;
     const email = this.profileForm.get('email')?.value;
     const password = this.profileForm.get('password')?.value;
@@ -54,7 +55,6 @@ export class SignInComponent {
     if (name && email && password) {
       this.LoginService.userName = name;
       this.LoginService.signIn(email, password);
-      this.router.navigate(['/choose-avatar']);
     } 
   }
 
