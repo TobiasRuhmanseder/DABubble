@@ -29,8 +29,10 @@
           <div class="title">Mitglieder</div>
           <div class="close-button" (click)="closeAllDialog()"></div>
         </div>
-        <div>Frederik Beck (du)</div>
-        <div class="dialog-title">
+        <div *ngFor="let user of chatService.currentChannel[0].users">
+          <div class="button-user" (click)="openUserDetails()">{{ user }}</div>
+        </div>
+        <div class="button-user" (click)="goToAddUser()">
           <div class="header-add-icon icon"></div>
           <span class="add-user-button-text">Mitglieder hinzufügen</span>
         </div>
@@ -46,11 +48,35 @@
           <div class="close-button" (click)="closeAllDialog()"></div>
         </div>
         <div class="sub-title"># Entwicklerteam</div>
-        <div class="dialog-input">
-          <div class="input">Name eingeben</div>
+        <div class="dialog-input" mat-button [matMenuTriggerFor]="addUser">
+          <div class="input">
+            <div *ngIf="inputAddUser.length === 0">Name eingeben</div>
+            <div class="input-user" *ngIf="inputAddUser.length > 0">
+              <div></div>
+              <div>{{ inputAddUser }}</div>
+              <div class="close-user-button" (click)="closeUser()"></div>
+            </div>
+          </div>
+          <div class="choose-user">
+            <mat-menu #addUser="matMenu">
+              <div
+                *ngFor="let user of this.chatService.currentChannel[0].users"
+              >
+                <button
+                  mat-menu-item
+                  class="add-menu"
+                  (click)="selectUser(user)"
+                >
+                  {{ user }}
+                </button>
+              </div>
+            </mat-menu>
+          </div>
         </div>
         <div class="dialog-button-container">
-          <div class="add-button">Hinzufügen</div>
+          <button class="add-button" [disabled]="disableButton" (click)="addUserToChannel()">
+            Hinzufügen
+          </button>
         </div>
       </div>
     </div>
