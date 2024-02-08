@@ -11,7 +11,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup
 } from "firebase/auth";
-
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,15 @@ export class LoginService {
   firestore: Firestore = inject(Firestore);
 
   constructor(private router: Router) {
+    this.uploadProfileImg();
+  }
+
+  // choose avatar
+  
+  uploadProfileImg() {
+    const storage = getStorage();
+    const imagesRef = ref(storage, 'user_pics/linux.png');
+    console.log(imagesRef.fullPath);
   }
 
   // google login
