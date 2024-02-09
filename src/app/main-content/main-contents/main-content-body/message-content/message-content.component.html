@@ -1,0 +1,31 @@
+<div
+  *ngFor="let msg of chatService.sortedMessages; let i = index"
+  class="message-content" 
+>
+  <div class="message-header" *ngIf="chatService.checkNextDay(i)">
+    <div class="stroke"></div>
+    <div class="message-header-time">
+      {{ chatService.getFormattedDate(msg.timestamp, i) }}
+    </div>
+    <div class="stroke"></div>
+  </div>
+  <div
+    class="message-container" (mouseenter)="isHover = i" (mouseleave)="isHover = -1"
+    [ngStyle]="{
+      'flex-direction':
+        msg.senderId === this.chatService.eingeloggterUser
+          ? 'row-reverse'
+          : 'row'
+    }"
+  >
+    <img
+      class="message-pic"
+      src=".\assets\pics\{{ chatService.renderMessagePic(i) }}"
+    />
+    <div class="message-body">
+        <app-message-title [msg]="msg" [i]="i" [isHover]="isHover"></app-message-title>
+        <app-message-bubble [msg]="msg" [i]="i" [isHover]="isHover"></app-message-bubble>
+        <app-message-footer [msg]="msg" [i]="i"></app-message-footer>
+    </div>
+  </div>
+</div>

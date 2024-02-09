@@ -1,0 +1,62 @@
+<div
+  *ngIf="chatService.editFlaggIndex != i"
+  class="message-nav-footer"
+  [ngStyle]="{
+    'flex-direction':
+      msg.senderId === this.chatService.eingeloggterUser ? 'row-reverse' : 'row'
+  }"
+>
+  <!-- <div class="message-answer" (click)="chatService.toggleThread()"> -->
+  <div class="message-answer" (click)="chatService.toggleThread(i)">
+    2 answer
+  </div>
+  <div class="message-time">last message</div>
+  <div *ngIf="msg.reactionCheck.length > 0" class="reaction-icon">
+    <img src=".\assets\icons\check.png" /><span>{{
+      msg.reactionCheck.length
+    }}</span>
+    <div class="tooltip-emoji">
+      <img src=".\assets\icons\check.png" />
+      <div *ngFor="let userName of setSelfToLast(msg, 'Check')">
+        <strong>{{ getUserName(userName, "Check", msg) }}</strong>
+      </div>
+      <span>hat reagiert</span>
+    </div>
+  </div>
+  <div *ngIf="msg.reactionRaising.length > 0" class="reaction-icon">
+    <img src=".\assets\icons\raising.png" /><span>{{
+      msg.reactionRaising.length
+    }}</span>
+    <div class="tooltip-emoji">
+      <img src=".\assets\icons\raising.png" />
+      <div *ngFor="let userName of setSelfToLast(msg, 'Raising')">
+        <strong>{{ getUserName(userName, "Raising", msg) }}</strong>
+      </div>
+      <span>hat reagiert</span>
+    </div>
+  </div>
+  <div *ngIf="msg.reactionRocket.length > 0" class="reaction-icon">
+    <img src=".\assets\icons\rocket.png" /><span>{{
+      msg.reactionRocket.length
+    }}</span>
+    <div class="tooltip-emoji">
+      <img src=".\assets\icons\rocket.png" />
+      <div *ngFor="let userName of setSelfToLast(msg, 'Rocket')">
+        <strong>{{ getUserName(userName, "Rocket", msg) }}</strong>
+      </div>
+      <span>hat reagiert</span>
+    </div>
+  </div>
+  <div *ngIf="msg.reactionNerd.length > 0" class="reaction-icon">
+    <img src=".\assets\icons\nerd.png" /><span>{{
+      msg.reactionNerd.length
+    }}</span>
+    <div class="tooltip-emoji">
+      <img src=".\assets\icons\nerd.png" />
+      <div *ngFor="let userName of setSelfToLast(msg, 'Nerd')">
+        <strong>{{ getUserName(userName, "Nerd", msg) }}</strong>
+      </div>
+      <span>hat reagiert</span>
+    </div>
+  </div>
+</div>
