@@ -18,12 +18,16 @@
         <div class="upload-container">
             <span>eigenes Bild verwenden</span>
             <div>
-                <button class="btn-white">Datei hochladen</button>
+                <label class="btn-white">
+                    <input class="btn-white" type="file" id="fileInput" (change)="uploadFile($event)">
+                    Datei hochladen
+                </label>
             </div>
         </div>
     </div>
     <div class="submit-btn">
-        <button class="btn-blue" (click)="saveAvatar()" [disabled]="this.LoginService.saveAvatarBtnDisabled" [class.btn-inactive]="this.LoginService.saveAvatarBtnDisabled">Weiter</button>
+        <button class="btn-blue" (click)="saveAvatar()" [disabled]="this.LoginService.saveAvatarBtnDisabled"
+            [class.btn-inactive]="this.LoginService.saveAvatarBtnDisabled">Weiter</button>
     </div>
 </div>
 <div class="footer">
