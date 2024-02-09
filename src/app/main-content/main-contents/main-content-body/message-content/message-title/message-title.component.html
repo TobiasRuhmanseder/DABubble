@@ -22,67 +22,76 @@
       {{ chatService.getMessageTime(msg.timestamp) }} Uhr
     </div>
   </div>
-  <div class="message-icon-nav" *ngIf="chatService.editFlaggIndex === -1" [class.hover-effect]="isHover === i">
+  <div class="position-nav" [ngClass]="msg.senderId === this.chatService.eingeloggterUser
+        ? 'left'
+        : 'right'
+  ">
     <div
-      class="icon-check icon-message"
-      (click)="addReaction('Check', i)"
-    ></div>
-    <div
-      class="icon-raising icon-message"
-      (click)="addReaction('Raising', i)"
-    ></div>
-    <div
-      class="icon-emoji icon-message"
-      mat-button
-      [matMenuTriggerFor]="emojiMenu"
-    ></div>
-    <mat-menu #emojiMenu="matMenu">
-      <div style="display: flex; flex-direction: row">
-        <div
-          mat-menu-item
-          class="icon-check icon-message"
-          (click)="addReaction('Check', i)"
-        >
-          <img src=".\assets\icons\check.png" />
-        </div>
-        <div
-          mat-menu-item
-          class="icon-check icon-message"
-          (click)="addReaction('Raising', i)"
-        >
-          <img src=".\assets\icons\raising.png" />
-        </div>
-        <div
-          mat-menu-item
-          class="icon-check icon-message"
-          (click)="addReaction('Rocket', i)"
-        >
-          <img src=".\assets\icons\rocket.png" />
-        </div>
-        <div
-          mat-menu-item
-          class="icon-check icon-message"
-          (click)="addReaction('Nerd', i)"
-        >
-          <img src=".\assets\icons\nerd.png" />
-        </div>
-      </div>
-    </mat-menu>
-    <div
-      class="icon-comment icon-message"
-      (click)="chatService.toggleThread(i)"
-    ></div>
-    <div
-      mat-button
-      [matMenuTriggerFor]="editMsg"
-      *ngIf="msg.senderId === this.chatService.eingeloggterUser"
+      class="message-icon-nav"
+      *ngIf="chatService.editFlaggIndex === -1"
+      [class.hover-effect]="isHover === i"
     >
-      <div class="icon-more icon-message"></div>
+      <div
+        class="icon-check icon-message"
+        (click)="addReaction('Check', i)"
+      ></div>
+      <div
+        class="icon-raising icon-message"
+        (click)="addReaction('Raising', i)"
+      ></div>
+      <div
+        class="icon-emoji icon-message"
+        mat-button
+        [matMenuTriggerFor]="emojiMenu"
+      ></div>
+      <mat-menu #emojiMenu="matMenu">
+        <div style="display: flex; flex-direction: row">
+          <div
+            mat-menu-item
+            class="icon-check icon-message"
+            (click)="addReaction('Check', i)"
+          >
+            <img src=".\assets\icons\check.png" />
+          </div>
+          <div
+            mat-menu-item
+            class="icon-check icon-message"
+            (click)="addReaction('Raising', i)"
+          >
+            <img src=".\assets\icons\raising.png" />
+          </div>
+          <div
+            mat-menu-item
+            class="icon-check icon-message"
+            (click)="addReaction('Rocket', i)"
+          >
+            <img src=".\assets\icons\rocket.png" />
+          </div>
+          <div
+            mat-menu-item
+            class="icon-check icon-message"
+            (click)="addReaction('Nerd', i)"
+          >
+            <img src=".\assets\icons\nerd.png" />
+          </div>
+        </div>
+      </mat-menu>
+      <div
+        class="icon-comment icon-message"
+        (click)="chatService.toggleThread(i)"
+      ></div>
+      <div
+        mat-button
+        [matMenuTriggerFor]="editMsg"
+        *ngIf="msg.senderId === this.chatService.eingeloggterUser"
+      >
+        <div class="icon-more icon-message"></div>
+      </div>
+      <mat-menu #editMsg="matMenu">
+        <button mat-menu-item (click)="editMessage(i)" class="edit-menu">
+          Nachricht bearbeiten
+        </button>
+      </mat-menu>
     </div>
-    <mat-menu #editMsg="matMenu">
-      <button mat-menu-item (click)="editMessage(i)" class="edit-menu">
-        Nachricht bearbeiten
-      </button>
-    </mat-menu>
   </div>
 </div>

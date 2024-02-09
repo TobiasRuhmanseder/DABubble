@@ -1,6 +1,6 @@
 <div class="main-messages">
   <div class="main-messages-container" id="messagesContent" #messagesContent>
-    <app-message-content></app-message-content>
+    <app-message-content [mainChat]="true"></app-message-content>
 
     <div
       *ngIf="chatService.sortedMessages.length === 0"

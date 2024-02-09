@@ -1,0 +1,10 @@
+.thread-content {
+  min-height: 80%;
+  display: flex;
+  app-message-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
