@@ -52,9 +52,9 @@ export class MainContentComponent {
     });
   }
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
   scrollDown() {
+    this.chatService.getSortMessages();
     const element =
       this.elementRef.nativeElement.querySelector('#messagesContent');
     this.renderer.setProperty(element, 'scrollTop', 9999);

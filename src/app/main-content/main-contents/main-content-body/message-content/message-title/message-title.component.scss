@@ -1,0 +1,91 @@
+.message-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .message-name-nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .message-name {
+      color: #000;
+      font-family: Nunito;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+      &:hover {
+        color: #444df2;
+      }
+    }
+
+    .icon-message {
+      transition: all 0.3s;
+      background-repeat: no-repeat;
+      background-position: center;
+      padding: 4px;
+      height: 24px;
+      width: 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+      &:hover {
+        border-radius: 20px;
+        background-color: #eceefe;
+      }
+    }
+    .icon-check {
+      background-image: url("/assets/icons/check.png");
+    }
+    .icon-raising {
+      background-image: url("/assets/icons/raising.png");
+    }
+    .icon-emoji {
+      background-image: url("/assets/icons/add_reaction.png");
+      &:hover {
+        background-image: url("/assets/icons/add_reaction_hover.png");
+      }
+    }
+    .icon-comment {
+      background-image: url("/assets/icons/comment.png");
+      &:hover {
+        background-image: url("/assets/icons/comment_hover.png");
+      }
+    }
+    .icon-more {
+      background-image: url("/assets/icons/more_vert.png");
+      &:hover {
+        background-image: url("/assets/icons/more_vert_hover.png");
+      }
+    }
+  }
+  .message-time {
+    color: #686868;
+    font-family: Nunito;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  .message-icon-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 46px;
+    gap: 5px;
+    padding: 3px 15px 3px 20px;
+    border-radius: 25px 25px 0px 25px;
+    border: 1px solid #adb0d9;
+    background: #fff;
+    opacity: 0;
+    transition: all 0.3s;
+    transform: translate(25px, -25px);
+    top: 0;
+  }
+  .hover-effect {
+    opacity: 1;
+    transform: translate(0, -25px);
+  }

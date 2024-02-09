@@ -1,0 +1,53 @@
+.message-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 35px;
+    .stroke {
+      border: 0.5px solid #adb0d9;
+      width: 100%;
+    }
+    .message-header-time {
+      display: flex;
+      justify-content: center;
+      flex: 1;
+      white-space: nowrap;
+      padding: 5px 15px;
+      border-radius: 30px;
+      border: 1px solid #adb0d9;
+      font-family: Nunito;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
+  .message-container {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+    gap: 30px;
+    padding: 10px 45px;
+    transition: all 0.3s;
+    &:hover {
+      background-color: #eceefe;
+    }
+  }
+  .message-pic {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+  }
+  .message-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  .message-container:hover .message-icon-nav {
+    opacity: 1;
+    transform: translate(0, -25px);
+  }
+  .message-container:hover .hover-effekt {
+    background-color: #fff;
+  }

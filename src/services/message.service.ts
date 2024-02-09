@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Channel } from '../models/channel.class';
 import { FirebaseService } from './firebase.service';
 import { getDoc } from 'firebase/firestore';
+import { Message } from '../models/message.class';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,14 @@ export class MessageService {
   threadIsOpen = true;
 
   eingeloggterUser: string = 'h4w3Cntmu2BmDuWSxKqt';
+  setMessageAndUpdate(index: number) {
+    let newMessage = new Message(this.sortedMessages[index]);
+    this.fire.updateMessage(
+      this.currentChannel[0].id,
+      this.sortedMessages[index].id,
+      newMessage
+    );
+  }
 
   resetValues() {
     this.messagesList = [];
@@ -120,8 +129,8 @@ export class MessageService {
     if (date.getDate() === new Date().getDate()) {
       return 'Heute';
     }
-    if (date.getDate() - new Date().getDate() === 1){
-      return 'Gestern'
+    if (date.getDate() - new Date().getDate() === 1) {
+      return 'Gestern';
     }
     return `${day} ${dateOfMonth}. ${month}`;
   }
