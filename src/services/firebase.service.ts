@@ -44,6 +44,13 @@ export class FirebaseService implements OnDestroy {
     );
   }
 
+  updateThread(channelId: string, messageId: string, threadId: string, msg: Message){
+    return setDoc(
+      doc(this.firestore, 'channels', channelId, 'messages', messageId, 'threads', threadId),
+      msg.toJSON()
+    )
+  }
+
   saveMessage(id: string, msg: Message) {
     return addDoc(
       collection(this.firestore, 'channels', id, 'messages'),

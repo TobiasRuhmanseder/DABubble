@@ -17,7 +17,7 @@
     }"
     *ngIf="checkAnswer(i) === true && mainChat === true"
   >
-    <div class="message-answer" (click)="chatService.setCurrentThread(i)">
+    <div class="message-answer" (click)="chatService.setCurrentThread(i, msg.id)">
       {{ getThreadMessages(i) }} Antworten
     </div>
     <div class="message-time">Letzte Antwort {{ getThreadTimestamp(i) }}</div>

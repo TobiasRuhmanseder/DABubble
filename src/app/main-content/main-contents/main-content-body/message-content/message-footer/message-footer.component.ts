@@ -18,6 +18,7 @@ export class MessageFooterComponent {
   @Input() msg: any;
   @Input() i: any;
   @Input() mainChat: any;
+
   getUserName(userName: string, reaction: string, msg: any) {
     if (userName === this.chatService.eingeloggterUser) {
       if (msg[`reaction${reaction}`].length > 1) {
@@ -56,6 +57,7 @@ export class MessageFooterComponent {
     }
     return '';
   }
+  
   getThreadTimestamp(i: number) {
     return this.chatService.getMessageTime(
       Number(

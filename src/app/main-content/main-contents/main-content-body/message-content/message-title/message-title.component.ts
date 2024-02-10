@@ -18,16 +18,19 @@ export class MessageTitleComponent {
   @Input() msg: any;
   @Input() i: any;
   @Input() isHover: any;
-
+  @Input() list: any;
+  @Input() mainChat: any;
   openUserDetails() {
     this.dialog.open(DialogUserInfoComponent, {});
   }
   addReaction(reaction: string, index: number) {
-    let content = this.chatService.sortedMessages[index];
+    let content = this.list[index];
     let user = this.chatService.eingeloggterUser;
     this.updateReaction(reaction, content, user);
-    this.chatService.setMessageAndUpdate(index);
-  }
+    if (this.mainChat) {
+    return this.chatService.setMessageAndUpdate(index);
+  } return this.chatService.setThreadMessagesAndUpdate(index, content.id);
+}
   private updateReaction(reaction: string, content: any, user: string) {
     if (content[`reaction${reaction}`].includes(user)) {
       deleteUser();

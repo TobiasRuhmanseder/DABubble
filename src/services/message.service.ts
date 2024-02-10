@@ -12,6 +12,7 @@ export class MessageService {
 
   currentChannel: any;
   currentThread: any;
+  currentOpenMessageThreadId: any;
 
   messagesList: any[] = [];
   sortedMessages: any[] = [];
@@ -28,6 +29,16 @@ export class MessageService {
       this.currentChannel[0].id,
       this.sortedMessages[index].id,
       newMessage
+    );
+  }
+  setThreadMessagesAndUpdate(threadIndex: number, threadId: string) {
+    debugger
+    let newThread = new Message(this.currentThread[threadIndex]);
+    this.fire.updateThread(
+      this.currentChannel[0].id,
+      this.currentOpenMessageThreadId,
+      threadId,
+      newThread
     );
   }
 
@@ -51,8 +62,10 @@ export class MessageService {
     // return this.messagesList;
   }
 
-  setCurrentThread(index: number) {
+  setCurrentThread(index: number, messageId: string) {
     this.currentThread = this.threadList[index];
+    this.currentOpenMessageThreadId = messageId;
+    this.threadIsOpen = true;
   }
 
   // ('NME25IW6lIFNuqfo4IrP','Iz9ByE5o3aoC8OQukKSl')
