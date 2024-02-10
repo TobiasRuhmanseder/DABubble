@@ -24,21 +24,8 @@ export class MainContentFooterComponent {
   textareaContent: string = '';
 
   sendMessage() {
-    let msg = this.textareaContent;
-    let time = this.chatService.getTimeStamp();
-    this.textareaContent = '';
-    let message = new Message({
-      senderId: this.chatService.eingeloggterUser,
-      timestamp: time,
-      content: msg,
-      answers: [],
-      reactionNerd: [],
-      reactionCheck: [],
-      reactionRaising: [],
-      reactionRocket: [],
-    });
-    this.chatService.sortedMessages.push(message);
-    this.fire.saveMessage(this.chatService.currentChannel[0].id, message);
+    let message = this.chatService.setMessage(this.textareaContent);
+    this.chatService.saveAndAddNewMessage(message);
     setTimeout(() => {
       this.mainContent.scrollDown();
     }, 1);

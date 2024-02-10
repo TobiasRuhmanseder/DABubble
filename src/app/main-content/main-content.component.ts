@@ -40,15 +40,6 @@ export class MainContentComponent {
       this.chatService.resetValues();
       this.chatService.getChannel(params['id']);
       this.chatService.getMessagesFromChannel(params['id']);
-      setTimeout(() => {
-        this.scrollDown();
-      }, 330);
-      setTimeout(() => {
-        this.scrollDown();
-      }, 660);
-      setTimeout(() => {
-        this.scrollDown();
-      }, 1000);
     });
   }
 

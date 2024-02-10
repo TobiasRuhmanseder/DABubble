@@ -1,5 +1,5 @@
 <section>
-    <textarea class="input" placeholder="Starte eine neue Nachricht" type="text"></textarea>
+    <textarea class="input" placeholder="Starte eine neue Nachricht" type="text" [(ngModel)]="textareaThreadContent"></textarea>
     <div class="input-bottom-line">
         <div class="interact-btns-container">
             <img src="assets/img/plus_light.svg" alt="">
@@ -8,7 +8,7 @@
             <img src="assets/img/@_light.svg" alt="">
         </div>
 
-        <div class="send-message-btn">
+        <div class="send-message-btn" (click)="sendMessage()">
             <img src="assets/img/send_message.svg" alt="">
         </div>
     </div>

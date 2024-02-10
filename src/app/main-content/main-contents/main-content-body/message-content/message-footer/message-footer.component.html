@@ -15,9 +15,12 @@
           ? 'row-reverse'
           : 'row'
     }"
-    *ngIf="checkAnswer(i) === true && mainChat === true"
+    *ngIf="mainChat === true && checkAnswer(i) === true"
   >
-    <div class="message-answer" (click)="chatService.setCurrentThread(i, msg.id)">
+    <div
+      class="message-answer"
+      (click)="chatService.setCurrentThread(i, msg.id)"
+    >
       {{ getThreadMessages(i) }} Antworten
     </div>
     <div class="message-time">Letzte Antwort {{ getThreadTimestamp(i) }}</div>

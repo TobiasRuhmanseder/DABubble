@@ -23,6 +23,38 @@ export class MessageService {
   threadIsOpen = true;
 
   eingeloggterUser: string = 'h4w3Cntmu2BmDuWSxKqt';
+
+  saveAndAddThreadMessage(message: Message) {
+    this.currentThread.push(message);
+    this.fire.saveThreadMessage(
+      this.currentChannel[0].id,
+      this.currentOpenMessageThreadId,
+      message
+    );
+  }
+
+  saveAndAddNewMessage(message: Message) {
+    this.sortedMessages.push(message);
+    this.fire.saveMessage(this.currentChannel[0].id, message);
+  }
+
+  setMessage(inputContent: string) {
+    let content = inputContent;
+    let time = this.getTimeStamp();
+    inputContent = '';
+    let message = new Message({
+      senderId: this.eingeloggterUser,
+      timestamp: time,
+      content: content,
+      answers: [],
+      reactionNerd: [],
+      reactionCheck: [],
+      reactionRaising: [],
+      reactionRocket: [],
+    });
+    return message;
+  }
+
   setMessageAndUpdate(index: number) {
     let newMessage = new Message(this.sortedMessages[index]);
     this.fire.updateMessage(
@@ -32,7 +64,6 @@ export class MessageService {
     );
   }
   setThreadMessagesAndUpdate(threadIndex: number, threadId: string) {
-    debugger
     let newThread = new Message(this.currentThread[threadIndex]);
     this.fire.updateThread(
       this.currentChannel[0].id,
@@ -45,6 +76,7 @@ export class MessageService {
   resetValues() {
     this.messagesList = [];
     this.sortedMessages = [];
+    this.threadList = [];
   }
 
   async getChannel(id: string) {
@@ -63,7 +95,7 @@ export class MessageService {
   }
 
   setCurrentThread(index: number, messageId: string) {
-    this.currentThread = this.threadList[index];
+    this.currentThread = this.getSortMessagesByTime(this.threadList[index]);
     this.currentOpenMessageThreadId = messageId;
     this.threadIsOpen = true;
   }
@@ -123,22 +155,22 @@ export class MessageService {
   // }
 
   getSortMessagesByTime(list: { timestamp: number }[]) {
-    this.sortedMessages = list.sort(
+    let sortetList = list.sort(
       (a: { timestamp: number }, b: { timestamp: number }) =>
         a.timestamp - b.timestamp
     );
-    return this.sortedMessages;
+    return sortetList;
   }
 
-  checkNextDay(index: number) {
+  checkNextDay(index: number, list: any) {
     if (index === 0) {
       return true;
     }
-    const currentTimestamp = new Date(
-      Number(this.sortedMessages[index].timestamp)
+    let currentTimestamp = new Date(
+      Number(list[index].timestamp)
     );
-    const previousTimestamp = new Date(
-      Number(this.sortedMessages[index - 1].timestamp)
+    let previousTimestamp = new Date(
+      Number(list[index - 1].timestamp)
     );
     return this.checkNextTime(currentTimestamp, previousTimestamp);
   }

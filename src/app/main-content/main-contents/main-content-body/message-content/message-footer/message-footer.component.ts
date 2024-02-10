@@ -11,9 +11,7 @@ import { MessageService } from '../../../../../../services/message.service';
 })
 export class MessageFooterComponent {
   threadMessages: any;
-  constructor(
-    public chatService: MessageService,
-  ) {}
+  constructor(public chatService: MessageService) {}
 
   @Input() msg: any;
   @Input() i: any;
@@ -43,7 +41,7 @@ export class MessageFooterComponent {
   }
 
   checkAnswer(i: number) {
-    if (this.chatService.threadList.length > 0) {
+    if (this.chatService.threadList[i] != undefined) {
       if (this.chatService.threadList[i].length > 0) {
         return true;
       }
@@ -52,19 +50,26 @@ export class MessageFooterComponent {
   }
 
   getThreadMessages(i: number) {
-    if (this.chatService.threadList[i].length > 0) {
-      return this.chatService.threadList[i].length;
+    try {
+      if (this.chatService.threadList[i] != undefined) {
+        if (this.chatService.threadList[i].length > 0) {
+          return this.chatService.threadList[i].length;
+        }
+      }
+      return '';
+    } catch (error) {
+      debugger;
     }
-    return '';
   }
-  
+
   getThreadTimestamp(i: number) {
-    return this.chatService.getMessageTime(
-      Number(
+    if (this.chatService.threadList[i] != undefined) {
+      return this.chatService.getMessageTime(
         this.chatService.threadList[i][
           this.chatService.threadList[i].length - 1
         ].timestamp
-      )
-    );
+      );
+    }
+    return '';
   }
 }
