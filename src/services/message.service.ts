@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Channel } from '../models/channel.class';
 import { FirebaseService } from './firebase.service';
-import { getDoc } from 'firebase/firestore';
+import { DocumentData, getDoc } from 'firebase/firestore';
 import { Message } from '../models/message.class';
 
 @Injectable({
@@ -11,8 +11,13 @@ export class MessageService {
   constructor(private fire: FirebaseService) {}
 
   currentChannel: any;
+  currentThread: any;
+
   messagesList: any[] = [];
   sortedMessages: any[] = [];
+
+  threadList: any[] = [];
+
   editFlaggIndex: number = -1;
   threadIsOpen = true;
 
@@ -41,7 +46,23 @@ export class MessageService {
 
   async getMessagesFromChannel(id: string) {
     this.messagesList = await this.fire.getChannelMessages(id);
-    return this.messagesList;
+    this.sortedMessages = this.getSortMessagesByTime(this.messagesList);
+    this.threadList = await this.getThreadMessages(id);
+    // return this.messagesList;
+  }
+
+  setCurrentThread(index: number) {
+    this.currentThread = this.threadList[index];
+  }
+
+  // ('NME25IW6lIFNuqfo4IrP','Iz9ByE5o3aoC8OQukKSl')
+  async getThreadMessages(channelId: string) {
+    let dataList: any[] = [];
+    for (const msg of this.messagesList) {
+      dataList.push(await this.fire.getThreadMessages(channelId, msg.id));
+    }
+    console.log('Thread geladen:', dataList);
+    return dataList;
   }
 
   toggleThread(index: number) {
@@ -79,15 +100,21 @@ export class MessageService {
   }
 
   getSortMessages() {
-    this.sortedMessages = this.sortMessagesByTime();
+    this.sortedMessages = this.getSortMessagesByTime(this.messagesList);
     return this.sortedMessages;
   }
 
-  sortMessagesByTime() {
-    return this.messagesList.sort(
+  // getSortThreads(list: { timestamp: number }[]) {
+  //   this.sortedThread = this.sortMessagesByTime(list);
+  //   return this.sortedThread;
+  // }
+
+  getSortMessagesByTime(list: { timestamp: number }[]) {
+    this.sortedMessages = list.sort(
       (a: { timestamp: number }, b: { timestamp: number }) =>
         a.timestamp - b.timestamp
     );
+    return this.sortedMessages;
   }
 
   checkNextDay(index: number) {

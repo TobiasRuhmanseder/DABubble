@@ -54,7 +54,10 @@ export class MainContentComponent {
 
   ngAfterViewInit() {}
   scrollDown() {
-    this.chatService.getSortMessages();
+    // this.chatService.getSortMessages(
+    //   this.chatService.sortedMessages,
+    //   this.chatService.messagesList
+    // );
     const element =
       this.elementRef.nativeElement.querySelector('#messagesContent');
     this.renderer.setProperty(element, 'scrollTop', 9999);

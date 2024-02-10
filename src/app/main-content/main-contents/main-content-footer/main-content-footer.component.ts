@@ -18,7 +18,7 @@ export class MainContentFooterComponent {
   constructor(
     public chatService: MessageService,
     public mainContent: MainContentComponent,
-    private fire: FirebaseService
+    public fire: FirebaseService
   ) {}
 
   textareaContent: string = '';

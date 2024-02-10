@@ -19,7 +19,9 @@ import { MessageFooterComponent } from './message-footer/message-footer.componen
 })
 export class MessageContentComponent {
   isHover: any;
-  constructor(public chatService: MessageService) {
-  }
-  @Input() mainChat:any;
+  @Input() mainChat: any;
+  @Input() list: any;
+  constructor(public chatService: MessageService) {}
+
+  getSortedList() {}
 }

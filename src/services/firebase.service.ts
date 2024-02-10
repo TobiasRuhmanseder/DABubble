@@ -51,6 +51,25 @@ export class FirebaseService implements OnDestroy {
     );
   }
 
+  async getThreadMessages(channelId: string, messageId: string) {
+    let threadList: DocumentData[] = [];
+    let querySnapshot = await getDocs(
+      collection(
+        this.firestore,
+        'channels',
+        channelId,
+        'messages',
+        messageId,
+        'threads'
+      )
+    );
+    querySnapshot.forEach((doc) => {
+      let messageData = { id: doc.id, ...doc.data() };
+      threadList.push(messageData);
+    });
+    return threadList;
+  }
+
   async getChannelMessages(id: string) {
     let messagesList: DocumentData[] = [];
     let querySnapshot = await getDocs(

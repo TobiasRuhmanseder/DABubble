@@ -7,10 +7,21 @@
   }"
 >
   <!-- <div class="message-answer" (click)="chatService.toggleThread()"> -->
-  <div class="message-answer" (click)="chatService.toggleThread(i)">
-    2 answer
+  <div
+    class="message-nav-footer"
+    [ngStyle]="{
+      'flex-direction':
+        msg.senderId === this.chatService.eingeloggterUser
+          ? 'row-reverse'
+          : 'row'
+    }"
+    *ngIf="checkAnswer(i) === true && mainChat === true"
+  >
+    <div class="message-answer" (click)="chatService.setCurrentThread(i)">
+      {{ getThreadMessages(i) }} Antworten
+    </div>
+    <div class="message-time">Letzte Antwort {{ getThreadTimestamp(i) }}</div>
   </div>
-  <div class="message-time">last message</div>
   <div *ngIf="msg.reactionCheck.length > 0" class="reaction-icon">
     <img src=".\assets\icons\check.png" /><span>{{
       msg.reactionCheck.length

@@ -10,10 +10,14 @@ import { MessageService } from '../../../../../../services/message.service';
   styleUrl: './message-footer.component.scss',
 })
 export class MessageFooterComponent {
-  constructor(public chatService: MessageService) {}
+  threadMessages: any;
+  constructor(
+    public chatService: MessageService,
+  ) {}
 
   @Input() msg: any;
   @Input() i: any;
+  @Input() mainChat: any;
   getUserName(userName: string, reaction: string, msg: any) {
     if (userName === this.chatService.eingeloggterUser) {
       if (msg[`reaction${reaction}`].length > 1) {
@@ -35,5 +39,30 @@ export class MessageFooterComponent {
       msg[`reaction${reaction}`].push(user);
     }
     return msg[`reaction${reaction}`];
+  }
+
+  checkAnswer(i: number) {
+    if (this.chatService.threadList.length > 0) {
+      if (this.chatService.threadList[i].length > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getThreadMessages(i: number) {
+    if (this.chatService.threadList[i].length > 0) {
+      return this.chatService.threadList[i].length;
+    }
+    return '';
+  }
+  getThreadTimestamp(i: number) {
+    return this.chatService.getMessageTime(
+      Number(
+        this.chatService.threadList[i][
+          this.chatService.threadList[i].length - 1
+        ].timestamp
+      )
+    );
   }
 }
