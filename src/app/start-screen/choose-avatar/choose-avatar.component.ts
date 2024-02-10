@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './choose-avatar.component.scss'
 })
 
-export class ChooseAvatarComponent {
+export class ChooseAvatarComponent implements OnInit {
   defaultAvatar: string = './../../../assets/img/user_pics/default_user.svg';
   avatars: string[] = [
     './../../../assets/img/user_pics/female1.svg',
@@ -24,8 +24,21 @@ export class ChooseAvatarComponent {
     './../../../assets/img/user_pics/male3.svg',
     './../../../assets/img/user_pics/male4.svg',
   ];
+  imgFile: any = {};
+
 
   constructor(private router: Router, public LoginService: LoginService) { }
+
+  ngOnInit(): void {
+    this.LoginService.customAvatar$.subscribe((url: any) => {
+      this.defaultAvatar = url;
+    });
+  }
+
+  uploadFile(event: any) {
+    this.imgFile = event.target.files[0];
+    this.LoginService.uploadProfileImg(this.imgFile);
+  }
 
   chooseAvatar(avatar: string) {
     if (avatar) {

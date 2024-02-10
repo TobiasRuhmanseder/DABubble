@@ -11,7 +11,13 @@ import {
   GoogleAuthProvider,
   signInWithPopup
 } from "firebase/auth";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "firebase/storage";
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,21 +27,27 @@ export class LoginService {
   mailInUse: string = '';
   userName: string = '';
   userImg: string = './../../../assets/img/user_pics/default_user.svg';
+  customAvatar$ = new Subject();
   showConfirmationMessage: boolean = false;
   saveAvatarBtnDisabled: boolean = false;
 
   firestore: Firestore = inject(Firestore);
 
   constructor(private router: Router) {
-    this.uploadProfileImg();
+
   }
 
-  // choose avatar
-  
-  uploadProfileImg() {
+  // upload avatar
+  uploadProfileImg(imgFile: any) {
     const storage = getStorage();
-    const imagesRef = ref(storage, 'user_pics/linux.png');
-    console.log(imagesRef.fullPath);
+    const storageRef = ref(storage, 'user_pics/' + imgFile.name);
+
+    uploadBytes(storageRef, imgFile).then(() => {
+      getDownloadURL(storageRef).then((imgURL) => {
+        this.userImg = imgURL;
+        this.customAvatar$.next(imgURL);
+      });
+    });
   }
 
   // google login
