@@ -30,6 +30,7 @@ export class LoginService {
   customAvatar$ = new Subject();
   showConfirmationMessage: boolean = false;
   saveAvatarBtnDisabled: boolean = false;
+  loadAvatarBtnDisabled: boolean = false;
 
   firestore: Firestore = inject(Firestore);
 

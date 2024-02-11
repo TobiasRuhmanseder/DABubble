@@ -32,10 +32,14 @@ export class ChooseAvatarComponent implements OnInit {
   ngOnInit(): void {
     this.LoginService.customAvatar$.subscribe((url: any) => {
       this.defaultAvatar = url;
+      this.LoginService.loadAvatarBtnDisabled = false;
+      console.log(this.LoginService.loadAvatarBtnDisabled);
     });
   }
 
   uploadFile(event: any) {
+    this.LoginService.loadAvatarBtnDisabled = true;
+    console.log(this.LoginService.loadAvatarBtnDisabled);
     this.imgFile = event.target.files[0];
     this.LoginService.uploadProfileImg(this.imgFile);
   }
