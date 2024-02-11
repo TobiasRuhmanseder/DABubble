@@ -1,13 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Channel } from '../models/channel.class';
 import { FirebaseService } from './firebase.service';
-import { DocumentData, getDoc } from 'firebase/firestore';
+import { getDoc } from 'firebase/firestore';
 import { Message } from '../models/message.class';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageService {
+  months = [
+    'Januar',
+    'Februar',
+    'März',
+    'April',
+    'Mai',
+    'Juni',
+    'Juli',
+    'August',
+    'September',
+    'Oktober',
+    'November',
+    'Dezember',
+  ];
+  days = [
+    'Sonntag',
+    'Montag',
+    'Dienstag',
+    'Mittwoch',
+    'Donnerstag',
+    'Freitag',
+    'Samstag',
+  ];
   constructor(private fire: FirebaseService) {}
 
   currentChannel: any;
@@ -20,13 +43,13 @@ export class MessageService {
   threadList: any[] = [];
 
   editFlaggIndex: number = -1;
-  threadIsOpen = true;
+  threadIsOpen = false;
 
   eingeloggterUser: string = 'h4w3Cntmu2BmDuWSxKqt';
 
   saveAndAddThreadMessage(message: Message) {
     this.currentThread.push(message);
-    this.fire.saveThreadMessage(
+    this.fire.saveNewThreadMessage(
       this.currentChannel[0].id,
       this.currentOpenMessageThreadId,
       message
@@ -35,7 +58,7 @@ export class MessageService {
 
   saveAndAddNewMessage(message: Message) {
     this.sortedMessages.push(message);
-    this.fire.saveMessage(this.currentChannel[0].id, message);
+    this.fire.saveNewMessage(this.currentChannel[0].id, message);
   }
 
   setMessage(inputContent: string) {
@@ -149,11 +172,6 @@ export class MessageService {
     return this.sortedMessages;
   }
 
-  // getSortThreads(list: { timestamp: number }[]) {
-  //   this.sortedThread = this.sortMessagesByTime(list);
-  //   return this.sortedThread;
-  // }
-
   getSortMessagesByTime(list: { timestamp: number }[]) {
     let sortetList = list.sort(
       (a: { timestamp: number }, b: { timestamp: number }) =>
@@ -166,12 +184,8 @@ export class MessageService {
     if (index === 0) {
       return true;
     }
-    let currentTimestamp = new Date(
-      Number(list[index].timestamp)
-    );
-    let previousTimestamp = new Date(
-      Number(list[index - 1].timestamp)
-    );
+    let currentTimestamp = new Date(Number(list[index].timestamp));
+    let previousTimestamp = new Date(Number(list[index - 1].timestamp));
     return this.checkNextTime(currentTimestamp, previousTimestamp);
   }
 
@@ -208,34 +222,10 @@ export class MessageService {
   }
 
   getFormattedDate(timestamp: number, index: number) {
-    const months = [
-      'Januar',
-      'Februar',
-      'März',
-      'April',
-      'Mai',
-      'Juni',
-      'Juli',
-      'August',
-      'September',
-      'Oktober',
-      'November',
-      'Dezember',
-    ];
-    const days = [
-      'Sonntag',
-      'Montag',
-      'Dienstag',
-      'Mittwoch',
-      'Donnerstag',
-      'Freitag',
-      'Samstag',
-    ];
-
     let date = new Date(timestamp);
-    let day = days[date.getDay()];
+    let day = this.days[date.getDay()];
     let dateOfMonth = date.getDate();
-    let month = months[date.getMonth()];
+    let month = this.months[date.getMonth()];
     let year = date.getFullYear();
     return this.renderDate(index, date, day, dateOfMonth, month, year);
   }
@@ -243,5 +233,9 @@ export class MessageService {
     let date = new Date(timestamp);
     let timeText = date.getHours() + ':' + date.getMinutes();
     return timeText;
+  }
+
+  addUserToChannel(userId: string, channelId: string) {
+    // this.fire.addUser(userId, channelId)
   }
 }

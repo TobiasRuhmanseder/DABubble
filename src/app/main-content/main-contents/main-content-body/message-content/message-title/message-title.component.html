@@ -22,20 +22,24 @@
       {{ chatService.getMessageTime(msg.timestamp) }} Uhr
     </div>
   </div>
-  <div class="position-nav" [ngClass]="msg.senderId === this.chatService.eingeloggterUser
-        ? 'left'
-        : 'right'
-  ">
+  <div
+    class="position-nav"
+    [ngClass]="
+      msg.senderId === this.chatService.eingeloggterUser ? 'left' : 'right'
+    "
+  >
     <div
       class="message-icon-nav"
       *ngIf="chatService.editFlaggIndex === -1"
       [class.hover-effect]="isHover === i"
     >
       <div
+        *ngIf="mainChat"
         class="icon-check icon-message"
         (click)="addReaction('Check', i)"
       ></div>
       <div
+        *ngIf="mainChat"
         class="icon-raising icon-message"
         (click)="addReaction('Raising', i)"
       ></div>
@@ -77,6 +81,7 @@
         </div>
       </mat-menu>
       <div
+        *ngIf="mainChat"
         class="icon-comment icon-message"
         (click)="chatService.toggleThread(i)"
       ></div>

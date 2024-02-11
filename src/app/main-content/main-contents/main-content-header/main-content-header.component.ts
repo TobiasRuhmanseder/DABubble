@@ -39,6 +39,7 @@ export class MainContentHeaderComponent {
   // muss noch im firebase gespeichert werden!
   addUserToChannel() {
     this.chatService.currentChannel[0].users.push(this.inputAddUser);
+    this.chatService.addUserToChannel(this.inputAddUser, this.chatService.currentChannel[0].id);
   }
 
   openUserDetails() {

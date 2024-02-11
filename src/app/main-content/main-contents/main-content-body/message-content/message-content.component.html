@@ -1,10 +1,4 @@
-<div
-  *ngFor="
-    let msg of list;
-    let i = index
-  "
-  class="message-content"
->
+<div *ngFor="let msg of list; let i = index" class="message-content">
   <div class="message-header" *ngIf="chatService.checkNextDay(i, list)">
     <div class="stroke"></div>
     <div class="message-header-time">
@@ -23,6 +17,12 @@
           : 'row'
     }"
   >
+    <!-- <app-user-pic
+      class="message-pic"
+      [status]="true"
+      [online]="true"
+      [userImageName]="activeUser.photoURL"
+    ></app-user-pic> -->
     <img
       class="message-pic"
       src=".\assets\pics\{{ chatService.renderMessagePic(i) }}"

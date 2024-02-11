@@ -4,18 +4,20 @@ import { MessageService } from '../../../../../services/message.service';
 import { MessageTitleComponent } from './message-title/message-title.component';
 import { MessageBubbleComponent } from './message-bubble/message-bubble.component';
 import { MessageFooterComponent } from './message-footer/message-footer.component';
+import { UserPicComponent } from "../../../../user-pic/user-pic.component";
 
 @Component({
-  selector: 'app-message-content',
-  standalone: true,
-  templateUrl: './message-content.component.html',
-  styleUrl: './message-content.component.scss',
-  imports: [
-    CommonModule,
-    MessageTitleComponent,
-    MessageBubbleComponent,
-    MessageFooterComponent,
-  ],
+    selector: 'app-message-content',
+    standalone: true,
+    templateUrl: './message-content.component.html',
+    styleUrl: './message-content.component.scss',
+    imports: [
+        CommonModule,
+        MessageTitleComponent,
+        MessageBubbleComponent,
+        MessageFooterComponent,
+        UserPicComponent
+    ]
 })
 export class MessageContentComponent {
   isHover: any;

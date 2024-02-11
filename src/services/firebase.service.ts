@@ -37,6 +37,7 @@ export class FirebaseService implements OnDestroy {
     });
   }
 
+
   updateMessage(channelId: string, messageId: string, msg: Message) {
     return setDoc(
       doc(this.firestore, 'channels', channelId, 'messages', messageId),
@@ -51,14 +52,14 @@ export class FirebaseService implements OnDestroy {
     )
   }
 
-  saveMessage(id: string, msg: Message) {
+  saveNewMessage(id: string, msg: Message) {
     return addDoc(
       collection(this.firestore, 'channels', id, 'messages'),
       msg.toJSON()
     );
   }
 
-  saveThreadMessage(id: string, msgId:string, msg:Message){
+  saveNewThreadMessage(id: string, msgId:string, msg:Message){
     return addDoc(
       collection(this.firestore, 'channels', id, 'messages', msgId, 'threads'),
       msg.toJSON()
