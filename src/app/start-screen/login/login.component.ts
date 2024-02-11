@@ -3,13 +3,15 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
 import { RouterLink } from '@angular/router';
 import { LoginService } from '../../../services/login.service';
 import { CurrentUserService } from '../../../services/current-user.service';
+import { IntroAnimationComponent } from '../intro-animation/intro-animation.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IntroAnimationComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
