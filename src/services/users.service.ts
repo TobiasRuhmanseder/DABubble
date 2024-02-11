@@ -20,6 +20,8 @@ export class UsersService {
   }
   getUserName(userId: string){
     let user = this.allUsers.find((u) => u.id === userId);
+    if (user){
     return user.name;
-  }
+  }return '';
+}
 }

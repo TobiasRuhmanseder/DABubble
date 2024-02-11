@@ -30,7 +30,13 @@
           <div class="close-button" (click)="closeAllDialog()"></div>
         </div>
         <div *ngFor="let user of chatService.currentChannel[0].users">
-          <div class="button-user" (click)="openUserDetails()">{{ users.getUserName(user) }}</div>
+          <div class="user" (click)="openUserDetails()">
+            <img
+              class="user-pic"
+              src=".\assets\pics\{{ chatService.getUserPic(user) }}.png"
+            />
+            {{ users.getUserName(user) }}
+          </div>
         </div>
         <div class="button-user" (click)="goToAddUser()">
           <div class="header-add-icon icon"></div>
@@ -47,18 +53,32 @@
           <div class="title">Leute hinzufügen</div>
           <div class="close-button" (click)="closeAllDialog()"></div>
         </div>
-        <div class="sub-title"># Entwicklerteam</div>
-        <div class="dialog-input" mat-button [matMenuTriggerFor]="addUser">
-          <div class="input">
-            <div *ngIf="inputAddUser.length === 0">Name eingeben</div>
-            <div class="input-user" *ngIf="inputAddUser.length > 0">
+        <div class="sub-title"># {{ chatService.getChannelName() }}</div>
+
+        <div class="dialog-input">
+          <input
+            class="input"
+            type="text"
+            placeholder="Name eingeben"
+            [(ngModel)]="inputAddUser"
+          />
+          <!-- <div class="input-user" *ngIf="inputAddUser.length > 0">
               <div></div>
               <div>{{ inputAddUser }}</div>
               <div class="close-user-button" (click)="closeUser()"></div>
+            </div> -->
+          <div
+            class="choose-user"
+            *ngIf="inputAddUser.length > 0 && filterUserList().length > 0"
+          >
+            <div *ngFor="let user of filterUserList()" class="user">
+              <img
+                class="user-pic"
+                src=".\assets\pics\{{ chatService.getUserPic(user.id) }}.png"
+              />
+              {{ user.name }}
             </div>
-          </div>
-          <div class="choose-user">
-            <mat-menu #addUser="matMenu">
+            <!-- <mat-menu #addUser="matMenu">
               <div
                 *ngFor="let user of this.chatService.currentChannel[0].users"
               >
@@ -70,9 +90,10 @@
                   {{ user }}
                 </button>
               </div>
-            </mat-menu>
+            </mat-menu> -->
           </div>
         </div>
+
         <div class="dialog-button-container">
           <button
             class="add-button"

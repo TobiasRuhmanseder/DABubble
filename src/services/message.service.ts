@@ -3,13 +3,14 @@ import { Channel } from '../models/channel.class';
 import { FirebaseService } from './firebase.service';
 import { getDoc } from 'firebase/firestore';
 import { Message } from '../models/message.class';
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageService {
 
-  constructor(private fire: FirebaseService) {}
+  constructor(private fire: FirebaseService, private users: UsersService) {}
 
   currentChannel: any;
   currentThread: any;
@@ -115,9 +116,11 @@ export class MessageService {
     this.threadIsOpen = !this.threadIsOpen;
   }
 
-  getUserById(id: string) {
-    let users;
-    return;
+  getUserPic(userId: any) {
+    let user = this.users.getUserPic(userId);
+    if (user) {
+      return user.photoURL;
+    }return 'Profile'
   }
 
   getTimeStamp() {
@@ -139,11 +142,6 @@ export class MessageService {
     return this.currentChannel[0].users;
   }
 
-  renderMessagePic(index: number) {
-    // let user = this.usersTest.user.indexOf(this.sortedMessages[index].name);
-    // let pic = this.usersTest.picURL[user];
-    // return pic;
-  }
 
   getSortMessages() {
     this.sortedMessages = this.getSortMessagesByTime(this.messagesList);

@@ -27,6 +27,13 @@ export class MainContentHeaderComponent {
     public channelDetails: MatDialog,
     public users: UsersService
   ) {}
+  filterUserList() {
+    let list = this.users.allUsers;
+    let filterList = list.filter((user) => {
+      return user.name.toLowerCase().includes(this.inputAddUser.toLowerCase());
+    });
+    return filterList;
+  }
 
   selectUser(user: string) {
     this.inputAddUser = user;
@@ -94,6 +101,7 @@ export class MainContentHeaderComponent {
       if (userPic) {
         return userPic.photoURL;
       }
-    }return 'Profile'
+    }
+    return 'Profile';
   }
 }

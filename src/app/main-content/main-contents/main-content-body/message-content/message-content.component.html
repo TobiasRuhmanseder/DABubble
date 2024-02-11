@@ -25,7 +25,7 @@
     ></app-user-pic> -->
     <img
       class="message-pic"
-      src=".\assets\pics\{{ getUserPic(msg.senderId) }}.png"
+      src=".\assets\pics\{{ chatService.getUserPic(msg.senderId) }}.png"
     />
     <div class="message-body">
       <app-message-title

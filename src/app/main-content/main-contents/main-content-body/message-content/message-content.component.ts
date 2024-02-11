@@ -26,10 +26,5 @@ export class MessageContentComponent {
   @Input() list: any;
   constructor(public chatService: MessageService, public users: UsersService) {}
 
-  getUserPic(userId: any) {
-    let user = this.users.getUserPic(userId);
-    if (user) {
-      return user.photoURL;
-    }return 'Profile'
-  }
+
 }
