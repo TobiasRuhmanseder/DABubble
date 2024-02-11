@@ -15,7 +15,7 @@
             >
               <img
                 class="header-pic"
-                src=".\assets\pics\{{ getUserPic(users) }}"
+                src=".\assets\pics\{{ getUserPicFromChannel(users) }}.png"
               />
             </div>
           </div>
@@ -30,7 +30,7 @@
           <div class="close-button" (click)="closeAllDialog()"></div>
         </div>
         <div *ngFor="let user of chatService.currentChannel[0].users">
-          <div class="button-user" (click)="openUserDetails()">{{ user }}</div>
+          <div class="button-user" (click)="openUserDetails()">{{ users.getUserName(user) }}</div>
         </div>
         <div class="button-user" (click)="goToAddUser()">
           <div class="header-add-icon icon"></div>

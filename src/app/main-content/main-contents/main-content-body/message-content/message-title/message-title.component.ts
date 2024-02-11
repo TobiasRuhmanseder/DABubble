@@ -4,6 +4,7 @@ import { MessageService } from '../../../../../../services/message.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { DialogUserInfoComponent } from '../../../../private-chat/dialog-user-info/dialog-user-info.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UsersService } from '../../../../../../services/users.service';
 
 @Component({
   selector: 'app-message-title',
@@ -13,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './message-title.component.scss',
 })
 export class MessageTitleComponent {
-  constructor(public chatService: MessageService, public dialog: MatDialog) {}
+  constructor(public chatService: MessageService, public dialog: MatDialog, public users:UsersService) {}
 
   @Input() msg: any;
   @Input() i: any;

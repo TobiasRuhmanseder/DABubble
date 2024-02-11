@@ -15,12 +15,10 @@
   }
   .header-users-img {
     display: flex;
-    flex-direction: row;
     height: 40px;
-    width: 50px;
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-between;
-    margin-right: 40px;
+    margin-right: 10px;
   }
   .channel-title {
     display: flex;
@@ -65,7 +63,7 @@
     background-position: center;
   }
   .header-pic-container {
-    width: 1px;
+    width: 25px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

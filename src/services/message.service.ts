@@ -8,29 +8,7 @@ import { Message } from '../models/message.class';
   providedIn: 'root',
 })
 export class MessageService {
-  months = [
-    'Januar',
-    'Februar',
-    'März',
-    'April',
-    'Mai',
-    'Juni',
-    'Juli',
-    'August',
-    'September',
-    'Oktober',
-    'November',
-    'Dezember',
-  ];
-  days = [
-    'Sonntag',
-    'Montag',
-    'Dienstag',
-    'Mittwoch',
-    'Donnerstag',
-    'Freitag',
-    'Samstag',
-  ];
+
   constructor(private fire: FirebaseService) {}
 
   currentChannel: any;
@@ -222,10 +200,33 @@ export class MessageService {
   }
 
   getFormattedDate(timestamp: number, index: number) {
+    let months = [
+      'Januar',
+      'Februar',
+      'März',
+      'April',
+      'Mai',
+      'Juni',
+      'Juli',
+      'August',
+      'September',
+      'Oktober',
+      'November',
+      'Dezember',
+    ];
+    let days = [
+      'Sonntag',
+      'Montag',
+      'Dienstag',
+      'Mittwoch',
+      'Donnerstag',
+      'Freitag',
+      'Samstag',
+    ];
     let date = new Date(timestamp);
-    let day = this.days[date.getDay()];
+    let day = days[date.getDay()];
     let dateOfMonth = date.getDate();
-    let month = this.months[date.getMonth()];
+    let month = months[date.getMonth()];
     let year = date.getFullYear();
     return this.renderDate(index, date, day, dateOfMonth, month, year);
   }

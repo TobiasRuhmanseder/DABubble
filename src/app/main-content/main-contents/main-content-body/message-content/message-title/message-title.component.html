@@ -16,7 +16,7 @@
     }"
   >
     <div class="message-name" (click)="openUserDetails()">
-      {{ msg.senderId }}
+      {{ users.getUserName(msg.senderId) }}
     </div>
     <div class="message-time">
       {{ chatService.getMessageTime(msg.timestamp) }} Uhr

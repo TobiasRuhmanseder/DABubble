@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChannelPopUpComponent } from '../../channel/channel-pop-up/channel-pop-up.component';
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
+import { UsersService } from '../../../../services/users.service';
 
 @Component({
   selector: 'app-main-content-header',
@@ -23,7 +24,8 @@ export class MainContentHeaderComponent {
   constructor(
     public chatService: MessageService,
     public userDetails: MatDialog,
-    public channelDetails: MatDialog
+    public channelDetails: MatDialog,
+    public users: UsersService
   ) {}
 
   selectUser(user: string) {
@@ -39,7 +41,10 @@ export class MainContentHeaderComponent {
   // muss noch im firebase gespeichert werden!
   addUserToChannel() {
     this.chatService.currentChannel[0].users.push(this.inputAddUser);
-    this.chatService.addUserToChannel(this.inputAddUser, this.chatService.currentChannel[0].id);
+    this.chatService.addUserToChannel(
+      this.inputAddUser,
+      this.chatService.currentChannel[0].id
+    );
   }
 
   openUserDetails() {
@@ -80,8 +85,15 @@ export class MainContentHeaderComponent {
     return this.chatService.currentChannel[0].users.length;
   }
 
-  getUserPic(user: string) {
-    // let index = this.chatService.usersTest.user.indexOf(user);
-    // return this.chatService.usersTest.picURL[index];
+  getUserPicFromChannel(user: string) {
+    let checkIfUserInChannel = this.chatService.currentChannel[0].users.find(
+      (users: string) => users === user
+    );
+    if (checkIfUserInChannel) {
+      let userPic = this.users.getUserPic(checkIfUserInChannel);
+      if (userPic) {
+        return userPic.photoURL;
+      }
+    }return 'Profile'
   }
 }

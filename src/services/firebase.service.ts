@@ -37,7 +37,6 @@ export class FirebaseService implements OnDestroy {
     });
   }
 
-
   updateMessage(channelId: string, messageId: string, msg: Message) {
     return setDoc(
       doc(this.firestore, 'channels', channelId, 'messages', messageId),
@@ -45,11 +44,24 @@ export class FirebaseService implements OnDestroy {
     );
   }
 
-  updateThread(channelId: string, messageId: string, threadId: string, msg: Message){
+  updateThread(
+    channelId: string,
+    messageId: string,
+    threadId: string,
+    msg: Message
+  ) {
     return setDoc(
-      doc(this.firestore, 'channels', channelId, 'messages', messageId, 'threads', threadId),
+      doc(
+        this.firestore,
+        'channels',
+        channelId,
+        'messages',
+        messageId,
+        'threads',
+        threadId
+      ),
       msg.toJSON()
-    )
+    );
   }
 
   saveNewMessage(id: string, msg: Message) {
@@ -59,7 +71,7 @@ export class FirebaseService implements OnDestroy {
     );
   }
 
-  saveNewThreadMessage(id: string, msgId:string, msg:Message){
+  saveNewThreadMessage(id: string, msgId: string, msg: Message) {
     return addDoc(
       collection(this.firestore, 'channels', id, 'messages', msgId, 'threads'),
       msg.toJSON()
@@ -95,6 +107,16 @@ export class FirebaseService implements OnDestroy {
       messagesList.push(messageData);
     });
     return messagesList;
+  }
+
+  async getUserList() {
+    let userList: any[] = [];
+    let querySnapshot = await getDocs(this.getCollRef('users'));
+    querySnapshot.forEach((doc) => {
+      let userData = { id: doc.id, ...doc.data() };
+      userList.push(userData);
+    });
+    return userList;
   }
 
   // Add the id for the local Array Channels by onSnapshot
