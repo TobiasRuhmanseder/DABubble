@@ -31,24 +31,12 @@ export class LoginService {
   showConfirmationMessage: boolean = false;
   saveAvatarBtnDisabled: boolean = false;
   loadAvatarBtnDisabled: boolean = false;
+  invalidImgType: string = '';
 
   firestore: Firestore = inject(Firestore);
 
   constructor(private router: Router) {
 
-  }
-
-  // upload avatar
-  uploadProfileImg(imgFile: any) {
-    const storage = getStorage();
-    const storageRef = ref(storage, 'user_pics/' + imgFile.name);
-
-    uploadBytes(storageRef, imgFile).then(() => {
-      getDownloadURL(storageRef).then((imgURL) => {
-        this.userImg = imgURL;
-        this.customAvatar$.next(imgURL);
-      });
-    });
   }
 
   // google login
@@ -60,7 +48,6 @@ export class LoginService {
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const user = result.user;
-        console.log('button works', user);
         this.router.navigate(['/home']);
       }).catch((error) => {
         const errorCode = error.code;
@@ -135,6 +122,33 @@ export class LoginService {
         );
     }
   }
+
+    // upload avatar
+    uploadProfileImg(imgFile: any, customURL: string) {
+      this.invalidImgType = '';
+      const storage = getStorage();
+      const storageRef = ref(storage, 'user_pics/' + customURL);
+  
+      if (imgFile.type == 'image/png' || imgFile.type == 'image/jpeg' || imgFile.type == 'image/gif') {
+        this.uploadImage(storageRef, imgFile);
+      } else {
+        this.handleInvalidImageType();
+      };
+    }
+  
+    uploadImage(storageRef: any, imgFile: any): void {
+      uploadBytes(storageRef, imgFile).then(() => {
+        getDownloadURL(storageRef).then((imgURL) => {
+          this.userImg = imgURL;
+          this.customAvatar$.next(imgURL);
+        });
+      });
+    }
+  
+    handleInvalidImageType() {
+      this.invalidImgType = 'Erlaubte Dateiformate: PNG, JPEG und GIF. Bitte wähle eine gültige Datei aus.';
+      this.loadAvatarBtnDisabled = false;
+    }
 
   // reset password
   resetPassword(email: string) {

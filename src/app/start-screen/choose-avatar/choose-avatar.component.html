@@ -24,6 +24,9 @@
                 </label>
             </div>
         </div>
+        <div class="alert">
+            {{ this.LoginService.invalidImgType }}
+        </div>
     </div>
     <div class="submit-btn">
         <button class="btn-blue" (click)="saveAvatar()" [disabled]="this.LoginService.saveAvatarBtnDisabled"

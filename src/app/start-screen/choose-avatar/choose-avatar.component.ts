@@ -33,15 +33,17 @@ export class ChooseAvatarComponent implements OnInit {
     this.LoginService.customAvatar$.subscribe((url: any) => {
       this.defaultAvatar = url;
       this.LoginService.loadAvatarBtnDisabled = false;
-      console.log(this.LoginService.loadAvatarBtnDisabled);
     });
   }
 
   uploadFile(event: any) {
     this.LoginService.loadAvatarBtnDisabled = true;
-    console.log(this.LoginService.loadAvatarBtnDisabled);
     this.imgFile = event.target.files[0];
-    this.LoginService.uploadProfileImg(this.imgFile);
+    this.LoginService.uploadProfileImg(this.imgFile, this.generateRandomId());
+  }
+
+  generateRandomId() {
+    return Math.random().toString(36).substring(2, 15);
   }
 
   chooseAvatar(avatar: string) {
