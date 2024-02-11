@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MessageService } from '../../../../../../services/message.service';
+import { UsersService } from '../../../../../../services/users.service';
 
 @Component({
   selector: 'app-message-footer',
@@ -11,7 +12,7 @@ import { MessageService } from '../../../../../../services/message.service';
 })
 export class MessageFooterComponent {
   threadMessages: any;
-  constructor(public chatService: MessageService) {}
+  constructor(public chatService: MessageService, public users: UsersService) {}
 
   @Input() msg: any;
   @Input() i: any;
@@ -24,7 +25,7 @@ export class MessageFooterComponent {
       }
       return 'Du';
     }
-    return userName;
+    return this.users.getUserName(userName);
   }
 
   setSelfToLast(msg: any, reaction: string) {
@@ -50,16 +51,12 @@ export class MessageFooterComponent {
   }
 
   getThreadMessages(i: number) {
-    try {
-      if (this.chatService.threadList[i] != undefined) {
-        if (this.chatService.threadList[i].length > 0) {
-          return this.chatService.threadList[i].length;
-        }
+    if (this.chatService.threadList[i] != undefined) {
+      if (this.chatService.threadList[i].length > 0) {
+        return this.chatService.threadList[i].length;
       }
-      return '';
-    } catch (error) {
-      debugger;
     }
+    return '';
   }
 
   getThreadTimestamp(i: number) {
