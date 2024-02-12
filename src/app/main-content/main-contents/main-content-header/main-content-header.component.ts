@@ -20,8 +20,9 @@ export class MainContentHeaderComponent {
   showBg: boolean = false;
   addUserDialog: boolean = false;
   userDialog: boolean = false;
-  disableButton: boolean = true;
   inputAddUser: string = '';
+  selectedUser: any;
+  addSelectUser: boolean = false;
   constructor(
     public chatService: MessageService,
     public userDetails: MatDialog,
@@ -38,24 +39,35 @@ export class MainContentHeaderComponent {
     });
     return filterList;
   }
+  checkUserExists() {
+    if (!this.addSelectUser) {
+      return !this.users.allUsers.some(
+        (user) => user.name.toLowerCase() === this.inputAddUser.toLowerCase()
+      );
+    }
+    return false;
+  }
 
-  selectUser(user: string) {
-    this.inputAddUser = user;
-    this.disableButton = false;
+  selectUser(user: any) {
+    this.selectedUser = user;
+    this.inputAddUser = user.name;
+    this.addSelectUser = true
   }
 
   closeUser() {
     this.inputAddUser = '';
-    this.disableButton = true;
+    this.selectedUser = [];
+    this.addSelectUser =false;
   }
 
   // muss noch im firebase gespeichert werden!
   addUserToChannel() {
-    this.chatService.currentChannel[0].users.push(this.inputAddUser);
-    this.chatService.addUserToChannel(
-      this.inputAddUser,
-      this.chatService.currentChannel[0].id
-    );
+    let user = this.users.allUsers.find((user) => {
+      return user.name.toLowerCase() === this.inputAddUser.toLowerCase();
+    });
+    this.chatService.currentChannel[0].users.push(user.id);
+    this.chatService.saveChannel();
+    this.closeUser()
   }
 
   openUserDetails() {
@@ -67,7 +79,8 @@ export class MainContentHeaderComponent {
     this.addUserDialog = false;
     this.userDialog = false;
     this.inputAddUser = '';
-    this.disableButton = true;
+    this.addSelectUser = false;
+    this.selectedUser = [];
   }
 
   addUser() {

@@ -238,7 +238,8 @@ export class MessageService {
     return timeText;
   }
 
-  addUserToChannel(userId: string, channelId: string) {
-    // this.fire.addUser(userId, channelId)
+  async saveChannel() {
+    let updateChannel = new Channel(this.currentChannel[0])
+    await this.fire.updateChannel(updateChannel);
   }
 }

@@ -62,29 +62,47 @@
         <div class="sub-title"># {{ chatService.getChannelName() }}</div>
 
         <div class="dialog-input">
+          <div class="input" *ngIf="addSelectUser">
+            <div class="selectInputUser">
+              <img
+                class="user-select-pic"
+                src=".\assets\img\user_pics\{{ selectedUser.photoURL }}.svg"
+              />{{ selectedUser.name }}
+              <img
+                class="close"
+                src=".\assets\icons\close.svg"
+                (click)="closeUser()"
+              />
+            </div>
+          </div>
           <input
+            *ngIf="!addSelectUser"
             class="input"
             type="text"
             placeholder="Name eingeben"
             [(ngModel)]="inputAddUser"
           />
-          <div
-            class="choose-user"
-            *ngIf="inputAddUser.length > 0 && filterUserList().length > 0"
-          >
-            <div *ngFor="let user of filterUserList()" class="user">
-              <div class="user-pic">
-                <app-user-pic
-                  [status]="true"
-                  [online]="user.status"
-                  userImageName=".\assets\img\user_pics\{{ user.photoURL }}.svg"
-                ></app-user-pic>
+          <div *ngIf="!addSelectUser">
+            <div
+              class="choose-user"
+              *ngIf="inputAddUser.length > 0 && filterUserList().length > 0"
+            >
+              <div
+                *ngFor="let user of filterUserList()"
+                class="user"
+                (click)="selectUser(user)"
+              >
+                <div class="user-pic">
+                  <app-user-pic
+                    [status]="true"
+                    [online]="user.status"
+                    userImageName=".\assets\img\user_pics\{{
+                      user.photoURL
+                    }}.svg"
+                  ></app-user-pic>
+                </div>
+                {{ user.name }}
               </div>
-              <!-- <img
-                class="user-pic"
-                src=".\assets\pics\{{ chatService.getUserPic(user.id) }}.png"
-              /> -->
-              {{ user.name }}
             </div>
           </div>
         </div>
@@ -92,7 +110,7 @@
         <div class="dialog-button-container">
           <button
             class="add-button"
-            [disabled]="disableButton"
+            [disabled]="checkUserExists()"
             (click)="addUserToChannel()"
           >
             Hinzufügen
