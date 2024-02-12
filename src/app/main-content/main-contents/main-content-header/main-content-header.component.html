@@ -1,5 +1,5 @@
-<div class="header">
-  <div class="channel-title" (click)="openChannelData()">
+<div class="header" *ngIf="chatService.getChannelName().length > 0">
+  <div class="channel-title" (click)="openChannelData()" >
     <div class="icon icon-tag" src=".\assets\icons\tag.png"></div>
     <div class="title-hover">{{ chatService.getChannelName() }}</div>
     <div class="icon icon-expand"></div>
@@ -15,7 +15,9 @@
             >
               <img
                 class="header-pic"
-                src=".\assets\pics\{{ getUserPicFromChannel(users) }}.png"
+                src=".\assets\img\user_pics\{{
+                  getUserPicFromChannel(users)
+                }}.svg"
               />
             </div>
           </div>
@@ -31,10 +33,14 @@
         </div>
         <div *ngFor="let user of chatService.currentChannel[0].users">
           <div class="user" (click)="openUserDetails()">
-            <img
+            <app-user-pic
               class="user-pic"
-              src=".\assets\pics\{{ chatService.getUserPic(user) }}.png"
-            />
+              [status]="true"
+              [online]="getUserStatus(user)"
+              userImageName=".\assets\img\user_pics\{{
+                chatService.getUserPic(user)
+              }}.svg"
+            ></app-user-pic>
             {{ users.getUserName(user) }}
           </div>
         </div>
@@ -56,48 +62,55 @@
         <div class="sub-title"># {{ chatService.getChannelName() }}</div>
 
         <div class="dialog-input">
+          <div class="input" *ngIf="addSelectUser">
+            <div class="selectInputUser">
+              <img
+                class="user-select-pic"
+                src=".\assets\img\user_pics\{{ selectedUser.photoURL }}.svg"
+              />{{ selectedUser.name }}
+              <img
+                class="close"
+                src=".\assets\icons\close.svg"
+                (click)="closeUser()"
+              />
+            </div>
+          </div>
           <input
+            *ngIf="!addSelectUser"
             class="input"
             type="text"
             placeholder="Name eingeben"
             [(ngModel)]="inputAddUser"
           />
-          <!-- <div class="input-user" *ngIf="inputAddUser.length > 0">
-              <div></div>
-              <div>{{ inputAddUser }}</div>
-              <div class="close-user-button" (click)="closeUser()"></div>
-            </div> -->
-          <div
-            class="choose-user"
-            *ngIf="inputAddUser.length > 0 && filterUserList().length > 0"
-          >
-            <div *ngFor="let user of filterUserList()" class="user">
-              <img
-                class="user-pic"
-                src=".\assets\pics\{{ chatService.getUserPic(user.id) }}.png"
-              />
-              {{ user.name }}
-            </div>
-            <!-- <mat-menu #addUser="matMenu">
+          <div *ngIf="!addSelectUser">
+            <div
+              class="choose-user"
+              *ngIf="inputAddUser.length > 0 && filterUserList().length > 0"
+            >
               <div
-                *ngFor="let user of this.chatService.currentChannel[0].users"
+                *ngFor="let user of filterUserList()"
+                class="user"
+                (click)="selectUser(user)"
               >
-                <button
-                  mat-menu-item
-                  class="add-menu"
-                  (click)="selectUser(user)"
-                >
-                  {{ user }}
-                </button>
+                <div class="user-pic">
+                  <app-user-pic
+                    [status]="true"
+                    [online]="user.status"
+                    userImageName=".\assets\img\user_pics\{{
+                      user.photoURL
+                    }}.svg"
+                  ></app-user-pic>
+                </div>
+                {{ user.name }}
               </div>
-            </mat-menu> -->
+            </div>
           </div>
         </div>
 
         <div class="dialog-button-container">
           <button
             class="add-button"
-            [disabled]="disableButton"
+            [disabled]="checkUserExists()"
             (click)="addUserToChannel()"
           >
             Hinzufügen

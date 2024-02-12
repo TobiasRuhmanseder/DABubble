@@ -119,6 +119,13 @@ export class FirebaseService implements OnDestroy {
     return userList;
   }
 
+  updateChannel(channelData: any){
+    return setDoc(
+      doc(this.firestore, 'channels', channelData.id),
+      channelData.toJSON()
+    );
+  }
+
   // Add the id for the local Array Channels by onSnapshot
   idToChannel(obj: any, id: string): Channel {
     let channel: any = {

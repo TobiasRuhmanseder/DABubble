@@ -17,15 +17,9 @@
           : 'row'
     }"
   >
-    <!-- <app-user-pic
-      class="message-pic"
-      [status]="true"
-      [online]="true"
-      [userImageName]="activeUser.photoURL"
-    ></app-user-pic> -->
     <img
       class="message-pic"
-      src=".\assets\pics\{{ chatService.getUserPic(msg.senderId) }}.png"
+      src=".\assets\img\user_pics\{{ chatService.getUserPic(msg.senderId) }}.svg"
     />
     <div class="message-body">
       <app-message-title
@@ -39,6 +33,8 @@
         [msg]="msg"
         [i]="i"
         [isHover]="isHover"
+        [list]="list"
+        [mainChat]="mainChat"
       ></app-message-bubble>
       <app-message-footer
         [msg]="msg"

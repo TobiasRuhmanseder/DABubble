@@ -83,8 +83,8 @@
       <div
         *ngIf="mainChat"
         class="icon-comment icon-message"
-        (click)="chatService.toggleThread(i)"
-      ></div>
+        (click)="chatService.setCurrentThread(i, msg.id)"
+        ></div>
       <div
         mat-button
         [matMenuTriggerFor]="editMsg"

@@ -14,7 +14,11 @@ import { UsersService } from '../../../../../../services/users.service';
   styleUrl: './message-title.component.scss',
 })
 export class MessageTitleComponent {
-  constructor(public chatService: MessageService, public dialog: MatDialog, public users:UsersService) {}
+  constructor(
+    public chatService: MessageService,
+    public dialog: MatDialog,
+    public users: UsersService
+  ) {}
 
   @Input() msg: any;
   @Input() i: any;
@@ -29,9 +33,10 @@ export class MessageTitleComponent {
     let user = this.chatService.eingeloggterUser;
     this.updateReaction(reaction, content, user);
     if (this.mainChat) {
-    return this.chatService.setMessageAndUpdate(index);
-  } return this.chatService.setThreadMessagesAndUpdate(index, content.id);
-}
+      return this.chatService.setMessageAndUpdate(index);
+    }
+    return this.chatService.setThreadMessagesAndUpdate(index, content.id);
+  }
   private updateReaction(reaction: string, content: any, user: string) {
     if (content[`reaction${reaction}`].includes(user)) {
       deleteUser();

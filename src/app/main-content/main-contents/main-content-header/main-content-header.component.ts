@@ -7,20 +7,22 @@ import { ChannelPopUpComponent } from '../../channel/channel-pop-up/channel-pop-
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { UsersService } from '../../../../services/users.service';
+import { UserPicComponent } from '../../../user-pic/user-pic.component';
 
 @Component({
   selector: 'app-main-content-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatMenuModule],
   templateUrl: './main-content-header.component.html',
   styleUrl: './main-content-header.component.scss',
+  imports: [CommonModule, FormsModule, MatMenuModule, UserPicComponent],
 })
 export class MainContentHeaderComponent {
   showBg: boolean = false;
   addUserDialog: boolean = false;
   userDialog: boolean = false;
-  disableButton: boolean = true;
   inputAddUser: string = '';
+  selectedUser: any;
+  addSelectUser: boolean = false;
   constructor(
     public chatService: MessageService,
     public userDetails: MatDialog,
@@ -28,30 +30,44 @@ export class MainContentHeaderComponent {
     public users: UsersService
   ) {}
   filterUserList() {
-    let list = this.users.allUsers;
+    let allUserList = this.users.allUsers;
+    let list = allUserList.filter((user) => {
+      return !this.chatService.currentChannel[0].users.includes(user.id);
+    });
     let filterList = list.filter((user) => {
       return user.name.toLowerCase().includes(this.inputAddUser.toLowerCase());
     });
     return filterList;
   }
+  checkUserExists() {
+    if (!this.addSelectUser) {
+      return !this.users.allUsers.some(
+        (user) => user.name.toLowerCase() === this.inputAddUser.toLowerCase()
+      );
+    }
+    return false;
+  }
 
-  selectUser(user: string) {
-    this.inputAddUser = user;
-    this.disableButton = false;
+  selectUser(user: any) {
+    this.selectedUser = user;
+    this.inputAddUser = user.name;
+    this.addSelectUser = true
   }
 
   closeUser() {
     this.inputAddUser = '';
-    this.disableButton = true;
+    this.selectedUser = [];
+    this.addSelectUser =false;
   }
 
   // muss noch im firebase gespeichert werden!
   addUserToChannel() {
-    this.chatService.currentChannel[0].users.push(this.inputAddUser);
-    this.chatService.addUserToChannel(
-      this.inputAddUser,
-      this.chatService.currentChannel[0].id
-    );
+    let user = this.users.allUsers.find((user) => {
+      return user.name.toLowerCase() === this.inputAddUser.toLowerCase();
+    });
+    this.chatService.currentChannel[0].users.push(user.id);
+    this.chatService.saveChannel();
+    this.closeUser()
   }
 
   openUserDetails() {
@@ -63,7 +79,8 @@ export class MainContentHeaderComponent {
     this.addUserDialog = false;
     this.userDialog = false;
     this.inputAddUser = '';
-    this.disableButton = true;
+    this.addSelectUser = false;
+    this.selectedUser = [];
   }
 
   addUser() {
@@ -103,5 +120,9 @@ export class MainContentHeaderComponent {
       }
     }
     return 'Profile';
+  }
+  getUserStatus(userId: string) {
+    let user = this.users.getUserPic(userId);
+    return user.status;
   }
 }

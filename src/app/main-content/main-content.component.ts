@@ -9,7 +9,6 @@ import { PrivateChatComponent } from './private-chat/private-chat.component';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users.service';
-import { CurrentUserService } from '../../services/current-user.service';
 
 @Component({
   selector: 'app-main-content',
@@ -32,31 +31,26 @@ export class MainContentComponent {
     public elementRef: ElementRef,
     public renderer: Renderer2,
     private route: ActivatedRoute,
-    private user: UsersService,
+    private user: UsersService
   ) {}
 
   ngOnDestroy() {
     this.routeSub.unsubscribe();
   }
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngAfterViewInit() {
     this.routeSub = this.route.params.subscribe((params) => {
-      this.chatService.resetValues();
-      this.chatService.getChannel(params['id']);
-      this.chatService.getMessagesFromChannel(params['id']);
+      if (params['id']) {
+        this.chatService.resetValues();
+        this.chatService.getChannel(params['id']);
+        this.chatService.getMessagesFromChannel(params['id']);
+        this.user.getAllUsers();
+        this.scrollDown();
+      }
     });
-    this.user.getAllUsers();
   }
 
-  ngAfterViewInit() {}
-  scrollDown() {
-    // this.chatService.getSortMessages(
-    //   this.chatService.sortedMessages,
-    //   this.chatService.messagesList
-    // );
-    const element =
-      this.elementRef.nativeElement.querySelector('#messagesContent');
-    this.renderer.setProperty(element, 'scrollTop', 9999);
-  }
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     if (
@@ -64,6 +58,17 @@ export class MainContentComponent {
       !(event.target as HTMLElement).closest('.message-text-edit')
     ) {
       this.chatService.editFlaggIndex = -1;
+    }
+  }
+  scrollDown() {
+    if (this.chatService.threadList.length > 0) {
+      const element =
+        this.elementRef.nativeElement.querySelector('#messagesContent');
+      this.renderer.setProperty(element, 'scrollTop', 9999);
+    } else {
+      setTimeout(() => {
+        this.scrollDown();
+      }, 250);
     }
   }
 }

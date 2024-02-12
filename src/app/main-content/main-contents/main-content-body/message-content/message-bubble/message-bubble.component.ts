@@ -17,18 +17,31 @@ export class MessageBubbleComponent {
   @Input() msg: any;
   @Input() i: any;
   @Input() isHover: any;
-
+  @Input() list: any;
+  @Input() mainChat: any;
   abortEditMessage() {
     this.chatService.editFlaggIndex = -1;
   }
-  saveEditMessage(index: number) {
-    let editContent = (
-      document.getElementById('input_' + index) as HTMLTextAreaElement
-    ).value;
-    if (this.chatService.sortedMessages[index].content != editContent) {
-      this.chatService.sortedMessages[index].content = editContent;
-      this.chatService.setMessageAndUpdate(index);
+  saveEditMessage(index: number, mainChat: any) {
+    let editContent = this.checkIfThread(index, mainChat);
+    if (this.list[index].content != editContent) {
+      this.list[index].content = editContent;
+      if (mainChat) {
+        this.chatService.setMessageAndUpdate(index);
+      } else {
+        this.chatService.setThreadMessagesAndUpdate(index, this.msg.id);
+      }
     }
     this.chatService.editFlaggIndex = -1;
+  }
+
+  checkIfThread(index: number, mainChat: any) {
+    if (mainChat) {
+      return (document.getElementById('input_' + index) as HTMLTextAreaElement)
+        .value;
+    }
+    return (
+      document.getElementById('inputThread_' + index) as HTMLTextAreaElement
+    ).value;
   }
 }

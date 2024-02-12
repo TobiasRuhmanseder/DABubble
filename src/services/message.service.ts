@@ -9,10 +9,10 @@ import { UsersService } from './users.service';
   providedIn: 'root',
 })
 export class MessageService {
-
   constructor(private fire: FirebaseService, private users: UsersService) {}
 
   currentChannel: any;
+  currentThreadChannelId: any;
   currentThread: any;
   currentOpenMessageThreadId: any;
 
@@ -29,7 +29,7 @@ export class MessageService {
   saveAndAddThreadMessage(message: Message) {
     this.currentThread.push(message);
     this.fire.saveNewThreadMessage(
-      this.currentChannel[0].id,
+      this.currentThreadChannelId,
       this.currentOpenMessageThreadId,
       message
     );
@@ -65,10 +65,11 @@ export class MessageService {
       newMessage
     );
   }
+
   setThreadMessagesAndUpdate(threadIndex: number, threadId: string) {
     let newThread = new Message(this.currentThread[threadIndex]);
     this.fire.updateThread(
-      this.currentChannel[0].id,
+      this.currentThreadChannelId,
       this.currentOpenMessageThreadId,
       threadId,
       newThread
@@ -93,12 +94,12 @@ export class MessageService {
     this.messagesList = await this.fire.getChannelMessages(id);
     this.sortedMessages = this.getSortMessagesByTime(this.messagesList);
     this.threadList = await this.getThreadMessages(id);
-    // return this.messagesList;
   }
 
   setCurrentThread(index: number, messageId: string) {
     this.currentThread = this.getSortMessagesByTime(this.threadList[index]);
     this.currentOpenMessageThreadId = messageId;
+    this.currentThreadChannelId = this.currentChannel[0].id;
     this.threadIsOpen = true;
   }
 
@@ -120,7 +121,8 @@ export class MessageService {
     let user = this.users.getUserPic(userId);
     if (user) {
       return user.photoURL;
-    }return 'Profile'
+    }
+    return 'Profile';
   }
 
   getTimeStamp() {
@@ -141,7 +143,6 @@ export class MessageService {
     }
     return this.currentChannel[0].users;
   }
-
 
   getSortMessages() {
     this.sortedMessages = this.getSortMessagesByTime(this.messagesList);
@@ -230,11 +231,14 @@ export class MessageService {
   }
   getMessageTime(timestamp: number) {
     let date = new Date(timestamp);
-    let timeText = date.getHours() + ':' + date.getMinutes();
+    let hours = ('0' + date.getHours()).slice(-2); 
+    let minutes = ('0' + date.getMinutes()).slice(-2); 
+    let timeText = hours + ':' + minutes;
     return timeText;
   }
 
-  addUserToChannel(userId: string, channelId: string) {
-    // this.fire.addUser(userId, channelId)
+  async saveChannel() {
+    let updateChannel = new Channel(this.currentChannel[0])
+    await this.fire.updateChannel(updateChannel);
   }
 }
