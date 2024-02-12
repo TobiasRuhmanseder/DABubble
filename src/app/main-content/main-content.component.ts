@@ -9,7 +9,6 @@ import { PrivateChatComponent } from './private-chat/private-chat.component';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users.service';
-import { CurrentUserService } from '../../services/current-user.service';
 
 @Component({
   selector: 'app-main-content',
