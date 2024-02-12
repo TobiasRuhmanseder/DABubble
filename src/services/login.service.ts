@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
+import { doc, setDoc } from "firebase/firestore";
 import { Router } from '@angular/router';
 import {
   getAuth,
@@ -15,9 +16,10 @@ import {
   getStorage,
   ref,
   uploadBytes,
-  getDownloadURL
+  getDownloadURL,
 } from "firebase/storage";
 import { Subject } from 'rxjs';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root'
@@ -33,28 +35,12 @@ export class LoginService {
   loadAvatarBtnDisabled: boolean = false;
   invalidImgType: string = '';
   showIntroAnimation = true;
+  userObject: User[] = [];
 
   firestore: Firestore = inject(Firestore);
 
   constructor(private router: Router) {
 
-  }
-
-  // google login
-  signInWithGoogle() {
-    const provider = new GoogleAuthProvider();
-
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const user = result.user;
-        this.router.navigate(['/home']);
-      }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log('Sign In With Google Errors', errorCode, errorMessage)
-      });
   }
 
   // login user
@@ -90,6 +76,24 @@ export class LoginService {
       });
   }
 
+  // google login
+  signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const user = result.user;
+        this.addUserToFirestore(user);
+        this.router.navigate(['/home']);
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('Sign In With Google Errors', errorCode, errorMessage)
+      });
+  }
+
   saveUserDetails() {
     this.saveAvatarBtnDisabled = true;
     const auth = getAuth();
@@ -99,6 +103,7 @@ export class LoginService {
       updateProfile(auth.currentUser, {
         displayName: this.userName, photoURL: this.userImg
       }).then(() => {
+        this.addUserToFirestore(auth.currentUser);
         this.showConfirmationMessage = true;
         this.sendConfirmationMail();
         this.backToLogin();
@@ -107,6 +112,29 @@ export class LoginService {
         console.log(error.code);
       });
     }
+  }
+
+
+  addUserToFirestore(user: any) {
+    const uid = user.uid;
+    const displayName = user.displayName;
+    const email = user.email;
+    const photoURL = user.photoURL;
+
+    const userObject = new User({
+      name: displayName,
+      email: email,
+      photoURL: photoURL,
+      status: false,
+    });
+
+    setDoc(doc(this.firestore, 'users', uid), userObject.toJSON())
+      .then(() => {
+        console.log('Benutzer wurde erfolgreich zu Firestore hinzugefügt');
+      })
+      .catch((error) => {
+        console.error('Error Message', error);
+      });
   }
 
   sendConfirmationMail() {
@@ -124,32 +152,32 @@ export class LoginService {
     }
   }
 
-    // upload avatar
-    uploadProfileImg(imgFile: any, customURL: string) {
-      this.invalidImgType = '';
-      const storage = getStorage();
-      const storageRef = ref(storage, 'user_pics/' + customURL);
-  
-      if (imgFile.type == 'image/png' || imgFile.type == 'image/jpeg' || imgFile.type == 'image/gif') {
-        this.uploadImage(storageRef, imgFile);
-      } else {
-        this.handleInvalidImageType();
-      };
-    }
-  
-    uploadImage(storageRef: any, imgFile: any): void {
-      uploadBytes(storageRef, imgFile).then(() => {
-        getDownloadURL(storageRef).then((imgURL) => {
-          this.userImg = imgURL;
-          this.customAvatar$.next(imgURL);
-        });
+  // upload avatar
+  handleProfileImageUpload(imgFile: any, customURL: string) {
+    this.invalidImgType = '';
+    const storage = getStorage();
+    const storageRef = ref(storage, 'user_pics/' + customURL);
+
+    if (imgFile.type == 'image/png' || imgFile.type == 'image/jpeg' || imgFile.type == 'image/gif') {
+      this.uploadImageToStorage(storageRef, imgFile);
+    } else {
+      this.handleInvalidImageType();
+    };
+  }
+
+  uploadImageToStorage(storageRef: any, imgFile: any): void {
+    uploadBytes(storageRef, imgFile).then(() => {
+      getDownloadURL(storageRef).then((imgURL) => {
+        this.userImg = imgURL;
+        this.customAvatar$.next(imgURL);
       });
-    }
-  
-    handleInvalidImageType() {
-      this.invalidImgType = 'Erlaubte Dateiformate: PNG, JPEG und GIF. Bitte wähle eine gültige Datei aus.';
-      this.loadAvatarBtnDisabled = false;
-    }
+    });
+  }
+
+  handleInvalidImageType() {
+    this.invalidImgType = 'Erlaubte Dateiformate: PNG, JPEG und GIF. Bitte wähle eine gültige Datei aus.';
+    this.loadAvatarBtnDisabled = false;
+  }
 
   // reset password
   resetPassword(email: string) {
