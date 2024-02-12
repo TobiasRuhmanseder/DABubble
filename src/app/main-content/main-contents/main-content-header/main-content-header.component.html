@@ -15,7 +15,9 @@
             >
               <img
                 class="header-pic"
-                src=".\assets\pics\{{ getUserPicFromChannel(users) }}.png"
+                src=".\assets\img\user_pics\{{
+                  getUserPicFromChannel(users)
+                }}.svg"
               />
             </div>
           </div>
@@ -31,10 +33,14 @@
         </div>
         <div *ngFor="let user of chatService.currentChannel[0].users">
           <div class="user" (click)="openUserDetails()">
-            <img
+            <app-user-pic
               class="user-pic"
-              src=".\assets\pics\{{ chatService.getUserPic(user) }}.png"
-            />
+              [status]="true"
+              [online]="getUserStatus(user)"
+              userImageName=".\assets\img\user_pics\{{
+                chatService.getUserPic(user)
+              }}.svg"
+            ></app-user-pic>
             {{ users.getUserName(user) }}
           </div>
         </div>
@@ -62,35 +68,24 @@
             placeholder="Name eingeben"
             [(ngModel)]="inputAddUser"
           />
-          <!-- <div class="input-user" *ngIf="inputAddUser.length > 0">
-              <div></div>
-              <div>{{ inputAddUser }}</div>
-              <div class="close-user-button" (click)="closeUser()"></div>
-            </div> -->
           <div
             class="choose-user"
             *ngIf="inputAddUser.length > 0 && filterUserList().length > 0"
           >
             <div *ngFor="let user of filterUserList()" class="user">
-              <img
+              <div class="user-pic">
+                <app-user-pic
+                  [status]="true"
+                  [online]="user.status"
+                  userImageName=".\assets\img\user_pics\{{ user.photoURL }}.svg"
+                ></app-user-pic>
+              </div>
+              <!-- <img
                 class="user-pic"
                 src=".\assets\pics\{{ chatService.getUserPic(user.id) }}.png"
-              />
+              /> -->
               {{ user.name }}
             </div>
-            <!-- <mat-menu #addUser="matMenu">
-              <div
-                *ngFor="let user of this.chatService.currentChannel[0].users"
-              >
-                <button
-                  mat-menu-item
-                  class="add-menu"
-                  (click)="selectUser(user)"
-                >
-                  {{ user }}
-                </button>
-              </div>
-            </mat-menu> -->
           </div>
         </div>
 

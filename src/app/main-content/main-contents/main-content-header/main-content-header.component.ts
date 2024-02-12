@@ -7,13 +7,14 @@ import { ChannelPopUpComponent } from '../../channel/channel-pop-up/channel-pop-
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { UsersService } from '../../../../services/users.service';
+import { UserPicComponent } from '../../../user-pic/user-pic.component';
 
 @Component({
   selector: 'app-main-content-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatMenuModule],
   templateUrl: './main-content-header.component.html',
   styleUrl: './main-content-header.component.scss',
+  imports: [CommonModule, FormsModule, MatMenuModule, UserPicComponent],
 })
 export class MainContentHeaderComponent {
   showBg: boolean = false;
@@ -28,7 +29,10 @@ export class MainContentHeaderComponent {
     public users: UsersService
   ) {}
   filterUserList() {
-    let list = this.users.allUsers;
+    let allUserList = this.users.allUsers;
+    let list = allUserList.filter((user) => {
+      return !this.chatService.currentChannel[0].users.includes(user.id);
+    });
     let filterList = list.filter((user) => {
       return user.name.toLowerCase().includes(this.inputAddUser.toLowerCase());
     });
@@ -103,5 +107,9 @@ export class MainContentHeaderComponent {
       }
     }
     return 'Profile';
+  }
+  getUserStatus(userId: string) {
+    let user = this.users.getUserPic(userId);
+    return user.status;
   }
 }
