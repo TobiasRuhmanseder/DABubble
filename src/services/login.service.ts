@@ -85,7 +85,8 @@ export class LoginService {
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const user = result.user;
-        this.addUserToFirestore(user);
+        const statusValue: boolean = true;
+        this.addUserToFirestore(user, statusValue);
         this.router.navigate(['/home']);
       }).catch((error) => {
         const errorCode = error.code;
@@ -94,16 +95,18 @@ export class LoginService {
       });
   }
 
+  // save additional user details
   saveUserDetails() {
     this.saveAvatarBtnDisabled = true;
     const auth = getAuth();
     const user = auth.currentUser;
+    const statusValue: boolean = false;
 
     if (user) {
       updateProfile(auth.currentUser, {
         displayName: this.userName, photoURL: this.userImg
       }).then(() => {
-        this.addUserToFirestore(auth.currentUser);
+        this.addUserToFirestore(auth.currentUser, statusValue);
         this.showConfirmationMessage = true;
         this.sendConfirmationMail();
         this.backToLogin();
@@ -114,8 +117,8 @@ export class LoginService {
     }
   }
 
-
-  addUserToFirestore(user: any) {
+  // add user also to firestore
+  addUserToFirestore(user: any, statusValue: boolean) {
     const uid = user.uid;
     const displayName = user.displayName;
     const email = user.email;
@@ -125,7 +128,7 @@ export class LoginService {
       name: displayName,
       email: email,
       photoURL: photoURL,
-      status: false,
+      status: statusValue,
     });
 
     setDoc(doc(this.firestore, 'users', uid), userObject.toJSON())
@@ -135,6 +138,7 @@ export class LoginService {
       .catch((error) => {
         console.error('Error Message', error);
       });
+
   }
 
   sendConfirmationMail() {
