@@ -1,5 +1,5 @@
-<div class="header">
-  <div class="channel-title" (click)="openChannelData()">
+<div class="header" *ngIf="chatService.getChannelName().length > 0">
+  <div class="channel-title" (click)="openChannelData()" >
     <div class="icon icon-tag" src=".\assets\icons\tag.png"></div>
     <div class="title-hover">{{ chatService.getChannelName() }}</div>
     <div class="icon icon-expand"></div>

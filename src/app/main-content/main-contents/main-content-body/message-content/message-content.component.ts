@@ -25,6 +25,4 @@ export class MessageContentComponent {
   @Input() mainChat: any;
   @Input() list: any;
   constructor(public chatService: MessageService, public users: UsersService) {}
-
-
 }

@@ -94,7 +94,6 @@ export class MessageService {
     this.messagesList = await this.fire.getChannelMessages(id);
     this.sortedMessages = this.getSortMessagesByTime(this.messagesList);
     this.threadList = await this.getThreadMessages(id);
-    // return this.messagesList;
   }
 
   setCurrentThread(index: number, messageId: string) {
