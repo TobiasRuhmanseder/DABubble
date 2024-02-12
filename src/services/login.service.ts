@@ -32,6 +32,7 @@ export class LoginService {
   saveAvatarBtnDisabled: boolean = false;
   loadAvatarBtnDisabled: boolean = false;
   invalidImgType: string = '';
+  showIntroAnimation = true;
 
   firestore: Firestore = inject(Firestore);
 
