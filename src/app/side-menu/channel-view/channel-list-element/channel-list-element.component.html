@@ -1,8 +1,11 @@
 <div class="channel-list-element">
     <div class="button" (click)="chooseChannel()" [class.button-active]="channel.id == currentCollectionId">
-        <img src=" ../../../../assets/img/tag.svg" alt="">
-        <img src="../../../../assets/img/tag_click.svg" alt="">
-        <img src="../../../../assets/img/tag_active.svg" alt="">
+        <div class="img-container">
+            <img src=" ../../../../assets/img/tag.svg" alt="">
+            <img src="../../../../assets/img/tag_click.svg" alt="">
+            <img src="../../../../assets/img/tag_active.svg" alt="">
+        </div>
+
         <span>{{ channel.name }}</span>
     </div>
 </div>

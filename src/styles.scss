@@ -1,3 +1,7 @@
+html {
+  overflow: hidden !important;
+}
+
 body {
   margin: 0;
   overflow: hidden;
@@ -60,13 +64,13 @@ body {
   display: flex;
   justify-content: space-between;
 
-  > div {
+  >div {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 10px;
 
-    > a {
+    >a {
       margin-right: -15px;
     }
   }
@@ -222,6 +226,7 @@ app-main-content {
   max-width: unset !important;
   box-shadow: 0 6px 10px 0 rgba($color: #000000, $alpha: 0.2);
 }
+
 .mat-mdc-menu-item-text {
   font-family: Nunito !important;
   font-size: 20px !important;
@@ -229,11 +234,18 @@ app-main-content {
   line-height: 27px !important;
   text-wrap: nowrap !important;
 }
+
 .mat-mdc-menu-item {
   padding: 10px 20px;
   border-radius: 100px;
+
   &:hover {
     background-color: #eceefe !important;
     color: #535af1;
   }
+}
+
+// dialog window new Channel
+.cdk-global-scrollblock {
+  overflow: hidden !important; //hidden the y-scrollbar 
 }

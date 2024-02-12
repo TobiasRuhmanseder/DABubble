@@ -1,6 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit, inject } from '@angular/core';
 import { IconHoverChangeImageComponent } from '../../icon-hover-change-image/icon-hover-change-image.component';
 import { ChannelListElementComponent } from './channel-list-element/channel-list-element.component';
+import { NewChannelListElementComponent } from './new-channel-list-element/new-channel-list-element.component';
 import { FirebaseService } from '../../../services/firebase.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-channel-view',
   standalone: true,
-  imports: [IconHoverChangeImageComponent, ChannelListElementComponent, CommonModule],
+  imports: [IconHoverChangeImageComponent, ChannelListElementComponent, CommonModule, NewChannelListElementComponent],
   templateUrl: './channel-view.component.html',
   styleUrl: './channel-view.component.scss'
 })
