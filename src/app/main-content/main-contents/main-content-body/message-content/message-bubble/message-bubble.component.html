@@ -5,22 +5,32 @@
       'message-text-owner': msg.senderId === this.chatService.eingeloggterUser,
       'message-text': msg.senderId !== this.chatService.eingeloggterUser
     }"
-    [class.hover-effect]="isHover === i && msg.senderId !== this.chatService.eingeloggterUser"
+    [class.hover-effect]="
+      isHover === i && msg.senderId !== this.chatService.eingeloggterUser
+    "
   >
     {{ msg.content }}
   </div>
   <div class="message-text-edit" *ngIf="chatService.editFlaggIndex === i">
     <textarea
+      *ngIf="mainChat"
       class="main-input-edit-field"
       cdkTextareaAutosize
       [id]="'input_' + i"
+      >{{ msg.content }}</textarea
+    >
+    <textarea
+      *ngIf="!mainChat"
+      class="main-input-edit-field"
+      cdkTextareaAutosize
+      [id]="'inputThread_' + i"
       >{{ msg.content }}</textarea
     >
     <div class="edit-nav">
       <div class="edit-icon"></div>
       <div class="message-text-edit-nav">
         <div class="abort" (click)="abortEditMessage()">Abbrechen</div>
-        <div class="save" (click)="saveEditMessage(i)">Speichern</div>
+        <div class="save" (click)="saveEditMessage(i, mainChat)">Speichern</div>
       </div>
     </div>
   </div>
