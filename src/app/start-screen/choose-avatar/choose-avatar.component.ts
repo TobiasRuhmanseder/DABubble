@@ -39,7 +39,7 @@ export class ChooseAvatarComponent implements OnInit {
   uploadFile(event: any) {
     this.LoginService.loadAvatarBtnDisabled = true;
     this.imgFile = event.target.files[0];
-    this.LoginService.uploadProfileImg(this.imgFile, this.generateRandomId());
+    this.LoginService.handleProfileImageUpload(this.imgFile, this.generateRandomId());
   }
 
   generateRandomId() {

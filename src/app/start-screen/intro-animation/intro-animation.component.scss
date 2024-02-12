@@ -14,7 +14,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        font-size: 96px;
+        font-size: 64px;
         font-weight: 700;
         color: white;
         display: flex;
@@ -27,7 +27,7 @@
 
         img {
             width: 180px;
-            transform: translateX(244px);
+            transform: translateX(162px);
             animation: fadeInImage 0.5s ease-in-out forwards, shrinkImg 1s ease-in-out forwards;
             animation-delay: 0.5s, 2.0s;
         }
@@ -41,7 +41,7 @@
 
     @keyframes fadeInImage {
         from {
-            transform: translateX(244px);
+            transform: translateX(162px);
         }
 
         to {
@@ -66,7 +66,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 96px;
+            font-size: 64px;
             color: white;
         }
 

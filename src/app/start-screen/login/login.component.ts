@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { LoginService } from '../../../services/login.service';
 import { CurrentUserService } from '../../../services/current-user.service';
 import { IntroAnimationComponent } from '../intro-animation/intro-animation.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,8 @@ import { IntroAnimationComponent } from '../intro-animation/intro-animation.comp
   imports: [
     RouterLink,
     ReactiveFormsModule,
-    IntroAnimationComponent
+    IntroAnimationComponent,
+    CommonModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

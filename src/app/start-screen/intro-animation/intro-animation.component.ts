@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../../../services/login.service';
 
 
 @Component({
@@ -12,9 +13,12 @@ import { Component, OnInit } from '@angular/core';
 export class IntroAnimationComponent implements OnInit{
   containerVisible = true;
 
+  constructor(public LoginService: LoginService) {}
+
   ngOnInit() {
     setTimeout(() => {
       this.containerVisible = false;
+      this.LoginService.showIntroAnimation = false;
     }, 3500);
   }
 }
