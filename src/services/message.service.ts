@@ -232,7 +232,9 @@ export class MessageService {
   }
   getMessageTime(timestamp: number) {
     let date = new Date(timestamp);
-    let timeText = date.getHours() + ':' + date.getMinutes();
+    let hours = ('0' + date.getHours()).slice(-2); 
+    let minutes = ('0' + date.getMinutes()).slice(-2); 
+    let timeText = hours + ':' + minutes;
     return timeText;
   }
 
