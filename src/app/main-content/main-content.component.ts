@@ -38,18 +38,18 @@ export class MainContentComponent {
   ngOnDestroy() {
     this.routeSub.unsubscribe();
   }
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.routeSub = this.route.params.subscribe((params) => {
-      this.chatService.resetValues();
-      this.chatService.getChannel(params['id']);
-      this.chatService.getMessagesFromChannel(params['id']);
-      this.user.getAllUsers();
-      this.scrollDown();
+      if (params['id']) {
+        this.chatService.resetValues();
+        this.chatService.getChannel(params['id']);
+        this.chatService.getMessagesFromChannel(params['id']);
+        this.user.getAllUsers();
+        this.scrollDown();
+      }
     });
-    
   }
 
   @HostListener('document:click', ['$event'])
