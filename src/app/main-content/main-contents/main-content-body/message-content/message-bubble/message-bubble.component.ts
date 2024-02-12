@@ -23,7 +23,6 @@ export class MessageBubbleComponent {
     this.chatService.editFlaggIndex = -1;
   }
   saveEditMessage(index: number, mainChat: any) {
-    debugger
     let editContent = this.checkIfThread(index, mainChat);
     if (this.list[index].content != editContent) {
       this.list[index].content = editContent;
