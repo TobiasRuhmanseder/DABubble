@@ -243,4 +243,27 @@ app-main-content {
     background-color: #eceefe !important;
     color: #535af1;
   }
+
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F2F2F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #BDBDBD;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6E6E6E;
+}
+
+// dialog window new Channel
+.cdk-global-scrollblock {
+  overflow: hidden !important; //hidden the y-scrollbar 
 }
