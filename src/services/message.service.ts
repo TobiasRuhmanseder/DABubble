@@ -72,6 +72,7 @@ export class MessageService {
     );
     message.id = refId;
     this.sortedMessages.push(message);
+    this.threadList.push([]);
   }
 
   setMessage(inputContent: string) {
@@ -132,23 +133,20 @@ export class MessageService {
   }
 
   setCurrentThread(index: number, messageId: string) {
-    this.currentThread = this.getSortMessagesByTime(this.threadList[index]);
-    this.currentOpenMessageThreadId = messageId;
-    this.currentThreadChannel = this.currentChannel[0];
-    this.threadIsOpen = true;
+    if (this.threadList.length != 0) {
+      this.currentThread = this.getSortMessagesByTime(this.threadList[index]);
+      this.currentOpenMessageThreadId = messageId;
+      this.currentThreadChannel = this.currentChannel[0];
+      this.threadIsOpen = true;
+    }
   }
 
-  // ('NME25IW6lIFNuqfo4IrP','Iz9ByE5o3aoC8OQukKSl')
   async getThreadMessages(channelId: string) {
     let dataList: any[] = [];
     for (const msg of this.messagesList) {
       dataList.push(await this.fire.getThreadMessages(channelId, msg.id));
     }
     return dataList;
-  }
-
-  toggleThread(index: number) {
-    this.threadIsOpen = !this.threadIsOpen;
   }
 
   getUserPic(userId: any) {

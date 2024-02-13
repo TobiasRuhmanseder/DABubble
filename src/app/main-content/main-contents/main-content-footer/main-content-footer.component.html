@@ -1,9 +1,14 @@
 <div class="main-input-container">
-  <textarea
-    [ngModel]="textareaContent"
+  <textarea *ngIf="mainChat"
+    [(ngModel)]="textAreaContent"
     class="main-input-field"
-    placeholder="Nachricht an # {{ chatService.getChannelName() }}"
+    [placeholder]="getPlaceholderText()"
   ></textarea>
+  <textarea *ngIf="!mainChat"
+  [(ngModel)]="textAreaThreadContent"
+  class="main-input-field"
+  [placeholder]="getPlaceholderText()"
+></textarea>
   <div class="main-inputfield-container">
     <div class="main-input-icons-nav">
       <!-- <app-icon-hover-change-image class="icon" [unhovered]="'../../../../assets/icons/add.png'" [hovered]="'../../../../assets/icons/add_hover.png'"></app-icon-hover-change-image> -->
@@ -15,10 +20,15 @@
       <button class="icon-smile inputfield-icon icon"></button>
       <button class="icon-ad inputfield-icon icon"></button>
     </div>
-    <button
+    <button *ngIf="mainChat"
       class="main-input-confirm inputfield-icon"
-      [disabled]="textareaContent.length === 0"
+      [disabled]="textAreaContent.length < 0"
       (click)="sendMessage()"
     ></button>
+    <button *ngIf="!mainChat"
+    class="main-input-confirm inputfield-icon"
+    [disabled]="textAreaThreadContent.length < 0"
+    (click)="sendMessage()"
+  ></button>
   </div>
 </div>

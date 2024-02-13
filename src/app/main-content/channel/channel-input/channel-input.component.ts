@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MessageService } from '../../../../services/message.service';
 import { FormsModule } from '@angular/forms';
-import { Message } from '../../../../models/message.class';
 
 @Component({
   selector: 'app-channel-input',
