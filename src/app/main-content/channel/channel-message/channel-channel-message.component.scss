@@ -1,7 +1,7 @@
 .thread-content {
-  min-height: 80%;
+  min-height: 100%;
   display: flex;
-  app-message-content {
+  .thread-content-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;

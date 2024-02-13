@@ -40,13 +40,13 @@ export class MainContentComponent {
   ngOnInit() {}
 
   ngAfterViewInit() {
+    this.user.getAllUsers();
     this.routeSub = this.route.params.subscribe((params) => {
       if (params['id']) {
         this.chatService.resetValues();
+        this.scrollDown();
         this.chatService.getChannel(params['id']);
         this.chatService.getMessagesFromChannel(params['id']);
-        this.user.getAllUsers();
-        this.scrollDown();
       }
     });
   }
@@ -61,10 +61,10 @@ export class MainContentComponent {
     }
   }
   scrollDown() {
-    if (this.chatService.threadList.length > 0) {
+    if (this.chatService.sortedMessages.length > 0) {
       const element =
         this.elementRef.nativeElement.querySelector('#messagesContent');
-      this.renderer.setProperty(element, 'scrollTop', 9999);
+      this.renderer.setProperty(element, 'scrollTop', 999999);
     } else {
       setTimeout(() => {
         this.scrollDown();

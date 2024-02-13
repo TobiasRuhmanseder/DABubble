@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { MainContentComponent } from '../../main-content.component';
 import { IconHoverChangeImageComponent } from '../../../icon-hover-change-image/icon-hover-change-image.component';
 import { FirebaseService } from '../../../../services/firebase.service';
-import { Message } from '../../../../models/message.class';
 
 @Component({
   selector: 'app-main-content-footer',

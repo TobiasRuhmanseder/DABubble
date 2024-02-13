@@ -31,7 +31,6 @@ export class MainContentHeaderComponent {
   ) {}
   filterUserList() {
     let allUserList = this.users.allUsers;
-    debugger
     let list = allUserList.filter((user) => {
       return !this.chatService.currentChannel[0].users.includes(user.id);
     });

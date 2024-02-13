@@ -12,7 +12,7 @@ export class MessageService {
   constructor(private fire: FirebaseService, private users: UsersService) {}
 
   currentChannel: any;
-  currentThreadChannelId: any;
+  currentThreadChannel: any;
   currentThread: any;
   currentOpenMessageThreadId: any;
 
@@ -56,7 +56,7 @@ export class MessageService {
 
   async saveAndAddThreadMessage(message: Message) {
     let refId = await this.fire.saveNewThreadMessage(
-      this.currentThreadChannelId,
+      this.currentThreadChannel.id,
       this.currentOpenMessageThreadId,
       message
     );
@@ -104,7 +104,7 @@ export class MessageService {
   setThreadMessagesAndUpdate(threadIndex: number, threadId: string) {
     let newThread = new Message(this.currentThread[threadIndex]);
     this.fire.updateThread(
-      this.currentThreadChannelId,
+      this.currentThreadChannel.id,
       this.currentOpenMessageThreadId,
       threadId,
       newThread
@@ -134,7 +134,7 @@ export class MessageService {
   setCurrentThread(index: number, messageId: string) {
     this.currentThread = this.getSortMessagesByTime(this.threadList[index]);
     this.currentOpenMessageThreadId = messageId;
-    this.currentThreadChannelId = this.currentChannel[0].id;
+    this.currentThreadChannel = this.currentChannel[0];
     this.threadIsOpen = true;
   }
 
