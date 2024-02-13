@@ -19,7 +19,6 @@
 
 
 .button {
-    width: max-content;
     padding-top: 4px;
     padding-bottom: 4px;
     padding-left: 10px;
@@ -34,11 +33,11 @@
         transition: all 125ms ease-in-out;
         background-color: #ECEEFE;
         border-radius: 12.25px;
+        color: #535AF1;
     }
 
-    &:active {
-        color: #535AF1;
-        font-weight: 700;
+    &:active{
+        color: black;
     }
 
     img {

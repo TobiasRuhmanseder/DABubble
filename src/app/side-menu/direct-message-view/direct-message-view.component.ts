@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IconHoverChangeImageComponent } from '../../icon-hover-change-image/icon-hover-change-image.component';
 
 @Component({
