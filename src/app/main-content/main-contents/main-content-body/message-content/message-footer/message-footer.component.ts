@@ -13,6 +13,7 @@ import { UsersService } from '../../../../../../services/users.service';
 export class MessageFooterComponent {
   threadMessages: any;
   constructor(public chatService: MessageService, public users: UsersService) {}
+  @Input() flagg: any;
 
   @Input() msg: any;
   @Input() i: any;

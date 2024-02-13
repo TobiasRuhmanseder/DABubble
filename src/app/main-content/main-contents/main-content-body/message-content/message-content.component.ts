@@ -22,6 +22,7 @@ import { UsersService } from '../../../../../services/users.service';
 })
 export class MessageContentComponent {
   isHover: any;
+  @Input() flagg: any;
   @Input() mainChat: any;
   @Input() list: any;
   constructor(public chatService: MessageService, public users: UsersService) {}

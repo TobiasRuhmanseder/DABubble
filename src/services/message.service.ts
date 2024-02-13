@@ -22,6 +22,7 @@ export class MessageService {
   threadList: any[] = [];
 
   editFlaggIndex: number = -1;
+  editThreadFlaggIndex: number = -1;
   threadIsOpen = false;
 
   eingeloggterUser: string = 'h4w3Cntmu2BmDuWSxKqt';

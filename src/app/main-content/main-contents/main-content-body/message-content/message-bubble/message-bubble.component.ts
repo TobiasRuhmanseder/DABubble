@@ -14,6 +14,8 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 export class MessageBubbleComponent {
   constructor(public chatService: MessageService) {}
 
+  @Input() flagg: any;
+
   @Input() msg: any;
   @Input() i: any;
   @Input() isHover: any;
@@ -21,18 +23,20 @@ export class MessageBubbleComponent {
   @Input() mainChat: any;
   abortEditMessage() {
     this.chatService.editFlaggIndex = -1;
+    this.chatService.editThreadFlaggIndex = -1;
   }
   saveEditMessage(index: number, mainChat: any) {
     let editContent = this.checkIfThread(index, mainChat);
-    if (this.list[index].content != editContent) {
-      this.list[index].content = editContent;
-      if (mainChat) {
-        this.chatService.setMessageAndUpdate(index);
-      } else {
-        this.chatService.setThreadMessagesAndUpdate(index, this.msg.id);
-      }
-    }
-    this.chatService.editFlaggIndex = -1;
+    console.log(editContent);
+    // if (this.list[index].content != editContent) {
+    //   this.list[index].content = editContent;
+    //   if (mainChat) {
+    //     this.chatService.setMessageAndUpdate(index);
+    //   } else {
+    //     this.chatService.setThreadMessagesAndUpdate(index, this.msg.id);
+    //   }
+    // }
+    this.abortEditMessage();
   }
 
   checkIfThread(index: number, mainChat: any) {

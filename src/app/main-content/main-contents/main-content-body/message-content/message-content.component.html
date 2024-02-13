@@ -18,11 +18,13 @@
     }"
   >
     <img
+      *ngIf="chatService.editThreadFlaggIndex === -1 || mainChat"
       class="message-pic"
       src="{{ chatService.getUserPic(msg.senderId) }}"
     />
     <div class="message-body">
       <app-message-title
+        [flagg]="flagg"
         [msg]="msg"
         [i]="i"
         [list]="list"
@@ -30,6 +32,7 @@
         [mainChat]="mainChat"
       ></app-message-title>
       <app-message-bubble
+        [flagg]="flagg"
         [msg]="msg"
         [i]="i"
         [isHover]="isHover"
@@ -37,6 +40,7 @@
         [mainChat]="mainChat"
       ></app-message-bubble>
       <app-message-footer
+        [flagg]="flagg"
         [msg]="msg"
         [i]="i"
         [list]="list"

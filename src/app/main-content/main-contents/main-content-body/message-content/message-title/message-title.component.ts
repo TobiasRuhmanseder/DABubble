@@ -20,6 +20,8 @@ export class MessageTitleComponent {
     public users: UsersService
   ) {}
 
+  @Input() flagg: any;
+
   @Input() msg: any;
   @Input() i: any;
   @Input() isHover: any;
@@ -30,7 +32,11 @@ export class MessageTitleComponent {
   }
   editMessage(index: number) {
     setTimeout(() => {
-      this.chatService.editFlaggIndex = index;
+      if (this.mainChat) {
+        return (this.chatService.editFlaggIndex = index);
+      } else {
+        return (this.chatService.editThreadFlaggIndex = index);
+      }
     }, 1);
   }
 }

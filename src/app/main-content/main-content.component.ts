@@ -54,9 +54,11 @@ export class MainContentComponent {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     if (
-      this.chatService.editFlaggIndex > -1 &&
-      !(event.target as HTMLElement).closest('.message-text-edit')
+      this.chatService.editThreadFlaggIndex > -1 ||
+      (this.chatService.editFlaggIndex > -1 &&
+        !(event.target as HTMLElement).closest('.message-text-edit'))
     ) {
+      this.chatService.editThreadFlaggIndex = -1;
       this.chatService.editFlaggIndex = -1;
     }
   }

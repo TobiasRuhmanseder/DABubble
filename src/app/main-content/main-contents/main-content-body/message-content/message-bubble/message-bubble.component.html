@@ -1,6 +1,6 @@
 <div>
   <div
-    *ngIf="chatService.editFlaggIndex != i"
+    *ngIf="flagg != i"
     [ngClass]="{
       'message-text-owner': msg.senderId === this.chatService.eingeloggterUser,
       'message-text': msg.senderId !== this.chatService.eingeloggterUser
@@ -11,7 +11,7 @@
   >
     {{ msg.content }}
   </div>
-  <div class="message-text-edit" *ngIf="chatService.editFlaggIndex === i">
+  <div class="message-text-edit" *ngIf="flagg === i">
     <textarea
       *ngIf="mainChat"
       class="main-input-edit-field"
@@ -22,7 +22,7 @@
     <textarea
       *ngIf="!mainChat"
       class="main-input-edit-field"
-      cdkTextareaAutosize
+      cdkTextareaAutosizes
       [id]="'inputThread_' + i"
       >{{ msg.content }}</textarea
     >

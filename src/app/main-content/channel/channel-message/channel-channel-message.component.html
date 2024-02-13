@@ -2,6 +2,7 @@
   <div class="thread-content-container">
     <!-- <app-message-content [mainChat]="false" [list]="this.chatService.currentThread"></app-message-content> -->
     <app-message-content
+    [flagg]="this.chatService.editThreadFlaggIndex"
       [mainChat]="false"
       [list]="this.chatService.currentThread"
     ></app-message-content>
