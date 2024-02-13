@@ -25,6 +25,7 @@ export class MainContentFooterComponent {
 
   sendMessage() {
     let message = this.chatService.setMessage(this.textareaContent);
+    this.textareaContent = '';
     this.chatService.saveAndAddNewMessage(message);
     setTimeout(() => {
       this.mainContent.scrollDown();

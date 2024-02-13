@@ -1,5 +1,5 @@
 <div class="header" *ngIf="chatService.getChannelName().length > 0">
-  <div class="channel-title" (click)="openChannelData()" >
+  <div class="channel-title" (click)="openChannelData()">
     <div class="icon icon-tag" src=".\assets\icons\tag.png"></div>
     <div class="title-hover">{{ chatService.getChannelName() }}</div>
     <div class="icon icon-expand"></div>
@@ -15,9 +15,7 @@
             >
               <img
                 class="header-pic"
-                src=".\assets\img\user_pics\{{
-                  getUserPicFromChannel(users)
-                }}.svg"
+                src="{{ getUserPicFromChannel(users) }}"
               />
             </div>
           </div>
@@ -37,9 +35,7 @@
               class="user-pic"
               [status]="true"
               [online]="getUserStatus(user)"
-              userImageName=".\assets\img\user_pics\{{
-                chatService.getUserPic(user)
-              }}.svg"
+              userImageName="{{ chatService.getUserPic(user) }}"
             ></app-user-pic>
             {{ users.getUserName(user) }}
           </div>
@@ -66,7 +62,7 @@
             <div class="selectInputUser">
               <img
                 class="user-select-pic"
-                src=".\assets\img\user_pics\{{ selectedUser.photoURL }}.svg"
+                src="{{ selectedUser.photoURL }}"
               />{{ selectedUser.name }}
               <img
                 class="close"
@@ -96,9 +92,7 @@
                   <app-user-pic
                     [status]="true"
                     [online]="user.status"
-                    userImageName=".\assets\img\user_pics\{{
-                      user.photoURL
-                    }}.svg"
+                    userImageName="{{ user.photoURL }}"
                   ></app-user-pic>
                 </div>
                 {{ user.name }}

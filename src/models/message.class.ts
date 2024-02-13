@@ -1,4 +1,5 @@
 export class Message {
+  id: string;
   senderId: string;
   timestamp: number;
   content: string;
@@ -8,6 +9,7 @@ export class Message {
   reactionRocket: any[];
 
   constructor(obj: any) {
+    this.id = obj ? obj.id : '';
     this.senderId = obj ? obj.senderId : '';
     this.timestamp = obj ? obj.timestamp : 0;
     this.content = obj ? obj.content : '';
@@ -19,6 +21,7 @@ export class Message {
 
   public toJSON() {
     return {
+      id: this.id,
       senderId: this.senderId,
       timestamp: this.timestamp,
       content: this.content,

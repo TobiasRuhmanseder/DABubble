@@ -36,12 +36,12 @@
       <div
         *ngIf="mainChat"
         class="icon-check icon-message"
-        (click)="addReaction('Check', i)"
+        (click)="chatService.addReaction('Check', i, list, mainChat)"
       ></div>
       <div
         *ngIf="mainChat"
         class="icon-raising icon-message"
-        (click)="addReaction('Raising', i)"
+        (click)="chatService.addReaction('Raising', i, list, mainChat)"
       ></div>
       <div
         class="icon-emoji icon-message"
@@ -53,28 +53,28 @@
           <div
             mat-menu-item
             class="icon-check icon-message"
-            (click)="addReaction('Check', i)"
+            (click)="chatService.addReaction('Check', i, list, mainChat)"
           >
             <img src=".\assets\icons\check.png" />
           </div>
           <div
             mat-menu-item
             class="icon-check icon-message"
-            (click)="addReaction('Raising', i)"
+            (click)="chatService.addReaction('Raising', i, list, mainChat)"
           >
             <img src=".\assets\icons\raising.png" />
           </div>
           <div
             mat-menu-item
             class="icon-check icon-message"
-            (click)="addReaction('Rocket', i)"
+            (click)="chatService.addReaction('Rocket', i, list, mainChat)"
           >
             <img src=".\assets\icons\rocket.png" />
           </div>
           <div
             mat-menu-item
             class="icon-check icon-message"
-            (click)="addReaction('Nerd', i)"
+            (click)="chatService.addReaction('Nerd', i, list, mainChat)"
           >
             <img src=".\assets\icons\nerd.png" />
           </div>

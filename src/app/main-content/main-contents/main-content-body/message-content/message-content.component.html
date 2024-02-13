@@ -19,7 +19,7 @@
   >
     <img
       class="message-pic"
-      src=".\assets\img\user_pics\{{ chatService.getUserPic(msg.senderId) }}.svg"
+      src="{{ chatService.getUserPic(msg.senderId) }}"
     />
     <div class="message-body">
       <app-message-title
@@ -39,6 +39,7 @@
       <app-message-footer
         [msg]="msg"
         [i]="i"
+        [list]="list"
         [mainChat]="mainChat"
       ></app-message-footer>
     </div>

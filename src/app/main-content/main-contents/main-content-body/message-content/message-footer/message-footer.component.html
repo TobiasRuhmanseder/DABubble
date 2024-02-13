@@ -25,9 +25,12 @@
     <div class="message-time">Letzte Antwort {{ getThreadTimestamp(i) }}</div>
   </div>
   <div *ngIf="msg.reactionCheck.length > 0" class="reaction-icon">
-    <img src=".\assets\icons\check.png" /><span>{{
-      msg.reactionCheck.length
-    }}</span>
+    <div class="reaction-icon-button"             (click)="chatService.addReaction('Check', i, list, mainChat)"
+    >
+      <img src=".\assets\icons\check.png" /><span>{{
+        msg.reactionCheck.length
+      }}</span>
+    </div>
     <div class="tooltip-emoji">
       <img src=".\assets\icons\check.png" />
       <div *ngFor="let userName of setSelfToLast(msg, 'Check')">
@@ -37,9 +40,13 @@
     </div>
   </div>
   <div *ngIf="msg.reactionRaising.length > 0" class="reaction-icon">
-    <img src=".\assets\icons\raising.png" /><span>{{
-      msg.reactionRaising.length
-    }}</span>
+    <div class="reaction-icon-button"             (click)="chatService.addReaction('Raising', i, list, mainChat)"
+    >
+      <img src=".\assets\icons\raising.png" /><span>{{
+        msg.reactionRaising.length
+      }}</span>
+    </div>
+
     <div class="tooltip-emoji">
       <img src=".\assets\icons\raising.png" />
       <div *ngFor="let userName of setSelfToLast(msg, 'Raising')">
@@ -49,9 +56,13 @@
     </div>
   </div>
   <div *ngIf="msg.reactionRocket.length > 0" class="reaction-icon">
-    <img src=".\assets\icons\rocket.png" /><span>{{
-      msg.reactionRocket.length
-    }}</span>
+    <div class="reaction-icon-button"             (click)="chatService.addReaction('Rocket', i, list, mainChat)"
+    >
+      <img src=".\assets\icons\rocket.png" /><span>{{
+        msg.reactionRocket.length
+      }}</span>
+    </div>
+
     <div class="tooltip-emoji">
       <img src=".\assets\icons\rocket.png" />
       <div *ngFor="let userName of setSelfToLast(msg, 'Rocket')">
@@ -61,9 +72,13 @@
     </div>
   </div>
   <div *ngIf="msg.reactionNerd.length > 0" class="reaction-icon">
-    <img src=".\assets\icons\nerd.png" /><span>{{
-      msg.reactionNerd.length
-    }}</span>
+    <div class="reaction-icon-button"             (click)="chatService.addReaction('Nerd', i, list, mainChat)"
+    >
+      <img src=".\assets\icons\nerd.png" /><span>{{
+        msg.reactionNerd.length
+      }}</span>
+    </div>
+
     <div class="tooltip-emoji">
       <img src=".\assets\icons\nerd.png" />
       <div *ngFor="let userName of setSelfToLast(msg, 'Nerd')">

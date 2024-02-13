@@ -31,6 +31,7 @@ export class MainContentHeaderComponent {
   ) {}
   filterUserList() {
     let allUserList = this.users.allUsers;
+    debugger
     let list = allUserList.filter((user) => {
       return !this.chatService.currentChannel[0].users.includes(user.id);
     });
@@ -51,23 +52,22 @@ export class MainContentHeaderComponent {
   selectUser(user: any) {
     this.selectedUser = user;
     this.inputAddUser = user.name;
-    this.addSelectUser = true
+    this.addSelectUser = true;
   }
 
   closeUser() {
     this.inputAddUser = '';
     this.selectedUser = [];
-    this.addSelectUser =false;
+    this.addSelectUser = false;
   }
 
-  // muss noch im firebase gespeichert werden!
   addUserToChannel() {
     let user = this.users.allUsers.find((user) => {
       return user.name.toLowerCase() === this.inputAddUser.toLowerCase();
     });
     this.chatService.currentChannel[0].users.push(user.id);
     this.chatService.saveChannel();
-    this.closeUser()
+    this.closeUser();
   }
 
   openUserDetails() {
@@ -114,7 +114,7 @@ export class MainContentHeaderComponent {
       (users: string) => users === user
     );
     if (checkIfUserInChannel) {
-      let userPic = this.users.getUserPic(checkIfUserInChannel);
+      let userPic = this.users.getUserFromId(checkIfUserInChannel);
       if (userPic) {
         return userPic.photoURL;
       }
@@ -122,7 +122,7 @@ export class MainContentHeaderComponent {
     return 'Profile';
   }
   getUserStatus(userId: string) {
-    let user = this.users.getUserPic(userId);
+    let user = this.users.getUserFromId(userId);
     return user.status;
   }
 }

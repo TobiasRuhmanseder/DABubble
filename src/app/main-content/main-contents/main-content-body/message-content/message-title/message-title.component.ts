@@ -28,33 +28,6 @@ export class MessageTitleComponent {
   openUserDetails() {
     this.dialog.open(DialogUserInfoComponent, {});
   }
-  addReaction(reaction: string, index: number) {
-    let content = this.list[index];
-    let user = this.chatService.eingeloggterUser;
-    this.updateReaction(reaction, content, user);
-    if (this.mainChat) {
-      return this.chatService.setMessageAndUpdate(index);
-    }
-    return this.chatService.setThreadMessagesAndUpdate(index, content.id);
-  }
-  private updateReaction(reaction: string, content: any, user: string) {
-    if (content[`reaction${reaction}`].includes(user)) {
-      deleteUser();
-    } else {
-      addUser();
-    }
-
-    function addUser() {
-      content[`reaction${reaction}`].push(user);
-    }
-
-    function deleteUser() {
-      content[`reaction${reaction}`].splice(
-        content[`reaction${reaction}`].indexOf(user),
-        1
-      );
-    }
-  }
   editMessage(index: number) {
     setTimeout(() => {
       this.chatService.editFlaggIndex = index;

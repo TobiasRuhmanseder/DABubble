@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MessageService } from '../../../../services/message.service';
 import { FormsModule } from '@angular/forms';
+import { Message } from '../../../../models/message.class';
 
 @Component({
   selector: 'app-channel-input',
@@ -14,6 +15,7 @@ export class ChannelInputComponent {
   constructor(private chatService: MessageService) {}
   sendMessage() {
     let message = this.chatService.setMessage(this.textareaThreadContent);
+    this.textareaThreadContent = '';
     this.chatService.saveAndAddThreadMessage(message);
   }
 }

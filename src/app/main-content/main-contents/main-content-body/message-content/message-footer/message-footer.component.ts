@@ -17,6 +17,8 @@ export class MessageFooterComponent {
   @Input() msg: any;
   @Input() i: any;
   @Input() mainChat: any;
+  @Input() list: any;
+
 
   getUserName(userName: string, reaction: string, msg: any) {
     if (userName === this.chatService.eingeloggterUser) {

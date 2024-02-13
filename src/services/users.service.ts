@@ -15,7 +15,7 @@ export class UsersService {
     console.log('List of all Users:', this.allUsers);
   }
 
-  getUserPic(userId: string) {
+  getUserFromId(userId: string) {
     return this.allUsers.find((u) => u.id === userId);
   }
   getUserName(userId: string){

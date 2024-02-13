@@ -26,18 +26,52 @@ export class MessageService {
 
   eingeloggterUser: string = 'h4w3Cntmu2BmDuWSxKqt';
 
-  saveAndAddThreadMessage(message: Message) {
-    this.currentThread.push(message);
-    this.fire.saveNewThreadMessage(
+  addReaction(reaction: string, index: number, list: any, mainChat: any) {
+    let content = list[index];
+    let user = this.eingeloggterUser;
+    this.updateReaction(reaction, content, user);
+    if (mainChat) {
+      return this.setMessageAndUpdate(index);
+    }
+    return this.setThreadMessagesAndUpdate(index, content.id);
+  }
+  private updateReaction(reaction: string, content: any, user: string) {
+    if (content[`reaction${reaction}`].includes(user)) {
+      deleteUser();
+    } else {
+      addUser();
+    }
+
+    function addUser() {
+      content[`reaction${reaction}`].push(user);
+    }
+
+    function deleteUser() {
+      content[`reaction${reaction}`].splice(
+        content[`reaction${reaction}`].indexOf(user),
+        1
+      );
+    }
+  }
+
+  async saveAndAddThreadMessage(message: Message) {
+    let refId = await this.fire.saveNewThreadMessage(
       this.currentThreadChannelId,
       this.currentOpenMessageThreadId,
       message
     );
+    message.id = refId;
+
+    this.currentThread.push(message);
   }
 
-  saveAndAddNewMessage(message: Message) {
+  async saveAndAddNewMessage(message: Message) {
+    let refId = await this.fire.saveNewMessage(
+      this.currentChannel[0].id,
+      message
+    );
+    message.id = refId;
     this.sortedMessages.push(message);
-    this.fire.saveNewMessage(this.currentChannel[0].id, message);
   }
 
   setMessage(inputContent: string) {
@@ -48,6 +82,7 @@ export class MessageService {
       senderId: this.eingeloggterUser,
       timestamp: time,
       content: content,
+      id: '',
       answers: [],
       reactionNerd: [],
       reactionCheck: [],
@@ -109,7 +144,6 @@ export class MessageService {
     for (const msg of this.messagesList) {
       dataList.push(await this.fire.getThreadMessages(channelId, msg.id));
     }
-    console.log('Thread geladen:', dataList);
     return dataList;
   }
 
@@ -118,7 +152,7 @@ export class MessageService {
   }
 
   getUserPic(userId: any) {
-    let user = this.users.getUserPic(userId);
+    let user = this.users.getUserFromId(userId);
     if (user) {
       return user.photoURL;
     }
@@ -231,14 +265,14 @@ export class MessageService {
   }
   getMessageTime(timestamp: number) {
     let date = new Date(timestamp);
-    let hours = ('0' + date.getHours()).slice(-2); 
-    let minutes = ('0' + date.getMinutes()).slice(-2); 
+    let hours = ('0' + date.getHours()).slice(-2);
+    let minutes = ('0' + date.getMinutes()).slice(-2);
     let timeText = hours + ':' + minutes;
     return timeText;
   }
 
   async saveChannel() {
-    let updateChannel = new Channel(this.currentChannel[0])
+    let updateChannel = new Channel(this.currentChannel[0]);
     await this.fire.updateChannel(updateChannel);
   }
 }

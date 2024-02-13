@@ -31,13 +31,17 @@
     position: relative;
     padding: 5px 10px;
     border-radius: 20px;
-    display: flex;
-    align-items: center;
     border: 1px solid #adb0d9;
     background-color: #fff;
-    gap: 10px;
     cursor: default;
     transition: 0.3s;
+    .reaction-icon-button{
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+    }
     img {
       height: 24px;
       width: 24px;

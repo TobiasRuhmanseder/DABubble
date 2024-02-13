@@ -64,18 +64,20 @@ export class FirebaseService implements OnDestroy {
     );
   }
 
-  saveNewMessage(id: string, msg: Message) {
-    return addDoc(
+  async saveNewMessage(id: string, msg: Message) {
+    const docRef = await addDoc(
       collection(this.firestore, 'channels', id, 'messages'),
       msg.toJSON()
     );
+    return docRef.id.toString();
   }
 
-  saveNewThreadMessage(id: string, msgId: string, msg: Message) {
-    return addDoc(
+  async saveNewThreadMessage(id: string, msgId: string, msg: Message) {
+    const docRef = await addDoc(
       collection(this.firestore, 'channels', id, 'messages', msgId, 'threads'),
       msg.toJSON()
     );
+    return docRef.id.toString();
   }
 
   async getThreadMessages(channelId: string, messageId: string) {
@@ -119,7 +121,7 @@ export class FirebaseService implements OnDestroy {
     return userList;
   }
 
-  updateChannel(channelData: any){
+  updateChannel(channelData: any) {
     return setDoc(
       doc(this.firestore, 'channels', channelData.id),
       channelData.toJSON()
