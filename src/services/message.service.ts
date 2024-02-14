@@ -23,6 +23,7 @@ export class MessageService {
 
   editFlaggIndex: number = -1;
   editThreadFlaggIndex: number = -1;
+  controllerId: any;
   threadIsOpen = false;
 
   eingeloggterUser: string = 'h4w3Cntmu2BmDuWSxKqt';
@@ -113,7 +114,8 @@ export class MessageService {
     );
   }
 
-  resetValues() {
+  resetValues(channelId: string) {
+    this.controllerId = channelId;
     this.messagesList = [];
     this.sortedMessages = [];
     this.threadList = [];
@@ -145,6 +147,9 @@ export class MessageService {
   async getThreadMessages(channelId: string) {
     let dataList: any[] = [];
     for (const msg of this.messagesList) {
+      if (channelId != this.controllerId) {
+        return dataList;
+      }
       dataList.push(await this.fire.getThreadMessages(channelId, msg.id));
     }
     return dataList;

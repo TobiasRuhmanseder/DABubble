@@ -9,6 +9,7 @@ import { PrivateChatComponent } from './private-chat/private-chat.component';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users.service';
+import { CurrentUserService } from '../../services/current-user.service';
 
 @Component({
   selector: 'app-main-content',
@@ -31,7 +32,8 @@ export class MainContentComponent {
     public elementRef: ElementRef,
     public renderer: Renderer2,
     private route: ActivatedRoute,
-    private user: UsersService
+    private user: UsersService,
+    private currentUser: CurrentUserService
   ) {}
 
   ngOnDestroy() {
@@ -43,7 +45,7 @@ export class MainContentComponent {
     this.user.getAllUsers();
     this.routeSub = this.route.params.subscribe((params) => {
       if (params['id']) {
-        this.chatService.resetValues();
+        this.chatService.resetValues(params['id']);
         this.scrollDown();
         this.chatService.getChannel(params['id']);
         this.chatService.getMessagesFromChannel(params['id']);
@@ -70,7 +72,7 @@ export class MainContentComponent {
     } else {
       setTimeout(() => {
         this.scrollDown();
-      }, 250);
+      }, 100);
     }
   }
 }
