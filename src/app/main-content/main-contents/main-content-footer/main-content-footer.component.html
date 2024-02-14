@@ -1,14 +1,22 @@
 <div class="main-input-container">
-  <textarea *ngIf="mainChat"
+  <textarea
+    *ngIf="mainChat"
     [(ngModel)]="textAreaContent"
     class="main-input-field"
     [placeholder]="getPlaceholderText()"
   ></textarea>
-  <textarea *ngIf="!mainChat"
-  [(ngModel)]="textAreaThreadContent"
-  class="main-input-field"
-  [placeholder]="getPlaceholderText()"
-></textarea>
+  <textarea
+    *ngIf="!mainChat"
+    [(ngModel)]="textAreaThreadContent"
+    class="main-input-field"
+    [placeholder]="getPlaceholderText()"
+  ></textarea>
+  <emoji-mart
+    class="emojis"
+    *ngIf="isEmojiPickerVisible"
+    (emojiSelect)="addEmoji($event, mainChat)"
+    title="Choose your emoji"
+  ></emoji-mart>
   <div class="main-inputfield-container">
     <div class="main-input-icons-nav">
       <!-- <app-icon-hover-change-image class="icon" [unhovered]="'../../../../assets/icons/add.png'" [hovered]="'../../../../assets/icons/add_hover.png'"></app-icon-hover-change-image> -->
@@ -17,18 +25,23 @@
       <!-- <app-icon-hover-change-image class="icon" [unhovered]="'../../../../assets/icons/sentiment_satisfied.png'" [hovered]="'../../../../assets/icons/sentiment_satisfied_hover.png'"></app-icon-hover-change-image>
         <app-icon-hover-change-image class="icon" [unhovered]="'../../../../assets/icons/alternate_email.png'" [hovered]="'../../../../assets/icons/alternate_email_hover.png'"></app-icon-hover-change-image> -->
 
-      <button class="icon-smile inputfield-icon icon"></button>
+      <button
+        class="icon-smile inputfield-icon icon"
+        (click)="isEmojiPickerVisible = !isEmojiPickerVisible"
+      ></button>
       <button class="icon-ad inputfield-icon icon"></button>
     </div>
-    <button *ngIf="mainChat"
+    <button
+      *ngIf="mainChat"
       class="main-input-confirm inputfield-icon"
       [disabled]="textAreaContent.length < 0"
       (click)="sendMessage()"
     ></button>
-    <button *ngIf="!mainChat"
-    class="main-input-confirm inputfield-icon"
-    [disabled]="textAreaThreadContent.length < 0"
-    (click)="sendMessage()"
-  ></button>
+    <button
+      *ngIf="!mainChat"
+      class="main-input-confirm inputfield-icon"
+      [disabled]="textAreaThreadContent.length < 0"
+      (click)="sendMessage()"
+    ></button>
   </div>
 </div>

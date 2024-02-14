@@ -7,6 +7,12 @@
   &:focus-within {
     border-color: #444df2;
   }
+  .emojis {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    height: 500px;
+  }
   .main-input-field {
     min-height: calc(100% - 80px);
     width: calc(100% - 20px);
@@ -89,7 +95,6 @@
       background-color: #eceefe;
     }
   }
-
 }
 button {
   border: none;
@@ -98,8 +103,9 @@ button {
 .icon {
   transition: all 0.3s;
   cursor: pointer;
-  &:hover{
+  &:hover {
     border-radius: 50%;
     background-color: #eceefe;
   }
 }
+
