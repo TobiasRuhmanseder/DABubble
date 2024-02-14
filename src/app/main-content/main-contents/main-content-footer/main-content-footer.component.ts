@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { MessageService } from '../../../../services/message.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -29,6 +29,16 @@ export class MainContentFooterComponent {
   textAreaContent: string = '';
   textAreaThreadContent: string = '';
   isEmojiPickerVisible: boolean = false;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if ( !(event.target as HTMLElement).closest('.icon-smile') &&
+        !(event.target as HTMLElement).closest('.emojis'))
+     {
+      this.isEmojiPickerVisible = false;
+    }
+  }
+
 
   addEmoji(event: { emoji: { native: any } }, mainChat: any) {
     if (mainChat) {
