@@ -65,7 +65,7 @@ export class MainContentFooterComponent {
       files = this.currentThreadFiles;
     }
     files.forEach((file) => {
-      this.chatService.handleUpload(file.newFile, file.refId);
+      this.chatService.handleUpload(file.file, file.refId);
     });
   }
 
@@ -77,6 +77,7 @@ export class MainContentFooterComponent {
     } else {
       this.currentThreadFiles.push({ refId: id, file: newFile, fileURL: null });
     }
+    console.log(this.currentFiles)
     this.renderImage(newFile);
   }
 

@@ -76,13 +76,13 @@
     <button
       *ngIf="mainChat"
       class="main-input-confirm inputfield-icon"
-      [disabled]="textAreaContent.length < 1"
+      [disabled]="currentFiles.length === 0 && textAreaContent.length === 0"
       (click)="sendMessage()"
     ></button>
     <button
       *ngIf="!mainChat"
       class="main-input-confirm inputfield-icon"
-      [disabled]="textAreaThreadContent.length < 1"
+      [disabled]="textAreaThreadContent.length === 0 && currentThreadFiles.length === 0"
       (click)="sendMessage()"
     ></button>
   </div>

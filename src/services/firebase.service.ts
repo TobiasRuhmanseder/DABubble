@@ -9,7 +9,7 @@ import {
 import { DocumentData, collection, doc, updateDoc } from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
 import { Message } from '../models/message.class';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +33,25 @@ export class FirebaseService implements OnDestroy {
     let storage = getStorage();
     let storageRef = ref(storage, 'msg_files/' + customURL);
     uploadBytes(storageRef, file);
+  }
+
+  async getDownloadURLWithRetry(
+    path: string,
+    maxRetries: number
+  ): Promise<string> {
+    let retries = 0;
+    while (retries < maxRetries) {
+      try {
+        const storage = getStorage();
+        const pathReference = ref(storage, path);
+        const fileURL = await getDownloadURL(pathReference);
+        return fileURL;
+      } catch (error) {
+        await new Promise((resolve) => setTimeout(resolve, 1000)); 
+        retries++;
+      }
+    }
+    throw new Error('Maximale Anzahl von Wiederholungsversuchen erreicht');
   }
 
   subChannelsList() {

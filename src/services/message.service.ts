@@ -28,8 +28,28 @@ export class MessageService {
 
   eingeloggterUser: string = 'h4w3Cntmu2BmDuWSxKqt';
 
+  getSingleFile(fileIdList: any): any {
+    return fileIdList.map(async (fileId: string) => {
+      return this.fire.getDownloadURLWithRetry('msg_files/' + fileId, 5);
+    });
+  }
+
+  handleInvalidImageType() {
+    console.log(
+      'Erlaubte Dateiformate: PNG, JPEG und GIF. Bitte wähle eine gültige Datei aus.'
+    );
+  }
+
   handleUpload(file: any, customURL: string) {
-    this.fire.uploadToStorage(file, customURL);
+    if (
+      file.type == 'image/png' ||
+      file.type == 'image/jpeg' ||
+      file.type == 'image/gif'
+    ) {
+      this.fire.uploadToStorage(file, customURL);
+    } else {
+      this.handleInvalidImageType();
+    }
   }
 
   addReaction(reaction: string, index: number, list: any, mainChat: any) {
