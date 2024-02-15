@@ -65,6 +65,10 @@ body {
   display: flex;
   justify-content: space-between;
 
+  img {
+    height: 70px;
+  }
+
   >div {
     display: flex;
     flex-direction: column;
