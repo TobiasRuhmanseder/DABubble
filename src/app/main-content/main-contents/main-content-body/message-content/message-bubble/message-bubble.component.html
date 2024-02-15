@@ -25,9 +25,17 @@
       cdkTextareaAutosizes
       [id]="'inputThread_' + i"
       >{{ msg.content }}</textarea
-    >
+    ><emoji-mart
+      class="emojis"
+      *ngIf="isEmojiPickerVisible"
+      (emojiSelect)="addEmoji($event)"
+      title="Choose your emoji"
+    ></emoji-mart>
     <div class="edit-nav">
-      <div class="edit-icon"></div>
+      <div
+        class="edit-icon"
+        (click)="isEmojiPickerVisible = !isEmojiPickerVisible"
+      ></div>
       <div class="message-text-edit-nav">
         <div class="abort" (click)="abortEditMessage()">Abbrechen</div>
         <div class="save" (click)="saveEditMessage(i, mainChat)">Speichern</div>

@@ -9,7 +9,6 @@ import { PrivateChatComponent } from './private-chat/private-chat.component';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users.service';
-import { CurrentUserService } from '../../services/current-user.service';
 
 @Component({
   selector: 'app-main-content',
@@ -33,7 +32,6 @@ export class MainContentComponent {
     public renderer: Renderer2,
     private route: ActivatedRoute,
     private user: UsersService,
-    private currentUser: CurrentUserService
   ) {}
 
   ngOnDestroy() {
@@ -56,9 +54,10 @@ export class MainContentComponent {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     if (
-      this.chatService.editThreadFlaggIndex > -1 ||
-      (this.chatService.editFlaggIndex > -1 &&
-        !(event.target as HTMLElement).closest('.message-text-edit'))
+      (this.chatService.editThreadFlaggIndex > -1 ||
+        this.chatService.editFlaggIndex > -1) &&
+      !(event.target as HTMLElement).closest('.message-text-edit') &&
+      !(event.target as HTMLElement).closest('.emojis')
     ) {
       this.chatService.editThreadFlaggIndex = -1;
       this.chatService.editFlaggIndex = -1;

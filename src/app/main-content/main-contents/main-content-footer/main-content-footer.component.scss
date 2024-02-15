@@ -1,3 +1,23 @@
+.mention-container {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.mention-pic{
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+}
+.file-img{
+  padding: 24px;
+  max-width: 250px;
+  max-height: 200px;
+}
+.file-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .main-input-container {
   position: relative;
   margin: 0 45px 40px 45px;
@@ -12,6 +32,7 @@
     bottom: 20px;
     left: 20px;
   }
+
   .main-input-field {
     min-height: calc(100% - 80px);
     width: calc(100% - 20px);
@@ -34,7 +55,7 @@
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 20px 20px 20px;
   }
   .main-input-confirm {
     right: 0;
@@ -66,6 +87,14 @@
     padding: 24px;
     background-repeat: no-repeat;
     background-position: center;
+  }
+  .inputfield-data{
+    height: 24px;
+    width: 24px;
+    padding: 12px;
+    background-repeat: no-repeat;
+    background-position: center;
+
   }
   .icon-add {
     background-image: url("/assets/icons/add.png");
@@ -107,4 +136,3 @@ button {
     background-color: #eceefe;
   }
 }
-

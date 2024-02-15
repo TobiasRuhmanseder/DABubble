@@ -28,6 +28,10 @@ export class MessageService {
 
   eingeloggterUser: string = 'h4w3Cntmu2BmDuWSxKqt';
 
+  handleUpload(file: any, customURL: string) {
+    this.fire.uploadToStorage(file, customURL);
+  }
+
   addReaction(reaction: string, index: number, list: any, mainChat: any) {
     let content = list[index];
     let user = this.eingeloggterUser;
@@ -91,6 +95,7 @@ export class MessageService {
       reactionCheck: [],
       reactionRaising: [],
       reactionRocket: [],
+      files: [],
     });
     return message;
   }

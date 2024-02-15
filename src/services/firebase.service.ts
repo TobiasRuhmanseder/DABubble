@@ -9,6 +9,7 @@ import {
 import { DocumentData, collection, doc, updateDoc } from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
 import { Message } from '../models/message.class';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,12 @@ export class FirebaseService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubChannels();
+  }
+
+  uploadToStorage(file: any, customURL: string) {
+    let storage = getStorage();
+    let storageRef = ref(storage, 'msg_files/' + customURL);
+    uploadBytes(storageRef, file);
   }
 
   subChannelsList() {

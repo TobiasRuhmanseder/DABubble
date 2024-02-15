@@ -7,6 +7,7 @@ export class Message {
   reactionCheck: any[];
   reactionRaising: any[];
   reactionRocket: any[];
+  files: any[];
 
   constructor(obj: any) {
     this.id = obj ? obj.id : '';
@@ -17,6 +18,7 @@ export class Message {
     this.reactionCheck = obj ? obj.reactionCheck : [];
     this.reactionRaising = obj ? obj.reactionRaising : [];
     this.reactionRocket = obj ? obj.reactionRocket : [];
+    this.files = obj ? obj.files: [];
   }
 
   public toJSON() {
@@ -29,6 +31,7 @@ export class Message {
       reactionCheck: this.reactionCheck,
       reactionRaising: this.reactionRaising,
       reactionRocket: this.reactionRocket,
+      files: this.files,
     };
   }
 }
