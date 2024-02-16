@@ -2,11 +2,11 @@
   <div
     *ngIf="flagg != i"
     [ngClass]="{
-      'message-text-owner': msg.senderId === this.chatService.eingeloggterUser,
-      'message-text': msg.senderId !== this.chatService.eingeloggterUser
+      'message-text-owner': msg.senderId === this.chatService.currentUser,
+      'message-text': msg.senderId !== this.chatService.currentUser
     }"
     [class.hover-effect]="
-      isHover === i && msg.senderId !== this.chatService.eingeloggterUser
+      isHover === i && msg.senderId !== this.chatService.currentUser
     "
   >
   <div class="message-files" *ngIf="mainChat">

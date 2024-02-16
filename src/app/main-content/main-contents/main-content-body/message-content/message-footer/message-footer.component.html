@@ -1,7 +1,7 @@
 <div class="message-footer"
 [ngStyle]="{
   'flex-direction':
-    msg.senderId === this.chatService.eingeloggterUser ? 'row-reverse' : 'row'
+    msg.senderId === this.chatService.currentUser ? 'row-reverse' : 'row'
 }"
 >
 <div
@@ -12,7 +12,7 @@
     class="message-nav-footer"
     [ngStyle]="{
       'flex-direction':
-        msg.senderId === this.chatService.eingeloggterUser
+        msg.senderId === this.chatService.currentUser
           ? 'row-reverse'
           : 'row'
     }"

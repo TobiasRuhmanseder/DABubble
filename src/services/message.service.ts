@@ -26,7 +26,7 @@ export class MessageService {
   controllerId: any;
   threadIsOpen = false;
 
-  eingeloggterUser: string = 'h4w3Cntmu2BmDuWSxKqt';
+  currentUser: string = 'h4w3Cntmu2BmDuWSxKqt';
 
   getSingleFile(fileIdList: any): any {
     return fileIdList.map(async (fileId: string) => {
@@ -41,20 +41,12 @@ export class MessageService {
   }
 
   handleUpload(file: any, customURL: string) {
-    if (
-      file.type == 'image/png' ||
-      file.type == 'image/jpeg' ||
-      file.type == 'image/gif'
-    ) {
       this.fire.uploadToStorage(file, customURL);
-    } else {
-      this.handleInvalidImageType();
-    }
   }
 
   addReaction(reaction: string, index: number, list: any, mainChat: any) {
     let content = list[index];
-    let user = this.eingeloggterUser;
+    let user = this.currentUser;
     this.updateReaction(reaction, content, user);
     if (mainChat) {
       return this.setMessageAndUpdate(index);
@@ -106,7 +98,7 @@ export class MessageService {
     let time = this.getTimeStamp();
     inputContent = '';
     let message = new Message({
-      senderId: this.eingeloggterUser,
+      senderId: this.currentUser,
       timestamp: time,
       content: content,
       id: '',

@@ -73,10 +73,24 @@ export class MessageBubbleComponent {
       );
 
       fileURLs.forEach((fileURL, i) => {
-        this.renderImage(fileURL, i);
+        debugger
+        if (
+          fileURL == 'image/png' ||
+          fileURL == 'image/jpeg' ||
+          fileURL == 'image/gif'
+        ) {
+        this.renderImage(fileURL, i);}
       });
     }
   }
+
+  // downloadFile(): void {
+  //   const fileUrl = 'URL_DER_DATEI';
+  //   this.http.get(fileUrl, { responseType: 'blob' })
+  //     .subscribe((data: Blob) => {
+  //       saveAs(data, 'dateiname');
+  //     });
+  // }
 
   renderImage(fileURL: string, index: number) {
     let elementsArray;

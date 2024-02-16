@@ -2,7 +2,7 @@
   class="message-nav"
   [ngStyle]="{
     'flex-direction':
-      msg.senderId === this.chatService.eingeloggterUser ? 'row-reverse' : 'row'
+      msg.senderId === this.chatService.currentUser ? 'row-reverse' : 'row'
   }"
 >
   <div
@@ -10,7 +10,7 @@
     class="message-name-nav"
     [ngStyle]="{
       'flex-direction':
-        msg.senderId === this.chatService.eingeloggterUser
+        msg.senderId === this.chatService.currentUser
           ? 'row-reverse'
           : 'row'
     }"
@@ -25,7 +25,7 @@
   <div
     class="position-nav"
     [ngClass]="
-      msg.senderId === this.chatService.eingeloggterUser ? 'left' : 'right'
+      msg.senderId === this.chatService.currentUser ? 'left' : 'right'
     "
   >
     <div
@@ -88,7 +88,7 @@
       <div
         mat-button
         [matMenuTriggerFor]="editMsg"
-        *ngIf="msg.senderId === this.chatService.eingeloggterUser"
+        *ngIf="msg.senderId === this.chatService.currentUser"
       >
         <div class="icon-more icon-message"></div>
       </div>

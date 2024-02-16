@@ -12,7 +12,7 @@
     (mouseleave)="isHover = -1"
     [ngStyle]="{
       'flex-direction':
-        msg.senderId === this.chatService.eingeloggterUser
+        msg.senderId === this.chatService.currentUser
           ? 'row-reverse'
           : 'row'
     }"

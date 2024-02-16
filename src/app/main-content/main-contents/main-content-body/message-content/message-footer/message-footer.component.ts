@@ -22,7 +22,7 @@ export class MessageFooterComponent {
 
 
   getUserName(userName: string, reaction: string, msg: any) {
-    if (userName === this.chatService.eingeloggterUser) {
+    if (userName === this.chatService.currentUser) {
       if (msg[`reaction${reaction}`].length > 1) {
         return 'und Du';
       }
@@ -32,7 +32,7 @@ export class MessageFooterComponent {
   }
 
   setSelfToLast(msg: any, reaction: string) {
-    let user = this.chatService.eingeloggterUser;
+    let user = this.chatService.currentUser;
     if (
       msg[`reaction${reaction}`].includes(user) &&
       msg[`reaction${reaction}`] > 1
