@@ -8,11 +8,13 @@
 }
 
 app-main-content-body {
-  // scroll-behavior: smooth;
+  scroll-behavior: smooth;
   height: 100%;
   overflow-x: hidden;
   z-index: 0;
   position: relative;
+  display: flex;
+  flex-direction: column-reverse;
 }
 .chat-containers {
   display: flex;

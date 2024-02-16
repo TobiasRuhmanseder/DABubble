@@ -15,4 +15,6 @@ app-channel-channel-message {
   overflow-x: hidden;
   z-index: 0;
   position: relative;
+  display: flex;
+  flex-direction: column-reverse;
 }

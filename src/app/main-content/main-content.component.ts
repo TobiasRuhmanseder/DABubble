@@ -31,7 +31,7 @@ export class MainContentComponent {
     public elementRef: ElementRef,
     public renderer: Renderer2,
     private route: ActivatedRoute,
-    private user: UsersService,
+    private user: UsersService
   ) {}
 
   ngOnDestroy() {
@@ -62,12 +62,20 @@ export class MainContentComponent {
       this.chatService.editThreadFlaggIndex = -1;
       this.chatService.editFlaggIndex = -1;
     }
+    if ((event.target as HTMLElement).closest('#sendConfirm')) {
+      this.scrollDown();
+    }
+    if ((event.target as HTMLElement).closest('#sendThreadConfirm')) {
+      this.scrollDown();
+    }
   }
   scrollDown() {
     if (this.chatService.sortedMessages.length > 0) {
       const element =
         this.elementRef.nativeElement.querySelector('#messagesContent');
-      this.renderer.setProperty(element, 'scrollTop', 999999);
+      if (element) {
+        element.scrollTop = element.scrollHeight;
+      }
     } else {
       setTimeout(() => {
         this.scrollDown();
