@@ -1,6 +1,11 @@
 <div class="main-input-container">
   <div *ngIf="mainChat">
-    <div #imageContainer class="file-container"></div>
+    <div #imageContainer class="file-container">
+      <div *ngIf="checkIsFileImg(currentFiles)" style="padding: 12px">
+        <img class="file" src=".\assets\icons\attach_file_add.svg" />
+        <div *ngFor="let file of currentFiles">{{ file.file.name }}</div>
+      </div>
+    </div>
     <textarea
       [mentionConfig]="{
         dropUp: true,
@@ -23,7 +28,12 @@
     <span>{{ item.name }}</span>
   </ng-template> -->
   <div *ngIf="!mainChat">
-    <div #imageThreadContainer class="file-container"></div>
+    <div #imageThreadContainer class="file-container">
+      <div *ngIf="checkIsFileImg(currentThreadFiles)" style="padding: 12px">
+        <img class="file" src=".\assets\icons\attach_file_add.svg" />
+        <div *ngFor="let file of currentFiles">{{ file.file.name }}</div>
+      </div>
+    </div>
     <textarea
       [mention]="users.allUsersName"
       [(ngModel)]="textAreaThreadContent"
@@ -41,29 +51,29 @@
     <div class="main-input-icons-nav">
       <!-- <app-icon-hover-change-image class="icon" [unhovered]="'../../../../assets/icons/add.png'" [hovered]="'../../../../assets/icons/add_hover.png'"></app-icon-hover-change-image> -->
       <div *ngIf="mainChat">
-      <label
-        for="file-upload-message"
-        class="icon-add inputfield-data icon"
-      ></label>
-      <input
-        type="file"
-        id="file-upload-message"
-        (change)="addFile($event)"
-        style="display: none"
-      />
-    </div>
-    <div *ngIf="!mainChat">
-      <label
-        for="file-upload-threadMessage"
-        class="icon-add inputfield-data icon"
-      ></label>
-      <input
-        type="file"
-        id="file-upload-threadMessage"
-        (change)="addFile($event)"
-        style="display: none"
-      />
-    </div>
+        <label
+          for="file-upload-message"
+          class="icon-add inputfield-data icon"
+        ></label>
+        <input
+          type="file"
+          id="file-upload-message"
+          (change)="addFile($event)"
+          style="display: none"
+        />
+      </div>
+      <div *ngIf="!mainChat">
+        <label
+          for="file-upload-threadMessage"
+          class="icon-add inputfield-data icon"
+        ></label>
+        <input
+          type="file"
+          id="file-upload-threadMessage"
+          (change)="addFile($event)"
+          style="display: none"
+        />
+      </div>
       <div class="stroke-icons-nav"></div>
       <!-- <app-icon-hover-change-image class="icon" [unhovered]="'../../../../assets/icons/sentiment_satisfied.png'" [hovered]="'../../../../assets/icons/sentiment_satisfied_hover.png'"></app-icon-hover-change-image>
         <app-icon-hover-change-image class="icon" [unhovered]="'../../../../assets/icons/alternate_email.png'" [hovered]="'../../../../assets/icons/alternate_email_hover.png'"></app-icon-hover-change-image> -->
@@ -82,7 +92,9 @@
     <button
       *ngIf="!mainChat"
       class="main-input-confirm inputfield-icon"
-      [disabled]="textAreaThreadContent.length === 0 && currentThreadFiles.length === 0"
+      [disabled]="
+        textAreaThreadContent.length === 0 && currentThreadFiles.length === 0
+      "
       (click)="sendMessage()"
     ></button>
   </div>

@@ -16,6 +16,10 @@
 .file-container{
   display: flex;
   flex-wrap: wrap;
+  .file {
+    height: 50px;
+    padding: 12px;
+  }
 }
 
 .main-input-container {
@@ -89,6 +93,7 @@
     background-position: center;
   }
   .inputfield-data{
+    display: block;
     height: 24px;
     width: 24px;
     padding: 12px;

@@ -15,6 +15,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { MentionModule } from 'angular-mentions';
 import { UsersService } from '../../../../services/users.service';
 import { UserPicComponent } from '../../../user-pic/user-pic.component';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-main-content-footer',
   standalone: true,
@@ -27,6 +28,7 @@ import { UserPicComponent } from '../../../user-pic/user-pic.component';
     PickerModule,
     MentionModule,
     UserPicComponent,
+    MatIconModule,
   ],
 })
 export class MainContentFooterComponent {
@@ -69,7 +71,18 @@ export class MainContentFooterComponent {
     });
   }
 
+  checkIsFileImg(files: any[]) {
+    for (let i = 0; i < files.length; i++) {
+      if (!files[i].file.type.startsWith('image/')) {
+        console.log('no bild');
+        return true; 
+      }
+    }
+    return false; 
+  }
+
   addFile(event: any) {
+    debugger;
     let newFile = event.target.files[0];
     let id = this.generateRandomId(20);
     if (this.mainChat) {
@@ -77,8 +90,9 @@ export class MainContentFooterComponent {
     } else {
       this.currentThreadFiles.push({ refId: id, file: newFile, fileURL: null });
     }
-    console.log(this.currentFiles)
-    this.renderImage(newFile);
+    if (newFile.type.startsWith('image/')) {
+      this.renderImage(newFile);
+    }
   }
 
   renderImage(file: any) {
