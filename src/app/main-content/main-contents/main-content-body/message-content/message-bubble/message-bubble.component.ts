@@ -10,8 +10,6 @@ import { MessageService } from '../../../../../../services/message.service';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { FormsModule } from '@angular/forms';
-import { FirebaseService } from '../../../../../../services/firebase.service';
-// import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-message-bubble',
@@ -24,11 +22,7 @@ export class MessageBubbleComponent {
   @ViewChildren('fileContent') fileContentList!: QueryList<ElementRef>;
   @ViewChildren('fileThreadContent')
   fileContentThreadList!: QueryList<ElementRef>;
-  constructor(
-    // private http: HttpClient,
-    public chatService: MessageService,
-    private fire: FirebaseService
-  ) {}
+  constructor(public chatService: MessageService) {}
   isEmojiPickerVisible: boolean = false;
 
   @Input() flagg: any;
@@ -78,7 +72,7 @@ export class MessageBubbleComponent {
     if (fileIdList && fileIdList.length > 0) {
       const fileURLs = await Promise.all(
         fileIdList.map((fileId: string) =>
-          this.fire.getDownloadURLWithRetry('msg_files/' + fileId, 5)
+          this.chatService.handleDownload('msg_files/' + fileId, 5)
         )
       );
       fileURLs.forEach((file, i) => {
@@ -91,11 +85,17 @@ export class MessageBubbleComponent {
     }
   }
 
-  downloadFile(fileUrl: string): void {
-    const blob = new Blob([fileUrl], { type: 'text/csv' });
+  downloadFile(file: any): void {
+    const blob = new Blob([file.fileURL], { type: file.metaData.contentType });
     const url = window.URL.createObjectURL(blob);
-    window.open(url);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = file.metaData.customMetadata.originalName; // Setze den Dateinamen über das "download" Attribut
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
+  
+
   renderImage(fileURL: string, index: number) {
     let elementsArray;
     elementsArray = this.fileContentList.toArray();

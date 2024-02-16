@@ -18,6 +18,15 @@
   height: 50px;
   padding: 12px;
 }
+.download-file{
+  padding: 4px 10px;
+  border-radius: 25px;
+  transition: all 0.3s;
+  cursor: pointer;
+  &:hover{
+    background-color: #eceefe;
+  }
+}
 .message-text {
   padding: 15px;
   border-radius: 0px 30px 30px 30px;

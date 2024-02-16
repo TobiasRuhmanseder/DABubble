@@ -25,13 +25,38 @@ export class MessageService {
   editThreadFlaggIndex: number = -1;
   controllerId: any;
   threadIsOpen = false;
+  isUploading = false;
 
   currentUser: string = 'h4w3Cntmu2BmDuWSxKqt';
 
   getSingleFile(fileIdList: any): any {
     return fileIdList.map(async (fileId: string) => {
-      return this.fire.getDownloadURLWithRetry('msg_files/' + fileId, 5);
+      return this.handleDownload('msg_files/' + fileId, 5);
     });
+  }
+
+  async handleDownload(fileURL: string, maxRetries: number) {
+    let retries = 0;
+    let downloadResult = null;
+    while (this.isUploading) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+    while (retries < maxRetries) {
+      try {
+        downloadResult = await this.fire.getDownloadURL(fileURL);
+        break;
+      } catch {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        retries++;
+      }
+    }
+    if (downloadResult) {
+      return downloadResult;
+    } else {
+      throw new Error(
+        'Maximale Anzahl von Wiederholungen erreicht. Download fehlgeschlagen.'
+      );
+    }
   }
 
   handleInvalidImageType() {
@@ -40,8 +65,10 @@ export class MessageService {
     );
   }
 
-  handleUpload(file: any, customURL: string) {
-      this.fire.uploadToStorage(file, customURL);
+  async handleUpload(file: any, customURL: string) {
+    this.isUploading = true;
+    await this.fire.uploadToStorage(file, customURL);
+    this.isUploading = false;
   }
 
   addReaction(reaction: string, index: number, list: any, mainChat: any) {

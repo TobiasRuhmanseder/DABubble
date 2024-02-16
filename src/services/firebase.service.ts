@@ -9,7 +9,13 @@ import {
 import { DocumentData, collection, doc, updateDoc } from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
 import { Message } from '../models/message.class';
-import { getDownloadURL, getMetadata, getStorage, ref, uploadBytes } from 'firebase/storage';
+import {
+  getDownloadURL,
+  getMetadata,
+  getStorage,
+  ref,
+  uploadBytes,
+} from 'firebase/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -29,35 +35,37 @@ export class FirebaseService implements OnDestroy {
     this.unsubChannels();
   }
 
-  async uploadToStorage(file: any, customURL: string) {
-    let storage = getStorage();
-    let storageRef = ref(storage, 'msg_files/' + customURL);
-    const metadata = {
-      customMetadata: {
-        originalName: file.name
+  async uploadToStorage(file: any, customURL: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      try {
+        let storage = getStorage();
+        let storageRef = ref(storage, 'msg_files/' + customURL);
+        const metadata = {
+          customMetadata: {
+            originalName: file.name,
+          },
+        };
+        uploadBytes(storageRef, file, metadata)
+          .then(() => {
+            resolve(true); // Upload erfolgreich abgeschlossen
+          })
+          .catch((error) => {
+            reject(error); // Fehler beim Upload
+          });
+      } catch (error) {
+        reject(error); // Fehler beim Upload
       }
-    };
-    await uploadBytes(storageRef, file, metadata);
+    });
   }
 
-  async getDownloadURLWithRetry(
-    path: string,
-    maxRetries: number
-  ): Promise<{ fileURL: string, metaData: any }> {
-    let retries = 0;
-    while (retries < maxRetries) {
-      try {
-        const storage = getStorage();
-        const pathReference = ref(storage, path);
-        const fileURL = await getDownloadURL(pathReference);
-        const metaData = await getMetadata(pathReference);
-        return { fileURL, metaData };
-      } catch (error) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        retries++;
-      }
-    }
-    throw new Error('Maximale Anzahl von Wiederholungsversuchen erreicht');
+  async getDownloadURL(
+    path: string
+  ): Promise<{ fileURL: string; metaData: any }> {
+    const storage = getStorage();
+    const pathReference = ref(storage, path);
+    const fileURL = await getDownloadURL(pathReference);
+    const metaData = await getMetadata(pathReference);
+    return { fileURL, metaData };
   }
 
   subChannelsList() {
