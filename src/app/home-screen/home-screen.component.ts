@@ -21,6 +21,6 @@ export class HomeScreenComponent {
   ngAfterViewInit() {
     const auth = getAuth();
     let user = this.login.getDataFromActiveUser(auth);
-    this.chatService.currentUser = user.uid;
+    this.chatService.currentUser = 'h4w3Cntmu2BmDuWSxKqt';
   }
 }

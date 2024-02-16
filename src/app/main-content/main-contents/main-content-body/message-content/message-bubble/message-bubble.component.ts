@@ -10,6 +10,8 @@ import { MessageService } from '../../../../../../services/message.service';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { FormsModule } from '@angular/forms';
+import { FirebaseService } from '../../../../../../services/firebase.service';
+// import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-message-bubble',
@@ -20,8 +22,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class MessageBubbleComponent {
   @ViewChildren('fileContent') fileContentList!: QueryList<ElementRef>;
-  @ViewChildren('fileThreadContent') fileContentThreadList!: QueryList<ElementRef>;
-  constructor(public chatService: MessageService) {}
+  @ViewChildren('fileThreadContent')
+  fileContentThreadList!: QueryList<ElementRef>;
+  constructor(
+    // private http: HttpClient,
+    public chatService: MessageService,
+    private fire: FirebaseService
+  ) {}
   isEmojiPickerVisible: boolean = false;
 
   @Input() flagg: any;
@@ -30,6 +37,7 @@ export class MessageBubbleComponent {
   @Input() isHover: any;
   @Input() list: any;
   @Input() mainChat: any;
+  files: any[] = [];
 
   ngAfterViewInit() {
     this.getFiles(this.msg.files);
@@ -69,36 +77,28 @@ export class MessageBubbleComponent {
   async getFiles(fileIdList: any) {
     if (fileIdList && fileIdList.length > 0) {
       const fileURLs = await Promise.all(
-        this.chatService.getSingleFile(fileIdList)
+        fileIdList.map((fileId: string) =>
+          this.fire.getDownloadURLWithRetry('msg_files/' + fileId, 5)
+        )
       );
-
-      fileURLs.forEach((fileURL, i) => {
-        debugger
-        if (
-          fileURL == 'image/png' ||
-          fileURL == 'image/jpeg' ||
-          fileURL == 'image/gif'
-        ) {
-        this.renderImage(fileURL, i);}
+      fileURLs.forEach((file, i) => {
+        if (!file.metaData.contentType.startsWith('image/')) {
+          this.files.push(file);
+        } else {
+          this.renderImage(file.fileURL, i);
+        }
       });
     }
   }
 
-  // downloadFile(): void {
-  //   const fileUrl = 'URL_DER_DATEI';
-  //   this.http.get(fileUrl, { responseType: 'blob' })
-  //     .subscribe((data: Blob) => {
-  //       saveAs(data, 'dateiname');
-  //     });
-  // }
-
+  downloadFile(fileUrl: string): void {
+    const blob = new Blob([fileUrl], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
+  }
   renderImage(fileURL: string, index: number) {
     let elementsArray;
-    if (this.mainChat) {
-      elementsArray = this.fileContentList.toArray();
-    } else {
-      elementsArray = this.fileContentThreadList.toArray();
-    }
+    elementsArray = this.fileContentList.toArray();
     const element = elementsArray[index];
     const img = new Image();
     img.src = fileURL;
@@ -107,7 +107,11 @@ export class MessageBubbleComponent {
       maxWidth: '200px',
       maxHeight: '200px',
       'object-fit': 'contain',
+      cursor: 'pointer',
     });
+    img.onclick = () => {
+      window.open(fileURL, '_blank');
+    };
     element.nativeElement.appendChild(img);
   }
 }

@@ -9,7 +9,7 @@ import {
 import { DocumentData, collection, doc, updateDoc } from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
 import { Message } from '../models/message.class';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, getMetadata, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -29,25 +29,31 @@ export class FirebaseService implements OnDestroy {
     this.unsubChannels();
   }
 
-  uploadToStorage(file: any, customURL: string) {
+  async uploadToStorage(file: any, customURL: string) {
     let storage = getStorage();
     let storageRef = ref(storage, 'msg_files/' + customURL);
-    uploadBytes(storageRef, file);
+    const metadata = {
+      customMetadata: {
+        originalName: file.name
+      }
+    };
+    await uploadBytes(storageRef, file, metadata);
   }
 
   async getDownloadURLWithRetry(
     path: string,
     maxRetries: number
-  ): Promise<string> {
+  ): Promise<{ fileURL: string, metaData: any }> {
     let retries = 0;
     while (retries < maxRetries) {
       try {
         const storage = getStorage();
         const pathReference = ref(storage, path);
         const fileURL = await getDownloadURL(pathReference);
-        return fileURL;
+        const metaData = await getMetadata(pathReference);
+        return { fileURL, metaData };
       } catch (error) {
-        await new Promise((resolve) => setTimeout(resolve, 1000)); 
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         retries++;
       }
     }

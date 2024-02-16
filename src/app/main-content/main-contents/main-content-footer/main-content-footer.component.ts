@@ -74,7 +74,6 @@ export class MainContentFooterComponent {
   checkIsFileImg(files: any[]) {
     for (let i = 0; i < files.length; i++) {
       if (!files[i].file.type.startsWith('image/')) {
-        console.log('no bild');
         return true; 
       }
     }
@@ -82,7 +81,6 @@ export class MainContentFooterComponent {
   }
 
   addFile(event: any) {
-    debugger;
     let newFile = event.target.files[0];
     let id = this.generateRandomId(20);
     if (this.mainChat) {

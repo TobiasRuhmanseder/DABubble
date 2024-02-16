@@ -9,12 +9,16 @@
       isHover === i && msg.senderId !== this.chatService.currentUser
     "
   >
-  <div class="message-files" *ngIf="mainChat">
-    <div #fileContent *ngFor="let file of msg.files"></div>
-  </div>
-  <div class="message-files" *ngIf="!mainChat">
-    <div #fileThreadContent *ngFor="let file of msg.files"></div>
-  </div>
+    <div class="message-files" >
+      <div *ngIf="files.length > 0" style="padding: 12px">
+        <img class="file" src=".\assets\icons\attach_file_add.svg" />
+        <div *ngFor="let file of files"><a href="#" (click)="downloadFile(file.fileURL)">{{ file.metaData.customMetadata.originalName }}</a> </div>
+      </div>
+      <div #fileContent *ngFor="let file of msg.files"></div>
+    </div>
+    <!-- <div class="message-files" *ngIf="!mainChat">
+      <div #fileThreadContent *ngFor="let file of msg.files"></div>
+    </div> -->
     <div>
       {{ msg.content }}
     </div>
