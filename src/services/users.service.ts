@@ -9,11 +9,15 @@ export class UsersService {
   allUsersName: any[] = [];
   constructor(private fire: FirebaseService) {}
 
-  async getAllUsers() {
-    this.allUsers = [];
-    this.allUsers = await this.fire.getUserList();
-    console.log('List of all Users:', this.allUsers);
-    this.allUsersName = this.getAllUsersName();
+  async getAllUsers(): Promise<any[]> {
+    try {
+      this.allUsers = await this.fire.getUserList();
+      console.log('List of all Users:', this.allUsers);
+      this.allUsersName = await this.getAllUsersName();
+      return this.allUsers;
+    } catch (error) {
+      throw error;
+    }
   }
 
   getUserFromId(userId: string) {
@@ -26,12 +30,12 @@ export class UsersService {
     }
     return '';
   }
-  getAllUsersName() {
-    let list: any[] = [];
-    this.allUsers.forEach((user) => {
-      list.push(user.name);
+  getAllUsersName(): Promise<string[]> {
+    return new Promise((resolve) => {
+      if (this.allUsers) {
+        const names = this.allUsers.map((user: any) => user.name);
+        resolve(names);
+      }
     });
-    console.log(list);
-    return list;
   }
 }

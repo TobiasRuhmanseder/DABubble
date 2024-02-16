@@ -31,8 +31,8 @@ export class MainContentComponent {
     public elementRef: ElementRef,
     public renderer: Renderer2,
     private route: ActivatedRoute,
-    private user: UsersService
   ) {}
+
 
   ngOnDestroy() {
     this.routeSub.unsubscribe();
@@ -40,7 +40,6 @@ export class MainContentComponent {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.user.getAllUsers();
     this.routeSub = this.route.params.subscribe((params) => {
       if (params['id']) {
         this.chatService.resetValues(params['id']);
