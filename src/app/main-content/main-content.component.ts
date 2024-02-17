@@ -44,7 +44,7 @@ export class MainContentComponent {
       if (params['id']) {
         this.chatService.resetValues(params['id']);
         this.scrollDown();
-        this.chatService.getChannel(params['id']);
+        this.chatService.getChannelFromId(params['id']);
         this.chatService.getMessagesFromChannel(params['id']);
       }
     });

@@ -112,7 +112,7 @@ export class MessageService {
 
   async saveAndAddNewMessage(message: Message) {
     let refId = await this.fire.saveNewMessage(
-      this.currentChannel[0].id,
+      this.currentChannel.id,
       message
     );
     message.id = refId;
@@ -142,7 +142,7 @@ export class MessageService {
   setMessageAndUpdate(index: number) {
     let newMessage = new Message(this.sortedMessages[index]);
     this.fire.updateMessage(
-      this.currentChannel[0].id,
+      this.currentChannel.id,
       this.sortedMessages[index].id,
       newMessage
     );
@@ -165,12 +165,8 @@ export class MessageService {
     this.threadList = [];
   }
 
-  async getChannel(id: string) {
-    let docRef = this.fire.getDocRef('channels', id);
-    let docSnap = await getDoc(docRef);
-    let data = docSnap.data() as Channel;
-    this.currentChannel = [];
-    this.currentChannel.push(data);
+  async getChannelFromId(id: string) {
+    this.currentChannel = await this.fire.getChannel(id);
   }
 
   async getMessagesFromChannel(id: string) {
@@ -183,7 +179,7 @@ export class MessageService {
     if (this.threadList.length != 0) {
       this.currentThread = this.getSortMessagesByTime(this.threadList[index]);
       this.currentOpenMessageThreadId = messageId;
-      this.currentThreadChannel = this.currentChannel[0];
+      this.currentThreadChannel = this.currentChannel;
       this.threadIsOpen = true;
     }
   }
@@ -216,14 +212,14 @@ export class MessageService {
     if (this.currentChannel === undefined) {
       return '';
     }
-    return this.currentChannel[0].name;
+    return this.currentChannel.name;
   }
 
   getChannelUsers() {
     if (this.currentChannel === undefined) {
       return '';
     }
-    return this.currentChannel[0].users;
+    return this.currentChannel.users;
   }
 
   getSortMessages() {
@@ -320,7 +316,7 @@ export class MessageService {
   }
 
   async saveChannel() {
-    let updateChannel = new Channel(this.currentChannel[0]);
+    let updateChannel = new Channel(this.currentChannel);
     await this.fire.updateChannel(updateChannel);
   }
 }

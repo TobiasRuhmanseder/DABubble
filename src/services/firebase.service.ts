@@ -6,7 +6,13 @@ import {
   onSnapshot,
   setDoc,
 } from '@angular/fire/firestore';
-import { DocumentData, collection, doc, updateDoc } from '@firebase/firestore';
+import {
+  DocumentData,
+  collection,
+  doc,
+  getDoc,
+  updateDoc,
+} from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
 import { Message } from '../models/message.class';
 import {
@@ -161,6 +167,13 @@ export class FirebaseService implements OnDestroy {
       userList.push(userData);
     });
     return userList;
+  }
+
+  async getChannel(id: string) {
+    let docRef = this.getDocRef('channels', id);
+    let docSnap = await getDoc(docRef);
+    let data = docSnap.data() as Channel;
+    return data;
   }
 
   updateChannel(channelData: any) {

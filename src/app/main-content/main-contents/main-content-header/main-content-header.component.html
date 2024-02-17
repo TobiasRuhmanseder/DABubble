@@ -29,7 +29,7 @@
           <div class="title">Mitglieder</div>
           <div class="close-button" (click)="closeAllDialog()"></div>
         </div>
-        <div *ngFor="let user of chatService.currentChannel[0].users">
+        <div *ngFor="let user of chatService.currentChannel.users">
           <div class="user" (click)="openUserDetails()">
             <app-user-pic
               class="user-pic"

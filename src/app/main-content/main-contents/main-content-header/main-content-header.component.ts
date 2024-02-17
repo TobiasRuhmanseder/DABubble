@@ -32,7 +32,7 @@ export class MainContentHeaderComponent {
   filterUserList() {
     let allUserList = this.users.allUsers;
     let list = allUserList.filter((user) => {
-      return !this.chatService.currentChannel[0].users.includes(user.id);
+      return !this.chatService.currentChannel.users.includes(user.id);
     });
     let filterList = list.filter((user) => {
       return user.name.toLowerCase().includes(this.inputAddUser.toLowerCase());
@@ -64,7 +64,7 @@ export class MainContentHeaderComponent {
     let user = this.users.allUsers.find((user) => {
       return user.name.toLowerCase() === this.inputAddUser.toLowerCase();
     });
-    this.chatService.currentChannel[0].users.push(user.id);
+    this.chatService.currentChannel.users.push(user.id);
     this.chatService.saveChannel();
     this.closeUser();
   }
@@ -105,11 +105,11 @@ export class MainContentHeaderComponent {
     if (this.chatService.currentChannel === undefined) {
       return '';
     }
-    return this.chatService.currentChannel[0].users.length;
+    return this.chatService.currentChannel.users.length;
   }
 
   getUserPicFromChannel(user: string) {
-    let checkIfUserInChannel = this.chatService.currentChannel[0].users.find(
+    let checkIfUserInChannel = this.chatService.currentChannel.users.find(
       (users: string) => users === user
     );
     if (checkIfUserInChannel) {
