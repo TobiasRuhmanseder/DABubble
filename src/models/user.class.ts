@@ -3,12 +3,14 @@ export class User {
   photoURL: string;
   email: string;
   status: boolean;
+  directmsg: any[];
 
   constructor(obj: any) {
     this.name = obj ? obj.name : '';
     this.photoURL = obj ? obj.photoURL : '';
     this.email = obj ? obj.email : '';
     this.status = obj ? obj.status : false;
+    this.directmsg = obj ? obj.directmsg : [];
   }
   public toJSON() {
     return {
@@ -16,6 +18,7 @@ export class User {
       photoURL: this.photoURL,
       email: this.email,
       status: this.status,
+      directmsg: this.directmsg,
     };
   }
 }
