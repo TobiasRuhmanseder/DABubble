@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { FirebaseService } from './firebase.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,13 +8,17 @@ import { FirebaseService } from './firebase.service';
 export class UsersService {
   allUsers: any[] = [];
   allUsersName: any[] = [];
-  constructor(private fire: FirebaseService) {}
+
+  allUsers$: any = new Subject;
+
+  constructor(private fire: FirebaseService) { }
 
   async getAllUsers(): Promise<any[]> {
     try {
       this.allUsers = await this.fire.getUserList();
       console.log('List of all Users:', this.allUsers);
       this.allUsersName = await this.getAllUsersName();
+      this.allUsers$.next(this.allUsers);
       return this.allUsers;
     } catch (error) {
       throw error;

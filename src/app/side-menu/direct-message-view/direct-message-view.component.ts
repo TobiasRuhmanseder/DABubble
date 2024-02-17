@@ -16,19 +16,24 @@ import { CommonModule } from '@angular/common';
 export class DirectMessageViewComponent implements OnInit, OnDestroy {
   dropdownOpen = true;
   activeUser: ActiveUser = { displayName: "", photoURL: "" };
-  allUsersWithoutActiveUser: any;
-  currentUserService: CurrentUserService = inject(CurrentUserService);
-  //userService: UsersService = inject(UsersService);
-  unsubCurrentUser: any;
+  allUsersWithoutActiveUser: any[] = [];
 
-  constructor(private userService: UsersService) {
+  unsubCurrentUser: any;
+  unsubAllUsers: any;
+
+  currentUserService: CurrentUserService = inject(CurrentUserService);
+  userService: UsersService = inject(UsersService);
+
+
+  constructor() {
 
   }
 
   ngOnInit(): void {
     this.currentUserService.activeUser();
+    this.unsubAllUsers = this.subAllUsers();
     this.unsubCurrentUser = this.subCurrentUser();
-    this.allUsersWithoutActiveUser = this.getAllUsersWithoutActiveUser();
+
     console.log(this.allUsersWithoutActiveUser);
   }
 
@@ -62,6 +67,12 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
       let currentUser;
       currentUser = this.setActiceUser(user);
       this.activeUser = currentUser;
+    });
+  }
+
+  subAllUsers() {
+    return this.userService.allUsers$.subscribe((users: any[]) => {
+      this.allUsersWithoutActiveUser = users;
     });
   }
 
