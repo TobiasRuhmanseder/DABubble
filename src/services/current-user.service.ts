@@ -1,20 +1,23 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { collectionGroup } from 'firebase/firestore';
 import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class CurrentUserService {
+export class CurrentUserService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
   router: Router = inject(Router);
   currentUser = new Subject;
 
   constructor() { }
+
+  ngOnDestroy(): void {
+    this.currentUser.unsubscribe();
+  }
 
   activeUser() {
     const auth = getAuth();
@@ -49,7 +52,7 @@ export class CurrentUserService {
       const emailVerified = user.emailVerified;
       const uid = user.uid;
     }
-    console.log(user); 
+    console.log(user);
     return user;
   }
 

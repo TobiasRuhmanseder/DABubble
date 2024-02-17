@@ -35,7 +35,7 @@ export class MainContentComponent {
 
 
   ngOnDestroy() {
-    this.routeSub.unsubscribe();
+   // this.routeSub.unsubscribe();
   }
   ngOnInit() {}
 

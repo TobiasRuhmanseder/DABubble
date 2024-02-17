@@ -11,5 +11,5 @@ export class UserPicComponent {
 
   @Input() status = false;
   @Input() online = false;
-  @Input() userImageName?: string;
+  @Input() userImageName?: String;
 }
