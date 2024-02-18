@@ -24,16 +24,10 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
   currentUserService: CurrentUserService = inject(CurrentUserService);
   userService: UsersService = inject(UsersService);
 
-
-  constructor() {
-
-  }
-
   ngOnInit(): void {
     this.currentUserService.activeUser();
     this.unsubAllUsers = this.subAllUsers();
     this.unsubCurrentUser = this.subCurrentUser();
-
     console.log(this.allUsersWithoutActiveUser);
   }
 
@@ -67,17 +61,27 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
       let currentUser;
       currentUser = this.setActiceUser(user);
       this.activeUser = currentUser;
+
     });
   }
 
   subAllUsers() {
     return this.userService.allUsers$.subscribe((users: any[]) => {
       this.allUsersWithoutActiveUser = users;
+      this.getAllUsersWithoutActiveUser(users);
     });
   }
 
-  getAllUsersWithoutActiveUser() {
-    return this.userService.allUsers;
-
+  getAllUsersWithoutActiveUser(users: any[]) {
+    let index;
+    let indexGuest;
+    let allUsersWithoutActiveUser = users;
+    if (allUsersWithoutActiveUser && this.activeUser) {
+      index = allUsersWithoutActiveUser.findIndex((user) => user.name === this.activeUser.displayName);
+      if (index != -1) allUsersWithoutActiveUser.splice(index, 1);
+      indexGuest = allUsersWithoutActiveUser.findIndex((user) => user.name === "Guest User");
+      if (index != -1) allUsersWithoutActiveUser.splice(indexGuest, 1);
+    }
   }
+
 }
