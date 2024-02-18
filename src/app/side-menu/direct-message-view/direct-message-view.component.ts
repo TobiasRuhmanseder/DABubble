@@ -28,7 +28,6 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
     this.currentUserService.activeUser();
     this.unsubAllUsers = this.subAllUsers();
     this.unsubCurrentUser = this.subCurrentUser();
-    console.log(this.allUsersWithoutActiveUser);
   }
 
   ngOnDestroy(): void {
@@ -66,22 +65,28 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
   }
 
   subAllUsers() {
-    return this.userService.allUsers$.subscribe((users: any[]) => {
-      this.allUsersWithoutActiveUser = users;
-      this.getAllUsersWithoutActiveUser(users);
+    return this.userService.users$.subscribe((obj: any[]) => {
+      console.log(obj);
+      let users: any = [];
+      obj.forEach(element => {
+        users.push(element);
+      });
+      this.allUsersWithoutActiveUser = this.withoutActiveUser(users);
+      console.log(this.userService.allUsers);
     });
   }
 
-  getAllUsersWithoutActiveUser(users: any[]) {
+  withoutActiveUser(users: any[]) {
     let index;
     let indexGuest;
-    let allUsersWithoutActiveUser = users;
-    if (allUsersWithoutActiveUser && this.activeUser) {
-      index = allUsersWithoutActiveUser.findIndex((user) => user.name === this.activeUser.displayName);
-      if (index != -1) allUsersWithoutActiveUser.splice(index, 1);
-      indexGuest = allUsersWithoutActiveUser.findIndex((user) => user.name === "Guest User");
-      if (index != -1) allUsersWithoutActiveUser.splice(indexGuest, 1);
+    let withoutActiveUser = users;
+    if (withoutActiveUser && this.activeUser) {
+      index = withoutActiveUser.findIndex((user) => user.name === this.activeUser.displayName);
+      if (index != -1) withoutActiveUser.splice(index, 1);
+      indexGuest = withoutActiveUser.findIndex((user) => user.name === "Guest User");
+      if (index != -1) withoutActiveUser.splice(indexGuest, 1);
     }
+    return withoutActiveUser;
   }
 
 }

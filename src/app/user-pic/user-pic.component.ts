@@ -9,7 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 export class UserPicComponent {
 
-  @Input() status = false;
-  @Input() online = false;
+  @Input() status: Boolean = false;
+  @Input() online: Boolean = false;
   @Input() userImageName?: String;
 }

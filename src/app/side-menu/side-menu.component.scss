@@ -26,10 +26,8 @@
     height: 94%;
     overflow: scroll;
     scrollbar-width: none;
-
-
 }
-
+//hide the scrollbar still it is scrollable
 ::-webkit-scrollbar {
     width: 0px;
 }

@@ -15,4 +15,6 @@ CurrentUserService
 export class DirectMessageUserListElementComponent {
   @Input() userName!: String;
   @Input() userPic!: String;
+  @Input() status!: Boolean;
+
 }
