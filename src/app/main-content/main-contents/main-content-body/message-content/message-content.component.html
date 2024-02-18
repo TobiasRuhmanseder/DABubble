@@ -2,7 +2,7 @@
   <div class="message-header" *ngIf="chatService.checkNextDay(i, list)">
     <div class="stroke"></div>
     <div class="message-header-time">
-      {{ chatService.getFormattedDate(msg.timestamp, i) }}
+      {{ getFormattedDate(msg.timestamp, i) }}
     </div>
     <div class="stroke"></div>
   </div>

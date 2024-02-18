@@ -252,61 +252,7 @@ export class MessageService {
     );
   }
 
-  renderDate(
-    index: number,
-    date: Date,
-    day: string,
-    dateOfMonth: number,
-    month: string,
-    year: number
-  ) {
-    if (index < this.sortedMessages.length) {
-      let now = new Date();
-      let oneYear = now.getFullYear() - year;
-      if (oneYear > 0) {
-        return `${day} ${dateOfMonth}. ${month} ${year}`;
-      }
-    }
-    if (date.getDate() === new Date().getDate()) {
-      return 'Heute';
-    }
-    if (date.getDate() - new Date().getDate() === 1) {
-      return 'Gestern';
-    }
-    return `${day} ${dateOfMonth}. ${month}`;
-  }
 
-  getFormattedDate(timestamp: number, index: number) {
-    let months = [
-      'Januar',
-      'Februar',
-      'März',
-      'April',
-      'Mai',
-      'Juni',
-      'Juli',
-      'August',
-      'September',
-      'Oktober',
-      'November',
-      'Dezember',
-    ];
-    let days = [
-      'Sonntag',
-      'Montag',
-      'Dienstag',
-      'Mittwoch',
-      'Donnerstag',
-      'Freitag',
-      'Samstag',
-    ];
-    let date = new Date(timestamp);
-    let day = days[date.getDay()];
-    let dateOfMonth = date.getDate();
-    let month = months[date.getMonth()];
-    let year = date.getFullYear();
-    return this.renderDate(index, date, day, dateOfMonth, month, year);
-  }
   getMessageTime(timestamp: number) {
     let date = new Date(timestamp);
     let hours = ('0' + date.getHours()).slice(-2);
