@@ -117,11 +117,6 @@ export class MessageService {
     this.threadList.push([]);
   }
 
-  /**
-   * Setzt die Nachricht mit dem angegebenen Inhalt und gibt die erstellte Nachricht mit timestamp zurück.
-   * @param inputContent Der Inhalt für die zu setzende Nachricht.
-   * @returns Die erstellte Nachricht mit dem angegebenen Inhalt und aktuelle Zeit.
-   */
   setMessage(inputContent: string) {
     let content = inputContent;
     inputContent = '';
