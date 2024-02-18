@@ -111,19 +111,21 @@ export class MessageService {
   }
 
   async saveAndAddNewMessage(message: Message) {
-    let refId = await this.fire.saveNewMessage(
-      this.currentChannel.id,
-      message
-    );
+    let refId = await this.fire.saveNewMessage(this.currentChannel.id, message);
     message.id = refId;
     this.sortedMessages.push(message);
     this.threadList.push([]);
   }
 
+  /**
+   * Setzt die Nachricht mit dem angegebenen Inhalt und gibt die erstellte Nachricht mit timestamp zurück.
+   * @param inputContent Der Inhalt für die zu setzende Nachricht.
+   * @returns Die erstellte Nachricht mit dem angegebenen Inhalt und aktuelle Zeit.
+   */
   setMessage(inputContent: string) {
     let content = inputContent;
-    let time = this.getTimeStamp();
     inputContent = '';
+    let time = this.getTimeStamp();
     let message = new Message({
       senderId: this.currentUser,
       timestamp: time,
@@ -251,7 +253,6 @@ export class MessageService {
       currentTimestamp.getDate() > previousTimestamp.getDate()
     );
   }
-
 
   getMessageTime(timestamp: number) {
     let date = new Date(timestamp);
