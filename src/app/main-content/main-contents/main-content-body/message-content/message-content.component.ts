@@ -25,7 +25,9 @@ export class MessageContentComponent {
   @Input() flagg: any;
   @Input() mainChat: any;
   @Input() list: any;
+
   constructor(public chatService: MessageService, public users: UsersService) {}
+
   months = [
     'Januar',
     'Februar',
@@ -50,6 +52,12 @@ export class MessageContentComponent {
     'Samstag',
   ];
 
+  /**
+   * Die Funktin bereitet für die Funktion renderDate() die params vor.
+   * @param timestamp Der Zeitstempel, der in ein Datum umgewandelt werden soll.
+   * @param index Der Index-Wert für die Formatierung des Datums.
+   * @returns Das formatierte Datum entsprechend dem angegebenen Zeitstempel und Index.
+   */
   getFormattedDate(timestamp: number, index: number) {
     let date = new Date(timestamp);
     let day = this.days[date.getDay()];
@@ -59,6 +67,17 @@ export class MessageContentComponent {
     return this.renderDate(index, date, day, dateOfMonth, month, year);
   }
 
+  /**
+   *  Die Funktion rendert das Datum basierend auf den angegebenen Parametern
+   *  und gibt das gerenderte Datum zurück.
+   * @param index Der Index-Wert für die Formatierung des Datums.
+   * @param date Das Datum, das gerendert werden soll.
+   * @param day Der Wochentag des Datums.
+   * @param dateOfMonth Der Tag des Monats.
+   * @param month Der Monat des Datums.
+   * @param year Das Jahr des Datums.
+   * @returns Das gerenderte Datum entsprechend den angegebenen Parametern.
+   */
   renderDate(
     index: number,
     date: Date,
