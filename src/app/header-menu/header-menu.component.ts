@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { UserPicComponent } from '../user-pic/user-pic.component';
 import { CurrentUserService } from '../../services/current-user.service';
 import { ActiveUser } from '../../interfaces/active-user.interface';
@@ -10,20 +10,23 @@ import { Observable } from 'rxjs';
   templateUrl: './header-menu.component.html',
   styleUrl: './header-menu.component.scss'
 })
-export class HeaderMenuComponent implements OnInit {
+export class HeaderMenuComponent implements OnInit, OnDestroy {
 
   currentUserService: CurrentUserService = inject(CurrentUserService);
-
   activeUser: ActiveUser = { displayName: "", photoURL: "" };
-
+  unsubCurrentUser: any;
 
   ngOnInit(): void {
-    this.currentUserService.currentUser.subscribe(user => {
+    this.unsubCurrentUser = this.currentUserService.currentUser.subscribe(user => {
       let currentUser;
       currentUser = this.setActiceUser(user);
       this.activeUser = currentUser;
     });
     this.currentUserService.activeUser();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubCurrentUser.unsubscribe();
   }
 
   filterImgName(path: string) {
@@ -48,9 +51,9 @@ export class HeaderMenuComponent implements OnInit {
     return activeUser;
   }
 
-  signOutUser(){
-    setTimeout(()=>{this.currentUserService.signOut();},1500)
-    
+  signOutUser() {
+    setTimeout(() => { this.currentUserService.signOut(); }, 1500)
+
   }
 }
 
