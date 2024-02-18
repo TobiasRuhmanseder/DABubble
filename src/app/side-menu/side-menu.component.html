@@ -5,8 +5,11 @@
             <span>Code learning</span>
         </div>
         <app-icon-hover-change-image [unhovered]="'../../../assets/img/new_message_g.svg'"
-        [hovered]="'../../../assets/img/new_message_g_hover.svg'" [onClick]="'../../../assets/img/new_message_g_click.svg'" ></app-icon-hover-change-image>
+            [hovered]="'../../../assets/img/new_message_g_hover.svg'"
+            [onClick]="'../../../assets/img/new_message_g_click.svg'"></app-icon-hover-change-image>
     </div>
-<app-channel-view></app-channel-view>
-<app-direct-message-view></app-direct-message-view>
+    <div class="scroll-window">
+        <app-channel-view></app-channel-view>
+        <app-direct-message-view></app-direct-message-view>
+    </div>
 </div>

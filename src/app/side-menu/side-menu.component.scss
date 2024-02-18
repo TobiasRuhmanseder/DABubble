@@ -4,7 +4,7 @@
     padding: 30px;
 }
 
-.workspace-section{
+.workspace-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -13,11 +13,21 @@
     margin-bottom: 30px;
 }
 
-.workspace-description{
+.workspace-description {
     display: flex;
     align-items: center;
 }
 
-.logo{
+.logo {
     margin-right: 15px;
+}
+
+.scroll-window {
+    height: 94%;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+//hide the scrollbar still it is scrollable
+::-webkit-scrollbar {
+    width: 0px;
 }
