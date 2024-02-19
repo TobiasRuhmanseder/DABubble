@@ -14,11 +14,11 @@
             [hovered]="'../../../assets/img/plus-hovered.svg'"
             [onClick]="'../../../assets/img/plus-onclick.svg'"></app-icon-hover-change-image>
     </div>
-    <div class="list-container">
-        <div [class.dropdown-menu-open]="dropdownOpen" [class.dropdown-menu-close]="!dropdownOpen">
+    <div [class.dropdown-menu-open]="dropdownOpen" [class.dropdown-menu-close]="!dropdownOpen">
+        <div class="inner">
             <app-channel-list-element *ngFor="let channel of this.firebaseService.channels" [channel]="channel"
                 [currentCollectionId]="this.currentCollectionId"></app-channel-list-element>
-                <app-new-channel-list-element></app-new-channel-list-element>
+            <app-new-channel-list-element></app-new-channel-list-element>
         </div>
     </div>
 </div>

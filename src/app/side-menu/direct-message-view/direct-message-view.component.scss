@@ -62,14 +62,18 @@ img:nth-child(4) {
 }
 
 .dropdown-menu-open {
-    overflow: hidden;
-    width: 100%;
-    transition: all 500ms ease-in-out;
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.5s ease-out;
+
 }
 
 .dropdown-menu-close {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s ease-out;
+}
+
+.inner {
     overflow: hidden;
-    height: 0px;
-    width: 100%;
-    transition: all 500ms ease-in-out;
 }

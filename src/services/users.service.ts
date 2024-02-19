@@ -58,6 +58,7 @@ export class UsersService implements OnDestroy {
 
 
   ngOnDestroy(): void {
+    console.log('users.service destroy');
     this.unsubUsers();
   }
 
@@ -67,8 +68,6 @@ export class UsersService implements OnDestroy {
       list.forEach((element) => {
         this.users.push((element.data()));
       });
-      console.log('snapshot list:')
-      console.log(this.users);
       this.users$.next(this.users);
     });
 
