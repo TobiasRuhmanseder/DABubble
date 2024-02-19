@@ -24,14 +24,19 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
   currentUserService: CurrentUserService = inject(CurrentUserService);
   userService: UsersService = inject(UsersService);
 
+
+  //////////////USER LIST COMPONENT///////////////////// 
   ngOnInit(): void {
     this.currentUserService.activeUser();
     this.unsubAllUsers = this.subAllUsers();
     this.unsubCurrentUser = this.subCurrentUser();
+    if (this.userService) this.userService.subUsers(); // start a new Snapshot on the service
   }
 
   ngOnDestroy(): void {
     this.unsubCurrentUser.unsubscribe();
+    console.log('direct message list comp destroyed')
+    this.userService.unsubUsers(); // unsub the snapshot on the service 
   }
 
   toggleDropdownMenu() {

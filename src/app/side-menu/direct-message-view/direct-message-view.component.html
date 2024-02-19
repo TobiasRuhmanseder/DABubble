@@ -11,11 +11,12 @@
         </div>
     </div>
     <div [class.dropdown-menu-open]="dropdownOpen" [class.dropdown-menu-close]="!dropdownOpen">
-
-        <app-direct-message-user-list-element [userName]="'Du'" [status]="true"
-            [userPic]="activeUser.photoURL"></app-direct-message-user-list-element>
-
-        <app-direct-message-user-list-element *ngFor="let user of this.allUsersWithoutActiveUser" [userName]="user.name"
-            [userPic]="user.photoURL" [status]="user.status"></app-direct-message-user-list-element>
+        <div class="inner">
+            <app-direct-message-user-list-element [userName]="'Du'" [status]="true"
+                [userPic]="activeUser.photoURL"></app-direct-message-user-list-element>
+            <app-direct-message-user-list-element *ngFor="let user of this.allUsersWithoutActiveUser"
+                [userName]="user.name" [userPic]="user.photoURL"
+                [status]="user.status"></app-direct-message-user-list-element>
+        </div>
     </div>
 </div>
