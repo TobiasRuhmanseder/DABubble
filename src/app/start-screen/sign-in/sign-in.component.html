@@ -8,14 +8,16 @@
     <form [formGroup]="profileForm">
         <div class="inputfield-container">
             <img src="./../../../assets/icons/user_icon.svg">
-            <input id="name" type="name" formControlName="name" placeholder="Name und Nachname" (focus)="inputFocusOn()">
+            <input id="name" type="name" formControlName="name" placeholder="Name und Nachname"
+                (focus)="inputFocusOn()">
         </div>
         <div class="alert" *ngIf="name?.errors?.['pattern'] && inputFocused">
             * Bitte gib deinen vollständigen Vor- und Nachnamen an.
         </div>
         <div class="inputfield-container">
             <img src="./../../../assets/icons/mail_icon.svg">
-            <input id="email" type="email" formControlName="email" placeholder="beispielname@email.com" (focus)="inputFocusOn()">
+            <input id="email" type="email" formControlName="email" placeholder="beispielname@email.com"
+                (focus)="inputFocusOn()">
         </div>
         <div class="alert" *ngIf="email?.errors?.['email']">
             * Bitte verwende eine gültige Email-Adresse.
@@ -40,10 +42,14 @@
         </div>
     </form>
     <div class="submit-btn">
-        <button class="btn-blue" [disabled]="!profileForm.get('acceptTerms')?.value || !profileForm.valid" [class.btn-inactive]="!profileForm.get('acceptTerms')?.value || !profileForm.valid" (click)="signIn()">Weiter</button>
+        <button class="btn-blue" [disabled]="!profileForm.get('acceptTerms')?.value || !profileForm.valid"
+            [class.btn-inactive]="!profileForm.get('acceptTerms')?.value || !profileForm.valid"
+            (click)="signIn()">Weiter</button>
     </div>
 </div>
 <div class="footer">
-    <a class="link-btn" (click)="navigateToLegalNotice()">Impressum</a>
-    <a class="link-btn" (click)="navigateToPrivacyPolicy()">Datenschutz</a>
+    <div>
+        <a class="link-btn" routerLink="legal-notice">Impressum</a>
+        <a class="link-btn" routerLink="privacy-policy">Datenschutz</a>
+    </div>
 </div>

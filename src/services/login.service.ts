@@ -129,6 +129,7 @@ export class LoginService {
       email: email,
       photoURL: photoURL,
       status: statusValue,
+      directmsg: []
     });
 
     setDoc(doc(this.firestore, 'users', uid), userObject.toJSON())
