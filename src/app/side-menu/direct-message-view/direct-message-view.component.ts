@@ -36,7 +36,6 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubCurrentUser.unsubscribe();
-    console.log('direct message list comp destroyed')
     this.userService.unsubUsers();
   }
 
@@ -72,13 +71,11 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
 
   subAllUsers() {
     return this.userService.users$.subscribe((obj: any[]) => {
-      console.log(obj);
       let users: any = [];
       obj.forEach(element => {
         users.push(element);
       });
       this.allUsersWithoutActiveUser = this.withoutActiveUser(users);
-      console.log(this.userService.allUsers);
     });
   }
 

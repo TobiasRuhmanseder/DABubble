@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Injectable, OnDestroy, OnInit, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
@@ -52,7 +52,6 @@ export class CurrentUserService implements OnDestroy {
       const emailVerified = user.emailVerified;
       const uid = user.uid;
     }
-    console.log(user);
     return user;
   }
 
