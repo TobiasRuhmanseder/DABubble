@@ -35,6 +35,15 @@ export class MessageService {
   unsubMessages: Unsubscribe | undefined;
   unsubThreads: Unsubscribe | undefined;
 
+  ngOnDestroy() {
+    if (this.unsubMessages) {
+      this.unsubMessages();
+    }
+    if (this.unsubThreads) {
+      this.unsubThreads();
+    }
+  }
+
   subChannelThreads(channelId: string) {
     const messagesRef = collection(
       this.firestore,
