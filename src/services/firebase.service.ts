@@ -48,28 +48,6 @@ export class FirebaseService implements OnDestroy {
     }
   }
 
-  // subChannelMessages(channelId: string) {
-  //   const q = query(
-  //     collection(this.firestore, 'channels', channelId, 'messages')
-  //   );
-  //   this.unsubMessages = onSnapshot(q, (querySnapshot) => {
-  //     const messagesList: DocumentData[] = [];
-  //     querySnapshot.docChanges().forEach((change) => {
-  //       // if (change.type === 'added') {
-  //       //   let messageData = { id: change.doc.id, ...change.doc.data() };
-  //       //   // this.saveNewMessage(messageData)
-  //       //   console.log('adding', messageData);
-  //       //   // Hier können Sie weitere Aktionen für hinzugefügte Nachrichten durchführen
-  //       // }
-  //       if (change.type === 'modified') {
-  //         let messageData = { id: change.doc.id, ...change.doc.data() };
-  //         console.log('edding', messageData);
-  //         messagesList.push(messageData);
-  //         // Hier können Sie Aktionen für geänderte Nachrichten durchführen
-  //       }
-  //     });
-  //   });
-  // }
 
   async uploadToStorage(file: any, customURL: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -112,19 +90,6 @@ export class FirebaseService implements OnDestroy {
       });
     });
   }
-
-  // subMessagesList(channelId: string) {
-  //   return onSnapshot(
-  //     collection(this.firestore, 'channels', channelId, 'messages'),
-  //     (querySnapshot) => {
-  //       this.messages = [];
-  //       querySnapshot.forEach((doc) => {
-  //         let message = doc.data() as Message;
-  //         this.messages.push(message);
-  //       });
-  //     }
-  //   );
-  // }
 
   updateMessage(channelId: string, messageId: string, msg: Message) {
     return setDoc(
