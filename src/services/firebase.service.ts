@@ -8,9 +8,11 @@ import {
 } from '@angular/fire/firestore';
 import {
   DocumentData,
+  Unsubscribe,
   collection,
   doc,
   getDoc,
+  query,
   updateDoc,
 } from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
@@ -30,8 +32,10 @@ export class FirebaseService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
 
   channels: Channel[] = [];
+  messages: Message[] = [];
 
   unsubChannels;
+  unsubMessages: Unsubscribe | undefined;
 
   constructor() {
     this.unsubChannels = this.subChannelsList();
@@ -39,7 +43,11 @@ export class FirebaseService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubChannels();
+    if (this.unsubMessages) {
+      this.unsubMessages();
+    }
   }
+
 
   async uploadToStorage(file: any, customURL: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -144,7 +152,7 @@ export class FirebaseService implements OnDestroy {
       let messageData = { id: doc.id, ...doc.data() };
       threadList.push(messageData);
     });
-    return threadList;
+    return { messageId, threadList };
   }
 
   async getChannelMessages(id: string) {

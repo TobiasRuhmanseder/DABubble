@@ -35,7 +35,11 @@
       </div>
     </div>
     <textarea
-      [mention]="users.allUsersName"
+      [mentionConfig]="{
+        dropUp: true,
+        items: users.allUsers,
+        labelKey: 'name'
+      }"
       [(ngModel)]="textAreaThreadContent"
       class="main-input-field"
       [placeholder]="getPlaceholderText()"
