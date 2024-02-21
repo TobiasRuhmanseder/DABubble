@@ -5,6 +5,7 @@ import { ActiveUser } from '../../../interfaces/active-user.interface';
 import { CurrentUserService } from '../../../services/current-user.service';
 import { UsersService } from '../../../services/users.service';
 import { CommonModule } from '@angular/common';
+import { DirectMessagesService } from '../../../services/direct-messages.service';
 
 @Component({
   selector: 'app-direct-message-view',
@@ -23,20 +24,19 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
 
   currentUserService: CurrentUserService = inject(CurrentUserService);
   userService: UsersService = inject(UsersService);
+  directMessagesService: DirectMessagesService = inject(DirectMessagesService);
 
 
-  //////////////USER LIST COMPONENT///////////////////// 
   ngOnInit(): void {
     this.currentUserService.activeUser();
     this.unsubAllUsers = this.subAllUsers();
     this.unsubCurrentUser = this.subCurrentUser();
-    if (this.userService) this.userService.subUsers(); // start a new Snapshot on the service
+    if (this.userService) this.userService.subUsers();
   }
 
   ngOnDestroy(): void {
     this.unsubCurrentUser.unsubscribe();
-    console.log('direct message list comp destroyed')
-    this.userService.unsubUsers(); // unsub the snapshot on the service 
+    this.userService.unsubUsers();
   }
 
   toggleDropdownMenu() {
@@ -71,13 +71,11 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
 
   subAllUsers() {
     return this.userService.users$.subscribe((obj: any[]) => {
-      console.log(obj);
       let users: any = [];
       obj.forEach(element => {
         users.push(element);
       });
       this.allUsersWithoutActiveUser = this.withoutActiveUser(users);
-      console.log(this.userService.allUsers);
     });
   }
 
