@@ -46,7 +46,7 @@ export class MessageFooterComponent {
 
   checkAnswer(i: number) {
     if (this.chatService.threadList[i] != undefined) {
-      if (this.chatService.threadList[i].length > 0) {
+      if (this.chatService.threadList[i].threadList.length > 0) {
         return true;
       }
     }
@@ -55,8 +55,8 @@ export class MessageFooterComponent {
 
   getThreadMessages(i: number) {
     if (this.chatService.threadList[i] != undefined) {
-      if (this.chatService.threadList[i].length > 0) {
-        return this.chatService.threadList[i].length;
+      if (this.chatService.threadList[i].threadList.length > 0) {
+        return this.chatService.threadList[i].threadList.length;
       }
     }
     return '';
@@ -65,8 +65,8 @@ export class MessageFooterComponent {
   getThreadTimestamp(i: number) {
     if (this.chatService.threadList[i] != undefined) {
       return this.chatService.getMessageTime(
-        this.chatService.threadList[i][
-          this.chatService.threadList[i].length - 1
+        this.chatService.threadList[i].threadList[
+          this.chatService.threadList[i].threadList.length - 1
         ].timestamp
       );
     }

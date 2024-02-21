@@ -10,7 +10,6 @@ import { collection } from '@firebase/firestore';
 })
 export class UsersService implements OnDestroy {
   allUsers: any[] = [];
-  allUsersName: any[] = [];
 
   constructor(private fire: FirebaseService) {
     this.unsubUsers = this.subUsers(); // Tobias
@@ -20,7 +19,6 @@ export class UsersService implements OnDestroy {
     try {
       this.allUsers = await this.fire.getUserList();
       console.log('List of all Users:', this.allUsers);
-      this.allUsersName = await this.getAllUsersName();
       return this.allUsers;
     } catch (error) {
       throw error;
@@ -35,17 +33,15 @@ export class UsersService implements OnDestroy {
     if (user) {
       return user.name;
     }
-    return '';
+    return 'User dont found'
   }
-  getAllUsersName(): Promise<string[]> {
-    return new Promise((resolve) => {
-      if (this.allUsers) {
-        const names = this.allUsers.map((user: any) => user.name);
-        resolve(names);
-      }
-    });
+  getUserPic(userId: any) {
+    let user = this.getUserFromId(userId);
+    if (user) {
+      return user.photoURL;
+    }
+    return './assets/img/user_pics/default_user.svg';
   }
-
 
 
   ///Tobias 

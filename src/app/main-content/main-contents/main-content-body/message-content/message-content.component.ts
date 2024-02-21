@@ -84,4 +84,22 @@ export class MessageContentComponent {
     }
     return `${day} ${dateOfMonth}. ${month}`;
   }
+
+  checkNextDay(index: number, list: any) {
+    if (index === 0) {
+      return true;
+    }
+    let currentTimestamp = new Date(Number(list[index].timestamp));
+    let previousTimestamp = new Date(Number(list[index - 1].timestamp));
+    return this.checkNextTime(currentTimestamp, previousTimestamp);
+  }
+
+  checkNextTime(currentTimestamp: Date, previousTimestamp: Date) {
+    return (
+      currentTimestamp.getFullYear() > previousTimestamp.getFullYear() ||
+      currentTimestamp.getMonth() > previousTimestamp.getMonth() ||
+      currentTimestamp.getDate() > previousTimestamp.getDate()
+    );
+  }
+
 }

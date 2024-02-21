@@ -1,5 +1,5 @@
 <div *ngFor="let msg of list; let i = index" class="message-content">
-  <div class="message-header" *ngIf="chatService.checkNextDay(i, list)">
+  <div class="message-header" *ngIf="checkNextDay(i, list)">
     <div class="stroke"></div>
     <div class="message-header-time">
       {{ getFormattedDate(msg.timestamp, i) }}
@@ -20,7 +20,7 @@
     <img
       *ngIf="chatService.editThreadFlaggIndex === -1 || mainChat"
       class="message-pic"
-      src="{{ chatService.getUserPic(msg.senderId) }}"
+      src="{{ users.getUserPic(msg.senderId) }}"
     />
     <div class="message-body">
       <app-message-title

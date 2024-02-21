@@ -30,19 +30,20 @@ export class MainContentHeaderComponent {
     public users: UsersService
   ) {}
   filterUserList() {
-    let allUserList = this.users.allUsers;
-    let list = allUserList.filter((user) => {
+    let allUserList = this.users.users;
+    let list = allUserList.filter((user: { id: any }) => {
       return !this.chatService.currentChannel.users.includes(user.id);
     });
-    let filterList = list.filter((user) => {
+    let filterList = list.filter((user: { name: string }) => {
       return user.name.toLowerCase().includes(this.inputAddUser.toLowerCase());
     });
     return filterList;
   }
   checkUserExists() {
     if (!this.addSelectUser) {
-      return !this.users.allUsers.some(
-        (user) => user.name.toLowerCase() === this.inputAddUser.toLowerCase()
+      return !this.users.users.some(
+        (user: { name: string }) =>
+          user.name.toLowerCase() === this.inputAddUser.toLowerCase()
       );
     }
     return false;
@@ -61,7 +62,7 @@ export class MainContentHeaderComponent {
   }
 
   addUserToChannel() {
-    let user = this.users.allUsers.find((user) => {
+    let user = this.users.users.find((user: { name: string }) => {
       return user.name.toLowerCase() === this.inputAddUser.toLowerCase();
     });
     this.chatService.currentChannel.users.push(user.id);
@@ -118,10 +119,14 @@ export class MainContentHeaderComponent {
         return userPic.photoURL;
       }
     }
-    return 'Profile';
+    return './assets/img/user_pics/default_user.svg';
   }
   getUserStatus(userId: string) {
-    let user = this.users.getUserFromId(userId);
+    let currentUser = this.users.getUserFromId(userId);
+
+    let user = this.users.users.find(
+      (u: { email: string }) => u.email === currentUser.email
+    );
     return user.status;
   }
 }
