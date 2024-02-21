@@ -4,6 +4,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
 import { onSnapshot } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -66,7 +67,8 @@ export class UsersService implements OnDestroy {
     return onSnapshot(this.getCollRef('users'), (list) => {
       this.users = [];
       list.forEach((element) => {
-        this.users.push((element.data()));
+        let user = new User(element.data(), element.id)
+        this.users.push(user);
       });
       this.users$.next(this.users);
     });

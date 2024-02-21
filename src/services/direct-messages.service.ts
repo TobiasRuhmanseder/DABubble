@@ -1,9 +1,10 @@
-import { Injectable, OnDestroy, OnInit, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
-import { onSnapshot } from '@angular/fire/firestore';
-import { collection, collectionGroup } from '@firebase/firestore';
+import { onSnapshot, addDoc, deleteDoc, doc } from '@angular/fire/firestore';
+import { collection } from '@firebase/firestore';
 import { CurrentUserService } from './current-user.service';
 import { DirectMessages } from '../interfaces/direct-messages.interface';
+import { Message } from '../models/message.class';
 
 @Injectable({
   providedIn: 'root'
@@ -25,14 +26,11 @@ export class DirectMessagesService implements OnDestroy {
     });
     this.currentUserService.activeUser();
     setTimeout(() => { //for the testing now 
-      this.getDocIdFromTheDirectMessaging('3kib1Ag4OvYZLG7EF0AKxM8TJjX2'); // start this function in the direct message component when click on a User  
     }, 2000
     )
-
   }
 
   constructor() {
-    console.log('constructor starts');
     this.unsubDirectMessages = this.subDirectMessages();
     this.init();
   }
@@ -49,7 +47,6 @@ export class DirectMessagesService implements OnDestroy {
       list.forEach((element) => {
         this.allDirectMessages.push(this.addIdToList(element.data(), element.id));
         console.log(this.allDirectMessages);
-
       });
     });
   }
@@ -65,19 +62,55 @@ export class DirectMessagesService implements OnDestroy {
     return collection(this.firestore, colId);
   }
 
-  getDocIdFromTheDirectMessaging(uid: string) {
-    this.allDirectMessages.forEach((doc: any) => {
-      if (doc.users.includes(this.currentUser.uid) && doc.users.includes(this.currentUser.uid && uid)) {
-        console.log(doc.id); //for testing now
-      } else {
-        console.log('false'); //for testing now
-        this.addNewDocIdDirectMessaging();
-      }
-    });
+  getDirectMessagingRef() {
+    return collection(this.firestore, 'direct_messages');
   }
 
-  addNewDocIdDirectMessaging() {
-    // if it doesn't exist a direct messag doc on the firebase, here we will create one
-    //if it done, start the getDocId.....again
+  async getDocIdFromTheDirectMessaging(uid: string) {
+    let docId: any = null;
+    this.allDirectMessages.forEach((doc: any) => {
+      if (doc.users.includes(this.currentUser.uid) && doc.users.includes(this.currentUser.uid && uid)) {
+        docId = doc.id;
+
+      }
+    });
+    if (docId != null) {
+      console.log(docId);
+      return docId;
+    } else {
+      docId = this.addNewDocDirectMessaging(uid);
+      setTimeout(() => {                   // set Timeout for testing now
+        console.log('new Id was created:' + docId);
+        return docId;
+      }, 5000)
+    }
+  }
+
+  addNewDocDirectMessaging(uid: string) {
+    let newDoc = this.getEmtyDirectMessaging(uid);
+    let docId;
+    const docRef = addDoc(this.getDirectMessagingRef(), newDoc).catch(
+      (err) => { console.log(err) }
+    ).then(
+      (docRef) => {
+        this.addMessageCollection(docRef?.id);
+        console.log("Document written with ID: ", docRef?.id);
+        return docRef?.id;
+      }
+    )
+  }
+
+  getEmtyDirectMessaging(uid: string): DirectMessages {
+    return {
+      users: [this.currentUser.uid, uid],
+    }
+  }
+
+  async addMessageCollection(docRefId: any) {
+    let path = 'direct_messages/' + docRefId + '/messages'
+    let ref = collection(this.firestore, path);
+    await addDoc(ref, {}).catch(   // it can't be create a emty subcollection - here only with a emty json. After when I delete de doc(deleteDoc), the subcollection is also gone
+      (err) => { console.log(err) }
+    )
   }
 }

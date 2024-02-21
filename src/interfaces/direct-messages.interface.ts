@@ -1,4 +1,4 @@
 export interface DirectMessages {
-    id: string,
     users: any[]
+    id?: string,
 }

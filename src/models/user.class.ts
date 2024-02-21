@@ -1,11 +1,13 @@
 export class User {
+  id?: string;
   name: string;
   photoURL: string;
   email: string;
   status: boolean;
   directmsg: any[];
 
-  constructor(obj: any) {
+  constructor(obj: any, id?: string) {
+    this.id = id ? id : '';
     this.name = obj ? obj.name : '';
     this.photoURL = obj ? obj.photoURL : '';
     this.email = obj ? obj.email : '';
