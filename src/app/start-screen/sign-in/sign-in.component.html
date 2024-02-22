@@ -1,55 +1,58 @@
-<div class="header">
-    <img src="./../../assets/img/logo_small.svg" alt="DABubble Logo">
-</div>
-<div class="login-container">
-    <img (click)="navigateToLogin()" class="arrow-back" src="./../../../assets/img/arrow_back.svg">
-    <h1>Konto erstellen</h1>
-    <div class="info-text">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</div>
-    <form [formGroup]="profileForm">
-        <div class="inputfield-container">
-            <img src="./../../../assets/icons/user_icon.svg">
-            <input id="name" type="name" formControlName="name" placeholder="Name und Nachname"
-                (focus)="inputFocusOn()">
-        </div>
-        <div class="alert" *ngIf="name?.errors?.['pattern'] && inputFocused">
-            * Bitte gib deinen vollständigen Vor- und Nachnamen an.
-        </div>
-        <div class="inputfield-container">
-            <img src="./../../../assets/icons/mail_icon.svg">
-            <input id="email" type="email" formControlName="email" placeholder="beispielname@email.com"
-                (focus)="inputFocusOn()">
-        </div>
-        <div class="alert" *ngIf="email?.errors?.['email']">
-            * Bitte verwende eine gültige Email-Adresse.
-        </div>
-        <div class="alert">
-            {{ this.LoginService.mailInUse }}
-        </div>
-        <div class="inputfield-container">
-            <img src="./../../../assets/icons/password_icon.svg">
-            <input id="password" type="password" formControlName="password" placeholder="Passwort">
-        </div>
-        <div class="alert" *ngIf="password?.errors?.['minlength']">
-            * Das Passwort muss mindestens acht Zeichen lang sein.
-        </div>
-        <div>
-            <label class="checkbox-container">
-                <input type="checkbox" formControlName="acceptTerms" id="acceptTerms">
-                <span class="checkmark"></span>
-            </label>
-            <span class="privacy-link">Ich stimme der <a (click)="navigateToPrivacyPolicy()">Datenschutzerklärung</a>
-                zu.</span>
-        </div>
-    </form>
-    <div class="submit-btn">
-        <button class="btn-blue" [disabled]="!profileForm.get('acceptTerms')?.value || !profileForm.valid"
-            [class.btn-inactive]="!profileForm.get('acceptTerms')?.value || !profileForm.valid"
-            (click)="signIn()">Weiter</button>
+<div class="login-content">
+    <div class="header">
+        <img src="./../../assets/img/logo_small.svg" alt="DABubble Logo">
     </div>
-</div>
-<div class="footer">
-    <div>
-        <a class="link-btn" routerLink="legal-notice">Impressum</a>
-        <a class="link-btn" routerLink="privacy-policy">Datenschutz</a>
+    <div class="login-container">
+        <img (click)="navigateToLogin()" class="arrow-back" src="./../../../assets/img/arrow_back.svg">
+        <h1>Konto erstellen</h1>
+        <div class="info-text">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</div>
+        <form [formGroup]="profileForm">
+            <div class="inputfield-container">
+                <img src="./../../../assets/icons/user_icon.svg">
+                <input id="name" type="name" formControlName="name" placeholder="Name und Nachname"
+                    (focus)="inputFocusOn()">
+            </div>
+            <div class="alert" *ngIf="name?.errors?.['pattern'] && inputFocused">
+                * Bitte gib deinen vollständigen Vor- und Nachnamen an.
+            </div>
+            <div class="inputfield-container">
+                <img src="./../../../assets/icons/mail_icon.svg">
+                <input id="email" type="email" formControlName="email" placeholder="beispielname@email.com"
+                    (focus)="inputFocusOn()">
+            </div>
+            <div class="alert" *ngIf="email?.errors?.['email']">
+                * Bitte verwende eine gültige Email-Adresse.
+            </div>
+            <div class="alert" *ngIf="this.LoginService.mailInUse">
+               * Diese Email ist bereits in Verwendung
+            </div>
+            <div class="inputfield-container">
+                <img src="./../../../assets/icons/password_icon.svg">
+                <input id="password" type="password" formControlName="password" placeholder="Passwort">
+            </div>
+            <div class="alert" *ngIf="password?.errors?.['minlength']">
+                * Das Passwort muss mindestens acht Zeichen lang sein.
+            </div>
+            <div>
+                <label class="checkbox-container">
+                    <input type="checkbox" formControlName="acceptTerms" id="acceptTerms">
+                    <span class="checkmark"></span>
+                </label>
+                <span class="privacy-link">Ich stimme der <a
+                        (click)="navigateToPrivacyPolicy()">Datenschutzerklärung</a>
+                    zu.</span>
+            </div>
+        </form>
+        <div class="submit-btn">
+            <button class="btn-blue" [disabled]="!profileForm.get('acceptTerms')?.value || !profileForm.valid"
+                [class.btn-inactive]="!profileForm.get('acceptTerms')?.value || !profileForm.valid"
+                (click)="signIn()">Weiter</button>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="legal-links">
+            <a class="link-btn" routerLink="legal-notice">Impressum</a>
+            <a class="link-btn" routerLink="privacy-policy">Datenschutz</a>
+        </div>
     </div>
 </div>

@@ -43,7 +43,7 @@ export class SignInComponent {
   // hides the alert message as long as the input field is not selected
   inputFocusOn() {
     this.inputFocused = true;
-    this.LoginService.mailInUse = '';
+    this.LoginService.mailInUse = false;
   }
 
   signIn() {
@@ -56,10 +56,12 @@ export class SignInComponent {
       this.LoginService.userName = name;
       this.LoginService.signIn(email, password);
     } 
+    this.LoginService.mailInUse = false;
   }
 
   navigateToLogin() {
     this.router.navigate(['']);
+    this.LoginService.mailInUse = false;
   }
 
   navigateToLegalNotice() {

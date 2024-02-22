@@ -26,7 +26,7 @@ import { User } from '../models/user.class';
 })
 export class LoginService {
   wrongMailOrPassword: string = '';
-  mailInUse: string = '';
+  mailInUse: boolean = false;
   userName: string = '';
   userImg: string = './../../../assets/img/user_pics/default_user.svg';
   customAvatar$ = new Subject();
@@ -71,7 +71,7 @@ export class LoginService {
       .catch((error) => {
         console.log(error.code);
         if (error.code == 'auth/email-already-in-use') {
-          this.mailInUse = 'Diese Emailadresse ist bereits vergeben.';
+          this.mailInUse = true;
         }
       });
   }

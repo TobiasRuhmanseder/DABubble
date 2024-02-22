@@ -1,44 +1,47 @@
-<div class="header">
-    <img src="./../../assets/img/logo_small.svg" alt="DABubble Logo">
-</div>
-<div class="choose-avatar-container">
-    <img (click)="navigateToLogin()" class="arrow-back" src="./../../../assets/img/arrow_back.svg">
-    <h1>Wähle deinen Avatar</h1>
-    <div class="user-info">
-        <img src="{{ defaultAvatar }}" alt="">
-        <span>{{ this.LoginService.userName }}</span>
+<div class="login-content">
+    <div class="header">
+        <img src="./../../assets/img/logo_small.svg" alt="DABubble Logo">
     </div>
-    <div class="avatars-container">
-        <span>Aus der Liste wählen</span>
-        <div class="image-container">
-            <div *ngFor="let avatar of avatars, index as i" (click)="chooseAvatar(avatar)">
-                <img [src]="avatar">
+    <div class="choose-avatar-container">
+        <img (click)="navigateToLogin()" class="arrow-back" src="./../../../assets/img/arrow_back.svg">
+        <h1>Wähle deinen Avatar</h1>
+        <div class="user-info">
+            <img src="{{ defaultAvatar }}" alt="">
+            <span>{{ this.LoginService.userName }}</span>
+        </div>
+        <div class="avatars-container">
+            <span>Aus der Liste wählen</span>
+            <div class="image-container">
+                <div *ngFor="let avatar of avatars, index as i" (click)="chooseAvatar(avatar)">
+                    <img [src]="avatar">
+                </div>
+            </div>
+            <div class="upload-container">
+                <span>eigenes Bild verwenden</span>
+                <div>
+                    <label class="btn-white" [class.btn-inactive]="this.LoginService.loadAvatarBtnDisabled">
+                        <input class="btn-white" type="file" id="fileInput" (change)="uploadFile($event)"
+                            [disabled]="this.LoginService.loadAvatarBtnDisabled">
+                        Datei hochladen
+                    </label>
+                </div>
+            </div>
+            <div class="alert">
+                {{ this.LoginService.invalidImgType }}
             </div>
         </div>
-        <div class="upload-container">
-            <span>eigenes Bild verwenden</span>
-            <div>
-                <label class="btn-white" [class.btn-inactive]="this.LoginService.loadAvatarBtnDisabled">
-                    <input class="btn-white" type="file" id="fileInput" (change)="uploadFile($event)" [disabled]="this.LoginService.loadAvatarBtnDisabled">
-                    Datei hochladen
-                </label>
-            </div>
-        </div>
-        <div class="alert">
-            {{ this.LoginService.invalidImgType }}
+        <div class="submit-btn">
+            <button class="btn-blue" (click)="saveAvatar()" [disabled]="this.LoginService.saveAvatarBtnDisabled"
+                [class.btn-inactive]="this.LoginService.saveAvatarBtnDisabled">Weiter</button>
         </div>
     </div>
-    <div class="submit-btn">
-        <button class="btn-blue" (click)="saveAvatar()" [disabled]="this.LoginService.saveAvatarBtnDisabled"
-            [class.btn-inactive]="this.LoginService.saveAvatarBtnDisabled">Weiter</button>
+    <div class="footer">
+        <div class="legal-links">
+            <a class="link-btn" routerLink="legal-notice">Impressum</a>
+            <a class="link-btn" routerLink="privacy-policy">Datenschutz</a>
+        </div>
     </div>
-</div>
-<div class="footer">
-    <div>
-        <a class="link-btn" routerLink="legal-notice">Impressum</a>
-        <a class="link-btn" routerLink="privacy-policy">Datenschutz</a>
+    <div class="confirmation-message" *ngIf="this.LoginService.showConfirmationMessage">
+        Konto erfolgreich erstellt!
     </div>
-</div>
-<div class="confirmation-message" *ngIf="this.LoginService.showConfirmationMessage">
-    Konto erfolgreich erstellt!
 </div>

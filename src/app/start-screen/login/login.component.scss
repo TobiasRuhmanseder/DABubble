@@ -70,7 +70,7 @@
 
 @media(max-width: 992px) {
     .sign-up-container-desktop {
-        display: none;
+        display: none !important;
     }
 
     .sign-up-container-mobile {
@@ -81,14 +81,38 @@
     }
 }
 
-@media(max-width: 600px) {
+@media(max-width: 480px) {
+    .legal-links {
+        display: none !important;
+    }
+
     .submit-btns {
         gap: 15px;
-    }
+      }
 }
 
-@media(max-width: 480px) {
-    .submit-btns {
-        flex-direction: column;
-    }
+@media(max-width: 400px) {
+  .btn-blue, .btn-white {
+    padding: 6px 13px;
+    font-size: 16px;
+  }
+
+  .submit-btns {
+    gap: 8px;
+  }
 }
+
+@media(max-height: 700px) {
+    .login-divider {
+        margin: 5px 0 15px;
+    }
+
+    .google-btn {
+        padding: 12px 25px;
+
+        img {
+            height: 22px;
+        }
+    }
+  }
+
