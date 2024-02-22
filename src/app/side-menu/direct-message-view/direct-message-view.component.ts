@@ -5,7 +5,6 @@ import { ActiveUser } from '../../../interfaces/active-user.interface';
 import { CurrentUserService } from '../../../services/current-user.service';
 import { UsersService } from '../../../services/users.service';
 import { CommonModule } from '@angular/common';
-import { DirectMessagesService } from '../../../services/direct-messages.service';
 
 @Component({
   selector: 'app-direct-message-view',
@@ -24,7 +23,6 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
 
   currentUserService: CurrentUserService = inject(CurrentUserService);
   userService: UsersService = inject(UsersService);
-  directMessagesService: DirectMessagesService = inject(DirectMessagesService);
 
 
   ngOnInit(): void {
@@ -76,6 +74,8 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
         users.push(element);
       });
       this.allUsersWithoutActiveUser = this.withoutActiveUser(users);
+      console.log(this.allUsersWithoutActiveUser);
+      
     });
   }
 

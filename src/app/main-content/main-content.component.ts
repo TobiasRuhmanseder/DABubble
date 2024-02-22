@@ -9,6 +9,7 @@ import { PrivateChatComponent } from './private-chat/private-chat.component';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users.service';
+import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-main-content',
@@ -31,13 +32,17 @@ export class MainContentComponent {
     public elementRef: ElementRef,
     public renderer: Renderer2,
     private route: ActivatedRoute,
+    private fire: FirebaseService
   ) {}
 
+  unsubCurrentChannelMessages: any;
 
   ngOnDestroy() {
-   // this.routeSub.unsubscribe();
+    if (this.unsubCurrentChannelMessages) {
+      this.unsubCurrentChannelMessages.unsubscribe();
+    } // this.routeSub.unsubscribe();
   }
-  ngOnInit() {}
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.routeSub = this.route.params.subscribe((params) => {
@@ -46,6 +51,8 @@ export class MainContentComponent {
         this.scrollDown();
         this.chatService.getChannelFromId(params['id']);
         this.chatService.getMessagesFromChannel(params['id']);
+        this.chatService.subChannelMessages(params['id']);
+        this.chatService.subChannelThreads(params['id']);
       }
     });
   }

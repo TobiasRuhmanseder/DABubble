@@ -29,15 +29,17 @@
           <div class="title">Mitglieder</div>
           <div class="close-button" (click)="closeAllDialog()"></div>
         </div>
-        <div *ngFor="let user of chatService.currentChannel.users">
-          <div class="user" (click)="openUserDetails()">
-            <app-user-pic
-              class="user-pic"
-              [status]="true"
-              [online]="getUserStatus(user)"
-              userImageName="{{ chatService.getUserPic(user) }}"
-            ></app-user-pic>
-            {{ users.getUserName(user) }}
+        <div class="user-list">
+          <div *ngFor="let user of chatService.currentChannel.users">
+            <div class="user" (click)="openUserDetails()">
+              <app-user-pic
+                class="user-pic"
+                [status]="true"
+                [online]="getUserStatus(user)"
+                userImageName="{{ users.getUserPic(user) }}"
+              ></app-user-pic>
+              {{ users.getUserName(user) }}
+            </div>
           </div>
         </div>
         <div class="button-user" (click)="goToAddUser()">

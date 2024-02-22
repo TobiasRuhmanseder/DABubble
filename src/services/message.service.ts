@@ -1,17 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Channel } from '../models/channel.class';
 import { FirebaseService } from './firebase.service';
-import { getDoc } from 'firebase/firestore';
 import { Message } from '../models/message.class';
-import { UsersService } from './users.service';
+import { Unsubscribe, collection, getDocs, query } from '@firebase/firestore';
+import { Firestore, onSnapshot } from '@angular/fire/firestore';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageService {
-  constructor(private fire: FirebaseService, private users: UsersService) {}
-
+  constructor(private fire: FirebaseService) {}
   currentChannel: any;
+
   currentThreadChannel: any;
   currentThread: any;
   currentOpenMessageThreadId: any;
@@ -28,6 +29,110 @@ export class MessageService {
   isUploading = false;
 
   currentUser: string = 'h4w3Cntmu2BmDuWSxKqt';
+
+  firestore: Firestore = inject(Firestore);
+
+  unsubMessages: Unsubscribe | undefined;
+  unsubThreads: Unsubscribe | undefined;
+
+  ngOnDestroy() {
+    if (this.unsubMessages) {
+      this.unsubMessages();
+    }
+    if (this.unsubThreads) {
+      this.unsubThreads();
+    }
+  }
+
+  subChannelThreads(channelId: string) {
+    const messagesRef = collection(
+      this.firestore,
+      'channels',
+      channelId,
+      'messages'
+    );
+    getDocs(messagesRef).then((messagesSnapshot) => {
+      messagesSnapshot.forEach((messageDoc) => {
+        this.subChannelSingleThread(channelId, messageDoc.id);
+      });
+    });
+  }
+  subChannelSingleThread(channelId: string, messageId: string) {
+    const q = query(
+      collection(
+        this.firestore,
+        'channels',
+        channelId,
+        'messages',
+        messageId,
+        'threads'
+      )
+    );
+    this.unsubThreads = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.docChanges().forEach((change) => {
+        if (change.type === 'modified') {
+          let threadData = { id: change.doc.id, ...change.doc.data() };
+          this.setNewThread(threadData, messageId);
+        }
+      });
+    });
+  }
+
+  subChannelMessages(channelId: string) {
+    const q = query(
+      collection(this.firestore, 'channels', channelId, 'messages')
+    );
+    this.unsubMessages = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.docChanges().forEach((change) => {
+        if (change.type === 'modified') {
+          let messageData = { id: change.doc.id, ...change.doc.data() };
+          this.setNewMessages(messageData);
+        }
+      });
+    });
+  }
+
+  setNewThread(newMsg: any, messageId: string) {
+    let foundIndex = -1;
+    let threadIndex = -1;
+    if (newMsg) {
+      threadIndex = this.threadList.findIndex((msg: { messageId: string }) => {
+        return msg.messageId === messageId;
+      });
+      foundIndex = this.threadList[threadIndex].threadList.findIndex(
+        (msg: { id: string }) => {
+          return msg.id === newMsg.id;
+        }
+      );
+    }
+    if (foundIndex === -1) {
+      if (this.currentOpenMessageThreadId === messageId) {
+        this.currentThread.push(newMsg);
+        return this.getSortMessagesByTime(this.currentThread);
+      } else {
+        this.threadList[threadIndex].threadList.push(newMsg);
+        return this.getSortMessagesByTime(
+          this.threadList[threadIndex].threadList
+        );
+      }
+    }
+    return (this.threadList[threadIndex].threadList[foundIndex] = newMsg);
+  }
+
+  setNewMessages(newMsg: any) {
+    let foundIndex = -1;
+    if (newMsg) {
+      foundIndex = this.sortedMessages.findIndex((msg) => {
+        return msg.id === newMsg.id;
+      });
+    }
+    if (foundIndex === -1) {
+      this.sortedMessages.push(newMsg);
+      return this.getSortMessagesByTime(this.sortedMessages);
+    }
+
+    return (this.sortedMessages[foundIndex] = newMsg);
+  }
 
   getSingleFile(fileIdList: any): any {
     return fileIdList.map(async (fileId: string) => {
@@ -57,12 +162,6 @@ export class MessageService {
         'Maximale Anzahl von Wiederholungen erreicht. Download fehlgeschlagen.'
       );
     }
-  }
-
-  handleInvalidImageType() {
-    console.log(
-      'Erlaubte Dateiformate: PNG, JPEG und GIF. Bitte wähle eine gültige Datei aus.'
-    );
   }
 
   async handleUpload(file: any, customURL: string) {
@@ -105,19 +204,16 @@ export class MessageService {
       this.currentOpenMessageThreadId,
       message
     );
-    message.id = refId;
+    // message.id = refId;
 
-    this.currentThread.push(message);
+    // this.currentThread.push(message);
   }
 
   async saveAndAddNewMessage(message: Message) {
-    let refId = await this.fire.saveNewMessage(
-      this.currentChannel.id,
-      message
-    );
-    message.id = refId;
-    this.sortedMessages.push(message);
-    this.threadList.push([]);
+    let refId = await this.fire.saveNewMessage(this.currentChannel.id, message);
+    // message.id = refId;
+    // this.sortedMessages.push(message);
+    // this.threadList.push([]);
   }
 
   setMessage(inputContent: string) {
@@ -173,11 +269,14 @@ export class MessageService {
     this.messagesList = await this.fire.getChannelMessages(id);
     this.sortedMessages = this.getSortMessagesByTime(this.messagesList);
     this.threadList = await this.getThreadMessages(id);
+    console.log(this.threadList);
   }
 
   setCurrentThread(index: number, messageId: string) {
     if (this.threadList.length != 0) {
-      this.currentThread = this.getSortMessagesByTime(this.threadList[index]);
+      this.currentThread = this.getSortMessagesByTime(
+        this.threadList[index].threadList
+      );
       this.currentOpenMessageThreadId = messageId;
       this.currentThreadChannel = this.currentChannel;
       this.threadIsOpen = true;
@@ -193,14 +292,6 @@ export class MessageService {
       dataList.push(await this.fire.getThreadMessages(channelId, msg.id));
     }
     return dataList;
-  }
-
-  getUserPic(userId: any) {
-    let user = this.users.getUserFromId(userId);
-    if (user) {
-      return user.photoURL;
-    }
-    return 'Profile';
   }
 
   getTimeStamp() {
@@ -222,11 +313,6 @@ export class MessageService {
     return this.currentChannel.users;
   }
 
-  getSortMessages() {
-    this.sortedMessages = this.getSortMessagesByTime(this.messagesList);
-    return this.sortedMessages;
-  }
-
   getSortMessagesByTime(list: { timestamp: number }[]) {
     let sortetList = list.sort(
       (a: { timestamp: number }, b: { timestamp: number }) =>
@@ -235,78 +321,6 @@ export class MessageService {
     return sortetList;
   }
 
-  checkNextDay(index: number, list: any) {
-    if (index === 0) {
-      return true;
-    }
-    let currentTimestamp = new Date(Number(list[index].timestamp));
-    let previousTimestamp = new Date(Number(list[index - 1].timestamp));
-    return this.checkNextTime(currentTimestamp, previousTimestamp);
-  }
-
-  checkNextTime(currentTimestamp: Date, previousTimestamp: Date) {
-    return (
-      currentTimestamp.getFullYear() > previousTimestamp.getFullYear() ||
-      currentTimestamp.getMonth() > previousTimestamp.getMonth() ||
-      currentTimestamp.getDate() > previousTimestamp.getDate()
-    );
-  }
-
-  renderDate(
-    index: number,
-    date: Date,
-    day: string,
-    dateOfMonth: number,
-    month: string,
-    year: number
-  ) {
-    if (index < this.sortedMessages.length) {
-      let now = new Date();
-      let oneYear = now.getFullYear() - year;
-      if (oneYear > 0) {
-        return `${day} ${dateOfMonth}. ${month} ${year}`;
-      }
-    }
-    if (date.getDate() === new Date().getDate()) {
-      return 'Heute';
-    }
-    if (date.getDate() - new Date().getDate() === 1) {
-      return 'Gestern';
-    }
-    return `${day} ${dateOfMonth}. ${month}`;
-  }
-
-  getFormattedDate(timestamp: number, index: number) {
-    let months = [
-      'Januar',
-      'Februar',
-      'März',
-      'April',
-      'Mai',
-      'Juni',
-      'Juli',
-      'August',
-      'September',
-      'Oktober',
-      'November',
-      'Dezember',
-    ];
-    let days = [
-      'Sonntag',
-      'Montag',
-      'Dienstag',
-      'Mittwoch',
-      'Donnerstag',
-      'Freitag',
-      'Samstag',
-    ];
-    let date = new Date(timestamp);
-    let day = days[date.getDay()];
-    let dateOfMonth = date.getDate();
-    let month = months[date.getMonth()];
-    let year = date.getFullYear();
-    return this.renderDate(index, date, day, dateOfMonth, month, year);
-  }
   getMessageTime(timestamp: number) {
     let date = new Date(timestamp);
     let hours = ('0' + date.getHours()).slice(-2);

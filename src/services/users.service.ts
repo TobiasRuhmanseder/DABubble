@@ -4,13 +4,13 @@ import { Firestore } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
 import { onSnapshot } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService implements OnDestroy {
   allUsers: any[] = [];
-  allUsersName: any[] = [];
 
   constructor(private fire: FirebaseService) {
     this.unsubUsers = this.subUsers(); // Tobias
@@ -20,7 +20,6 @@ export class UsersService implements OnDestroy {
     try {
       this.allUsers = await this.fire.getUserList();
       console.log('List of all Users:', this.allUsers);
-      this.allUsersName = await this.getAllUsersName();
       return this.allUsers;
     } catch (error) {
       throw error;
@@ -35,17 +34,15 @@ export class UsersService implements OnDestroy {
     if (user) {
       return user.name;
     }
-    return '';
+    return 'User dont found'
   }
-  getAllUsersName(): Promise<string[]> {
-    return new Promise((resolve) => {
-      if (this.allUsers) {
-        const names = this.allUsers.map((user: any) => user.name);
-        resolve(names);
-      }
-    });
+  getUserPic(userId: any) {
+    let user = this.getUserFromId(userId);
+    if (user) {
+      return user.photoURL;
+    }
+    return './assets/img/user_pics/default_user.svg';
   }
-
 
 
   ///Tobias 
@@ -66,7 +63,8 @@ export class UsersService implements OnDestroy {
     return onSnapshot(this.getCollRef('users'), (list) => {
       this.users = [];
       list.forEach((element) => {
-        this.users.push((element.data()));
+        let user = new User(element.data(), element.id)
+        this.users.push(user);
       });
       this.users$.next(this.users);
     });
