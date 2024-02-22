@@ -46,7 +46,6 @@ export class DirectMessagesService implements OnDestroy {
       this.allDirectMessages = [];
       list.forEach((element) => {
         this.allDirectMessages.push(this.addIdToList(element.data(), element.id));
-        console.log(this.allDirectMessages);
       });
     });
   }
@@ -71,33 +70,30 @@ export class DirectMessagesService implements OnDestroy {
     this.allDirectMessages.forEach((doc: any) => {
       if (doc.users.includes(this.currentUser.uid) && doc.users.includes(this.currentUser.uid && uid)) {
         docId = doc.id;
-
       }
     });
     if (docId != null) {
       console.log(docId);
       return docId;
     } else {
-      docId = this.addNewDocDirectMessaging(uid);
-      setTimeout(() => {                   // set Timeout for testing now
-        console.log('new Id was created:' + docId);
-        return docId;
-      }, 5000)
+      docId = await this.addNewDocDirectMessaging(uid);
+      return docId;
     }
   }
 
-  addNewDocDirectMessaging(uid: string) {
+  async addNewDocDirectMessaging(uid: string) {
     let newDoc = this.getEmtyDirectMessaging(uid);
     let docId;
-    const docRef = addDoc(this.getDirectMessagingRef(), newDoc).catch(
-      (err) => { console.log(err) }
-    ).then(
-      (docRef) => {
-        this.addMessageCollection(docRef?.id);
-        console.log("Document written with ID: ", docRef?.id);
-        return docRef?.id;
-      }
-    )
+    try {
+      const docRef = await addDoc(this.getDirectMessagingRef(), newDoc)
+      this.addMessageCollection(docRef?.id);
+      console.log("Document written with ID: ", docRef?.id);
+      return docRef.id
+    }
+    catch (err) {
+      console.log(err);
+      return err
+    }
   }
 
   getEmtyDirectMessaging(uid: string): DirectMessages {

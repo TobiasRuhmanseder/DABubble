@@ -45,8 +45,8 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
     let activeUser = user;
     if (activeUser == null) {
       activeUser = {
-        displayName: "noUser",
-        photoURL: "male1.svg"
+        displayName: "",
+        photoURL: ""
       }
     }
     else {
@@ -74,8 +74,6 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
         users.push(element);
       });
       this.allUsersWithoutActiveUser = this.withoutActiveUser(users);
-      console.log(this.allUsersWithoutActiveUser);
-      
     });
   }
 

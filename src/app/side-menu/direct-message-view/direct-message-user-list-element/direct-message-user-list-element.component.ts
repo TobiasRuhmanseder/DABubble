@@ -25,7 +25,7 @@ export class DirectMessageUserListElementComponent {
 
 
   async chooseId() {
-    let directMessageDocId = await this.diMeService.getDocIdFromTheDirectMessaging(this.userUid);
+    let directMessageDocId = await this.diMeService.getDocIdFromTheDirectMessaging(this.userUid)
     this.router.navigateByUrl('/home/' + directMessageDocId);
   }
 }
