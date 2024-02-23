@@ -33,6 +33,7 @@
         }
 
         .title {
+            white-space: nowrap;
             opacity: 0;
             animation: fadeInTitle 0.5s ease-in-out forwards, shrinkTitle 1s ease-in-out forwards;
             animation-delay: 1s, 1.5s;
@@ -54,8 +55,9 @@
             opacity: 1;
             font-size: 64px;
             color: white;
-            
+
         }
+
         to {
             opacity: 0;
             font-size: 36px;
@@ -100,11 +102,78 @@
         }
     }
 
-   @keyframes fadeOutContainer {
+    @keyframes fadeOutContainer {
         from {
             opacity: 1;
-        } to {
+        }
+
+        to {
             opacity: 0;
         }
+    }
+}
+
+// responsive
+@media(max-width: 600px) {
+    .animation-container {
+        animation: fadeOutContainer 1s ease-in-out forwards;
+        animation-delay: 2s;
+
+        .logo {
+            font-size: 36px;
+            gap: 16px;
+            animation: moveLogoMobile 0.75s ease-in-out forwards;
+            animation-delay: 1.5s;
+
+            img {
+                width: 90px;
+                animation: fadeInImage 0.5s ease-in-out forwards, shrinkImgMobile 1s ease-in-out forwards;
+                animation-delay: 0.5s, 1.5s;
+            }
+
+            .title {
+                animation: fadeInTitle 0.5s ease-in-out forwards, shrinkTitleMobile 1s ease-in-out forwards;
+                animation-delay: 1s, 1.5s;
+            }
+        }
+    }
+
+}
+
+@keyframes moveLogoMobile {
+    from {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    to {
+        top: 75px;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes shrinkImgMobile {
+    from {
+        width: 90px;
+    }
+
+    to {
+        width: 70px;
+    }
+}
+
+@keyframes shrinkTitleMobile {
+    from {
+        opacity: 1;
+        font-size: 36px;
+        color: white;
+    }
+
+    to {
+        opacity: 0;
+        font-size: 36px;
+        color: black;
     }
 }

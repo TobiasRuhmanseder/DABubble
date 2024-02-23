@@ -124,7 +124,7 @@ body {
   border-radius: 30px;
   background-color: white;
   padding: 40px 80px;
-  width: 662px;
+  width: 500px;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -202,7 +202,7 @@ body {
   border-radius: 30px;
   background-color: white;
   padding: 40px 80px;
-  width: 662px;
+  width: 500px;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -233,7 +233,7 @@ body {
 @media(max-width: 768px) {
   .login-container,
   .legal-container {
-    width: 80%;
+    width: 400px;
     font-size: 17px;
 
     h1 {
@@ -247,6 +247,12 @@ body {
 }
 
 @media(max-width: 600px) {
+  .login-content {
+    .header {
+      justify-content: center;
+    }
+  }
+
   .login-container,
   .legal-container {
     padding: 35px 20px;
@@ -273,7 +279,14 @@ body {
 @media(max-width: 480px) {
   .login-container,
   .legal-container {
-    width: 95%;
+    width: 300px;
+  }
+}
+
+@media(max-width: 400px) {
+  .login-container,
+  .legal-container {
+    width: 250px;
   }
 }
 

@@ -7,7 +7,7 @@
     border-radius: 30px;
     background-color: white;
     padding: 40px 80px;
-    width: 662px;
+    width: 500px;
     z-index: 1;
     display: flex;
     flex-direction: column;
@@ -58,7 +58,6 @@
 
         .image-container {
             display: flex;
-            justify-content: space-between;
             flex-wrap: wrap;
 
             img {
@@ -166,7 +165,7 @@ input[type="file"] {
 // responsive
 @media(max-width: 768px) {
     .choose-avatar-container {
-        width: 80%;
+        width: 400px;
         font-size: 17px;
 
         h1 {
@@ -237,13 +236,69 @@ input[type="file"] {
         margin-left: 28px;
     }
 
+    .confirmation-message {
+        font-size: 22px;
+        padding: 20px 30px;
+        bottom: 75px;
+        right: -500px;
+        animation: slideInMobile 4s forwards;
+
+        img {
+            width: 21px;
+            height: 18px;
+        }
+    }
+    
+    @keyframes slideInMobile {
+        0% {
+            right: -500px;
+            opacity: 0;
+            visibility: hidden;
+        }
+    
+        25% {
+            right: 25px;
+            opacity: 1;
+            visibility: visible;
+        }
+    
+        50% {
+            right: 25px;
+            opacity: 1;
+            visibility: visible;
+        }
+    
+        75% {
+            right: 25px;
+            opacity: 0;
+            visibility: hidden;
+        }
+    
+        100% {
+            right: -500px;
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
 }
 
 @media(max-width: 480px) {
     .choose-avatar-container {
-        width: 95%;
+        width: 300px;
+    }
+
+    .confirmation-message {
+            font-size: 16px;
+            padding: 15px 23px;
     }
 }
+
+@media(max-width: 400px) {
+    .choose-avatar-container {
+      width: 250px;
+    }
+  }
 
 @media(max-height: 700px) {
     .login-content {
