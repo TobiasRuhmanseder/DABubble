@@ -1,15 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoginService } from '../../../services/login.service';
 @Component({
   selector: 'app-reset-password',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    CommonModule,
-    RouterLink
+    CommonModule
   ],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss'
@@ -28,7 +27,6 @@ export class ResetPasswordComponent {
     }
   }
   
-
   navigateToLogin() {
     this.router.navigate(['']);
   }

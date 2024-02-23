@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoginService } from '../../../services/login.service';
 import { CommonModule } from '@angular/common';
 
@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
   selector: 'app-choose-avatar',
   standalone: true,
   imports: [
-    RouterLink,
     CommonModule
   ],
   templateUrl: './choose-avatar.component.html',

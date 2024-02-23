@@ -37,8 +37,8 @@
     </div>
     <div class="footer">
         <div class="legal-links">
-            <a class="link-btn" routerLink="legal-notice">Impressum</a>
-            <a class="link-btn" routerLink="privacy-policy">Datenschutz</a>
+            <a class="link-btn" (click)="navigateToPrivacyPolicy()">Impressum</a>
+            <a class="link-btn" (click)="navigateToPrivacyPolicy()">Datenschutz</a>
         </div>
     </div>
     <div class="confirmation-message" *ngIf="this.LoginService.showConfirmationMessage">
