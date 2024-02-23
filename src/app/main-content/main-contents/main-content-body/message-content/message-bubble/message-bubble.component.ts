@@ -33,6 +33,14 @@ export class MessageBubbleComponent {
   @Input() mainChat: any;
   files: any[] = [];
 
+  styleProberty = {
+    maxWidth: '200px',
+    maxHeight: '200px',
+    'object-fit': 'contain',
+    cursor: 'pointer',
+    'border-radius': '12px',
+  };
+
   ngAfterViewInit() {
     this.getFiles(this.msg.files);
   }
@@ -94,7 +102,6 @@ export class MessageBubbleComponent {
     a.click();
     window.URL.revokeObjectURL(url);
   }
-  
 
   renderImage(fileURL: string, index: number) {
     let elementsArray;
@@ -102,13 +109,7 @@ export class MessageBubbleComponent {
     const element = elementsArray[index];
     const img = new Image();
     img.src = fileURL;
-    Object.assign(img.style, {
-      padding: '12px',
-      maxWidth: '200px',
-      maxHeight: '200px',
-      'object-fit': 'contain',
-      cursor: 'pointer',
-    });
+    Object.assign(img.style, this.styleProberty);
     img.onclick = () => {
       window.open(fileURL, '_blank');
     };

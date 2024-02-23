@@ -10,7 +10,7 @@
     "
   >
     <div class="message-files" >
-      <div *ngIf="files.length > 0" style="padding: 12px">
+      <div *ngIf="files.length > 0" class="content-file">
         <img class="file" src=".\assets\icons\attach_file_add.svg" />
         <div *ngFor="let file of files"><a class="download-file" (click)="downloadFile(file)">{{ file.metaData.customMetadata.originalName }}</a> </div>
       </div>
