@@ -38,6 +38,7 @@ body {
   border: #444df2 solid 1px;
   border-radius: 25px;
   padding: 12px 25px;
+  white-space: nowrap;
 }
 
 .btn-blue {
@@ -263,7 +264,6 @@ body {
     }
 
     .alert {
-    
       color: #ed1e79;
       margin-top: -8px;
     }

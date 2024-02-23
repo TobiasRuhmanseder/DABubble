@@ -1,12 +1,3 @@
-.arrow-back {
-    position: absolute;
-    top: 40px;
-    left: 20px;
-    height: 40px;
-    width: 40px;
-    cursor: pointer;
-}
-
 .choose-avatar-container {
     position: absolute;
     top: 50%;
@@ -15,12 +6,21 @@
     transform: translate(-50%, -50%);
     border-radius: 30px;
     background-color: white;
-    padding: 40px 53px;
-    width: 600px;
+    padding: 40px 80px;
+    width: 662px;
     z-index: 1;
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    .arrow-back {
+        position: absolute;
+        top: 40px;
+        left: 24px;
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+    }
 
     h1 {
         margin: 0;
@@ -59,25 +59,32 @@
         .image-container {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
-          
+            flex-wrap: wrap;
+
             img {
                 width: 64px;
                 height: 64px;
                 border-radius: 41px;
                 border: transparent 4px solid;
                 transition: ease-in 100ms;
+
                 &:hover {
                     cursor: pointer;
                     border: #E6E6E6 4px solid;
                 }
             }
         }
+
         .upload-container {
             display: flex;
             justify-content: space-between;
 
-            span, div {
+            span {
+                padding-right: 8px;
+            }
+
+            span,
+            div {
                 width: 50%;
                 box-sizing: border-box;
             }
@@ -86,7 +93,7 @@
         .alert {
             font-size: 14px;
             color: #ed1e79;
-          }
+        }
     }
 }
 
@@ -120,34 +127,130 @@ input[type="file"] {
     align-items: center;
     gap: 28px;
     z-index: 2;
-    transition: right 0.5s ease-in-out; 
+    transition: right 0.5s ease-in-out;
     animation: slideIn 4s forwards;
 }
 
 @keyframes slideIn {
     0% {
-        right: -500px; 
-        opacity: 0; 
-        visibility: hidden; 
+        right: -500px;
+        opacity: 0;
+        visibility: hidden;
     }
+
     25% {
-        right: 150px; 
-        opacity: 1; 
-        visibility: visible; 
+        right: 150px;
+        opacity: 1;
+        visibility: visible;
     }
+
     50% {
-        right: 150px; 
-        opacity: 1; 
-        visibility: visible; 
+        right: 150px;
+        opacity: 1;
+        visibility: visible;
     }
+
     75% {
-        right: 150px; 
-        opacity: 0; 
-        visibility: hidden; 
+        right: 150px;
+        opacity: 0;
+        visibility: hidden;
     }
+
     100% {
         right: -500px;
-        opacity: 0; 
-        visibility: hidden; 
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+// responsive
+@media(max-width: 768px) {
+    .choose-avatar-container {
+        width: 80%;
+        font-size: 17px;
+
+        h1 {
+            font-size: 32px;
+        }
+
+        .avatars-container {
+            font-size: 17px;
+            gap: 10px;
+
+            .image-container {
+                img {
+                    width: 48px;
+                    height: 48px;
+                }
+            }
+            .upload-container {
+                display: flex;
+                justify-content: flex-start;
+    
+                span,
+                div {
+                    width: auto;
+                }
+            }
+        }
+    }
+
+    .btn-white {
+        padding: 6px 13px;
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 600px) {
+    .choose-avatar-container {
+        padding: 35px 20px;
+        gap: 15px;
+
+        .arrow-back {
+            top: 20px;
+            left: 20px;
+        }
+
+        .user-info {
+            img {
+                width: 88px;
+                height: 88px;
+            }
+        }
+
+        .alert {
+            color: #ed1e79;
+            margin-top: -8px;
+        }
+    }
+
+    .btn-blue {
+        padding: 6px 13px;
+        font-size: 16px;
+    }
+
+    h1 {
+        margin-top: 28px !important;
+    }
+
+    .privacy-link {
+        margin-left: 28px;
+    }
+
+}
+
+@media(max-width: 480px) {
+    .choose-avatar-container {
+        width: 95%;
+    }
+}
+
+@media(max-height: 700px) {
+    .login-content {
+        font-size: 17px;
+
+        .footer {
+            margin: 4px;
+        }
     }
 }
