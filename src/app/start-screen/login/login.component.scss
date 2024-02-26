@@ -88,18 +88,20 @@
 
     .submit-btns {
         gap: 15px;
-      }
+    }
 }
 
 @media(max-width: 400px) {
-  .btn-blue, .btn-white {
-    padding: 6px 13px;
-    font-size: 16px;
-  }
 
-  .submit-btns {
-    gap: 8px;
-  }
+    .btn-blue,
+    .btn-white {
+        padding: 6px 13px;
+        font-size: 16px;
+    }
+
+    .submit-btns {
+        gap: 8px;
+    }
 }
 
 @media(max-height: 700px) {
@@ -114,5 +116,4 @@
             height: 22px;
         }
     }
-  }
-
+}

@@ -13,8 +13,17 @@ import { LoginService } from '../../../services/login.service';
 export class IntroAnimationComponent implements OnInit{
   containerVisible = true;
 
+  /**
+    * Constructs the ChooseAvatarComponent.
+    *
+    * @param LoginService - The service for handling user login-related functionality.
+    */
   constructor(public LoginService: LoginService) {}
 
+  /**
+   * Lifecycle hook called after component initialization.
+   * Hides animation container after 3500 milliseconds.
+   */
   ngOnInit() {
     setTimeout(() => {
       this.containerVisible = false;

@@ -182,10 +182,11 @@ input[type="file"] {
                     height: 48px;
                 }
             }
+
             .upload-container {
                 display: flex;
                 justify-content: flex-start;
-    
+
                 span,
                 div {
                     width: auto;
@@ -248,32 +249,32 @@ input[type="file"] {
             height: 18px;
         }
     }
-    
+
     @keyframes slideInMobile {
         0% {
             right: -500px;
             opacity: 0;
             visibility: hidden;
         }
-    
+
         25% {
             right: 25px;
             opacity: 1;
             visibility: visible;
         }
-    
+
         50% {
             right: 25px;
             opacity: 1;
             visibility: visible;
         }
-    
+
         75% {
             right: 25px;
             opacity: 0;
             visibility: hidden;
         }
-    
+
         100% {
             right: -500px;
             opacity: 0;
@@ -289,16 +290,16 @@ input[type="file"] {
     }
 
     .confirmation-message {
-            font-size: 16px;
-            padding: 15px 23px;
+        font-size: 16px;
+        padding: 15px 23px;
     }
 }
 
 @media(max-width: 400px) {
     .choose-avatar-container {
-      width: 250px;
+        width: 250px;
     }
-  }
+}
 
 @media(max-height: 700px) {
     .login-content {

@@ -14,27 +14,51 @@ import { LoginService } from '../../../services/login.service';
   styleUrl: './reset-password.component.scss'
 })
 export class ResetPasswordComponent {
+  
+  /**
+   * Constructs the ResetPasswordComponent.
+   *
+   * @param {Router} router - Angular Router service for navigation.
+   * @param {LoginService} LoginService - The service for handling user login-related functionality.
+   */
   constructor(private router: Router, public LoginService: LoginService) { }
 
+  /**
+  * FormControl validates the email input in the password reset form.
+  *
+  * @type {FormControl}
+  */
   emailControl = new FormControl('', [Validators.required, Validators.email]);
 
+  /**
+   * Initiates the password reset process with the provided email address.
+   * It calls the 'resetPassword' method from the LoginService and resets the email control's value after submission.
+   */
   resetPassword() {
-    console.log('Button works');
     const email = this.emailControl.value;
     if (email) {
       this.LoginService.resetPassword(email);
       this.emailControl.setValue('');
     }
   }
-  
+
+  /**
+  * Navigates to the login page.
+  */
   navigateToLogin() {
     this.router.navigate(['']);
   }
 
+  /**
+  * Navigates to the legal notice page.
+  */
   navigateToLegalNotice() {
     this.router.navigate(['/legal-notice']);
   }
 
+  /**
+  * Navigates to the privacy policy page.
+  */
   navigateToPrivacyPolicy() {
     this.router.navigate(['/privacy-policy']);
   }
