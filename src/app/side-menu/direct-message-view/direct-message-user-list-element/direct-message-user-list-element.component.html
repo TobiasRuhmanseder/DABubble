@@ -1,4 +1,4 @@
-<div class="user-list-element" (click)="chooseId()">
+<div class="user-list-element" [class.active]="activeMessaging" (click)="chooseId()">
     <app-user-pic class="user-pic-size" [status]="true" [online]="status" [userImageName]="userPic"></app-user-pic>
     <span>{{userName}}</span>
 </div>

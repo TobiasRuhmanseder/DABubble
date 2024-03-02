@@ -19,7 +19,7 @@ export class CurrentUserService implements OnDestroy {
     this.currentUser.unsubscribe();
   }
 
-  activeUser() {
+  async activeUser() {
     const auth = getAuth();
     return onAuthStateChanged(auth, (user) => {
       if (user) {

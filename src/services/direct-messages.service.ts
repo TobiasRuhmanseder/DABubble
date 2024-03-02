@@ -4,7 +4,7 @@ import { onSnapshot, addDoc, deleteDoc, doc } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import { CurrentUserService } from './current-user.service';
 import { DirectMessages } from '../interfaces/direct-messages.interface';
-import { Message } from '../models/message.class';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,14 @@ export class DirectMessagesService implements OnDestroy {
 
   firestore: Firestore = inject(Firestore);
   currentUserService: CurrentUserService = inject(CurrentUserService);
+
   allDirectMessages: any = [];
+  allDirectMessages$ = new Subject;
   currentUser: any = [];
 
   unsubDirectMessages;
   unsubCurrentUser: any;
+  activeDirectMessaging!: DirectMessages;
 
 
   init(): void {
@@ -25,9 +28,6 @@ export class DirectMessagesService implements OnDestroy {
       this.currentUser = user;
     });
     this.currentUserService.activeUser();
-    setTimeout(() => { //for the testing now 
-    }, 2000
-    )
   }
 
   constructor() {
@@ -35,10 +35,14 @@ export class DirectMessagesService implements OnDestroy {
     this.init();
   }
 
-
   ngOnDestroy(): void {
     this.unsubDirectMessages();
     this.unsubCurrentUser.unsubscribe();
+  }
+
+  getActiveMessaging(paramsId: string) {
+    if (this.allDirectMessages.paramsId)
+      return this.allDirectMessages.paramsId
   }
 
   subDirectMessages() {
@@ -47,7 +51,12 @@ export class DirectMessagesService implements OnDestroy {
       list.forEach((element) => {
         this.allDirectMessages.push(this.addIdToList(element.data(), element.id));
       });
+      this.allDirectMessages$.next(this.allDirectMessages);
     });
+  }
+
+  async getCurrentDirectMessages() {
+    if (this.allDirectMessages) this.allDirectMessages$.next(this.allDirectMessages);
   }
 
   addIdToList(doc: any, id: any): DirectMessages {
@@ -68,14 +77,13 @@ export class DirectMessagesService implements OnDestroy {
   async getDocIdFromTheDirectMessaging(uid: string) {
     let docId: any = null;
     this.allDirectMessages.forEach((doc: any) => {
-      if (doc.users.includes(this.currentUser.uid) && doc.users.includes(this.currentUser.uid && uid)) {
-        docId = doc.id;
+      if (this.currentUser.uid === uid) {
+        if (doc.users[0] === uid && doc.users[1] === uid) docId = doc.id;
       }
+      else if (doc.users.includes(this.currentUser.uid) && doc.users.includes(uid)) docId = doc.id;
     });
-    if (docId != null) {
-      console.log(docId);
-      return docId;
-    } else {
+    if (docId != null) return docId;
+    else {
       docId = await this.addNewDocDirectMessaging(uid);
       return docId;
     }
@@ -105,7 +113,7 @@ export class DirectMessagesService implements OnDestroy {
   async addMessageCollection(docRefId: any) {
     let path = 'direct_messages/' + docRefId + '/messages'
     let ref = collection(this.firestore, path);
-    await addDoc(ref, {}).catch(   // it can't be create a emty subcollection - here only with a emty json. After when I delete de doc(deleteDoc), the subcollection is also gone
+    await addDoc(ref, {}).catch( // it can't be create a emty subcollection - here only with a emty json. After when I delete de doc(deleteDoc), the subcollection is also gone
       (err) => { console.log(err) }
     )
   }

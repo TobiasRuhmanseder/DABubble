@@ -13,9 +13,15 @@
 
     &:hover {
         transition: all 125ms ease-in-out;
-        border-radius: 29px;
-        background-color: #ECEEFE;
+
     }
+}
+
+.active {
+    border-radius: 29px;
+    background-color: #ECEEFE;
+    color: #535AF1;
+    font-weight: 700;
 }
 
 .user-pic-size {

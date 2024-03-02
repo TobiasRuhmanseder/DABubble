@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class DirectMessageViewComponent implements OnInit, OnDestroy {
   dropdownOpen = true;
-  activeUser: ActiveUser = { displayName: "", photoURL: "" };
+  activeUser: ActiveUser = { displayName: "", photoURL: "", uid: "" };
   allUsersWithoutActiveUser: any[] = [];
 
   unsubCurrentUser: any;
@@ -45,12 +45,14 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
     let activeUser = user;
     if (activeUser == null) {
       activeUser = {
+        uid: "",
         displayName: "",
         photoURL: ""
       }
     }
     else {
       activeUser = {
+        uid: user.uid,
         displayName: user.displayName,
         photoURL: user.photoURL
       }
