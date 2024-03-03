@@ -231,6 +231,7 @@ body {
 
 // responsive
 @media(max-width: 768px) {
+
   .login-container,
   .legal-container {
     width: 400px;
@@ -277,6 +278,7 @@ body {
 }
 
 @media(max-width: 480px) {
+
   .login-container,
   .legal-container {
     width: 300px;
@@ -284,6 +286,7 @@ body {
 }
 
 @media(max-width: 400px) {
+
   .login-container,
   .legal-container {
     width: 250px;
@@ -407,4 +410,27 @@ app-main-content {
 // dialog window new Channel
 .cdk-global-scrollblock {
   overflow: hidden !important; //hidden the y-scrollbar 
+}
+
+// default mat dialog window settings
+.mat-mdc-dialog-surface {
+  border-radius: 0 20px 20px 20px !important;
+  padding: 40px;
+}
+
+.close-button {
+  background-image: url("/assets/icons/close.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 24px;
+  height: 24px;
+  transition: all 0.125s;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  
+  &:hover {
+    background-image: url("/assets/icons/close_hover.svg");
+    background-color: #eceefe;
+  }
 }

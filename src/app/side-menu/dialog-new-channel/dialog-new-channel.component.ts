@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormField } from '@angular/material/form-field';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -9,10 +11,15 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-dialog-new-channel',
   standalone: true,
-  imports: [MatDialogModule, MatFormField, MatInputModule],
+  imports: [MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
   templateUrl: './dialog-new-channel.component.html',
   styleUrl: './dialog-new-channel.component.scss'
 })
 export class DialogNewChannelComponent {
 
+  constructor(public dialogRef: MatDialogRef<DialogNewChannelComponent>) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

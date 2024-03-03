@@ -25,7 +25,6 @@ export class CurrentUserService implements OnDestroy {
       if (user) {
         this.currentUser.next(this.getDataFromActiveUser(auth));
         // User is signed in.
-        console.log('User', user.displayName, 'is signed in with the ID', user.uid);
       } else {
         // No user is signed in.
       }

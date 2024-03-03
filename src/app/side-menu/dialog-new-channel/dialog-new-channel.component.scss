@@ -1,0 +1,36 @@
+.add-channel-dialog {
+    width: 872px;
+    height: 539px;
+    border-radius: 100px;
+}
+
+.content{
+    padding: 0 !important;
+    height: 100% !important;
+    color: black !important;
+    font-family: "Nunito", sans-serif !important;
+}
+
+.headline{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.description{
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.input-container{
+
+    span{
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+}
+

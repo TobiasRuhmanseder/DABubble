@@ -1,9 +1,18 @@
-<div class="dialog-new-channel">
-    <mat-dialog-content>
+<div class="add-channel-dialog">
+    <mat-dialog-content class="content">
+        <div class="headline">
+            <span>Channel erstellen</span>
+            <div class="close-button" (click)="onNoClick()" ></div>
+        </div>
+        <div class="description">
+            <span>Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum Beispiel.</span>
+        </div>
+        <div class="input-container">
+            <span>Channel-Name</span>
+        </div>
 
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-button>No Thanks</button>
         <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
     </mat-dialog-actions>
 </div>

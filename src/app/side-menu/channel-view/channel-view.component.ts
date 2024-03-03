@@ -5,6 +5,8 @@ import { NewChannelListElementComponent } from './new-channel-list-element/new-c
 import { FirebaseService } from '../../../services/firebase.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogNewChannelComponent } from '../dialog-new-channel/dialog-new-channel.component';
 
 
 
@@ -21,6 +23,8 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
   activeRoute: ActivatedRoute = inject(ActivatedRoute);
   currentCollectionId = '';
   unsubParams: any;
+  dialog: MatDialog = inject(MatDialog);
+
 
   ngOnInit(): void {
     this.unsubParams = this.activeRoute.params.subscribe(params => {
@@ -28,6 +32,9 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
     });
   }
 
+  openDialog() {
+this.dialog.open(DialogNewChannelComponent);
+  }
 
   ngOnDestroy(): void {
     this.unsubParams.unsubscribe();

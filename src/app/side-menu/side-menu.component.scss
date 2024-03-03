@@ -23,7 +23,7 @@
 }
 
 .scroll-window {
-    height: 94%;
+    height: calc(100vh - 300px);
     overflow: scroll;
     scrollbar-width: none;
 }

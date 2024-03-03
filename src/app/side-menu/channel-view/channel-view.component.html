@@ -10,7 +10,7 @@
             <span>Channels</span>
         </div>
 
-        <app-icon-hover-change-image [unhovered]="'../../../assets/img/plus-unhovered.svg'"
+        <app-icon-hover-change-image (click)="openDialog()" [unhovered]="'../../../assets/img/plus-unhovered.svg'"
             [hovered]="'../../../assets/img/plus-hovered.svg'"
             [onClick]="'../../../assets/img/plus-onclick.svg'"></app-icon-hover-change-image>
     </div>

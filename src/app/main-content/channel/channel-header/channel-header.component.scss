@@ -72,18 +72,3 @@ section {
   height: 40px;
   width: 40px;
 }
-.close-button {
-    background-image: url("/assets/icons/close.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 24px;
-    height: 24px;
-    transition: all 0.125s;
-    padding: 8px;
-    border-radius: 50%;
-    cursor: pointer;
-    &:hover {
-      background-image: url("/assets/icons/close_hover.svg");
-      background-color: #eceefe;
-    }
-  }
