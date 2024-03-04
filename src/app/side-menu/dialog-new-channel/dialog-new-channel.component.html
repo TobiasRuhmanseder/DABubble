@@ -2,17 +2,33 @@
     <mat-dialog-content class="content">
         <div class="headline">
             <span>Channel erstellen</span>
-            <div class="close-button" (click)="onNoClick()" ></div>
+            <div class="close-button" (click)="onNoClick()"></div>
         </div>
         <div class="description">
-            <span>Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum Beispiel.</span>
+            <span>Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum
+                Beispiel.</span>
         </div>
-        <div class="input-container">
-            <span>Channel-Name</span>
-        </div>
+        <form [formGroup]="channelForm">
 
+            <div class="input-headline">
+                <span>Channel-Name</span>
+            </div>
+            <div class="input-container">
+                <img src="../../../assets/img/tag_grey.svg" alt="">
+                <input class="input" maxlength="17" type="text" formControlName="channelName" placeholder="z.B. Kooperationsprojekte">
+            </div>
+
+            <div class="input-headline">
+                <span>Beschreibung</span>
+                <span class="optional"> (optional)</span>
+            </div>
+            <div class="input-container">
+                <img src="../../../assets/img/tag_grey.svg" alt="">
+                <input class="input" type="text" formControlName="channelName" placeholder="Dein Text hier">
+            </div>
+            <div class="button-container">
+                <button class="btn-blue">Erstellen</button>
+            </div>
+        </form>
     </mat-dialog-content>
-    <mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
-    </mat-dialog-actions>
 </div>

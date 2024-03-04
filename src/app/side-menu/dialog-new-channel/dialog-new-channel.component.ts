@@ -4,18 +4,24 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 
 
 @Component({
   selector: 'app-dialog-new-channel',
   standalone: true,
-  imports: [MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
+  imports: [MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './dialog-new-channel.component.html',
   styleUrl: './dialog-new-channel.component.scss'
 })
 export class DialogNewChannelComponent {
+
+  channelForm = new FormGroup({
+    channelName: new FormControl('', [Validators.required,Validators.minLength(3),Validators.maxLength(17)]),
+    channelDescription: new FormControl(''),
+  })
+
 
   constructor(public dialogRef: MatDialogRef<DialogNewChannelComponent>) { }
 

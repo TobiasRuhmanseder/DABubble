@@ -60,6 +60,32 @@ body {
   }
 }
 
+// inputs in the dialogs
+.input {
+  width: 100%;
+  outline: none;
+  border-radius: 30px;
+  border: 1px solid #adb0d9;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 15px 20px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 18px;
+  font-weight: 400;
+
+  &:hover {
+    border-color: #797EF3;
+  }
+
+  &:focus {
+    border-color: #444df2;
+
+  }
+}
+
 /* Start Screen Component */
 
 .login-content {
@@ -428,7 +454,7 @@ app-main-content {
   padding: 8px;
   border-radius: 50%;
   cursor: pointer;
-  
+
   &:hover {
     background-image: url("/assets/icons/close_hover.svg");
     background-color: #eceefe;

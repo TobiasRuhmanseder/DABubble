@@ -1,17 +1,17 @@
 .add-channel-dialog {
-    width: 872px;
-    height: 539px;
+    width: calc(872px - 80px);
+    height: calc(539px - 80px);
     border-radius: 100px;
 }
 
-.content{
+.content {
     padding: 0 !important;
     height: 100% !important;
     color: black !important;
     font-family: "Nunito", sans-serif !important;
 }
 
-.headline{
+.headline {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -20,17 +20,39 @@
     margin-bottom: 40px;
 }
 
-.description{
+.description {
     font-size: 18px;
     margin-bottom: 20px;
 }
 
-.input-container{
+.input-headline {
+    font-size: 18px;
+    font-weight: 700;
+}
 
-    span{
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 15px;
+.input-container {
+    position: relative;
+
+    img {
+        position: absolute;
+        padding-top: 18.5px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    input {
+        padding: 15px 63px;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 }
 
+.optional{
+    color: #686868 !important;
+    font-weight: 400 !important;
+}
+
+.button-container{
+    display: flex;
+    justify-content: flex-end;
+}
