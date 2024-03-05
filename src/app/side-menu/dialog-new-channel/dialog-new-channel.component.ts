@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Component, inject } from '@angular/core';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DialogNewChannelAddUserComponent } from '../dialog-new-channel-add-user/dialog-new-channel-add-user.component';
 
 
 
@@ -16,9 +17,10 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './dialog-new-channel.component.scss'
 })
 export class DialogNewChannelComponent {
-
+  createButtonActive = false;
+  dialog: MatDialog = inject(MatDialog);
   channelForm = new FormGroup({
-    channelName: new FormControl('', [Validators.required,Validators.minLength(3),Validators.maxLength(17)]),
+    channelName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(17)]),
     channelDescription: new FormControl(''),
   })
 
@@ -26,6 +28,13 @@ export class DialogNewChannelComponent {
   constructor(public dialogRef: MatDialogRef<DialogNewChannelComponent>) { }
 
   onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  nextUserChoose(){
+    this.dialog.open(DialogNewChannelAddUserComponent,{
+      height: 'auto',
+    });
     this.dialogRef.close();
   }
 }

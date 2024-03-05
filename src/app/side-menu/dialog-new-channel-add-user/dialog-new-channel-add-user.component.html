@@ -1,0 +1,25 @@
+<div class="add-channel-user-dialog">
+    <mat-dialog-content class="content">
+        <div class="headline">
+            <span>Leute hinzufügen</span>
+            <div class="close-button" (click)="onNoClick()"></div>
+        </div>
+
+        <form [formGroup]="form">
+            <div class="input-container">
+                <label (click)="allUsersSelect()" class="input-element">
+                    <input type="radio" formControlName="user"  value="all" [checked]="allUsersChoose" /> 
+                    <span>Alle Mitglieder hinzufügen</span>
+                </label>
+                <label (click)="costumUsersSelect()" class="input-element">
+                    <input type="radio" formControlName="user" [checked]="!allUsersChoose" /> 
+                    <span>Bestimmte Leute hinzufügen</span>
+                </label>
+                <input *ngIf="!allUsersChoose" class="input margin-bo-20" type="text" placeholder="Name eingeben">
+            </div>
+            <div class="button-container">
+                <button [disabled]="!form.valid || createButtonActive " class="btn-blue">Erstellen</button>
+            </div>
+        </form>
+    </mat-dialog-content>
+</div>

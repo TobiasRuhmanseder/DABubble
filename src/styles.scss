@@ -39,7 +39,18 @@ body {
   border-radius: 25px;
   padding: 12px 25px;
   white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
 }
+
+
 
 .btn-blue {
   color: white;
@@ -440,7 +451,7 @@ app-main-content {
 
 // default mat dialog window settings
 .mat-mdc-dialog-surface {
-  border-radius: 0 20px 20px 20px !important;
+  border-radius: 20px 20px 20px 20px !important;
   padding: 40px;
 }
 

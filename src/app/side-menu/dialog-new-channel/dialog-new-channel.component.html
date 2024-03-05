@@ -15,7 +15,8 @@
             </div>
             <div class="input-container">
                 <img src="../../../assets/img/tag_grey.svg" alt="">
-                <input class="input" maxlength="17" type="text" formControlName="channelName" placeholder="z.B. Kooperationsprojekte">
+                <input class="input input-tag" maxlength="17" type="text" formControlName="channelName"
+                    placeholder="z.B. Kooperationsprojekte">
             </div>
 
             <div class="input-headline">
@@ -23,11 +24,11 @@
                 <span class="optional"> (optional)</span>
             </div>
             <div class="input-container">
-                <img src="../../../assets/img/tag_grey.svg" alt="">
-                <input class="input" type="text" formControlName="channelName" placeholder="Dein Text hier">
+                <input class="input" type="text" formControlName="channelDescription" placeholder="Dein Text hier">
             </div>
             <div class="button-container">
-                <button class="btn-blue">Erstellen</button>
+                <button (click)="nextUserChoose()" [disabled]="!channelForm.valid || createButtonActive "
+                    class="btn-blue">Erstellen</button>
             </div>
         </form>
     </mat-dialog-content>
