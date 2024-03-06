@@ -48,6 +48,73 @@ input[type='radio'] {
     justify-content: flex-end;
 }
 
-.margin-bo-20{
+.userfield {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
     margin-bottom: 20px;
+    min-height: 48px;
+    max-height: 92px;
+    border: 1px solid #adb0d9;
+    border-radius: 30px;
+    padding: 5px 20px;
+    font-size: 18px;
+    overflow-y: scroll;
+    transition: all 125ms ease-in-out;
+    scrollbar-width: none;
+
+    input{
+        margin-left: 5px;
+        width: 130px;
+        height: 32px;
+        border: none;
+        outline: none;
+        font-size: 18px;
+    }
+
+    &:hover {
+        border-color: #797EF3;
+    }
+
+    &:focus {
+        border-color: #444df2;
+
+    }
+}
+
+.user:hover .user-delete{
+    background-image: url(../../../assets/icons/close_hover.svg);
+
+}
+
+.user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 15px;
+    height: 40px;
+    background-color: #ECEEFE;
+    border-radius: 20px;
+    cursor: pointer;
+
+    img{
+        width: 32px;
+        height: 32px;
+        border-radius: 16px;
+        object-fit: contain;
+    }
+
+    span{
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+}
+
+.user-delete{
+    width: 10px;
+    height: 10px;
+    background-image: url(../../../assets/icons/close.svg);
+    background-size: contain;
 }

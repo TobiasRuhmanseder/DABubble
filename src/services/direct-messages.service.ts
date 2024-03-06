@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
-import { onSnapshot, addDoc, deleteDoc, doc } from '@angular/fire/firestore';
+import { onSnapshot, addDoc } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import { CurrentUserService } from './current-user.service';
 import { DirectMessages } from '../interfaces/direct-messages.interface';

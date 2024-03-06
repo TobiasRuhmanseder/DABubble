@@ -1,5 +1,3 @@
-import { Message } from './message.class';
-
 export class Channel {
   id: string;
   name: string;
@@ -12,7 +10,7 @@ export class Channel {
     this.name = obj ? obj.name : '';
     this.description = obj ? obj.description : '';
     this.creator = obj ? obj.creator : '';
-    this.users = obj ? obj.users : '';
+    this.users = obj ? obj.users : [];
   }
 
   public toJSON() {
