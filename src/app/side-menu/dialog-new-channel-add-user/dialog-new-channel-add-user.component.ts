@@ -62,7 +62,7 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy {
     this.allUsersChoose = false;
   }
 
-  createChannel() {
+  async createChannel() {
     this.createButtonActive = false;
     const channel= new Channel( {
       id:'',
@@ -72,7 +72,8 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy {
       users: []
       
     })
-    this.channelService.addNewChannel(channel);
+    await this.channelService.addNewChannel(channel);
+    this.dialogRef.close();
   }
 
   scrollDownUsers(): void {
