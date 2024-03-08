@@ -305,12 +305,6 @@ export class MessageService {
     return this.currentChannel.name;
   }
 
-  getChannelUsers() {
-    if (this.currentChannel === undefined) {
-      return '';
-    }
-    return this.currentChannel.users;
-  }
 
   getSortMessagesByTime(list: { timestamp: number }[]) {
     let sortetList = list.sort(

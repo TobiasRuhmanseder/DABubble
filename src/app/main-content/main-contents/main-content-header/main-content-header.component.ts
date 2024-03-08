@@ -84,8 +84,10 @@ export class MainContentHeaderComponent {
   }
 
   addUser() {
-    this.showBg = !this.showBg;
-    this.addUserDialog = true;
+    if (this.chatService.currentChannel.users.length != 0) {
+      this.showBg = !this.showBg;
+      this.addUserDialog = true;
+    }
   }
 
   goToAddUser() {
@@ -106,13 +108,39 @@ export class MainContentHeaderComponent {
     if (this.chatService.currentChannel === undefined) {
       return '';
     }
+    if (this.chatService.currentChannel.users.length === 0) {
+      return this.users.allUsers.length;
+    }
     return this.chatService.currentChannel.users.length;
   }
 
+  getChannelUsers() {
+    if (this.chatService.currentChannel === undefined) {
+      return '';
+    }
+    if (this.chatService.currentChannel.users.length === 0) {
+      return this.allUsersId();
+    }
+    return this.chatService.currentChannel.users;
+  }
+
+  allUsersId() {
+    let allUsersId = [];
+    for (let index = 0; index < this.users.allUsers.length; index++) {
+      allUsersId.push(this.users.allUsers[index].id);
+    }
+    return allUsersId;
+  }
+
   getUserPicFromChannel(user: string) {
-    let checkIfUserInChannel = this.chatService.currentChannel.users.find(
-      (users: string) => users === user
-    );
+    let checkIfUserInChannel;
+    let userList;
+    if (this.chatService.currentChannel.users.length === 0) {
+      userList = this.allUsersId();
+    } else {
+      userList = this.chatService.currentChannel.users;
+    }
+    checkIfUserInChannel = userList.find((users: string) => users === user);
     if (checkIfUserInChannel) {
       let userPic = this.users.getUserFromId(checkIfUserInChannel);
       if (userPic) {
@@ -121,6 +149,7 @@ export class MainContentHeaderComponent {
     }
     return './assets/img/user_pics/default_user.svg';
   }
+
   getUserStatus(userId: string) {
     let currentUser = this.users.getUserFromId(userId);
 

@@ -11,7 +11,7 @@
           <div class="header-users-img">
             <div
               class="header-pic-container"
-              *ngFor="let users of chatService.getChannelUsers(); let i = index"
+              *ngFor="let users of getChannelUsers(); let i = index"
             >
               <img
                 class="header-pic"
@@ -30,7 +30,7 @@
           <div class="close-button" (click)="closeAllDialog()"></div>
         </div>
         <div class="user-list">
-          <div *ngFor="let user of chatService.currentChannel.users">
+          <div *ngFor="let user of getChannelUsers()">
             <div class="user" (click)="openUserDetails()">
               <app-user-pic
                 class="user-pic"
@@ -42,7 +42,7 @@
             </div>
           </div>
         </div>
-        <div class="button-user" (click)="goToAddUser()">
+        <div *ngIf="this.chatService.currentChannel.users.length != 0" class="button-user" (click)="goToAddUser()">
           <div class="header-add-icon icon"></div>
           <span class="add-user-button-text">Mitglieder hinzufügen</span>
         </div>
