@@ -14,6 +14,11 @@
   float: right;
   white-space: break-spaces;
 }
+.content-file{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 .file {
   height: 50px;
   padding: 12px;
@@ -49,6 +54,7 @@
 .message-files{
   display: flex;
   flex-wrap: wrap;
+  gap: 8px;
 }
 .message-text-edit {
   position: relative;

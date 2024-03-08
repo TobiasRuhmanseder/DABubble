@@ -8,8 +8,6 @@ import { CommonModule } from '@angular/common';
 import { PrivateChatComponent } from './private-chat/private-chat.component';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { UsersService } from '../../services/users.service';
-import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-main-content',
@@ -32,7 +30,6 @@ export class MainContentComponent {
     public elementRef: ElementRef,
     public renderer: Renderer2,
     private route: ActivatedRoute,
-    private fire: FirebaseService
   ) {}
 
   unsubCurrentChannelMessages: any;
@@ -48,7 +45,7 @@ export class MainContentComponent {
     this.routeSub = this.route.params.subscribe((params) => {
       if (params['id']) {
         this.chatService.resetValues(params['id']);
-        this.scrollDown();
+        this.scrollDown('#messagesContent');
         this.chatService.getChannelFromId(params['id']);
         this.chatService.getMessagesFromChannel(params['id']);
         this.chatService.subChannelMessages(params['id']);
@@ -69,22 +66,22 @@ export class MainContentComponent {
       this.chatService.editFlaggIndex = -1;
     }
     if ((event.target as HTMLElement).closest('#sendConfirm')) {
-      this.scrollDown();
+      this.scrollDown('#messagesContent');
     }
     if ((event.target as HTMLElement).closest('#sendThreadConfirm')) {
-      this.scrollDown();
+      this.scrollDown('#messagesContent');
     }
   }
-  scrollDown() {
+  scrollDown(id:string) {
     if (this.chatService.sortedMessages.length > 0) {
       const element =
-        this.elementRef.nativeElement.querySelector('#messagesContent');
+        this.elementRef.nativeElement.querySelector(id);
       if (element) {
         element.scrollTop = element.scrollHeight;
       }
     } else {
       setTimeout(() => {
-        this.scrollDown();
+        this.scrollDown(id);
       }, 100);
     }
   }

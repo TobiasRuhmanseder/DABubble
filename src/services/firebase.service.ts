@@ -8,11 +8,9 @@ import {
 } from '@angular/fire/firestore';
 import {
   DocumentData,
-  Unsubscribe,
   collection,
   doc,
   getDoc,
-  query,
   updateDoc,
 } from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
@@ -32,10 +30,8 @@ export class FirebaseService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
 
   channels: Channel[] = [];
-  messages: Message[] = [];
 
   unsubChannels;
-  unsubMessages: Unsubscribe | undefined;
 
   constructor() {
     this.unsubChannels = this.subChannelsList();
@@ -43,11 +39,7 @@ export class FirebaseService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubChannels();
-    if (this.unsubMessages) {
-      this.unsubMessages();
-    }
   }
-
 
   async uploadToStorage(file: any, customURL: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -149,8 +141,7 @@ export class FirebaseService implements OnDestroy {
       )
     );
     querySnapshot.forEach((doc) => {
-      let messageData = { id: doc.id, ...doc.data() };
-      threadList.push(messageData);
+      threadList.push({ id: doc.id, ...doc.data() });
     });
     return { messageId, threadList };
   }
@@ -161,8 +152,7 @@ export class FirebaseService implements OnDestroy {
       collection(this.firestore, 'channels', id, 'messages')
     );
     querySnapshot.forEach((doc) => {
-      let messageData = { id: doc.id, ...doc.data() };
-      messagesList.push(messageData);
+      messagesList.push({ id: doc.id, ...doc.data() });
     });
     return messagesList;
   }
@@ -171,17 +161,14 @@ export class FirebaseService implements OnDestroy {
     let userList: any[] = [];
     let querySnapshot = await getDocs(this.getCollRef('users'));
     querySnapshot.forEach((doc) => {
-      let userData = { id: doc.id, ...doc.data() };
-      userList.push(userData);
+      userList.push({ id: doc.id, ...doc.data() });
     });
     return userList;
   }
 
   async getChannel(id: string) {
-    let docRef = this.getDocRef('channels', id);
-    let docSnap = await getDoc(docRef);
-    let data = docSnap.data() as Channel;
-    return data;
+    let docSnap = await getDoc(this.getDocRef('channels', id));
+    return docSnap.data() as Channel;
   }
 
   updateChannel(channelData: any) {
