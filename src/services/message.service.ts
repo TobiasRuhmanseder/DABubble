@@ -4,7 +4,6 @@ import { FirebaseService } from './firebase.service';
 import { Message } from '../models/message.class';
 import { Unsubscribe, collection, getDocs, query } from '@firebase/firestore';
 import { Firestore, onSnapshot } from '@angular/fire/firestore';
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +27,7 @@ export class MessageService {
   threadIsOpen = false;
   isUploading = false;
 
+  mention: boolean = false;
   currentUser: string = 'h4w3Cntmu2BmDuWSxKqt';
 
   firestore: Firestore = inject(Firestore);

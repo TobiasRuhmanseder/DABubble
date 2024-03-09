@@ -6,16 +6,38 @@
         <div *ngFor="let file of currentFiles">{{ file.file.name }}</div>
       </div>
     </div>
-    <textarea
-      [mentionConfig]="{
-        dropUp: true,
-        items: users.allUsers,
-        labelKey: 'name'
-      }"
-      [(ngModel)]="textAreaContent"
-      class="main-input-field"
-      [placeholder]="getPlaceholderText()"
-    ></textarea>
+    <div style="position: relative">
+      <div class="user-list" *ngIf="chatService.mention">
+        <div
+          *ngFor="let user of users.users"
+          class="user"
+          (click)="tagUser(user.name)"
+        >
+          <div class="user-pic">
+            <app-user-pic
+              [status]="true"
+              [online]="user.status"
+              userImageName="{{ user.photoURL }}"
+            ></app-user-pic>
+          </div>
+          {{ user.name }}
+        </div>
+      </div>
+     
+      <div
+        class="main-input-field"
+        style="height: auto"
+        [innerHTML]="toText()"
+      ></div>
+      <textarea 
+        #textAreaInput
+        (keyup)="autoGrowTextZone($event)"
+        (keydown)="checkForAtSymbol($event)"
+        [(ngModel)]="textAreaContent"
+        class="main-input-field"
+        [placeholder]="getPlaceholderText()"
+      ></textarea>
+    </div>
   </div>
   <!-- <ng-template #mentionListTemplate let-item="item">
     <img

@@ -65,6 +65,9 @@ export class MainContentComponent {
       this.chatService.editThreadFlaggIndex = -1;
       this.chatService.editFlaggIndex = -1;
     }
+    if (!(event.target as HTMLElement).closest('.user-list')){
+      this.chatService.mention = false;
+    }
     if ((event.target as HTMLElement).closest('#sendConfirm')) {
       this.scrollDown('#messagesContent');
     }

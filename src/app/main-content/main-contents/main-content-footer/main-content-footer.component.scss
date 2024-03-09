@@ -8,6 +8,11 @@
   height: 30px;
   width: 30px;
 }
+.tag{
+  border-radius: 25px;
+  background-color: red !important;
+  font-size: 50px;
+}
 .file-img{
   padding: 24px;
   max-width: 250px;
@@ -20,6 +25,36 @@
     height: 50px;
     padding: 12px;
   }
+}
+.user-list{
+  position: absolute;
+  border: 1px solid #444df2;
+  border-radius: 25px;
+  bottom: 75px;
+  left: 24px;
+  background-color: #ffff;
+  padding: 12px;
+}
+.user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  padding: 4px 20px 4px 20px;
+  border-radius: 35px;
+  gap: 15px;
+  cursor: pointer;
+  &:hover {
+    background-color: #eceefe;
+    color: #535af1;
+  }
+}
+.user-pic {
+  position: relative;
+
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
 }
 
 .main-input-container {

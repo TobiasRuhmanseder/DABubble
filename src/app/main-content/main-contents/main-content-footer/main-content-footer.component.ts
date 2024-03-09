@@ -34,6 +34,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class MainContentFooterComponent {
   @ViewChild('imageContainer') imageContainer!: ElementRef;
   @ViewChild('imageThreadContainer') imageThreadContainer!: ElementRef;
+  @ViewChild('textAreaInput') textAreaInput!: ElementRef;
   @Input() mainChat: any;
   userList = [];
   constructor(
@@ -42,6 +43,7 @@ export class MainContentFooterComponent {
     public mainContent: MainContentComponent,
     public users: UsersService
   ) {}
+  tagText: string = '';
   textAreaContent: string = '';
   textAreaThreadContent: string = '';
   isEmojiPickerVisible: boolean = false;
@@ -63,6 +65,45 @@ export class MainContentFooterComponent {
     ) {
       this.isEmojiPickerVisible = false;
     }
+  }
+
+  autoGrowTextZone(e: any) {
+    e.target.style.height = '0px';
+    e.target.style.height = e.target.scrollHeight + 25 + 'px';
+  }
+
+  checkForAtSymbol(event: KeyboardEvent) {
+    if (event.key === '@') {
+      this.chatService.mention = true;
+    } else {
+      this.chatService.mention = false;
+    }
+  }
+  tagPersons() {}
+
+  toText() {
+    let text = this.textAreaContent.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');;
+    this.users.allUsers.forEach((user) => {
+      let searchValue = `@${user}`;
+      let index = text.indexOf(searchValue);
+      while (index !== -1) {
+          if (index === 0 || text[index - 1] === ' ') {
+              text = text.substring(0, index) + `<span class="tag">${searchValue}</span>` + text.substring(index + searchValue.length);
+          }
+          index = text.indexOf(searchValue, index + 1);
+      }
+  });
+    
+    return text;
+}
+
+
+  tagUser(user: string) {
+    this.textAreaContent += user + ' ';
+    this.chatService.mention = false;
+    setTimeout(() => {
+      this.textAreaInput.nativeElement.focus();
+    });
   }
 
   uploadFile() {
