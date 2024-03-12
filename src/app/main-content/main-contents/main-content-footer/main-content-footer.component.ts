@@ -16,12 +16,16 @@ import { MentionModule } from 'angular-mentions';
 import { UsersService } from '../../../../services/users.service';
 import { UserPicComponent } from '../../../user-pic/user-pic.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { EditableSectionComponent } from '../../editable-section/editable-section.component';
 @Component({
   selector: 'app-main-content-footer',
   standalone: true,
   templateUrl: './main-content-footer.component.html',
   styleUrl: './main-content-footer.component.scss',
   imports: [
+    EditableSectionComponent,
+    MatMenuModule,
     CommonModule,
     FormsModule,
     IconHoverChangeImageComponent,
@@ -52,6 +56,17 @@ export class MainContentFooterComponent {
 
   allUsers: any = {};
 
+  tile = {
+    editable: false,
+    tile: {
+      content: {
+        text: 'Angular Rocks !!',
+        html: '<i>Angular </i><b>Rocks !!</b>',
+      },
+      background: '#2ecc71',
+    },
+  };
+
   ngOnInit(): void {
     this.allUsers = this.users.allUsers;
   }
@@ -79,32 +94,112 @@ export class MainContentFooterComponent {
       this.chatService.mention = false;
     }
   }
-  tagPersons() {}
 
-  toText() {
-    let text = this.textAreaContent.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');;
-    this.users.allUsers.forEach((user) => {
-      let searchValue = `@${user}`;
-      let index = text.indexOf(searchValue);
-      while (index !== -1) {
-          if (index === 0 || text[index - 1] === ' ') {
-              text = text.substring(0, index) + `<span class="tag">${searchValue}</span>` + text.substring(index + searchValue.length);
-          }
-          index = text.indexOf(searchValue, index + 1);
+  highlightUsernames(text: string) {
+    let highlightedText = text;
+    let indices: any[] = [];
+
+    for (let i = text.length; i > -1; i--) {
+      if (text[i] === '@') {
+        indices.push(i);
       }
-  });
-    
-    return text;
-}
+    }
 
+    indices.forEach((atIndex) => {
+      const nextChar = text[atIndex + 1];
+
+      if (nextChar !== '&nbsp;' && nextChar !== undefined) {
+        let firstWord = text.indexOf('&nbsp;', atIndex);
+        let secondWord = text.indexOf('&nbsp;', firstWord + 1);
+        if (firstWord === -1) {
+          firstWord = text.length;
+        }
+
+        const word = text.substring(atIndex + 1, secondWord);
+        const cleanedWord = word.replace(/&nbsp;/g, ' ');
+
+        const user = this.users.users.find((u: any) => u.name === cleanedWord);
+
+        if (user) {
+          highlightedText =
+            highlightedText.substring(0, atIndex) +
+            '<span class="tag">' +
+            highlightedText.substring(atIndex, secondWord) +
+            '</span>' +
+            highlightedText.substring(secondWord);
+        }
+      }
+    });
+
+    return highlightedText;
+  }
+
+  tagPersons() {
+    const textArea = this.textAreaInput.nativeElement;
+    const startPos = textArea.selectionStart;
+    const endPos = textArea.selectionEnd;
+
+    const textBeforeCursor = this.textAreaContent.substring(0, startPos);
+    const textAfterCursor = this.textAreaContent.substring(endPos);
+
+    this.textAreaContent = textBeforeCursor + '@' + textAfterCursor;
+    const atIndex = textBeforeCursor.length + 1;
+   setTimeout(() =>{
+    textArea.focus();
+    textArea.setSelectionRange(atIndex, atIndex);
+    this.chatService.mention = true;
+   })
+
+  }
+  convertSpacesAndLineBreaksToHTML(text: string) {
+    // Ersetze Leerzeichen durch HTML-Entity für Leerzeichen (&nbsp;)
+    let htmlText = text.replace(/ /g, '&nbsp;');
+
+    // Ersetze Zeilenumbrüche durch HTML-Element für Zeilenumbruch (<br>)
+    htmlText = htmlText.replace(/\n/g, '<br>');
+
+    return htmlText;
+  }
+  toText() {
+    let text = this.textAreaContent;
+    text = this.convertSpacesAndLineBreaksToHTML(text);
+
+    text = this.highlightUsernames(text);
+    // this.users.allUsers.forEach((user) => {
+    //   let searchValue = `@${user}`;
+    //   let index = text.indexOf(searchValue);
+    //   while (index !== -1) {
+    //     if (index === 0 || text[index - 1] === ' ') {
+    //       text =
+    //         text.substring(0, index) +
+    //         `<span class="tag">${searchValue}</span>` +
+    //         text.substring(index + searchValue.length);
+    //     }
+    //     index = text.indexOf(searchValue, index + 1);
+    //   }
+    // });
+
+    return text;
+  }
 
   tagUser(user: string) {
-    this.textAreaContent += user + ' ';
+    const textArea = this.textAreaInput.nativeElement;
+    const startPos = textArea.selectionStart;
+    const endPos = textArea.selectionEnd;
+
+    const textBeforeCursor = this.textAreaContent.substring(0, startPos);
+    const textAfterCursor = this.textAreaContent.substring(endPos);
+
+    this.textAreaContent = textBeforeCursor + user + ' ' + textAfterCursor;
+
     this.chatService.mention = false;
+
     setTimeout(() => {
-      this.textAreaInput.nativeElement.focus();
+        textArea.focus();
+        textArea.setSelectionRange(startPos + user.length + 1, startPos + user.length + 1);
     });
-  }
+}
+
 
   uploadFile() {
     let files;

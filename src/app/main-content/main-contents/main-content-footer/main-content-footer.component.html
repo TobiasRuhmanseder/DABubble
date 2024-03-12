@@ -6,7 +6,7 @@
         <div *ngFor="let file of currentFiles">{{ file.file.name }}</div>
       </div>
     </div>
-    <div style="position: relative">
+    <div class="main-input-box">
       <div class="user-list" *ngIf="chatService.mention">
         <div
           *ngFor="let user of users.users"
@@ -23,7 +23,13 @@
           {{ user.name }}
         </div>
       </div>
-     
+      <!-- <div class="container">
+          <input type="checkbox" [(ngModel)]="tile.editable"> Editable<br/>
+          <app-editable-section 
+          [text]="tile"
+          >
+          </app-editable-section>
+      </div> -->
       <div
         class="main-input-field"
         style="height: auto"
@@ -105,7 +111,7 @@
         class="icon-smile inputfield-icon icon"
         (click)="isEmojiPickerVisible = !isEmojiPickerVisible"
       ></button>
-      <button class="icon-ad inputfield-icon icon"></button>
+      <button class="icon-ad inputfield-icon icon" (click)="tagPersons()"></button>
     </div>
     <button
       *ngIf="mainChat"

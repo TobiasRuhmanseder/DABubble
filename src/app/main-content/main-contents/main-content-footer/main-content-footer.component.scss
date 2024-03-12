@@ -8,11 +8,12 @@
   height: 30px;
   width: 30px;
 }
-.tag{
-  border-radius: 25px;
-  background-color: red !important;
-  font-size: 50px;
+.main-input-box{
+  position: relative;
+  min-height: 77px;
+  height: auto;
 }
+
 .file-img{
   padding: 24px;
   max-width: 250px;
@@ -73,6 +74,8 @@
   }
 
   .main-input-field {
+    position: absolute;
+    background-color: transparent;
     min-height: calc(100% - 80px);
     width: calc(100% - 20px);
     border: none;
