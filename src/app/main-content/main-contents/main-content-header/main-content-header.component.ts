@@ -25,7 +25,7 @@ export class MainContentHeaderComponent {
   addSelectUser: boolean = false;
   constructor(
     public chatService: MessageService,
-    public userDetails: MatDialog,
+    public dialog: MatDialog,
     public channelDetails: MatDialog,
     public users: UsersService
   ) {}
@@ -70,8 +70,10 @@ export class MainContentHeaderComponent {
     this.closeUser();
   }
 
-  openUserDetails() {
-    this.userDetails.open(DialogUserInfoComponent, {});
+  openUserDetails(id:string) {
+    this.dialog.open(DialogUserInfoComponent, {
+      data: { id: id }
+    });
   }
 
   closeAllDialog() {
