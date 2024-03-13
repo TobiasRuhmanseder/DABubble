@@ -61,7 +61,7 @@
 
         <div class="dialog-input">
           <div class="input" *ngIf="addSelectUser">
-            <div class="selectInputUser">
+            <div class="selectInputUser" (click)="openUserDetails(selectedUser.id)">
               <img
                 class="user-select-pic"
                 src="{{ selectedUser.photoURL }}"

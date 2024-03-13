@@ -197,6 +197,9 @@
           display: flex;
           flex-direction: row;
           align-items: center;
+          &:hover{
+            cursor: pointer;
+          }
           .user-select-pic {
             width: 34px;
             height: 34px;

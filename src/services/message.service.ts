@@ -90,7 +90,6 @@ export class MessageService {
         if (change.type === 'modified') {
           let messageData = { id: change.doc.id, ...change.doc.data() };
           this.setNewMessages(messageData);
-          console.log('neuer update');
         }
       });
     });
