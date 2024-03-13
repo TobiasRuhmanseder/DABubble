@@ -101,7 +101,9 @@ export class MainContentHeaderComponent {
   }
 
   openChannelData() {
-    this.channelDetails.open(ChannelPopUpComponent, {});
+    this.channelDetails.open(ChannelPopUpComponent, {
+      data: { channel: this.chatService.currentChannel}
+    });
   }
 
   getChannelUsersLength() {

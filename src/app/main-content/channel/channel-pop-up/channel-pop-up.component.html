@@ -1,6 +1,6 @@
 <div class="headline-container" mat-dialog-title>
     <div>
-        # Angular
+        # {{channelData.name}}
     </div>
     <div class="close-btn" (click)="onNoClick()">
         Close
@@ -15,7 +15,7 @@
         </div>
     
         <div class="name-container-title">
-            # <span>Angular</span>
+            # <span>{{channelData.name}}</span>
         </div>
     </div>
     
@@ -26,16 +26,14 @@
         </div>
     
         <div class="name-container-title">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Nesciunt suscipit eligendi id velit doloribus voluptate porro quisquam tempore quaerat 
-            molestiae cum repudiandae necessitatibus quia, earum fuga provident exercitationem. Tempore, ullam.
+            {{channelData.description}}
         </div>
     
         <div class="seperator"></div>
     
         <div class="creator-container">
             <span class="channel-name">Erstellt von</span>
-            <span class="creator-text">Noah Braun</span>
+            <span class="creator-text">{{this.users.getUserName(channelData.creator)}}</span>
         </div>
     </div>
 </div>

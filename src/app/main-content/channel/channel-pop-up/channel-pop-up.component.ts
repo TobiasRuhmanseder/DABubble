@@ -13,6 +13,7 @@ import {
   MatDialogClose,
   MatDialogModule,
 } from '@angular/material/dialog';
+import { UsersService } from '../../../../services/users.service';
 
 @Component({
   selector: 'app-channel-pop-up',
@@ -29,10 +30,14 @@ import {
   styleUrl: './channel-pop-up.component.scss'
 })
 export class ChannelPopUpComponent {
-
+channelData:any;
   constructor(
+    public users: UsersService,
     public dialogRef: MatDialogRef<ChannelPopUpComponent>,
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data:any
+  ) { 
+    this.channelData = this.data.channel
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
