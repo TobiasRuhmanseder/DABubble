@@ -13,7 +13,14 @@ body {
 }
 .tag{
   border-radius: 25px;
-  background-color: red !important;
+  color: #444df2;
+  background-color: #ffff;
+  transition: all ease 0.3s;
+  text-wrap: nowrap;
+  &:hover {
+    cursor: pointer;
+    background-color: #eceefe;
+  }
 }
 .card {
   background-color: white;

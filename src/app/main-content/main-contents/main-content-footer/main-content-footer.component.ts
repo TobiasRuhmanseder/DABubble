@@ -17,14 +17,12 @@ import { UsersService } from '../../../../services/users.service';
 import { UserPicComponent } from '../../../user-pic/user-pic.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { EditableSectionComponent } from '../../editable-section/editable-section.component';
 @Component({
   selector: 'app-main-content-footer',
   standalone: true,
   templateUrl: './main-content-footer.component.html',
   styleUrl: './main-content-footer.component.scss',
   imports: [
-    EditableSectionComponent,
     MatMenuModule,
     CommonModule,
     FormsModule,
@@ -39,6 +37,7 @@ export class MainContentFooterComponent {
   @ViewChild('imageContainer') imageContainer!: ElementRef;
   @ViewChild('imageThreadContainer') imageThreadContainer!: ElementRef;
   @ViewChild('textAreaInput') textAreaInput!: ElementRef;
+  @ViewChild('textThreadAreaInput') textThreadAreaInput!: ElementRef;
   @Input() mainChat: any;
   userList = [];
   constructor(
@@ -87,11 +86,16 @@ export class MainContentFooterComponent {
     e.target.style.height = e.target.scrollHeight + 25 + 'px';
   }
 
-  checkForAtSymbol(event: KeyboardEvent) {
+  checkForAtSymbol(event: KeyboardEvent, mainChat: boolean) {
     if (event.key === '@') {
-      this.chatService.mention = true;
+      if (mainChat) {
+        this.chatService.mention = true;
+      } else {
+        this.chatService.threadMention = true;
+      }
     } else {
       this.chatService.mention = false;
+      this.chatService.threadMention = false;
     }
   }
 
@@ -108,17 +112,17 @@ export class MainContentFooterComponent {
     indices.forEach((atIndex) => {
       const nextChar = text[atIndex + 1];
 
-      if (nextChar !== '&nbsp;' && nextChar !== undefined) {
-        let firstWord = text.indexOf('&nbsp;', atIndex);
-        let secondWord = text.indexOf('&nbsp;', firstWord + 1);
+      if (nextChar !== ' ' && nextChar !== undefined) {
+        let firstWord = text.indexOf(' ', atIndex);
+        let secondWord = text.indexOf(' ', firstWord + 1);
         if (firstWord === -1) {
           firstWord = text.length;
         }
 
         const word = text.substring(atIndex + 1, secondWord);
-        const cleanedWord = word.replace(/&nbsp;/g, ' ');
+        // const cleanedWord = word.replace(/&nbsp;/g, ' ');
 
-        const user = this.users.users.find((u: any) => u.name === cleanedWord);
+        const user = this.users.users.find((u: any) => u.name === word);
 
         if (user) {
           highlightedText =
@@ -135,54 +139,44 @@ export class MainContentFooterComponent {
   }
 
   tagPersons() {
-    const textArea = this.textAreaInput.nativeElement;
-    const startPos = textArea.selectionStart;
-    const endPos = textArea.selectionEnd;
+    if (this.mainChat) {
+      const textArea = this.textAreaInput.nativeElement;
+      const startPos = textArea.selectionStart;
+      const endPos = textArea.selectionEnd;
 
-    const textBeforeCursor = this.textAreaContent.substring(0, startPos);
-    const textAfterCursor = this.textAreaContent.substring(endPos);
+      const textBeforeCursor = this.textAreaContent.substring(0, startPos);
+      const textAfterCursor = this.textAreaContent.substring(endPos);
 
-    this.textAreaContent = textBeforeCursor + '@' + textAfterCursor;
-    const atIndex = textBeforeCursor.length + 1;
-   setTimeout(() =>{
-    textArea.focus();
-    textArea.setSelectionRange(atIndex, atIndex);
-    this.chatService.mention = true;
-   })
+      this.textAreaContent = textBeforeCursor + '@' + textAfterCursor;
+      const atIndex = textBeforeCursor.length + 1;
+      setTimeout(() => {
+        textArea.focus();
+        textArea.setSelectionRange(atIndex, atIndex);
+        this.chatService.mention = true;
+      });
+    } else {
+      const textArea = this.textThreadAreaInput.nativeElement;
+      const startPos = textArea.selectionStart;
+      const endPos = textArea.selectionEnd;
 
-  }
-  convertSpacesAndLineBreaksToHTML(text: string) {
-    // Ersetze Leerzeichen durch HTML-Entity für Leerzeichen (&nbsp;)
-    let htmlText = text.replace(/ /g, '&nbsp;');
+      const textBeforeCursor = this.textAreaThreadContent.substring(
+        0,
+        startPos
+      );
+      const textAfterCursor = this.textAreaThreadContent.substring(endPos);
 
-    // Ersetze Zeilenumbrüche durch HTML-Element für Zeilenumbruch (<br>)
-    htmlText = htmlText.replace(/\n/g, '<br>');
-
-    return htmlText;
-  }
-  toText() {
-    let text = this.textAreaContent;
-    text = this.convertSpacesAndLineBreaksToHTML(text);
-
-    text = this.highlightUsernames(text);
-    // this.users.allUsers.forEach((user) => {
-    //   let searchValue = `@${user}`;
-    //   let index = text.indexOf(searchValue);
-    //   while (index !== -1) {
-    //     if (index === 0 || text[index - 1] === ' ') {
-    //       text =
-    //         text.substring(0, index) +
-    //         `<span class="tag">${searchValue}</span>` +
-    //         text.substring(index + searchValue.length);
-    //     }
-    //     index = text.indexOf(searchValue, index + 1);
-    //   }
-    // });
-
-    return text;
+      this.textAreaThreadContent = textBeforeCursor + '@' + textAfterCursor;
+      const atIndex = textBeforeCursor.length + 1;
+      setTimeout(() => {
+        textArea.focus();
+        textArea.setSelectionRange(atIndex, atIndex);
+        this.chatService.threadMention = true;
+      });
+    }
   }
 
   tagUser(user: string) {
+    if (this.mainChat){
     const textArea = this.textAreaInput.nativeElement;
     const startPos = textArea.selectionStart;
     const endPos = textArea.selectionEnd;
@@ -193,13 +187,36 @@ export class MainContentFooterComponent {
     this.textAreaContent = textBeforeCursor + user + ' ' + textAfterCursor;
 
     this.chatService.mention = false;
+    this.chatService.threadMention = false;
 
     setTimeout(() => {
-        textArea.focus();
-        textArea.setSelectionRange(startPos + user.length + 1, startPos + user.length + 1);
-    });
-}
+      textArea.focus();
+      textArea.setSelectionRange(
+        startPos + user.length + 1,
+        startPos + user.length + 1
+      );
+    });} else {
+      const textArea = this.textThreadAreaInput.nativeElement;
+    const startPos = textArea.selectionStart;
+    const endPos = textArea.selectionEnd;
 
+    const textBeforeCursor = this.textAreaThreadContent.substring(0, startPos);
+    const textAfterCursor = this.textAreaThreadContent.substring(endPos);
+
+    this.textAreaThreadContent = textBeforeCursor + user + ' ' + textAfterCursor;
+
+    this.chatService.mention = false;
+    this.chatService.threadMention = false;
+
+    setTimeout(() => {
+      textArea.focus();
+      textArea.setSelectionRange(
+        startPos + user.length + 1,
+        startPos + user.length + 1
+      );
+    });
+    }
+  }
 
   uploadFile() {
     let files;

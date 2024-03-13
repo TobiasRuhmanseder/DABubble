@@ -30,15 +30,15 @@
           >
           </app-editable-section>
       </div> -->
-      <div
+      <!-- <div
         class="main-input-field"
         style="height: auto"
         [innerHTML]="toText()"
-      ></div>
-      <textarea 
+      ></div> -->
+      <textarea
         #textAreaInput
         (keyup)="autoGrowTextZone($event)"
-        (keydown)="checkForAtSymbol($event)"
+        (keydown)="checkForAtSymbol($event, mainChat)"
         [(ngModel)]="textAreaContent"
         class="main-input-field"
         [placeholder]="getPlaceholderText()"
@@ -62,16 +62,32 @@
         <div *ngFor="let file of currentFiles">{{ file.file.name }}</div>
       </div>
     </div>
-    <textarea
-      [mentionConfig]="{
-        dropUp: true,
-        items: users.allUsers,
-        labelKey: 'name'
-      }"
-      [(ngModel)]="textAreaThreadContent"
-      class="main-input-field"
-      [placeholder]="getPlaceholderText()"
-    ></textarea>
+    <div class="main-input-box">
+      <div class="user-list" *ngIf="chatService.threadMention">
+        <div
+          *ngFor="let user of users.users"
+          class="user"
+          (click)="tagUser(user.name)"
+        >
+          <div class="user-pic">
+            <app-user-pic
+              [status]="true"
+              [online]="user.status"
+              userImageName="{{ user.photoURL }}"
+            ></app-user-pic>
+          </div>
+          {{ user.name }}
+        </div>
+      </div>
+      <textarea
+        #textThreadAreaInput
+        (keyup)="autoGrowTextZone($event)"
+        (keydown)="checkForAtSymbol($event, mainChat)"
+        [(ngModel)]="textAreaThreadContent"
+        class="main-input-field"
+        [placeholder]="getPlaceholderText()"
+      ></textarea>
+    </div>
   </div>
   <emoji-mart
     class="emojis"
@@ -111,7 +127,10 @@
         class="icon-smile inputfield-icon icon"
         (click)="isEmojiPickerVisible = !isEmojiPickerVisible"
       ></button>
-      <button class="icon-ad inputfield-icon icon" (click)="tagPersons()"></button>
+      <button
+        class="icon-ad inputfield-icon icon"
+        (click)="tagPersons()"
+      ></button>
     </div>
     <button
       *ngIf="mainChat"

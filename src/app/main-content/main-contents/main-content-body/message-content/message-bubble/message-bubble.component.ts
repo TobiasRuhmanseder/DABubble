@@ -10,6 +10,9 @@ import { MessageService } from '../../../../../../services/message.service';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { FormsModule } from '@angular/forms';
+import { UsersService } from '../../../../../../services/users.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogUserInfoComponent } from '../../../../private-chat/dialog-user-info/dialog-user-info.component';
 
 @Component({
   selector: 'app-message-bubble',
@@ -22,7 +25,7 @@ export class MessageBubbleComponent {
   @ViewChildren('fileContent') fileContentList!: QueryList<ElementRef>;
   @ViewChildren('fileThreadContent')
   fileContentThreadList!: QueryList<ElementRef>;
-  constructor(public chatService: MessageService) {}
+  constructor(public dialog: MatDialog,private elementRef: ElementRef, public chatService: MessageService, private users: UsersService) {}
   isEmojiPickerVisible: boolean = false;
 
   @Input() flagg: any;
@@ -43,6 +46,29 @@ export class MessageBubbleComponent {
 
   ngAfterViewInit() {
     this.getFiles(this.msg.files);
+    const elements = this.elementRef.nativeElement.querySelectorAll('.tag');
+    
+    elements.forEach((element: any) => {
+        element.addEventListener('click', () => {
+            this.handleClick(this.getUserIdFromClass(element));
+        });
+    });
+  }
+
+  getUserIdFromClass(element: HTMLElement) {
+    const classes = Array.from(element.classList);
+    for (let className of classes) {
+        if (className !== 'tag') {
+            return className;
+        }
+    }
+    return 'user.id nicht gefunden';
+}
+  handleClick(userId: string) {
+    console.log('Clicked on user ID:', userId);
+    this.dialog.open(DialogUserInfoComponent, {
+      data: { id: userId }
+    });
   }
 
   abortEditMessage() {
@@ -115,4 +141,58 @@ export class MessageBubbleComponent {
     };
     element.nativeElement.appendChild(img);
   }
+
+  toHTML(content:string){
+let text = content;
+text = this.highlightUsernames(text)
+return text
+  }
+
+  highlightUsernames(text: string) {
+    let highlightedText = text;
+    let indices: any[] = [];
+
+    for (let i = text.length; i > -1; i--) {
+      if (text[i] === '@') {
+        indices.push(i);
+      }
+    }
+
+    indices.forEach((atIndex) => {
+      const nextChar = text[atIndex + 1];
+
+      if (nextChar !== ' ' && nextChar !== undefined) {
+        let firstWord = text.indexOf(' ', atIndex);
+        let secondWord = text.indexOf(' ', firstWord + 1);
+        let nextLineBreakIndex = text.indexOf('\n', firstWord + 1);
+
+        if (secondWord !== -1 && secondWord < nextLineBreakIndex) {
+        } else if (nextLineBreakIndex !== -1) {
+            secondWord = nextLineBreakIndex;
+        }
+        if (firstWord === -1) {
+          firstWord = text.length;
+        }
+        if (secondWord === -1) {
+          secondWord = text.length;
+        }
+
+        const word = text.substring(atIndex + 1, secondWord);
+
+        const user = this.users.users.find((u: any) => u.name === word);
+
+        if (user) {
+          highlightedText =
+              highlightedText.substring(0, atIndex) +
+              `<span class="tag ${user.id}"> ` +
+              highlightedText.substring(atIndex, secondWord) +
+              ' </span>' +
+              highlightedText.substring(secondWord);
+      }
+      }
+    });
+
+    return highlightedText;
+  }
+ 
 }

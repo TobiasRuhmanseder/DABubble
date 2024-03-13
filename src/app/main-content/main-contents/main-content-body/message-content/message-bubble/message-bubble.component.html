@@ -16,8 +16,8 @@
       </div>
       <div #fileContent *ngFor="let file of msg.files"></div>
     </div>
-    <div>
-      {{ msg.content }}
+    <div [innerHTML]="toHTML(msg.content)">
+      
     </div>
   </div>
   <div class="message-text-edit" *ngIf="flagg === i">
