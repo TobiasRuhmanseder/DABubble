@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { CurrentUserService } from '../../../services/current-user.service';
 import { ChannelService } from '../../../services/channel.service';
 import { Channel } from '../../../models/channel.class';
+import { UsersService } from '../../../services/users.service';
+import { Subject, debounceTime, filter, switchMap } from 'rxjs';
 
 
 @Component({
@@ -22,12 +24,17 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy {
 
   createButtonActive = true;
   allUsersChoose = true;
-
+  filteredUser: any = [];
+  input$ = new Subject<string>();
+  dropDownList = false;
+  inputValue: any;
 
   channelService: ChannelService = inject(ChannelService);
   currentUserService: CurrentUserService = inject(CurrentUserService);
+  users: UsersService = inject(UsersService);
   currentUser: any = [];
   unsubCurrentUser: any;
+  unsubInput: any;
   @ViewChild('userfield') private scrollDown?: ElementRef;
 
   form = new FormGroup({
@@ -35,19 +42,41 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy {
   })
 
   constructor(public dialogRef: MatDialogRef<DialogNewChannelAddUserComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.subInput();
+  }
+
+  subInput() {
+    this.unsubInput =
+      this.input$.pipe(debounceTime(300)).subscribe(search => {
+        console.log(search);
+        if (search.length >= 2) {
+          this.filteredUser = this.filterUser(search);
+          if (this.filteredUser.length >= 1) this.dropDownList = true; else this.dropDownList = false;
+        } else {
+          this.dropDownList = false;
+          this.filteredUser = [];
+        }
+      })
+  }
+
+  filterUser(search: string) {
+    const filterUser = this.users.users.filter(((el: any) => el.name.toLowerCase().includes(search.toLowerCase())));
+    return filterUser;
   }
 
   ngOnInit(): void {
     this.unsubCurrentUser = this.currentUserService.currentUser.subscribe(user => {
       this.currentUser = user;
       console.log(user);
-      
+
     });
     this.currentUserService.activeUser();
   }
 
+
   ngOnDestroy(): void {
     this.unsubCurrentUser.unsubscribe();
+    this.unsubInput.unsubscribe();
   }
 
   onNoClick(): void {
@@ -64,13 +93,13 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy {
 
   async createChannel() {
     this.createButtonActive = false;
-    const channel= new Channel( {
-      id:'',
+    const channel = new Channel({
+      id: '',
       name: this.data.channelName,
       description: this.data.channelDescription,
       creator: this.currentUser.uid,
       users: []
-      
+
     })
     await this.channelService.addNewChannel(channel);
     this.dialogRef.close();
@@ -82,6 +111,10 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy {
       left: 0,
       behavior: 'smooth'
     });
+  }
+
+  deleteUserFromList() {
+
   }
 }
 
