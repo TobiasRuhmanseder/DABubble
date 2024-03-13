@@ -52,9 +52,11 @@ export class MessageService {
       channelId,
       'messages'
     );
-    getDocs(messagesRef).then((messagesSnapshot) => {
-      messagesSnapshot.forEach((messageDoc) => {
-        this.subChannelSingleThread(channelId, messageDoc.id);
+    this.unsubThreads = onSnapshot(messagesRef, (messagesSnapshot) => {
+      messagesSnapshot.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+          this.subChannelSingleThread(channelId, change.doc.id);
+        }
       });
     });
   }
@@ -88,6 +90,7 @@ export class MessageService {
         if (change.type === 'modified') {
           let messageData = { id: change.doc.id, ...change.doc.data() };
           this.setNewMessages(messageData);
+          console.log('neuer update');
         }
       });
     });
@@ -274,6 +277,10 @@ export class MessageService {
 
   setCurrentThread(index: number, messageId: string) {
     if (this.threadList.length != 0) {
+      if (this.threadList.length === index) {
+        let newThread = { messageId: messageId, threadList: [] };
+        this.threadList.push(newThread);
+      }
       this.currentThread = this.getSortMessagesByTime(
         this.threadList[index].threadList
       );
@@ -305,7 +312,6 @@ export class MessageService {
     }
     return this.currentChannel.name;
   }
-
 
   getSortMessagesByTime(list: { timestamp: number }[]) {
     let sortetList = list.sort(

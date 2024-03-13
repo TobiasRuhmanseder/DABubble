@@ -339,6 +339,7 @@ export class MainContentFooterComponent {
       this.textAreaContent = '';
       this.chatService.saveAndAddNewMessage(message);
     } else {
+      debugger
       let message = this.chatService.setMessage(this.textAreaThreadContent);
       message.files = fileIdList;
       this.textAreaThreadContent = '';
