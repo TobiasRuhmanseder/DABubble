@@ -27,8 +27,10 @@ export class MessageTitleComponent {
   @Input() isHover: any;
   @Input() list: any;
   @Input() mainChat: any;
-  openUserDetails() {
-    this.dialog.open(DialogUserInfoComponent, {});
+  openUserDetails(id:string) {
+    this.dialog.open(DialogUserInfoComponent, {
+      data: { id: id }
+    });
   }
   editMessage(index: number) {
     setTimeout(() => {

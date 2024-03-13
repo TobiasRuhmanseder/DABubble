@@ -15,7 +15,7 @@
           : 'row'
     }"
   >
-    <div class="message-name" (click)="openUserDetails()">
+    <div class="message-name" (click)="openUserDetails(msg.senderId)">
       {{ users.getUserName(msg.senderId) }}
     </div>
     <div class="message-time">

@@ -61,6 +61,12 @@
                 border-radius: 50%;
                 background-color: green;
             }
+            .active{
+                background-color: green;
+            }
+            .disabled{
+                background-color: gray;
+            }
         }
 
         .mail-headline-container{
@@ -78,6 +84,9 @@
         .mail{
             padding:0px 10px 0px 50px;
             color: rgba(19, 129, 255, 1);
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 
