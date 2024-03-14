@@ -4,63 +4,44 @@
             <span>Leute hinzufügen</span>
             <div class="close-button" (click)="onNoClick()"></div>
         </div>
+        <div class="input-container">
+            <label (click)="allUsersSelect()" class="input-element">
+                <input type="radio" value="all" [checked]="allUsersChoose" />
+                <span>Alle Mitglieder hinzufügen</span>
+            </label>
+            <label (click)="costumUsersSelect()" class="input-element">
+                <input type="radio" [checked]="!allUsersChoose" />
+                <span>Bestimmte Leute hinzufügen</span>
+            </label>
+            <div #userfield *ngIf="!allUsersChoose" class="userfield">
 
-        <form [formGroup]="form">
-            <div class="input-container">
-                <label (click)="allUsersSelect()" class="input-element">
-                    <input type="radio" value="all" [checked]="allUsersChoose" />
-                    <span>Alle Mitglieder hinzufügen</span>
-                </label>
-                <label (click)="costumUsersSelect()" class="input-element">
-                    <input type="radio" [checked]="!allUsersChoose" />
-                    <span>Bestimmte Leute hinzufügen</span>
-                </label>
-                <div #userfield *ngIf="!allUsersChoose" class="userfield">
+                <div class="user">
+                    <img [src]="currentUser.photoURL" alt="">
+                    <span>Du</span>
+                    <div class="user-delete"></div>
+                </div>
 
+                <!--  
+                    <div class="user" *ngFor="let user of this.users.users" (click)="deleteUserFromList()">
+                        <img [src]="user.photoURL" alt="">
+                        <span>{{user.name}}</span>
+                        <div class="user-delete"></div>
+                    </div>
+                -->
+                <div class="name-input">
+                    <input #searchInput (input)="input$.next(searchInput.value)" [(ngModel)]="inputValue" type="text"
+                        placeholder="Name eingeben">
 
-                    <div class="user">
-                        <img [src]="currentUser.photoURL" alt="">
-                        <span>{{currentUser.displayName}}</span>
-                        <div class="user-delete"></div>
-                    </div>
-                    <div class="user">
-                        <img [src]="currentUser.photoURL" alt="">
-                        <span>{{currentUser.displayName}}</span>
-                        <div class="user-delete"></div>
-                    </div>
-                    <div class="user">
-                        <img [src]="currentUser.photoURL" alt="">
-                        <span>{{currentUser.displayName}}</span>
-                        <div class="user-delete"></div>
-                    </div>
-                    <div class="user">
-                        <img [src]="currentUser.photoURL" alt="">
-                        <span>{{currentUser.displayName}}</span>
-                        <div class="user-delete"></div>
-                    </div>
-                    <div class="user">
-                        <img [src]="currentUser.photoURL" alt="">
-                        <span>{{currentUser.displayName}}</span>
-                        <div class="user-delete"></div>
-                    </div>
-                    <div class="user">
-                        <img [src]="currentUser.photoURL" alt="">
-                        <span>{{currentUser.displayName}}</span>
-                        <div class="user-delete"></div>
-                    </div>
-                    <div class="user">
-                        <img [src]="currentUser.photoURL" alt="">
-                        <span>{{currentUser.displayName}}</span>
-                        <div class="user-delete"></div>
-                    </div>
-
-
-                    <input type="text" placeholder="Name eingeben">
                 </div>
             </div>
-            <div class="button-container">
-                <button (click)="createChannel()" [disabled]="!createButtonActive" class="btn-blue">Erstellen</button>
-            </div>
-        </form>
+        </div>
+        <div class="drop-dpown-list" *ngIf="dropDownList">
+            <span *ngFor="let user of filteredUser">{{user.name}}</span>
+        </div>
+
+        <div class="button-container">
+            <button (click)="createChannel()" [disabled]="!createButtonActive" class="btn-blue">Erstellen</button>
+        </div>
+
     </mat-dialog-content>
 </div>

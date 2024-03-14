@@ -64,7 +64,7 @@ input[type='radio'] {
     transition: all 125ms ease-in-out;
     scrollbar-width: none;
 
-    input{
+    input {
         margin-left: 5px;
         width: 130px;
         height: 32px;
@@ -83,12 +83,12 @@ input[type='radio'] {
     }
 }
 
-.user:hover .user-delete{
+.user:hover .user-delete {
     background-image: url(../../../assets/icons/close_hover.svg);
 
 }
 
-.user{
+.user {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -99,22 +99,35 @@ input[type='radio'] {
     border-radius: 20px;
     cursor: pointer;
 
-    img{
+    img {
         width: 32px;
         height: 32px;
         border-radius: 16px;
         object-fit: contain;
     }
 
-    span{
+    span {
         margin-left: 12px;
         margin-right: 12px;
     }
 }
 
-.user-delete{
+.user-delete {
     width: 10px;
     height: 10px;
     background-image: url(../../../assets/icons/close.svg);
     background-size: contain;
+}
+
+.name-input {
+    position: relative;
+}
+
+.drop-dpown-list {
+    z-index: 99;
+    background-color: white;
+    position: fixed;
+    height: 250px;
+    width: 630px;
+    border-radius: 20px;
 }
