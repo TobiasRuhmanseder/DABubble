@@ -123,11 +123,53 @@ input[type='radio'] {
     position: relative;
 }
 
-.drop-dpown-list {
-    z-index: 99;
+.drop-down-container{
+height: 225px;
+width: 630px;
+overflow: hidden;
+position: fixed;
+}
+
+.drop-down-list {
     background-color: white;
-    position: fixed;
-    height: 250px;
+    height: 225px;
     width: 630px;
     border-radius: 20px;
+    overflow: auto;
+
+    &::-webkit-scrollbar{
+        height: 90%;
+    }
+}
+
+.drop-down-list::-webkit-scrollbar-track{
+    margin-top: 5px;
+    margin-bottom: 22px;
+}
+
+.user-list-element {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    margin-bottom: 17px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    transition: all 125ms ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        transition: all 125ms ease-in-out;
+        color: #535AF1;
+    }
+}
+
+.user-pic-size {
+    display: block;
+    height: 50px;
+    width: 50px;
+    margin-right: 15px;
+    margin-left: 0px;
 }
