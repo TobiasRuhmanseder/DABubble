@@ -23,18 +23,6 @@
           {{ user.name }}
         </div>
       </div>
-      <!-- <div class="container">
-          <input type="checkbox" [(ngModel)]="tile.editable"> Editable<br/>
-          <app-editable-section 
-          [text]="tile"
-          >
-          </app-editable-section>
-      </div> -->
-      <!-- <div
-        class="main-input-field"
-        style="height: auto"
-        [innerHTML]="toText()"
-      ></div> -->
       <textarea
         #textAreaInput
         (keyup)="autoGrowTextZone($event)"
@@ -45,16 +33,6 @@
       ></textarea>
     </div>
   </div>
-  <!-- <ng-template #mentionListTemplate let-item="item">
-    <img
-      src="{{ item.photoURL }}"
-      width="30"
-      height="30"
-      style="border-radius: 50%"
-    />
-    &nbsp;
-    <span>{{ item.name }}</span>
-  </ng-template> -->
   <div *ngIf="!mainChat">
     <div #imageThreadContainer class="file-container">
       <div *ngIf="checkIsFileImg(currentThreadFiles)" style="padding: 12px">
@@ -135,14 +113,14 @@
     <button
       *ngIf="mainChat"
       class="main-input-confirm inputfield-icon"
-      [disabled]="currentFiles.length === 0 && textAreaContent.length === 0"
+      [disabled]="currentFiles.length === 0 && textAreaContent.length === 0 || !this.chatService.currentChannel"
       (click)="sendMessage()"
     ></button>
     <button
       *ngIf="!mainChat"
       class="main-input-confirm inputfield-icon"
       [disabled]="
-        textAreaThreadContent.length === 0 && currentThreadFiles.length === 0
+        textAreaThreadContent.length === 0 && currentThreadFiles.length === 0 || !this.chatService.currentChannel
       "
       (click)="sendMessage()"
     ></button>

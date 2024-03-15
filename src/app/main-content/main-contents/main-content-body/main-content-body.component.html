@@ -8,7 +8,7 @@
     ></app-message-content>
 
     <div
-      *ngIf="chatService.sortedMessages.length === 0"
+      *ngIf="chatService.sortedMessages.length === 0 && chatService.currentChannel"
       class="message-no-content"
     >
       <div *ngIf="checkDirect(this.chatService.currentChannel)">

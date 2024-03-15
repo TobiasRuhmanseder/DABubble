@@ -55,16 +55,6 @@ export class MainContentFooterComponent {
 
   allUsers: any = {};
 
-  tile = {
-    editable: false,
-    tile: {
-      content: {
-        text: 'Angular Rocks !!',
-        html: '<i>Angular </i><b>Rocks !!</b>',
-      },
-      background: '#2ecc71',
-    },
-  };
 
   ngOnInit(): void {
     this.allUsers = this.users.allUsers;
@@ -120,7 +110,6 @@ export class MainContentFooterComponent {
         }
 
         const word = text.substring(atIndex + 1, secondWord);
-        // const cleanedWord = word.replace(/&nbsp;/g, ' ');
 
         const user = this.users.users.find((u: any) => u.name === word);
 
@@ -297,6 +286,9 @@ export class MainContentFooterComponent {
   }
 
   getPlaceholderText(): string {
+    if (!this.chatService.currentChannel) {
+      return 'Starte eine neue Nachricht';
+    }
     if (
       this.chatService.currentChannel.id != this.chatService.currentChannel.name
     ) {
@@ -363,7 +355,6 @@ export class MainContentFooterComponent {
       this.textAreaContent = '';
       this.chatService.saveAndAddNewMessage(message);
     } else {
-      debugger;
       let message = this.chatService.setMessage(this.textAreaThreadContent);
       message.files = fileIdList;
       this.textAreaThreadContent = '';
