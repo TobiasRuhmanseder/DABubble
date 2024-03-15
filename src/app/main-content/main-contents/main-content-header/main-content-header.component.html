@@ -1,3 +1,11 @@
+<div class="header-search" *ngIf="chatService.currentChannel === undefined">
+  <div class="search-title">
+    Neue Nachricht
+  </div>
+  <div>
+    <input class="search-input" type="text">
+  </div>
+</div>
 <div
   class="header"
   *ngIf="
