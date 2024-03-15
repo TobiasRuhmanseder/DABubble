@@ -1,4 +1,27 @@
-<div class="header" *ngIf="chatService.getChannelName().length > 0">
+<div
+  class="header"
+  *ngIf="
+    chatService.getChannelName().length > 0 &&
+    chatService.currentChannel.name === chatService.currentChannel.id
+  "
+>
+  <div class="direct-nav">
+    <div class="direct-photo">
+    <app-user-pic
+      [userImageName]="getDirectMessageUser().photoURL"
+      [status]="true"
+      [online]="getDirectMessageUser().status"
+    ></app-user-pic></div>
+    {{ getDirectUserName() }}
+  </div>
+</div>
+<div
+  class="header"
+  *ngIf="
+    chatService.getChannelName().length > 0 &&
+    chatService.currentChannel.name != chatService.currentChannel.id
+  "
+>
   <div class="channel-title" (click)="openChannelData()">
     <div class="icon icon-tag" src=".\assets\icons\tag.png"></div>
     <div class="title-hover">{{ chatService.getChannelName() }}</div>
@@ -42,7 +65,11 @@
             </div>
           </div>
         </div>
-        <div *ngIf="this.chatService.currentChannel.users.length != 0" class="button-user" (click)="goToAddUser()">
+        <div
+          *ngIf="this.chatService.currentChannel.users.length != 0"
+          class="button-user"
+          (click)="goToAddUser()"
+        >
           <div class="header-add-icon icon"></div>
           <span class="add-user-button-text">Mitglieder hinzufügen</span>
         </div>
@@ -61,7 +88,10 @@
 
         <div class="dialog-input">
           <div class="input" *ngIf="addSelectUser">
-            <div class="selectInputUser" (click)="openUserDetails(selectedUser.id)">
+            <div
+              class="selectInputUser"
+              (click)="openUserDetails(selectedUser.id)"
+            >
               <img
                 class="user-select-pic"
                 src="{{ selectedUser.photoURL }}"

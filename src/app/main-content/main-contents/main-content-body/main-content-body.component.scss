@@ -10,5 +10,33 @@
 
   .message-no-content {
     padding: 20px 45px;
+    margin-bottom: 50px;
   }
+  .direct-photo-container {
+    font-family: Nunito;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 33px;
+    letter-spacing: 0em;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    gap: 25px;
+    margin-bottom: 25px;
+  }
+  .direct-photo {
+    height: 100px;
+    width: 100px;
+  }
+  .channel-name {
+    font-family: Nunito;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 33px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 25px;
+  }
+
 }

@@ -1,20 +1,56 @@
 <div class="main-messages">
-  <div class="main-messages-container" >
+  <div class="main-messages-container">
     <app-message-content
+      *ngIf="chatService.sortedMessages.length != 0"
       [flagg]="chatService.editFlaggIndex"
       [mainChat]="true"
       [list]="this.chatService.sortedMessages"
     ></app-message-content>
 
-    <!-- <div
+    <div
       *ngIf="chatService.sortedMessages.length === 0"
       class="message-no-content"
     >
-      <div># {{ chatService.getChannelName() }}</div>
-      <span
-        >Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
-        # {{ chatService.getChannelName() }}</span
-      >
-    </div> -->
+      <div *ngIf="checkDirect(this.chatService.currentChannel)">
+        <div class="direct-photo-container">
+          <div class="direct-photo">
+            <app-user-pic
+              [userImageName]="
+                getDirectMessageUser(this.chatService.currentChannel).photoURL
+              "
+              [status]="true"
+              [online]="
+                getDirectMessageUser(this.chatService.currentChannel).status
+              "
+            ></app-user-pic>
+          </div>
+          {{ getDirectUserName() }}
+        </div>
+        <div *ngIf="getDirectMessageTitle()">
+          <b>Dieser Raum ist nur für dich da. </b> Mache dir Notizen, liste
+          deine To-dos auf oder bewahre Links und Dateien griffbereit auf. Du
+          kannst hier auch gerne Dinge mit dir selbst besprechen.
+        </div>
+        <div *ngIf="!getDirectMessageTitle()">
+          Diese Unterhaltung findet nur zwischen<span
+            class="tag"
+            (click)="openUserData()"
+          >
+            &#64; {{ getDirectUserName() }} </span
+          >und dir statt.
+        </div>
+      </div>
+
+      <div *ngIf="!checkDirect(this.chatService.currentChannel)">
+        <div class="channel-name"># {{ chatService.getChannelName() }}</div>
+        <div>
+          {{ getMessageTitle(this.chatService.currentChannel) }}Das ist der
+          Anfang des Channels
+          <span class="tag" (click)="openChannelData()"
+            ># {{ this.chatService.getChannelName() }}
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

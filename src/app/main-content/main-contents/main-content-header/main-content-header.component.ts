@@ -70,9 +70,9 @@ export class MainContentHeaderComponent {
     this.closeUser();
   }
 
-  openUserDetails(id:string) {
+  openUserDetails(id: string) {
     this.dialog.open(DialogUserInfoComponent, {
-      data: { id: id }
+      data: { id: id },
     });
   }
 
@@ -104,7 +104,7 @@ export class MainContentHeaderComponent {
 
   openChannelData() {
     this.channelDetails.open(ChannelPopUpComponent, {
-      data: { channel: this.chatService.currentChannel}
+      data: { channel: this.chatService.currentChannel },
     });
   }
 
@@ -162,4 +162,28 @@ export class MainContentHeaderComponent {
     );
     return user.status;
   }
+
+  getDirectMessageUser() {
+    let directUserId = this.chatService.currentChannel.users.filter(
+      (user: any) => user !== this.chatService.currentUser
+    );
+    if (directUserId.length === 0 && this.chatService.currentChannel.users.length === 2) {
+      directUserId.push(this.chatService.currentChannel.users[0]);
+    }
+    let directUser = this.users.getUserFromId(directUserId[0]);
+    if (!directUser) {
+      return 'User not found';
+    }
+    return directUser;
+  }
+
+  getDirectUserName() {
+    let user = this.getDirectMessageUser();
+    if (user.id === this.chatService.currentUser) {
+      return user.name + ' (Du)';
+    }
+    return user.name;
+  }
+
+  
 }

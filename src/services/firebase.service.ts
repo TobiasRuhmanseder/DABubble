@@ -171,6 +171,29 @@ export class FirebaseService implements OnDestroy {
     return docSnap.data() as Channel;
   }
 
+  async getDirectMessagesChannel(id: string){
+    let docSnap = await getDoc(this.getDocRef('direct_messages', id));
+    let channelData = docSnap.data();
+    
+    if (channelData) {
+        // ID hinzufügen und Namen ändern
+        const channel: Channel = {
+          id: id, 
+          name: id,
+          description: '',
+          creator: '',
+          users: channelData['users'],
+          toJSON: function (): { id: string; name: string; description: string; creator: string; users: string[]; } {
+            throw new Error('Function not implemented.');
+          }
+        };
+
+        return channel;
+    } else {
+        return null; // Oder eine entsprechende Behandlung für den Fall, dass keine Daten vorhanden sind
+    }
+  }
+
   updateChannel(channelData: any) {
     return setDoc(
       doc(this.firestore, 'channels', channelData.id),

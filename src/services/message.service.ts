@@ -266,6 +266,9 @@ export class MessageService {
 
   async getChannelFromId(id: string) {
     this.currentChannel = await this.fire.getChannel(id);
+    if (this.currentChannel === undefined) {
+      this.currentChannel = await this.fire.getDirectMessagesChannel(id);
+    }
   }
 
   async getMessagesFromChannel(id: string) {
@@ -332,4 +335,9 @@ export class MessageService {
     let updateChannel = new Channel(this.currentChannel);
     await this.fire.updateChannel(updateChannel);
   }
+
+  getDirectUser() {
+
+  }
+  
 }

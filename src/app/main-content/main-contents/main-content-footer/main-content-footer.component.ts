@@ -176,45 +176,50 @@ export class MainContentFooterComponent {
   }
 
   tagUser(user: string) {
-    if (this.mainChat){
-    const textArea = this.textAreaInput.nativeElement;
-    const startPos = textArea.selectionStart;
-    const endPos = textArea.selectionEnd;
+    if (this.mainChat) {
+      const textArea = this.textAreaInput.nativeElement;
+      const startPos = textArea.selectionStart;
+      const endPos = textArea.selectionEnd;
 
-    const textBeforeCursor = this.textAreaContent.substring(0, startPos);
-    const textAfterCursor = this.textAreaContent.substring(endPos);
+      const textBeforeCursor = this.textAreaContent.substring(0, startPos);
+      const textAfterCursor = this.textAreaContent.substring(endPos);
 
-    this.textAreaContent = textBeforeCursor + user + ' ' + textAfterCursor;
+      this.textAreaContent = textBeforeCursor + user + ' ' + textAfterCursor;
 
-    this.chatService.mention = false;
-    this.chatService.threadMention = false;
+      this.chatService.mention = false;
+      this.chatService.threadMention = false;
 
-    setTimeout(() => {
-      textArea.focus();
-      textArea.setSelectionRange(
-        startPos + user.length + 1,
-        startPos + user.length + 1
-      );
-    });} else {
+      setTimeout(() => {
+        textArea.focus();
+        textArea.setSelectionRange(
+          startPos + user.length + 1,
+          startPos + user.length + 1
+        );
+      });
+    } else {
       const textArea = this.textThreadAreaInput.nativeElement;
-    const startPos = textArea.selectionStart;
-    const endPos = textArea.selectionEnd;
+      const startPos = textArea.selectionStart;
+      const endPos = textArea.selectionEnd;
 
-    const textBeforeCursor = this.textAreaThreadContent.substring(0, startPos);
-    const textAfterCursor = this.textAreaThreadContent.substring(endPos);
-
-    this.textAreaThreadContent = textBeforeCursor + user + ' ' + textAfterCursor;
-
-    this.chatService.mention = false;
-    this.chatService.threadMention = false;
-
-    setTimeout(() => {
-      textArea.focus();
-      textArea.setSelectionRange(
-        startPos + user.length + 1,
-        startPos + user.length + 1
+      const textBeforeCursor = this.textAreaThreadContent.substring(
+        0,
+        startPos
       );
-    });
+      const textAfterCursor = this.textAreaThreadContent.substring(endPos);
+
+      this.textAreaThreadContent =
+        textBeforeCursor + user + ' ' + textAfterCursor;
+
+      this.chatService.mention = false;
+      this.chatService.threadMention = false;
+
+      setTimeout(() => {
+        textArea.focus();
+        textArea.setSelectionRange(
+          startPos + user.length + 1,
+          startPos + user.length + 1
+        );
+      });
     }
   }
 
@@ -292,9 +297,28 @@ export class MainContentFooterComponent {
   }
 
   getPlaceholderText(): string {
-    return this.mainChat
-      ? `Nachricht an # ${this.chatService.getChannelName()}`
+    if (
+      this.chatService.currentChannel.id != this.chatService.currentChannel.name
+    ) {
+      return this.mainChat
+        ? `Nachricht an # ${this.chatService.getChannelName()}`
+        : 'Antworten...';
+    } else {
+      return this.mainChat
+      ? `Nachricht an ${this.getDirectMessageUser().name}`
       : 'Antworten...';
+    }
+  }
+  getDirectMessageUser(){
+    let directUserId = this.chatService.currentChannel.users.filter((user: any) => user !== this.chatService.currentUser);    
+    if (directUserId.length === 0 && this.chatService.currentChannel.users.length === 2) {
+      directUserId.push(this.chatService.currentChannel.users[0])
+    } 
+    let directUser = this.users.getUserFromId(directUserId[0])
+    if (!directUser) {
+      return 'User not found'
+    }
+    return directUser
   }
 
   getFilesId() {
@@ -339,7 +363,7 @@ export class MainContentFooterComponent {
       this.textAreaContent = '';
       this.chatService.saveAndAddNewMessage(message);
     } else {
-      debugger
+      debugger;
       let message = this.chatService.setMessage(this.textAreaThreadContent);
       message.files = fileIdList;
       this.textAreaThreadContent = '';

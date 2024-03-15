@@ -1,3 +1,21 @@
+.direct-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  font-family: Nunito;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 33px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.direct-photo {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  padding: 4px 8px;
+}
 .header {
   display: flex;
   flex-direction: row;
@@ -197,7 +215,7 @@
           display: flex;
           flex-direction: row;
           align-items: center;
-          &:hover{
+          &:hover {
             cursor: pointer;
           }
           .user-select-pic {
