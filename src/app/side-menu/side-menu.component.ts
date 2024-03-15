@@ -13,4 +13,10 @@ import { DirectMessageViewComponent } from './direct-message-view/direct-message
   styleUrl: './side-menu.component.scss'
 })
 export class SideMenuComponent {
+
+  menuOpen = true;
+
+  toggle(){
+this.menuOpen = !this.menuOpen;
+  }
 }

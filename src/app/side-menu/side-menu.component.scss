@@ -27,7 +27,62 @@
     overflow: scroll;
     scrollbar-width: none;
 }
+
 //hide the scrollbar still it is scrollable
 ::-webkit-scrollbar {
     width: 0px;
 }
+
+.slide-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: calc(100vh / 2 + 100px);
+    left: -150px;
+    rotate: 270deg;
+    width: 350px;
+    height: 60px;
+    border-radius: 0px 0px 30px 30px;
+    background-color: white;
+    box-shadow: -4px 4px 7px 0px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+
+    &:hover {
+        color: #535AF1;
+
+        span {
+            font-weight: 700 !important;
+        }
+    }
+
+    span {
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .icon {
+        margin-left: 15px;
+        width: 32px;
+        height: 32px;
+        background-image: url(../../assets/img/slide.svg);
+        background-position: center;
+        background-size: contain;
+        transition: all 125ms ease-in-out;
+
+    }
+
+    .in {
+        rotate: -90deg;
+    }
+
+    .out {
+        rotate: 90deg;
+    }
+}
+
+.slide-button:hover .icon {
+    background-image: url(../../assets/img/slide_hover.svg) !important;
+}
+
+
