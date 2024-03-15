@@ -157,7 +157,7 @@ export class MainContentHeaderComponent {
   getUserStatus(userId: string) {
     let currentUser = this.users.getUserFromId(userId);
 
-    let user = this.users.users.find(
+    let user = this.users.allUsers.find(
       (u: { email: string }) => u.email === currentUser.email
     );
     return user.status;
