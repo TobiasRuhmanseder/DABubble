@@ -11,6 +11,7 @@ import {
   collection,
   doc,
   getDoc,
+  query,
   updateDoc,
 } from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
@@ -81,6 +82,16 @@ export class FirebaseService implements OnDestroy {
         this.channels.push(this.idToChannel(element.data(), element.id));
       });
     });
+  }
+
+  async getAllChannels() {
+    const q = query(collection(this.firestore, 'channels'));
+    let channels: any[] = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      channels.push(doc.data());
+    });
+    return channels
   }
 
   updateMessage(channelId: string, messageId: string, msg: Message) {
@@ -171,26 +182,32 @@ export class FirebaseService implements OnDestroy {
     return docSnap.data() as Channel;
   }
 
-  async getDirectMessagesChannel(id: string){
+  async getDirectMessagesChannel(id: string) {
     let docSnap = await getDoc(this.getDocRef('direct_messages', id));
     let channelData = docSnap.data();
-    
-    if (channelData) {
-        // ID hinzufügen und Namen ändern
-        const channel: Channel = {
-          id: id, 
-          name: id,
-          description: '',
-          creator: '',
-          users: channelData['users'],
-          toJSON: function (): { id: string; name: string; description: string; creator: string; users: string[]; } {
-            throw new Error('Function not implemented.');
-          }
-        };
 
-        return channel;
+    if (channelData) {
+      // ID hinzufügen und Namen ändern
+      const channel: Channel = {
+        id: id,
+        name: id,
+        description: '',
+        creator: '',
+        users: channelData['users'],
+        toJSON: function (): {
+          id: string;
+          name: string;
+          description: string;
+          creator: string;
+          users: string[];
+        } {
+          throw new Error('Function not implemented.');
+        },
+      };
+
+      return channel;
     } else {
-        return null; // Oder eine entsprechende Behandlung für den Fall, dass keine Daten vorhanden sind
+      return null; // Oder eine entsprechende Behandlung für den Fall, dass keine Daten vorhanden sind
     }
   }
 

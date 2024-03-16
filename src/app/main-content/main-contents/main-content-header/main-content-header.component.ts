@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MessageService } from '../../../../services/message.service';
 import { CommonModule } from '@angular/common';
 import { DialogUserInfoComponent } from '../../private-chat/dialog-user-info/dialog-user-info.component';
@@ -8,6 +8,9 @@ import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { UsersService } from '../../../../services/users.service';
 import { UserPicComponent } from '../../../user-pic/user-pic.component';
+import { FirebaseService } from '../../../../services/firebase.service';
+import { Router } from '@angular/router';
+import { DirectMessagesService } from '../../../../services/direct-messages.service';
 
 @Component({
   selector: 'app-main-content-header',
@@ -23,12 +26,57 @@ export class MainContentHeaderComponent {
   inputAddUser: string = '';
   selectedUser: any;
   addSelectUser: boolean = false;
+  searchInput: string = '';
+  searching: any[] = [];
+  router: Router = inject(Router);
+  diMeService: DirectMessagesService = inject(DirectMessagesService);
   constructor(
     public chatService: MessageService,
     public dialog: MatDialog,
     public channelDetails: MatDialog,
-    public users: UsersService
+    public users: UsersService,
+    public fire: FirebaseService
   ) {}
+
+  async chooseId(userUid:string) {
+    if (userUid != undefined) {
+      let directMessageDocId = await this.diMeService.getDocIdFromTheDirectMessaging(userUid);
+      this.router.navigateByUrl('/home/' + directMessageDocId);
+    }
+  }
+
+  chooseChannel(id:string) {
+    this.router.navigateByUrl('/home/' + id);
+  }
+
+  async search() {
+    if (this.searchInput.includes('#')) {
+      this.searching = await this.fire.getAllChannels();
+      const filteredChannels = this.searching.filter((channel) =>
+        channel.name
+          .toLowerCase()
+          .includes(this.searchInput.toLowerCase().replace('#', ''))
+      );
+      this.searching = filteredChannels;
+      return;
+    }
+    if (this.searchInput.includes('@')) {
+      this.searching = this.users.allUsers;
+      const filteredUsers = this.searching.filter(
+        (user) =>
+          user.name
+            .toLowerCase()
+            .includes(this.searchInput.toLowerCase().replace('@', '')) ||
+          user.email
+            .toLowerCase()
+            .includes(this.searchInput.toLowerCase().replace('@', ''))
+      );
+      this.searching = filteredUsers;
+      return;
+    }
+    this.searching = [];
+  }
+
   filterUserList() {
     let allUserList = this.users.users;
     let list = allUserList.filter((user: { id: any }) => {
@@ -167,7 +215,10 @@ export class MainContentHeaderComponent {
     let directUserId = this.chatService.currentChannel.users.filter(
       (user: any) => user !== this.chatService.currentUser
     );
-    if (directUserId.length === 0 && this.chatService.currentChannel.users.length === 2) {
+    if (
+      directUserId.length === 0 &&
+      this.chatService.currentChannel.users.length === 2
+    ) {
       directUserId.push(this.chatService.currentChannel.users[0]);
     }
     let directUser = this.users.getUserFromId(directUserId[0]);
@@ -184,6 +235,4 @@ export class MainContentHeaderComponent {
     }
     return user.name;
   }
-
-  
 }

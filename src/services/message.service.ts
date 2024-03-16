@@ -309,7 +309,7 @@ export class MessageService {
   }
 
   getChannelName() {
-    if (this.currentChannel === undefined) {
+    if (this.currentChannel === undefined || this.currentChannel === null) {
       return '';
     }
     return this.currentChannel.name;

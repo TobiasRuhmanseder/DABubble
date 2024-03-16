@@ -1,9 +1,33 @@
 <div class="header-search" *ngIf="chatService.currentChannel === undefined">
-  <div class="search-title">
-    Neue Nachricht
-  </div>
-  <div>
-    <input class="search-input" type="text">
+  <div class="search-title">Neue Nachricht</div>
+  <div style="position: realtive">
+    <input
+      class="search-input"
+      [(ngModel)]="searchInput"
+      (input)="search()"
+      type="text"
+      placeholder="An: #channel, @jemand oder E-Mail addresse"
+    />
+    <div *ngIf="searchInput.includes('#')" class="search-result-container">
+      <div class="search-inbox">
+        <div *ngFor="let channel of searching" class="user" (click)="chooseChannel(channel.id)">
+          {{ channel.name }}
+        </div>
+      </div>
+    </div>
+    <div *ngIf="searchInput.includes('@')" class="search-result-container">
+      <div class="search-inbox">
+        <div *ngFor="let user of searching" class="user" (click)="chooseId(user.id)">
+          <app-user-pic
+            class="user-pic"
+            [status]="true"
+            [online]="user.status"
+            userImageName="{{ user.photoURL }}"
+          ></app-user-pic>
+          <div>{{ user.name }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div
@@ -15,11 +39,12 @@
 >
   <div class="direct-nav">
     <div class="direct-photo">
-    <app-user-pic
-      [userImageName]="getDirectMessageUser().photoURL"
-      [status]="true"
-      [online]="getDirectMessageUser().status"
-    ></app-user-pic></div>
+      <app-user-pic
+        [userImageName]="getDirectMessageUser().photoURL"
+        [status]="true"
+        [online]="getDirectMessageUser().status"
+      ></app-user-pic>
+    </div>
     {{ getDirectUserName() }}
   </div>
 </div>
