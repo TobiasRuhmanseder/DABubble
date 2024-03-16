@@ -24,8 +24,8 @@ export class MainContentHeaderComponent {
   addUserDialog: boolean = false;
   userDialog: boolean = false;
   inputAddUser: string = '';
-  selectedUser: any;
-  addSelectUser: boolean = false;
+  addUserList: any[] = [];
+  selectedUser: any[] = [];
   searchInput: string = '';
   searching: any[] = [];
   router: Router = inject(Router);
@@ -38,14 +38,15 @@ export class MainContentHeaderComponent {
     public fire: FirebaseService
   ) {}
 
-  async chooseId(userUid:string) {
+  async chooseId(userUid: string) {
     if (userUid != undefined) {
-      let directMessageDocId = await this.diMeService.getDocIdFromTheDirectMessaging(userUid);
+      let directMessageDocId =
+        await this.diMeService.getDocIdFromTheDirectMessaging(userUid);
       this.router.navigateByUrl('/home/' + directMessageDocId);
     }
   }
 
-  chooseChannel(id:string) {
+  chooseChannel(id: string) {
     this.router.navigateByUrl('/home/' + id);
   }
 
@@ -85,37 +86,42 @@ export class MainContentHeaderComponent {
     let filterList = list.filter((user: { name: string }) => {
       return user.name.toLowerCase().includes(this.inputAddUser.toLowerCase());
     });
-    return filterList;
-  }
-  checkUserExists() {
-    if (!this.addSelectUser) {
-      return !this.users.users.some(
-        (user: { name: string }) =>
-          user.name.toLowerCase() === this.inputAddUser.toLowerCase()
-      );
-    }
-    return false;
+    this.addUserList = filterList;
   }
 
   selectUser(user: any) {
-    this.selectedUser = user;
-    this.inputAddUser = user.name;
-    this.addSelectUser = true;
+    this.selectedUser.push(user);
+    let index = this.addUserList.indexOf(user);
+    if (index > -1) {
+      this.addUserList.splice(index, 1);
+    }
+    this.inputAddUser = '';
   }
 
-  closeUser() {
+  closeUserDialog() {
     this.inputAddUser = '';
     this.selectedUser = [];
-    this.addSelectUser = false;
+  }
+
+  closeUser(user: any) {
+    let index = this.selectedUser.indexOf(user);
+    if (index > -1) {
+      this.selectedUser.splice(index, 1);
+    }
+    this.addUserList.push(user);
   }
 
   addUserToChannel() {
-    let user = this.users.users.find((user: { name: string }) => {
-      return user.name.toLowerCase() === this.inputAddUser.toLowerCase();
-    });
-    this.chatService.currentChannel.users.push(user.id);
+    for (let i = 0; i < this.selectedUser.length; i++) {
+      this.users.users.find((user: any) => {
+        if (user === this.selectedUser[i]) {
+          this.chatService.currentChannel.users.push(user.id);
+        }
+      });
+    }
     this.chatService.saveChannel();
-    this.closeUser();
+    this.closeUserDialog();
+    this.closeAllDialog();
   }
 
   openUserDetails(id: string) {
@@ -129,7 +135,6 @@ export class MainContentHeaderComponent {
     this.addUserDialog = false;
     this.userDialog = false;
     this.inputAddUser = '';
-    this.addSelectUser = false;
     this.selectedUser = [];
   }
 
@@ -137,6 +142,7 @@ export class MainContentHeaderComponent {
     if (this.chatService.currentChannel.users.length != 0) {
       this.showBg = !this.showBg;
       this.addUserDialog = true;
+      this.filterUserList();
     }
   }
 

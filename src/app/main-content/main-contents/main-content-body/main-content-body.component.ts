@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { MessageContentComponent } from './message-content/message-content.component';
 import { UsersService } from '../../../../services/users.service';
 import { MessageService } from '../../../../services/message.service';

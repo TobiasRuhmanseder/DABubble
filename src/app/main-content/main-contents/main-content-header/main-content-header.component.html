@@ -120,36 +120,35 @@
         <div class="sub-title"># {{ chatService.getChannelName() }}</div>
 
         <div class="dialog-input">
-          <div class="input" *ngIf="addSelectUser">
+          <div class="dialog-selected-user" *ngFor="let user of selectedUser">
             <div
               class="selectInputUser"
-              (click)="openUserDetails(selectedUser.id)"
+              (click)="openUserDetails(user.id)"
             >
               <img
                 class="user-select-pic"
-                src="{{ selectedUser.photoURL }}"
-              />{{ selectedUser.name }}
+                src="{{ user.photoURL }}"
+              />{{ user.name }}
               <img
                 class="close"
                 src=".\assets\icons\close.svg"
-                (click)="closeUser()"
+                (click)="closeUser(user)"
               />
             </div>
           </div>
           <input
-            *ngIf="!addSelectUser"
             class="input"
             type="text"
             placeholder="Name eingeben"
             [(ngModel)]="inputAddUser"
           />
-          <div *ngIf="!addSelectUser">
+          <div >
             <div
               class="choose-user"
-              *ngIf="inputAddUser.length > 0 && filterUserList().length > 0"
+              *ngIf="inputAddUser.length > 0 && addUserList.length > 0"
             >
               <div
-                *ngFor="let user of filterUserList()"
+                *ngFor="let user of addUserList"
                 class="user"
                 (click)="selectUser(user)"
               >
@@ -169,7 +168,7 @@
         <div class="dialog-button-container">
           <button
             class="add-button"
-            [disabled]="checkUserExists()"
+            [disabled]="this.selectedUser.length === 0"
             (click)="addUserToChannel()"
           >
             Hinzufügen
