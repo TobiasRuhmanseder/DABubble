@@ -335,9 +335,5 @@ export class MessageService {
     let updateChannel = new Channel(this.currentChannel);
     await this.fire.updateChannel(updateChannel);
   }
-
-  getDirectUser() {
-
-  }
   
 }

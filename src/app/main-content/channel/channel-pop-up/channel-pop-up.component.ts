@@ -37,6 +37,7 @@ channelData:any;
     @Inject(MAT_DIALOG_DATA) public data:any
   ) { 
     this.channelData = this.data.channel
+    console.log(this.channelData)
   }
 
   onNoClick(): void {

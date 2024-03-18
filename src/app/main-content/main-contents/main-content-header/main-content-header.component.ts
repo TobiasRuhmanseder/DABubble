@@ -36,7 +36,13 @@ export class MainContentHeaderComponent {
     public channelDetails: MatDialog,
     public users: UsersService,
     public fire: FirebaseService
-  ) {}
+  ) {
+    this.getAllChannels()
+  }
+
+  async getAllChannels(){
+    this.searching = await this.fire.getAllChannels();
+  }
 
   async chooseId(userUid: string) {
     if (userUid != undefined) {
@@ -52,7 +58,6 @@ export class MainContentHeaderComponent {
 
   async search() {
     if (this.searchInput.includes('#')) {
-      this.searching = await this.fire.getAllChannels();
       const filteredChannels = this.searching.filter((channel) =>
         channel.name
           .toLowerCase()
