@@ -18,11 +18,13 @@ import { IconHoverChangeImageComponent } from "../../../icon-hover-change-image/
 export class ChannelHeaderComponent {
 
 
-  constructor(public dialog: MatDialog, public chatService: MessageService) {
+  constructor( public chatService: MessageService,public channelDetails: MatDialog) {
 
   }
 
   openDialog() {
-    this.dialog.open(ChannelPopUpComponent, {});
+    this.channelDetails.open(ChannelPopUpComponent, {
+      data: { channel: this.chatService.currentChannel },
+    });
   }
 }
