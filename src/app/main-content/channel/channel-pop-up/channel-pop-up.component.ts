@@ -35,6 +35,7 @@ export class ChannelPopUpComponent {
   editName: boolean = false;
   editDescription: boolean = false;
   constructor(
+    private chatService: MessageService,
     private fire: FirebaseService,
     public users: UsersService,
     public dialogRef: MatDialogRef<ChannelPopUpComponent>,
@@ -66,11 +67,20 @@ export class ChannelPopUpComponent {
       this.channelData.description = this.channelDescriptionInput;
       this.editDescription = false;
     }
-
-    let newData = new Channel(this.channelData);
-    this.fire.updateChannel(newData);
+    this.saveAndUpdateChannel(this.channelData);
+  }
+  leaveChannel() {
+    this.channelData.users = this.channelData.users.filter(
+      (user: string ) => user !== this.chatService.currentUser
+    );
+    this.saveAndUpdateChannel(this.channelData);
+    this.onNoClick();
   }
 
+  saveAndUpdateChannel(channelData: Channel) {
+    let newData = new Channel(channelData);
+    this.fire.updateChannel(newData);
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
