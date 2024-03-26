@@ -28,6 +28,7 @@ export class MainContentHeaderComponent {
   selectedUser: any[] = [];
   searchInput: string = '';
   searching: any[] = [];
+  allChannels: any[] = [];
   router: Router = inject(Router);
   diMeService: DirectMessagesService = inject(DirectMessagesService);
   constructor(
@@ -41,7 +42,8 @@ export class MainContentHeaderComponent {
   }
 
   async getAllChannels(){
-    this.searching = await this.fire.getAllChannels();
+    this.allChannels = await this.fire.getAllChannels();
+    this.searching = this.allChannels;
   }
 
   async chooseId(userUid: string) {
@@ -58,6 +60,7 @@ export class MainContentHeaderComponent {
 
   async search() {
     if (this.searchInput.includes('#')) {
+      this.searching = this.allChannels;
       const filteredChannels = this.searching.filter((channel) =>
         channel.name
           .toLowerCase()
