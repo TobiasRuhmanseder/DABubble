@@ -7,7 +7,7 @@
     z-index: 3;
     overflow: hidden;
     animation: fadeOutContainer 1.5s ease-in-out forwards;
-    animation-delay: 2s;
+    animation-delay: 2.3s;
 
     .logo {
         position: absolute;
@@ -94,10 +94,12 @@
     @keyframes shrinkImg {
         from {
             width: 180px;
+            opacity: 1;
         }
 
         to {
             width: 70px;
+            opacity: 0;
         }
     }
 
@@ -116,7 +118,7 @@
 @media(max-width: 600px) {
     .animation-container {
         animation: fadeOutContainer 1s ease-in-out forwards;
-        animation-delay: 2s;
+        animation-delay: 2.3s;
 
         .logo {
             font-size: 36px;
@@ -156,10 +158,12 @@
 @keyframes shrinkImgMobile {
     from {
         width: 90px;
+        opacity: 1;
     }
 
     to {
         width: 70px;
+        opacity: 0;
     }
 }
 
