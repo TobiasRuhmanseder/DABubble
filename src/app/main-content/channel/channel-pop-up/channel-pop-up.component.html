@@ -11,22 +11,32 @@
     <div class="channel-name-container mb-16" >
         <div class="head">
             <span class="channel-name">Channel name</span>
-            <span class="edit">Bearbeiten</span>
+            <span class="edit" *ngIf="!editName" (click)="editChannel('name')">Bearbeiten</span>
+            <span class="edit" for="name" *ngIf="editName" (click)="saveEdit('name')">Speichern</span>
         </div>
     
-        <div class="name-container-title">
+        <div class="name-container-title" *ngIf="!editName" >
             # <span>{{channelData.name}}</span>
+        </div>
+
+        <div *ngIf="editName" >
+            # <input type="text" id="name" [(ngModel)]="channelNameInput">
         </div>
     </div>
     
     <div class="channel-name-container">
         <div class="head">
             <span class="channel-name">Channel description</span>
-            <span class="edit">Bearbeiten</span>
+            <span class="edit" *ngIf="!editDescription" (click)="editChannel('description')">Bearbeiten</span>
+            <span class="edit" *ngIf="editDescription" (click)="saveEdit('description')">Speichern</span>
         </div>
     
-        <div class="name-container-title">
+        <div class="name-container-title" *ngIf="!editDescription" >
             {{channelData.description}}
+        </div>
+
+        <div *ngIf="editDescription" >
+            <input type="text" #description [(ngModel)]="channelDescriptionInput">
         </div>
     
         <div class="seperator"></div>
