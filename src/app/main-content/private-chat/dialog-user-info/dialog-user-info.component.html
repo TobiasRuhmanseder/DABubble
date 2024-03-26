@@ -1,37 +1,67 @@
 <div class="headline-container" mat-dialog-title>
   <div>Profile</div>
-  <div class="close-btn" (click)="onNoClick()">Close</div>
+  <div class="close-btn close-button" (click)="onNoClick()"></div>
 </div>
 
 <div mat-dialog-content>
   <div class="content-container">
     <img class="user-img" src="{{ userData.photoURL }}" alt="" />
 
-    <div class="user-info-container">
-      <span class="name">{{ userData.name }}</span>
+    <div *ngIf="edit">
+      <div>
+        <div>Vollständiger Name</div>
+        <input type="text" [(ngModel)]="userNameInput">
+      </div>
+      <div>
+        <div>E-Mail-Adresse</div>
+        <input type="text" [(ngModel)]="userEmailInput" >
+      </div>
+      <div class="user-dialog-footer-container">
+        <button class="dialog-footer-btn" (click)="abort()">Abbrechen</button>
+        <button class="dialog-footer-btn" (click)="save()">Speichern</button>
+      </div>
+    </div>
+
+    <div class="user-info-container" *ngIf="!edit">
+      <div class="user-info-container-header">
+        <span class="name">{{ userData.name }}</span>
+        <div (click)="editUser()" *ngIf="editable">Bearbeiten</div>
+
+      </div>
       <div class="active-container">
-        <span class="point" [ngClass]="{ 'active': userData.status, 'disabled': !userData.status }"></span>
+        <span
+          class="point"
+          [ngClass]="{ active: userData.status, disabled: !userData.status }"
+        ></span>
         <span *ngIf="userData.status">Aktive</span>
         <span *ngIf="!userData.status">Abwesend</span>
-    </div>
-
-    <div class="user-info-container">
-      <div class="mail-headline-container">
-        <img src="assets/icons/mail.png" alt="" />
-        <span class="mail-headline">E-mail Adresse</span>
       </div>
-      <span class="mail" (click)="sendEmail(userData.email)">{{ userData.email }}</span>
+
+      <div class="user-info-container">
+        <div class="mail-headline-container">
+          <img src="assets/icons/mail.png" alt="" />
+          <span class="mail-headline">E-mail Adresse</span>
+        </div>
+        <span class="mail" (click)="sendEmail(userData.email)">{{
+          userData.email
+        }}</span>
+      </div>
     </div>
   </div>
-</div>
 
-<div mat-dialog-actions>
-  <div class="user-dialog-footer-container">
-    <button class="dialog-footer-btn" mat-button (click)="goToPrivateChannel()">
-      <div class="flex-container">
-        <img src="assets/icons/comment_white.png" alt="" />
-        <span>Nachricht</span>
-      </div>
-    </button>
+  <div mat-dialog-actions>
+
+    <div class="user-dialog-footer-container"  *ngIf="!edit">
+      <button
+        class="dialog-footer-btn"
+        mat-button
+        (click)="goToPrivateChannel(userData.id)"
+      >
+        <div class="flex-container">
+          <img src="assets/icons/comment_white.png" alt="" />
+          <span>Nachricht</span>
+        </div>
+      </button>
+    </div>
   </div>
 </div>

@@ -1,137 +1,136 @@
 ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
-    border-radius: 30px;
-    padding: 40px;
+  border-radius: 30px;
+  padding: 40px;
 }
 
 .headline-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    font-size: 24px;
-    font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  font-size: 24px;
+  font-weight: 700;
 
-    .close-btn{
-        position: absolute;
-        right: 0px;
-        background-color: aqua;
-        cursor: pointer;
-    }
+  .close-btn {
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
+  }
 }
 
-.content-container{
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  width: 420px;
+  margin-top: 40px;
+
+  .user-img {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+  }
+
+  .user-info-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    gap: 40px;
-    width: 420px;
-    margin-top: 40px;
+    align-items: flex-start;
+    width: 100%;
+    .user-info-container-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .name {
+      font-size: 32px;
+      font-weight: 700;
+    }
 
-    .user-img{
-        height: 200px;
-        width: 200px;
+    .active-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 5px;
+      color: green;
+      font-size: 20px;
+      font-weight: 400;
+
+      .point {
+        height: 16px;
+        width: 16px;
         border-radius: 50%;
+        background-color: green;
+      }
+      .active {
+        background-color: green;
+      }
+      .disabled {
+        background-color: gray;
+      }
     }
 
-    .user-info-container{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        width: 100%;
+    .mail-headline-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 20px;
 
-        .name{
-            font-size: 32px;
-            font-weight: 700;
-        }
-
-        .active-container{
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 5px;
-            color: green;
-            font-size: 20px;
-            font-weight: 400;
-
-            .point{
-                height: 16px;
-                width: 16px;
-                border-radius: 50%;
-                background-color: green;
-            }
-            .active{
-                background-color: green;
-            }
-            .disabled{
-                background-color: gray;
-            }
-        }
-
-        .mail-headline-container{
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 20px;
-
-            img{
-                height: 30px;
-                width: 30px;
-            }
-        }
-
-        .mail{
-            padding:0px 10px 0px 50px;
-            color: rgba(19, 129, 255, 1);
-            &:hover {
-                cursor: pointer;
-            }
-        }
+      img {
+        height: 30px;
+        width: 30px;
+      }
     }
 
-    .user-mail-container{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
+    .mail {
+      padding: 0px 10px 0px 50px;
+      color: rgba(19, 129, 255, 1);
+      &:hover {
+        cursor: pointer;
+      }
     }
-}
+  }
 
-.user-dialog-footer-container{
+  .user-mail-container {
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
-    align-items: center;
-    margin-top: 40px;
-
-    .dialog-footer-btn{
-        padding: 12px 25px 12px 25px;
-        border-radius: 50px;
-        font-size: 18px;
-        font-weight: 700;
-        background-color: rgba(68, 77, 242, 1);
-        color: rgba(255, 255, 255, 1) !important;
-        transition: ease-in-out 0.2s;
-
-        &:hover{
-            scale: 1.05;
-        }
-
-        .flex-container{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-
-            img{
-                height: 24px;
-                width: 24px;
-            }
-        }
-
-    }
+  }
 }
 
+.user-dialog-footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
 
+  .dialog-footer-btn {
+    padding: 12px 25px 12px 25px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 700;
+    background-color: rgba(68, 77, 242, 1);
+    color: rgba(255, 255, 255, 1) !important;
+    transition: ease-in-out 0.2s;
 
+    &:hover {
+      scale: 1.05;
+    }
 
+    .flex-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      img {
+        height: 24px;
+        width: 24px;
+      }
+    }
+  }
+}

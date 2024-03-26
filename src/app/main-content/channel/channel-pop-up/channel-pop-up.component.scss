@@ -11,8 +11,6 @@
   .close-btn {
     position: absolute;
     right: 24px;
-    background-color: aqua;
-    cursor: pointer;
   }
 }
 
@@ -20,14 +18,27 @@ input {
   outline: none;
   border: none;
   font-size: 18px;
+  width: 100%;
 }
-
-.channel-name-container {
+.channel-name-border {
   padding: 20px;
-  border-radius: 20px;
   border: 2px solid rgb(173, 176, 217);
-  width: 50vw;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+  &:focus-within {
+    border-color: #444df2;
+  }
 
+}
+.name-input{
+    margin-left: 20px;
+    width: calc(100% - 20px);
+}
+.channel-name-container {
+  min-width: 50vw;
+  width: auto;
+  transition: all 0.3s ease;
+  border-radius: 20px;
   .head {
     display: flex;
     justify-content: space-between;
@@ -83,6 +94,10 @@ input {
 
 .mb-16 {
   margin-bottom: 16px;
+}
+
+.px-20 {
+  padding: 20px;
 }
 
 ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {

@@ -2,13 +2,12 @@
     <div>
         # {{channelData.name}}
     </div>
-    <div class="close-btn" (click)="onNoClick()">
-        Close
+    <div class="close-btn close-button" (click)="onNoClick()">
     </div>
 </div>
 
 <div mat-dialog-content>
-    <div class="channel-name-container mb-16" >
+    <div class="channel-name-container  mb-16" [ngClass]="{'channel-name-border': !editName}">
         <div class="head">
             <span class="channel-name">Channel name</span>
             <span class="edit" *ngIf="!editName" (click)="editChannel('name')">Bearbeiten</span>
@@ -16,15 +15,15 @@
         </div>
     
         <div class="name-container-title" *ngIf="!editName" >
-            # <span>{{channelData.name}}</span>
+             # <span>{{channelData.name}}</span>
         </div>
 
-        <div *ngIf="editName" >
-            # <input type="text" id="name" [(ngModel)]="channelNameInput">
+        <div *ngIf="editName" class="px-20 channel-name-border" style="position: relative;" >
+            <span style="position: absolute;">#</span> <input type="text" id="name" class="name-input" [(ngModel)]="channelNameInput">
         </div>
     </div>
     
-    <div class="channel-name-container">
+    <div class="channel-name-container " [ngClass]="{'channel-name-border': !editDescription}">
         <div class="head">
             <span class="channel-name">Channel description</span>
             <span class="edit" *ngIf="!editDescription" (click)="editChannel('description')">Bearbeiten</span>
@@ -35,7 +34,7 @@
             {{channelData.description}}
         </div>
 
-        <div *ngIf="editDescription" >
+        <div *ngIf="editDescription"  class="px-20 channel-name-border" >
             <input type="text" #description [(ngModel)]="channelDescriptionInput">
         </div>
     
