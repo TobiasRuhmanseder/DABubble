@@ -78,6 +78,10 @@ input {
     color: #ffff;
     border: 1px solid transparent;
   }
+  &:disabled {
+    background-color: #ccc;
+    color: #999;
+  }
 }
 .content-container {
   display: flex;

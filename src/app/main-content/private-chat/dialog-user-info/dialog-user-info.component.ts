@@ -5,7 +5,13 @@ import { UsersService } from '../../../../services/users.service';
 import { CommonModule } from '@angular/common';
 import { DirectMessagesService } from '../../../../services/direct-messages.service';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MessageService } from '../../../../services/message.service';
 import { User } from '../../../../models/user.class';
 import { FirebaseService } from '../../../../services/firebase.service';
@@ -13,7 +19,7 @@ import { FirebaseService } from '../../../../services/firebase.service';
 @Component({
   selector: 'app-dialog-user-info',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, FormsModule],
+  imports: [CommonModule, MatButtonModule, FormsModule,ReactiveFormsModule],
   templateUrl: './dialog-user-info.component.html',
   styleUrl: './dialog-user-info.component.scss',
 })
@@ -39,7 +45,13 @@ export class DialogUserInfoComponent {
       this.editable = false;
     }
   }
-
+  profileForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^[a-zA-ZäöüÄÖÜß]+ [a-zA-ZäöüÄÖÜß]+$/),
+    ]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
   editUser() {
     this.edit = true;
     this.userNameInput = this.userData.name;
@@ -53,14 +65,15 @@ export class DialogUserInfoComponent {
     this.edit = false;
   }
   save() {
-    
-    let editData = this.userData;
-    editData.name = this.userNameInput;
-    editData.email = this.userEmailInput;
-    let newUserData = new User(editData);
-    newUserData.id = this.userData.id;
-    this.fire.updateUser(newUserData);
-    this.abort();
+    if (this.profileForm.valid) {
+      let editData = this.userData;
+      editData.name = this.userNameInput;
+      editData.email = this.userEmailInput;
+      let newUserData = new User(editData);
+      newUserData.id = this.userData.id;
+      this.fire.updateUser(newUserData);
+      this.abort();
+    }
   }
   async goToPrivateChannel(userId: string) {
     if (userId != undefined) {

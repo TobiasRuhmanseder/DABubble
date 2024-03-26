@@ -8,25 +8,24 @@
   <div class="content-container">
     <img class="user-img" src="{{ userData.photoURL }}" alt="" />
 
-    <div class="user-info-container"  *ngIf="edit">
+    <div class="user-info-container" *ngIf="edit" [formGroup]="profileForm">
       <div class="edit-user">
         <div class="edit-container">
           <img src=".\assets\icons\user_icon.svg" />
           <div>Vollständiger Name</div>
         </div>
-
-        <input type="text" class="input-border" [(ngModel)]="userNameInput" />
+        <input type="text" class="input-border" [(ngModel)]="userNameInput" formControlName="name" />
       </div>
       <div class="edit-user">
         <div class="edit-container">
           <img src=".\assets\icons\mail_icon.svg" />
           <div>E-Mail-Adresse</div>
         </div>
-        <input type="text" class="input-border" [(ngModel)]="userEmailInput" />
+        <input type="text" class="input-border" [(ngModel)]="userEmailInput" formControlName="email" />
       </div>
       <div class="user-dialog-footer-container">
         <button class="abort btn" (click)="abort()">Abbrechen</button>
-        <button class="save btn" (click)="save()">Speichern</button>
+        <button class="save btn" (click)="save()" [disabled]="!profileForm.valid">Speichern</button>
       </div>
     </div>
 
