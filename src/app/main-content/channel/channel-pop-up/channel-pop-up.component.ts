@@ -44,7 +44,6 @@ export class ChannelPopUpComponent {
     this.channelData = this.data.channel;
     this.channelNameInput = this.channelData.name;
     this.channelDescriptionInput = this.channelData.description;
-    console.log(this.channelData);
   }
 
   editChannel(property: string) {

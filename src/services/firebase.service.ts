@@ -91,7 +91,7 @@ export class FirebaseService implements OnDestroy {
     querySnapshot.forEach((doc) => {
       channels.push(doc.data());
     });
-    return channels
+    return channels;
   }
 
   updateMessage(channelId: string, messageId: string, msg: Message) {
@@ -216,6 +216,10 @@ export class FirebaseService implements OnDestroy {
       doc(this.firestore, 'channels', channelData.id),
       channelData.toJSON()
     );
+  }
+
+  updateUser(user: any) {
+    return setDoc(doc(this.firestore, 'users', user.id), user.toJSON());
   }
 
   // Add the id for the local Array Channels by onSnapshot

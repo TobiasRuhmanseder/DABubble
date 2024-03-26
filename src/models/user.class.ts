@@ -4,7 +4,6 @@ export class User {
   photoURL: string;
   email: string;
   status: boolean;
-  directmsg: any[];
 
   constructor(obj: any, id?: string) {
     this.id = id ? id : '';
@@ -12,15 +11,14 @@ export class User {
     this.photoURL = obj ? obj.photoURL : '';
     this.email = obj ? obj.email : '';
     this.status = obj ? obj.status : false;
-    this.directmsg = obj ? obj.directmsg : [];
   }
   public toJSON() {
     return {
+      id: this.id,
       name: this.name,
       photoURL: this.photoURL,
       email: this.email,
       status: this.status,
-      directmsg: this.directmsg,
     };
   }
 }

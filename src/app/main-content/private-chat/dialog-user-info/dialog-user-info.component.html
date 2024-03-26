@@ -1,5 +1,6 @@
 <div class="headline-container" mat-dialog-title>
-  <div>Profile</div>
+  <div *ngIf="!edit">Profile</div>
+  <div *ngIf="edit">Dein Profil bearbeiten</div>
   <div class="close-btn close-button" (click)="onNoClick()"></div>
 </div>
 
@@ -7,26 +8,32 @@
   <div class="content-container">
     <img class="user-img" src="{{ userData.photoURL }}" alt="" />
 
-    <div *ngIf="edit">
-      <div>
-        <div>Vollständiger Name</div>
-        <input type="text" [(ngModel)]="userNameInput">
+    <div class="user-info-container"  *ngIf="edit">
+      <div class="edit-user">
+        <div class="edit-container">
+          <img src=".\assets\icons\user_icon.svg" />
+          <div>Vollständiger Name</div>
+        </div>
+
+        <input type="text" class="input-border" [(ngModel)]="userNameInput" />
       </div>
-      <div>
-        <div>E-Mail-Adresse</div>
-        <input type="text" [(ngModel)]="userEmailInput" >
+      <div class="edit-user">
+        <div class="edit-container">
+          <img src=".\assets\icons\mail_icon.svg" />
+          <div>E-Mail-Adresse</div>
+        </div>
+        <input type="text" class="input-border" [(ngModel)]="userEmailInput" />
       </div>
       <div class="user-dialog-footer-container">
-        <button class="dialog-footer-btn" (click)="abort()">Abbrechen</button>
-        <button class="dialog-footer-btn" (click)="save()">Speichern</button>
+        <button class="abort btn" (click)="abort()">Abbrechen</button>
+        <button class="save btn" (click)="save()">Speichern</button>
       </div>
     </div>
 
     <div class="user-info-container" *ngIf="!edit">
       <div class="user-info-container-header">
         <span class="name">{{ userData.name }}</span>
-        <div (click)="editUser()" *ngIf="editable">Bearbeiten</div>
-
+        <div (click)="editUser()" class="edit" *ngIf="editable">Bearbeiten</div>
       </div>
       <div class="active-container">
         <span
@@ -50,8 +57,7 @@
   </div>
 
   <div mat-dialog-actions>
-
-    <div class="user-dialog-footer-container"  *ngIf="!edit">
+    <div class="user-dialog-footer-container" *ngIf="!edit">
       <button
         class="dialog-footer-btn"
         mat-button

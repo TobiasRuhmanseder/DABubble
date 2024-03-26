@@ -28,11 +28,10 @@ input {
   &:focus-within {
     border-color: #444df2;
   }
-
 }
-.name-input{
-    margin-left: 20px;
-    width: calc(100% - 20px);
+.name-input {
+  margin-left: 20px;
+  width: calc(100% - 20px);
 }
 .channel-name-container {
   min-width: 50vw;
@@ -46,8 +45,17 @@ input {
     margin-bottom: 20px;
 
     .edit {
-      color: blue;
+      color: #535af1;
+      font-family: Nunito;
+      font-size: 18px;
+      font-weight: 500;
       cursor: pointer;
+      transition: all 0.3s ease;
+      &:hover {
+        font-weight: 800;
+        color: #444df2;
+        transition: all 0.3s ease;
+      }
     }
   }
 

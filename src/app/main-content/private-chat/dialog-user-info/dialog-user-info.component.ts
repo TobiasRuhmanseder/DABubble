@@ -7,6 +7,8 @@ import { DirectMessagesService } from '../../../../services/direct-messages.serv
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from '../../../../services/message.service';
+import { User } from '../../../../models/user.class';
+import { FirebaseService } from '../../../../services/firebase.service';
 
 @Component({
   selector: 'app-dialog-user-info',
@@ -26,6 +28,7 @@ export class DialogUserInfoComponent {
   constructor(
     public users: UsersService,
     public dialogRef: MatDialogRef<DialogUserInfoComponent>,
+    public fire: FirebaseService,
     private chatService: MessageService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -51,8 +54,13 @@ export class DialogUserInfoComponent {
   }
   save() {
     
+    let editData = this.userData;
+    editData.name = this.userNameInput;
+    editData.email = this.userEmailInput;
+    let newUserData = new User(editData);
+    newUserData.id = this.userData.id;
+    this.fire.updateUser(newUserData);
     this.abort();
-
   }
   async goToPrivateChannel(userId: string) {
     if (userId != undefined) {

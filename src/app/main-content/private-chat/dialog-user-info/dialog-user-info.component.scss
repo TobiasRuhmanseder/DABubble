@@ -17,7 +17,68 @@
     cursor: pointer;
   }
 }
-
+input {
+  outline: none;
+  border: none;
+  font-size: 18px;
+  width: 100%;
+}
+.input-border {
+  padding: 20px;
+  border: 2px solid rgb(173, 176, 217);
+  transition: all 0.3s ease;
+  border-radius: 30px;
+  width: auto;
+  &:focus-within {
+    border-color: #444df2;
+  }
+}
+.edit {
+  color: #535af1;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.125s ease;
+  &:hover {
+    font-weight: 800;
+    color: #444df2;
+    transition: all 0.125s ease;
+  }
+}
+.edit-user {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+.edit-container {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+.abort {
+  border: 1px solid #797ef3;
+  color: #444df2;
+}
+.save {
+  background-color: #444df2;
+  color: #ffff;
+  border: 1px solid transparent;
+}
+.btn{
+  border-radius: 50px;
+  padding: 12px 25px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  &:hover{
+    background-color: #797ef3;
+    color: #ffff;
+    border: 1px solid transparent;
+  }
+}
 .content-container {
   display: flex;
   flex-direction: column;
@@ -39,6 +100,7 @@
     justify-content: center;
     align-items: flex-start;
     width: 100%;
+    gap: 15px;
     .user-info-container-header {
       display: flex;
       flex-direction: row;
@@ -104,9 +166,10 @@
 
 .user-dialog-footer-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   margin-top: 40px;
+  width: 100%;
 
   .dialog-footer-btn {
     padding: 12px 25px 12px 25px;
