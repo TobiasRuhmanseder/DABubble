@@ -108,7 +108,7 @@
         </div>
       </div>
     </div>
-    <div class="header-profil-position">
+    <div class="header-profil-position" *ngIf="this.chatService.currentChannel.users.length != 0">
       <div>
         <div class="header-add-icon icon" (click)="addUser()"></div>
       </div>

@@ -38,10 +38,10 @@ export class MainContentHeaderComponent {
     public users: UsersService,
     public fire: FirebaseService
   ) {
-    this.getAllChannels()
+    this.getAllChannels();
   }
 
-  async getAllChannels(){
+  async getAllChannels() {
     this.allChannels = await this.fire.getAllChannels();
     this.searching = this.allChannels;
   }
@@ -218,11 +218,11 @@ export class MainContentHeaderComponent {
 
   getUserStatus(userId: string) {
     let currentUser = this.users.getUserFromId(userId);
-
-    let user = this.users.allUsers.find(
-      (u: { email: string }) => u.email === currentUser.email
-    );
-    return user.status;
+    try {
+      return currentUser.status;
+    } catch (e) {
+      console.log('Dont found Email with ID:', userId);
+    }
   }
 
   getDirectMessageUser() {
