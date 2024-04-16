@@ -8,14 +8,14 @@
       type="text"
       placeholder="An: #channel, @jemand oder E-Mail addresse"
     />
-    <div *ngIf="searchInput.includes('#')" class="search-result-container">
+    <div *ngIf="searchInput.includes('#') && searching.length > 0" class="search-result-container">
       <div class="search-inbox">
         <div *ngFor="let channel of searching" class="user" (click)="chooseChannel(channel.id)">
-          {{ channel.name }}
+          # {{ channel.name }}
         </div>
       </div>
     </div>
-    <div *ngIf="searchInput.includes('@')" class="search-result-container">
+    <div *ngIf="searchInput.includes('@') && searching.length > 0" class="search-result-container">
       <div class="search-inbox">
         <div *ngFor="let user of searching" class="user" (click)="chooseId(user.id)">
           <app-user-pic

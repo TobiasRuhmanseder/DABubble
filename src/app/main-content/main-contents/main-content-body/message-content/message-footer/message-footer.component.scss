@@ -5,7 +5,9 @@
 .message-nav-footer {
     display: flex;
     align-items: center;
-    gap: 20px;
+    column-gap: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
   .message-answer {
     color: #535af1;
