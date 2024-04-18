@@ -1,0 +1,48 @@
+.background {
+    position: absolute;
+    z-index: 98;
+    height: 100vh;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.menu {
+    position: absolute;
+    z-index: 99;
+    right: 50px;
+    top: 105px;
+    background-color: white;
+    border-radius: 30px 0px 30px 30px;
+    width: 250px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 20px;
+}
+
+.button {
+    width: max-content;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    transition: all 125ms ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        transition: all 125ms ease-in-out;
+        background-color: #ECEEFE;
+        border-radius: 12.25px;
+    }
+
+    &:active {
+        color: #535AF1;
+        font-weight: 700;
+    }
+}
