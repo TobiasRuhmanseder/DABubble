@@ -13,14 +13,14 @@
     top: 105px;
     background-color: white;
     border-radius: 30px 0px 30px 30px;
-    width: 250px;
-    height: 150px;
+    width: 280px;
+    height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 20px;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .button {
@@ -31,7 +31,8 @@
     padding-right: 20px;
     display: flex;
     align-items: center;
-    font-size: 18px;
+    font-size: 24px;
+    font-weight: 600;
     transition: all 125ms ease-in-out;
     cursor: pointer;
 

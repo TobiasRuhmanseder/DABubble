@@ -1,5 +1,7 @@
 <div class="background" (click)="dropDownMenuClosed.emit(false)"></div>
 <div class="menu">
-    <div class="button">Profil</div>
+    <div class="button" (click)="userProfileOpen = true">Profil</div>
     <div class="button" (click)="signOutUser()">Log out</div>
 </div>
+<app-current-user-profile *ngIf="userProfileOpen"
+    (currentUserProfileClosed)="userProfileOpen = $event"></app-current-user-profile>
