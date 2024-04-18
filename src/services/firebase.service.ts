@@ -172,7 +172,9 @@ export class FirebaseService implements OnDestroy {
     let userList: any[] = [];
     let querySnapshot = await getDocs(this.getCollRef('users'));
     querySnapshot.forEach((doc) => {
-      userList.push({ id: doc.id, ...doc.data() });
+      let userData = doc.data();
+      userData['id'] = doc.id;
+      userList.push(userData);
     });
     return userList;
   }
