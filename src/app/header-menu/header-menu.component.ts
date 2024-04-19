@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { UserPicComponent } from '../user-pic/user-pic.component';
 import { CurrentUserService } from '../../services/current-user.service';
 import { ActiveUser } from '../../interfaces/active-user.interface';

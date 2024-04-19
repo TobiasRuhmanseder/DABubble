@@ -1,4 +1,19 @@
 <div class="background" (click)="currentUserProfileClosed.emit(false)"></div>
 <div class="dialog">
-    
+    <div class="headline">
+        <span>Profil</span>
+        <div class="close-button" (click)="currentUserProfileClosed.emit(false)"></div>
+    </div>
+    <div class="user-pic-container">
+        <app-user-pic class="user-pic-size" [status]="false" [online]="false"
+            [userImageName]="this.activeUser.photoURL"></app-user-pic>
+    </div>
+    <div class="user-name-container">
+        <span class="user-name">{{this.activeUser.displayName}}</span>
+        <span class="edit-button">Bearbeiten</span>
+    </div>
+    <div class="active-container">
+        <div class="circle"></div>
+        <span>Aktive</span>
+    </div>
 </div>

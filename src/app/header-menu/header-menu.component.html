@@ -15,5 +15,6 @@
         <img class="arrow-down" (click)="drownDownMenuOpen = true" src="../../assets/img/arrow_down.svg" alt="">
     </div>
     <app-current-user-dropdown-menu *ngIf="drownDownMenuOpen" class="dropdown-menu"
-        (dropDownMenuClosed)="drownDownMenuOpen = $event"></app-current-user-dropdown-menu> 
+        (dropDownMenuClosed)="drownDownMenuOpen = $event"
+        [activeUser]="this.activeUser"></app-current-user-dropdown-menu>
 </div>

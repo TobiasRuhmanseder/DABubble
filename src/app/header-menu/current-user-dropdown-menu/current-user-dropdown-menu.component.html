@@ -3,5 +3,5 @@
     <div class="button" (click)="userProfileOpen = true">Profil</div>
     <div class="button" (click)="signOutUser()">Log out</div>
 </div>
-<app-current-user-profile *ngIf="userProfileOpen"
-    (currentUserProfileClosed)="userProfileOpen = $event"></app-current-user-profile>
+<app-current-user-profile *ngIf="userProfileOpen" (currentUserProfileClosed)="userProfileOpen = $event"
+    [activeUser]="this.activeUser"></app-current-user-profile>
