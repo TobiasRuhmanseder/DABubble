@@ -20,11 +20,11 @@
                     <span>Du</span>
                     <div class="user-delete"></div>
                 </div>
-                    <div class="user" *ngFor="let user of this.selectedUsers" (click)="deleteUserFromList(user.id)">
-                        <img [src]="user.photoURL" alt="">
-                        <span>{{user.name}}</span>
-                        <div class="user-delete"></div>
-                    </div>
+                <div class="user" *ngFor="let user of this.selectedUsers" (click)="deleteUserFromList(user.id)">
+                    <img [src]="user.photoURL" alt="">
+                    <span>{{user.name}}</span>
+                    <div class="user-delete"></div>
+                </div>
 
                 <div class="name-input">
                     <input #searchInput (input)="input$.next(searchInput.value)" [(ngModel)]="inputValue" type="text"
@@ -33,8 +33,8 @@
                 </div>
             </div>
         </div>
-        <div class="drop-down-container" *ngIf="dropDownList" >
-            <div class="drop-down-list" >
+        <div class="drop-down-container" *ngIf="dropDownList">
+            <div class="drop-down-list">
                 <div class="user-list-element" *ngFor="let user of filteredUsers" (click)="selectUser(user.id)">
                     <app-user-pic class="user-pic-size" [status]="true" [online]="user.status"
                         [userImageName]="user.photoURL"></app-user-pic>

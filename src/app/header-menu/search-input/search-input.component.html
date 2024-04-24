@@ -1,10 +1,11 @@
 <div class="input-container">
-    <input class="input-search" type="text" autocomplete="off">
+    <input class="input-search" #searchInput (input)="input$.next(searchInput.value)" [(ngModel)]="inputValue"
+        type="text" autocomplete="off">
     <div class="search-logo">
         <img src="../../assets/img/magnifying_glass.svg" alt="">
     </div>
-    <div class="dropdown-menu">
-        <div class="channel-search-container">
+    <div class="dropdown-menu" *ngIf="dropDownList">
+        <div>
             <div class="dropdown-headline">
                 <div class="line-left"></div>
                 <img src="../../../assets/img/tag_click.svg" alt="">
@@ -17,20 +18,20 @@
                 <span>Channelname</span>
             </div>
         </div>
-        <div class="user-search-container">
+        <div>
             <div class="dropdown-headline">
                 <div class="line-left"></div>
                 <img src="../../../assets/img/direct_message_logo_color.svg" alt="">
                 <span>Users</span>
                 <div class="line-right"></div>
             </div>
-            <div class="users">
-                <app-user-pic class="user-pic-size" [status]="true" [online]="true"
-                    [userImageName]="'./../../../assets/img/user_pics/male4.svg'"></app-user-pic>
-                <span>Tobias Ruhmanseder</span>
+            <div class="users" *ngFor="let user of filteredUsers" >
+                <app-user-pic class="user-pic-size" [status]="true" [online]="user.status"
+                    [userImageName]="user.photoURL"></app-user-pic>
+                <span>{{user.name}}</span>
             </div>
         </div>
-        <div class="message-search-container">
+        <div>
             <div class="dropdown-headline">
                 <div class="line-left"></div>
                 <img src="../../../assets/img/comment_color.svg" alt="">
