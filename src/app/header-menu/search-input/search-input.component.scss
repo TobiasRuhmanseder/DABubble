@@ -1,0 +1,144 @@
+.search-logo {
+    padding-top: 5px;
+    position: absolute;
+    right: 40px;
+    z-index: 99;
+}
+
+.input-container {
+    position: relative;
+    z-index: 99;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    input {
+        z-index: 98;
+        width: calc(100% + 105px);
+        height: 70px;
+        padding-left: 30px;
+        padding-right: 75px;
+        font-size: 24px;
+        color: #686868;
+        border-color: rgba(255, 255, 255, 0);
+        border-radius: 35px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.dropdown-menu {
+    position: absolute;
+    z-index: 97;
+    top: 45px;
+    width: calc(100% - 40px);
+    max-height: 80vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    background-color: white;
+    border-radius: 0px 0px 35px 35px;
+    box-shadow: -4px 4px 7px 4px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    padding-top: 15px;
+
+}
+
+.dropdown-headline {
+    display: flex;
+    align-items: center;
+    color: #535AF1;
+    margin-bottom: 16px;
+    margin-top: 16px;
+
+    img {
+        margin-right: 6px;
+    }
+}
+
+.line-left {
+    width: 20px;
+    background-color: #adb0d9;
+    height: 1px;
+    margin-right: 6px;
+}
+
+.line-right {
+    width: 100%;
+    background-color: #adb0d9;
+    height: 1px;
+    margin-left: 6px;
+}
+
+.channel {
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    img {
+        margin-right: 6px;
+    }
+
+    img:nth-child(2) {
+        display: none;
+    }
+
+    &:hover {
+        color: #535AF1;
+
+        img:nth-child(2) {
+            display: block;
+        }
+
+        img:nth-child(1) {
+            display: none;
+        }
+    }
+}
+
+.user-pic-size {
+    display: block;
+    width: 35px;
+    height: 35px;
+    margin-right: 6px;
+}
+
+.users {
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        color: #535AF1;
+    }
+}
+
+.messages {
+    margin-left: 40px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+        color: #535AF1;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #535AF1;
+        color: #535AF1;
+        width: max-content;
+
+        img {
+            margin-right: 6px;
+            width: 12px;
+            height: 12px;
+        }
+    }
+}

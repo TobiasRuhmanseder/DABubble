@@ -4,11 +4,13 @@ import { CurrentUserService } from '../../services/current-user.service';
 import { ActiveUser } from '../../interfaces/active-user.interface';
 import { CurrentUserDropdownMenuComponent } from './current-user-dropdown-menu/current-user-dropdown-menu.component';
 import { CommonModule } from '@angular/common';
+import { SearchInputComponent } from './search-input/search-input.component';
+
 
 @Component({
   selector: 'app-header-menu',
   standalone: true,
-  imports: [UserPicComponent, CurrentUserDropdownMenuComponent, CommonModule],
+  imports: [UserPicComponent, CurrentUserDropdownMenuComponent, CommonModule, SearchInputComponent],
   templateUrl: './header-menu.component.html',
   styleUrl: './header-menu.component.scss'
 })

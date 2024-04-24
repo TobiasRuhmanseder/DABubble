@@ -13,7 +13,7 @@
     width: calc(100% - 505px);
 }
 
-.right-container{
+.right-container {
     display: flex;
     align-items: center;
 }
@@ -23,48 +23,24 @@
 }
 
 .input-container {
-    position: relative;
     width: calc(100% - 243px);
-    display: flex;
-    align-items: center;
-
-    input {
-        width: calc(100% + 105px);
-        height: 70px;
-        padding-left: 30px;
-        padding-right: 75px;
-        font-size: 24px;
-        color: #686868;
-        border-color: rgba(255, 255, 255, 0);
-        border-radius: 35px;
-
-        &:focus {
-            outline: none;
-        }
-    }
 }
 
-.search-logo{
-    padding-top: 5px;
-    position: absolute;
-    right: 40px;
-}
-
-.arrow-down{
+.arrow-down {
     cursor: pointer;
     margin-right: 30px;
 
-    &:hover{
+    &:hover {
         scale: 1.1;
     }
 }
 
-.username{
+.username {
     font-size: 32px;
     font-weight: 700;
 }
 
-.user-pic-size{
+.user-pic-size {
     height: 70px;
     width: 70px;
     margin-left: 20px;

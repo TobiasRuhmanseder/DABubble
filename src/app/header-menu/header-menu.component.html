@@ -1,12 +1,9 @@
 <div class="header-menu">
     <div class="left-container">
         <img class="logo" src="../../assets/img/logo_small.svg" alt="">
-        <div class="input-container">
-            <input type="text" autocomplete="off">
-            <div class="search-logo">
-                <img src="../../assets/img/magnifying_glass.svg" alt="">
-            </div>
-        </div>
+        
+            <app-search-input class="input-container"></app-search-input>
+        
     </div>
     <div class="right-container">
         <span class="username">{{activeUser.displayName}}</span>
