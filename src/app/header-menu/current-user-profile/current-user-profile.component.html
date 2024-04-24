@@ -1,5 +1,5 @@
 <div class="background" (click)="currentUserProfileClosed.emit(false)"></div>
-<div class="dialog">
+<div class="dialog" *ngIf="!this.editCurrentUser">
     <div class="headline">
         <span>Profil</span>
         <div class="close-button" (click)="currentUserProfileClosed.emit(false)"></div>
@@ -10,10 +10,41 @@
     </div>
     <div class="user-name-container">
         <span class="user-name">{{this.activeUser.displayName}}</span>
-        <span class="edit-button">Bearbeiten</span>
+        <span class="edit-button" (click)="editButtonCurrentUser()">Bearbeiten</span>
     </div>
     <div class="active-container">
         <div class="circle"></div>
         <span>Aktive</span>
     </div>
+    <div class="mail-container">
+        <img src="../../../assets/icons/mail.png" alt="">
+        <span>E-Mail-Adresse</span>
+    </div>
+    <div class="mail-adress">
+        <span>{{this.activeUser.email}}</span>
+    </div>
+</div>
+
+<!-- dialog/current user -  edit -->
+
+<div class="dialog" *ngIf="this.editCurrentUser">
+    <div class="headline">
+        <span>Profil</span>
+        <div class="close-button" (click)="currentUserProfileClosed.emit(false)"></div>
+    </div>
+    <div class="user-pic-container">
+        <app-user-pic class="user-pic-size" [status]="false" [online]="false"
+            [userImageName]="this.activeUser.photoURL"></app-user-pic>
+    </div>
+
+    <div class="mail-container">
+        <img src="../../../assets/img/account_circle.svg" alt="">
+        <span>Vollständiger Name</span>
+    </div>
+
+    <div class="mail-container">
+        <img src="../../../assets/icons/mail.png" alt="">
+        <span>E-Mail-Adresse</span>
+    </div>
+
 </div>

@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 export class HeaderMenuComponent implements OnInit, OnDestroy {
 
   currentUserService: CurrentUserService = inject(CurrentUserService);
-  activeUser: ActiveUser = { displayName: "", photoURL: "" };
+  activeUser: ActiveUser = { displayName: "", photoURL: "", email: "" };
   unsubCurrentUser: any;
   drownDownMenuOpen = false;
 
@@ -42,13 +42,15 @@ export class HeaderMenuComponent implements OnInit, OnDestroy {
     if (activeUser == null) {
       activeUser = {
         displayName: "noUser",
-        photoURL: "male1.svg"
+        photoURL: "male1.svg",
+        email: ""
       }
     }
     else {
       activeUser = {
         displayName: user.displayName,
-        photoURL: user.photoURL
+        photoURL: user.photoURL,
+        email: user.email
       }
     }
     return activeUser;

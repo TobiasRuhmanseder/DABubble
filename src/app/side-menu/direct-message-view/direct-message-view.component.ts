@@ -47,7 +47,7 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
       activeUser = {
         uid: "",
         displayName: "",
-        photoURL: ""
+        photoURL: "",
       }
     }
     else {
