@@ -12,10 +12,10 @@
                 <span>Channels</span>
                 <div class="line-right"></div>
             </div>
-            <div class="channel">
+            <div class="channel" *ngFor="let channel of this.filteredChannel">
                 <img src="../../../assets/img/tag.svg" alt="">
                 <img src="../../../assets/img/tag_click.svg" alt="">
-                <span>Channelname</span>
+                <span>{{channel.name}}</span>
             </div>
         </div>
         <div>
@@ -25,7 +25,7 @@
                 <span>Users</span>
                 <div class="line-right"></div>
             </div>
-            <div class="users" *ngFor="let user of filteredUsers" >
+            <div class="users" *ngFor="let user of this.filteredUsers">
                 <app-user-pic class="user-pic-size" [status]="true" [online]="user.status"
                     [userImageName]="user.photoURL"></app-user-pic>
                 <span>{{user.name}}</span>

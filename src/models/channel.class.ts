@@ -4,6 +4,7 @@ export class Channel {
   description: string;
   creator: string;
   users: string[];
+  messages?: any;
 
   constructor(obj: any) {
     this.id = obj ? obj.id : '';
