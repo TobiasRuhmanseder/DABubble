@@ -6,7 +6,7 @@
     </div>
     <div class="dropdown-menu" *ngIf="dropDownList">
         <div>
-            <div class="dropdown-headline">
+            <div class="dropdown-headline" *ngIf="this.filteredChannel.length > 0">
                 <div class="line-left"></div>
                 <img src="../../../assets/img/tag_click.svg" alt="">
                 <span>Channels</span>
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div>
-            <div class="dropdown-headline">
+            <div class="dropdown-headline" *ngIf="this.filteredUsers.length > 0">
                 <div class="line-left"></div>
                 <img src="../../../assets/img/direct_message_logo_color.svg" alt="">
                 <span>Users</span>
@@ -32,20 +32,18 @@
             </div>
         </div>
         <div>
-            <div class="dropdown-headline">
+            <div class="dropdown-headline" *ngIf="this.filteredMessages.length > 0">
                 <div class="line-left"></div>
                 <img src="../../../assets/img/comment_color.svg" alt="">
                 <span>Nachrichten</span>
                 <div class="line-right"></div>
             </div>
-            <div class="messages">
+            <div class="messages" *ngFor="let message of this.filteredMessages">
                 <div>
                     <img src="../../../assets/img/tag_click.svg" alt="">
-                    <span>Allgemein</span>
+                    <span>{{message.channelname}}</span>
                 </div>
-                <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos dolorem, vero aliquid, id
-                    reprehenderit odit laudantium cumque quae natus aperiam tenetur voluptate! Aperiam recusandae quia
-                    non ipsum, incidunt libero vero.</span>
+                <span>{{message.message}}</span>
             </div>
         </div>
     </div>

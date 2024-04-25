@@ -66,7 +66,7 @@ export class UsersService implements OnDestroy {
         let user = new User(element.data(), element.id)
         this.users.push(user);
       });
-      this.users$.next(this.users);
+      this.users$.next(this.users); 
     });
 
   }
