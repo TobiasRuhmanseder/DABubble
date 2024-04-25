@@ -3,6 +3,7 @@ import { CurrentUserService } from '../../../services/current-user.service';
 import { UserPicComponent } from "../../user-pic/user-pic.component";
 import { ActiveUser } from '../../../interfaces/active-user.interface';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   templateUrl: './current-user-profile.component.html',
   styleUrl: './current-user-profile.component.scss',
-  imports: [UserPicComponent, CommonModule]
+  imports: [UserPicComponent, CommonModule, FormsModule]
 })
 export class CurrentUserProfileComponent {
   @Output() currentUserProfileClosed: EventEmitter<boolean> = new EventEmitter();
@@ -27,5 +28,15 @@ export class CurrentUserProfileComponent {
     this.editCurrentUser = true;
   }
 
+  closeEdit() {
+    this.editCurrentUser = false;
+  }
 
+  saveEdit() {
+    const userName = this.activeUser.displayName;
+    const userEmail = this.activeUser.email;
+
+    console.log('Name: ' + userName + 'Email: ' + userEmail);
+    this.currentUserService.editUserName(userName);
+  }
 }

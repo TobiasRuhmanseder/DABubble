@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, OnInit, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -52,6 +52,23 @@ export class CurrentUserService implements OnDestroy {
       const uid = user.uid;
     }
     return user;
+  }
+
+  editUserName(userName: string) {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      updateProfile(currentUser, {
+        displayName: userName,
+        
+      }).then(() => {
+        console.log('Profile updated')
+      }).catch((error) => {
+        console.log(error.code);
+      });
+    } else {
+      console.log('No user signed in');
+    }
   }
 
 
