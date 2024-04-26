@@ -35,8 +35,7 @@ export class CurrentUserProfileComponent {
   saveEdit() {
     const userName = this.activeUser.displayName;
     const userEmail = this.activeUser.email;
+    this.currentUserService.editUserDetails(userName, userEmail);
 
-    console.log('Name: ' + userName + 'Email: ' + userEmail);
-    this.currentUserService.editUserName(userName);
   }
 }
