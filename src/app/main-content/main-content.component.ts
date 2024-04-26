@@ -45,7 +45,6 @@ export class MainContentComponent {
     this.routeSub = this.route.params.subscribe((params) => {
       if (params['id']) {
         this.chatService.resetValues(params['id']);
-        this.scrollDown('#messagesContent');
         this.chatService.getChannelFromId(params['id']);
         this.chatService.getMessagesFromChannel(params['id']);
         this.chatService.subChannelMessages(params['id']);
