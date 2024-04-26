@@ -23,6 +23,7 @@ import {
   ref,
   uploadBytes,
 } from 'firebase/storage';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,7 @@ export class FirebaseService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
 
   channels: Channel[] = [];
+  $channels = new Subject;
 
   unsubChannels;
 
@@ -40,6 +42,7 @@ export class FirebaseService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubChannels();
+    this.$channels.unsubscribe();
   }
 
   async uploadToStorage(file: any, customURL: string): Promise<boolean> {
@@ -79,8 +82,10 @@ export class FirebaseService implements OnDestroy {
     return onSnapshot(this.getCollRef('channels'), (list) => {
       this.channels = [];
       list.forEach((element) => {
+        console.log(element.data());
         this.channels.push(this.idToChannel(element.data(), element.id));
       });
+      this.$channels.next(this.channels);
     });
   }
 
@@ -226,14 +231,18 @@ export class FirebaseService implements OnDestroy {
 
   // Add the id for the local Array Channels by onSnapshot
   idToChannel(obj: any, id: string): Channel {
+    console.log(obj);
+
     let channel: any = {
       id: id,
       name: obj.name || '',
       description: obj.description || '',
       creator: obj.creator || '',
-      users: obj.users || '',
+      users: obj.users || [],
       messages: obj.messages || [],
     };
+
+
     return channel;
   }
 
