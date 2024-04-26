@@ -71,7 +71,7 @@
     margin-right: 15px;
 }
 
-.active-container{
+.active-container {
     display: flex;
     align-items: center;
     font-size: 20px;
@@ -79,22 +79,35 @@
     margin-bottom: 45px;
 }
 
-.mail-container{
+.mail-container {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     margin-bottom: 20px;
 
-    span{
+    span {
         font-size: 20px;
         font-weight: 700;
     }
 
-    img{
+    img {
         margin-right: 20px;
+    }
+
+    input {
+        width: calc(100% - 40px);
+        font-size: 18px;
+        color: #686868;
+        outline: none;
+        border: 1px solid #ADB0D9;
+        height: 18px;
+        padding: 15px 20px 15px 20px;
+        border-radius: 26px;
+        margin-bottom: 10px;
     }
 }
 
-.mail-adress{
+.mail-adress {
     margin-left: 50px;
     color: #1381FF;
     font-size: 18px;
@@ -105,4 +118,11 @@
     display: flex;
     justify-content: center;
     gap: 30px;
+    margin-top: 40px;
+}
+
+.edit-head{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
