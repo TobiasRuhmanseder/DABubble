@@ -22,7 +22,7 @@
       class="message-pic"
       src="{{ users.getUserPic(msg.senderId) }}"
     />
-    <div class="message-body">
+    <div class="message-body" id={{msg.id}}>
       <app-message-title
         [flagg]="flagg"
         [msg]="msg"
