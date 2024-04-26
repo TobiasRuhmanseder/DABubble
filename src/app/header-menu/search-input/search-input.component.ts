@@ -8,6 +8,9 @@ import { CurrentUserService } from '../../../services/current-user.service';
 import { FirebaseService } from '../../../services/firebase.service';
 import { Firestore, getDocs } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
+import { DirectMessagesService } from '../../../services/direct-messages.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-search-input',
@@ -30,6 +33,8 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   FirebaseService: FirebaseService = inject(FirebaseService);
   currentUserService: CurrentUserService = inject(CurrentUserService);
   firestore: Firestore = inject(Firestore);
+  diMeService: DirectMessagesService = inject(DirectMessagesService)
+  router: Router = inject(Router);
   currentUser: any = [];
   unsubCurrentUser: any;
   unsubInput: any;
@@ -118,4 +123,27 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     }
   }
 
+  clearInput() {
+    this.inputValue = '';
+    this.dropDownList = false;
+  }
+
+  async onClickUser(userUid: string) {
+    if (userUid != undefined) {
+      let directMessageDocId = await this.diMeService.getDocIdFromTheDirectMessaging(userUid);
+      this.router.navigateByUrl('/home/' + directMessageDocId);
+      this.clearInput();
+    }
+  }
+
+  onClickChannel(channelId: string) {
+    this.router.navigateByUrl('/home/' + channelId);
+    this.clearInput();
+  }
+
+  onClickMessage(channelId: string) {
+    this.router.navigateByUrl('/home/' + channelId);
+    this.clearInput();
+  }
 }
+
