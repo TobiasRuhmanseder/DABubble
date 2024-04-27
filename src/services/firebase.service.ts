@@ -81,13 +81,19 @@ export class FirebaseService implements OnDestroy {
   subChannelsList() {
     return onSnapshot(this.getCollRef('channels'), (list) => {
       this.channels = [];
+
       list.forEach((element) => {
-        console.log(element.data());
-        this.channels.push(this.idToChannel(element.data(), element.id));
+        let ref: any = [];
+        let users: any = [];
+        ref = element.data();
+        users = JSON.stringify(ref.users);
+        console.log(users);
+        this.channels.push(this.idToChannel(ref, ref.id, users));
       });
       this.$channels.next(this.channels);
     });
   }
+
 
   async getAllChannels() {
     const q = query(collection(this.firestore, 'channels'));
@@ -230,18 +236,28 @@ export class FirebaseService implements OnDestroy {
   }
 
   // Add the id for the local Array Channels by onSnapshot
-  idToChannel(obj: any, id: string): Channel {
-    console.log(obj);
+  idToChannel(obj: any, id: string, users: any): Channel {
+    console.log(users);
+
+    let usersParse = JSON.parse(users);
+    let usersParseLoop = [];
+
+    for (let i = 0; i < usersParse.length; i++) {
+      usersParseLoop.push(usersParse[i]);
+
+    }
+    console.log(usersParseLoop);
+
 
     let channel: any = {
       id: id,
       name: obj.name || '',
       description: obj.description || '',
       creator: obj.creator || '',
-      users: obj.users || [],
+      users: usersParse ,
       messages: obj.messages || [],
     };
-
+    console.log(channel);
 
     return channel;
   }
