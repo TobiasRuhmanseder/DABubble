@@ -63,14 +63,19 @@ export class SearchInputComponent implements OnInit, OnDestroy {
         if (search.length >= 2) {
           this.filteredUsers = this.filterUser(search);
           this.filteredChannel = this.filterChannel(search);
+          this.checkHits();
           if (!this.loadMessages) await this.messagesIntoChannel();
           this.filterMessages(search);
-          if (this.filteredUsers.length >= 1 || this.filteredChannel.length >= 1 || this.filteredMessages.length >= 1) this.dropDownList = true; else this.dropDownList = false;
+          this.checkHits();
         } else {
           this.dropDownList = false;
           this.clearAllArrays();
         }
       })
+  }
+
+  checkHits() {
+    if (this.filteredUsers.length >= 1 || this.filteredChannel.length >= 1 || this.filteredMessages.length >= 1) this.dropDownList = true; else this.dropDownList = false;
   }
 
   clearAllArrays() {
@@ -100,8 +105,6 @@ export class SearchInputComponent implements OnInit, OnDestroy {
         this.filteredMessages.push({ message: filtered[z], channelname: this.channelMessages[i].name, channelId: this.channelMessages[i].id })
       }
     }
-    console.log(this.filteredMessages);
-
   }
 
   filterActiveUser(filteredUser: any) {

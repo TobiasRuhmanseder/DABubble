@@ -31,10 +31,8 @@ import { LoginComponent } from '../app/start-screen/login/login.component';
 })
 export class FirebaseService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
-
   channels: Channel[] = [];
   $channels = new Subject;
-
   unsubChannels;
 
   constructor() {
@@ -86,7 +84,6 @@ export class FirebaseService implements OnDestroy {
       list.forEach(async (element) => {
         deepCopy.push(element);
       })
-
 
       this.channels = [];
       let channel: any[] = [];
