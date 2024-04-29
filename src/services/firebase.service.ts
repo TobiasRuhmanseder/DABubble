@@ -78,12 +78,12 @@ export class FirebaseService implements OnDestroy {
   }
 
   subChannelsList() {
-    return onSnapshot(this.getCollRef('channels'), (list) => {
+    return onSnapshot(this.getCollRef('channels'), async (list) => {
 
       this.channels = [];
-      list.forEach((element:any) => {
-        console.log(element.data());
-        this.channels.push(element.data());   
+      list.forEach(async (element:any) => {
+      console.log(element.data());
+        this.channels.push(new Channel(element.data()));   
       })
       console.log(this.channels);   
       this.$channels.next(this.channels);
