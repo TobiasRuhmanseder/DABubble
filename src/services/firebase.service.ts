@@ -24,6 +24,7 @@ import {
   uploadBytes,
 } from 'firebase/storage';
 import { Subject } from 'rxjs';
+import { LoginComponent } from '../app/start-screen/login/login.component';
 
 @Injectable({
   providedIn: 'root',
@@ -79,21 +80,40 @@ export class FirebaseService implements OnDestroy {
   }
 
   subChannelsList() {
-    return onSnapshot(this.getCollRef('channels'), (list) => {
-      this.channels = [];
 
-      list.forEach((element) => {
-        let ref: any = [];
-        let users: any = [];
-        ref = element.data();
-        users = JSON.stringify(ref.users);
-        console.log(users);
-        this.channels.push(this.idToChannel(ref, ref.id, users));
-      });
+    return onSnapshot(this.getCollRef('channels'), async (list) => {
+      let deepCopy: any[] = [];
+      list.forEach(async (element) => {
+        deepCopy.push(element);
+      })
+
+
+      this.channels = [];
+      let channel: any[] = [];
+      // deepCopy.forEach(async (element) => {
+      //  channel.push(element.data());
+      // });
+      for (let i = 0; i < deepCopy.length; i++) {
+        // this.channels.push(this.idToChannel(channel[i], channel[i].id))
+        channel.push(deepCopy[i].data());
+      }
+
+      //channel.forEach((element) => this.channels.push(this.idToChannel(element, element.id)));
+
+      for (let i = 0; i < channel.length; i++) {
+        // this.channels.push(this.idToChannel(channel[i], channel[i].id))
+        this.channels.push(new Channel(channel[i]));
+      }
+      console.log(this.channels);
+
       this.$channels.next(this.channels);
+      // setTimeout(() => {
+      // console.log(this.channels)
+      // this.channels.forEach((channel) => console.log(channel)
+      // )
+      // }, 5000);
     });
   }
-
 
   async getAllChannels() {
     const q = query(collection(this.firestore, 'channels'));
@@ -137,7 +157,9 @@ export class FirebaseService implements OnDestroy {
       collection(this.firestore, 'channels', id, 'messages'),
       msg.toJSON()
     );
-    updateDoc(docRef, { id: docRef.id });
+    updateDoc(docRef, {
+      id: docRef.id
+    });
     return docRef.id.toString();
   }
 
@@ -207,12 +229,14 @@ export class FirebaseService implements OnDestroy {
         description: '',
         creator: '',
         users: channelData['users'],
+        messages: [],
         toJSON: function (): {
           id: string;
           name: string;
           description: string;
           creator: string;
           users: string[];
+          messages: []
         } {
           throw new Error('Function not implemented.');
         },
@@ -236,25 +260,18 @@ export class FirebaseService implements OnDestroy {
   }
 
   // Add the id for the local Array Channels by onSnapshot
-  idToChannel(obj: any, id: string, users: any): Channel {
-    console.log(users);
 
-    let usersParse = JSON.parse(users);
-    let usersParseLoop = [];
-
-    for (let i = 0; i < usersParse.length; i++) {
-      usersParseLoop.push(usersParse[i]);
-
+  idToChannel(obj: any, id: string): Channel {
+    let usersParse;
+    if (typeof obj.users === 'string') {
+      usersParse = JSON.parse(obj.users);
     }
-    console.log(usersParseLoop);
-
-
     let channel: any = {
       id: id,
       name: obj.name || '',
       description: obj.description || '',
       creator: obj.creator || '',
-      users: usersParse ,
+      users: usersParse || [],
       messages: obj.messages || [],
     };
     console.log(channel);

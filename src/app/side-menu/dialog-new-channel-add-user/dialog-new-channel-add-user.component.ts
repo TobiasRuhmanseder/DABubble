@@ -124,7 +124,7 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy, Afte
       this.selectedUsers.forEach((user: any) => {
         users.push(user.id);
       });
-      return users;
+      return JSON.stringify(users);
     }
   }
 

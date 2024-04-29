@@ -10,7 +10,7 @@ import { Firestore, getDocs } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import { DirectMessagesService } from '../../../services/direct-messages.service';
 import { Router } from '@angular/router';
-
+import { IdToScrollService } from '../../../services/id-to-scroll.service';
 
 @Component({
   selector: 'app-search-input',
@@ -33,7 +33,8 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   FirebaseService: FirebaseService = inject(FirebaseService);
   currentUserService: CurrentUserService = inject(CurrentUserService);
   firestore: Firestore = inject(Firestore);
-  diMeService: DirectMessagesService = inject(DirectMessagesService)
+  diMeService: DirectMessagesService = inject(DirectMessagesService);
+  idToScrollService: IdToScrollService = inject(IdToScrollService);
   router: Router = inject(Router);
   currentUser: any = [];
   unsubCurrentUser: any;
@@ -93,12 +94,14 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.channelMessages.length; i++) {
       for (let x = 0; x < this.channelMessages[i].messages.length; x++) {
       }
-      let filtered = this.channelMessages[i].messages.filter(((el: any) => el.toLowerCase().includes(search.toLowerCase())));
 
+      let filtered = this.channelMessages[i].messages.filter(((el: any) => el.message.toLowerCase().includes(search.toLowerCase())));
       for (let z = 0; z < filtered.length; z++) {
         this.filteredMessages.push({ message: filtered[z], channelname: this.channelMessages[i].name, channelId: this.channelMessages[i].id })
       }
     }
+    console.log(this.filteredMessages);
+
   }
 
   filterActiveUser(filteredUser: any) {
@@ -116,10 +119,18 @@ export class SearchInputComponent implements OnInit, OnDestroy {
 
       let ref = await getDocs(collection(this.firestore, 'channels', this.FirebaseService.channels[i].id, 'messages'));
       ref.forEach((element: any) => {
-        let messages = element.data();
-        channel[0].messages.push(messages.content);
+        let ref = element.data();
+        let messages = [
+          {
+            id: ref.id,
+            message: ref.content
+          }
+        ];
+        channel[0].messages.push(messages[0]);
+
       });
       this.channelMessages.push(channel[0]);
+      console.log(this.channelMessages);
     }
   }
 
@@ -141,8 +152,9 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     this.clearInput();
   }
 
-  onClickMessage(channelId: string) {
-    this.router.navigateByUrl('/home/' + channelId);
+  onClickMessage(channel: any) {
+    this.router.navigateByUrl('/home/' + channel.channelId);
+    this.idToScrollService.addId(channel.message.id);
     this.clearInput();
   }
 }

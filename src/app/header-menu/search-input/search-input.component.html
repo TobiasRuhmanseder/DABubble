@@ -38,13 +38,12 @@
                 <span>Nachrichten</span>
                 <div class="line-right"></div>
             </div>
-            <div class="messages" *ngFor="let message of this.filteredMessages"
-                (click)="onClickMessage(message.channelId)">
+            <div class="messages" *ngFor="let channel of this.filteredMessages" (click)="onClickMessage(channel)">
                 <div>
                     <img src="../../../assets/img/tag_click.svg" alt="">
-                    <span>{{message.channelname}}</span>
+                    <span>{{channel.channelname}}</span>
                 </div>
-                <span>{{message.message}}</span>
+                <span>{{channel.message.message}}</span>
             </div>
         </div>
     </div>

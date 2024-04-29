@@ -28,6 +28,7 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
   usersService: UsersService = inject(UsersService);
   currentCollectionId = '';
   allowedChannels: any[] = [];
+  channels: any;
   unsubParams: any;
   unsubChannels: any;
   unsubCurrentUser: any;
@@ -40,7 +41,6 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.users = this.usersService.users;
-
     this.unsubCurrentUser = this.currentUserService.currentUser.subscribe(user => {
       let currentUser;
       currentUser = this.setActiceUser(user);
@@ -110,13 +110,21 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
   }
 
   getAllowedChannels(channels: any) {
+   // console.log(channels);
+
     this.allowedChannels = [];
 
+
     channels.forEach((channel: any) => {
+      //console.log(channel);
+
+      if (typeof channel.users === 'string') channels.users = JSON.parse(channels.users);
 
       if (channel.users.length = 0) this.allowedChannels.push(channel);
       else if (channel.users.includes(this.activeUserId)) this.allowedChannels.push(channel);
     });
+   //console.log(this.allowedChannels);
+
 
 
   }
