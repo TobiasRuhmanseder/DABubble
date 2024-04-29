@@ -78,37 +78,15 @@ export class FirebaseService implements OnDestroy {
   }
 
   subChannelsList() {
-
-    return onSnapshot(this.getCollRef('channels'), async (list) => {
-      let deepCopy: any[] = [];
-      list.forEach(async (element) => {
-        deepCopy.push(element);
-      })
+    return onSnapshot(this.getCollRef('channels'), (list) => {
 
       this.channels = [];
-      let channel: any[] = [];
-      // deepCopy.forEach(async (element) => {
-      //  channel.push(element.data());
-      // });
-      for (let i = 0; i < deepCopy.length; i++) {
-        // this.channels.push(this.idToChannel(channel[i], channel[i].id))
-        channel.push(deepCopy[i].data());
-      }
-
-      //channel.forEach((element) => this.channels.push(this.idToChannel(element, element.id)));
-
-      for (let i = 0; i < channel.length; i++) {
-        // this.channels.push(this.idToChannel(channel[i], channel[i].id))
-        this.channels.push(new Channel(channel[i]));
-      }
-      console.log(this.channels);
-
+      list.forEach((element:any) => {
+        console.log(element.data());
+        this.channels.push(element.data());   
+      })
+      console.log(this.channels);   
       this.$channels.next(this.channels);
-      // setTimeout(() => {
-      // console.log(this.channels)
-      // this.channels.forEach((channel) => console.log(channel)
-      // )
-      // }, 5000);
     });
   }
 
