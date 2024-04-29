@@ -127,10 +127,8 @@ export class SearchInputComponent implements OnInit, OnDestroy {
           }
         ];
         channel[0].messages.push(messages[0]);
-
       });
       this.channelMessages.push(channel[0]);
-      console.log(this.channelMessages);
     }
   }
 
