@@ -207,16 +207,10 @@ export class MessageService {
       this.currentOpenMessageThreadId,
       message
     );
-    // message.id = refId;
-
-    // this.currentThread.push(message);
   }
 
   async saveAndAddNewMessage(message: Message) {
     let refId = await this.fire.saveNewMessage(this.currentChannel.id, message);
-    // message.id = refId;
-    // this.sortedMessages.push(message);
-    // this.threadList.push([]);
   }
 
   setMessage(inputContent: string) {
