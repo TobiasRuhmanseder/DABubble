@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { PrivateChatComponent } from './private-chat/private-chat.component';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { ViewportScroller } from '@angular/common';
 import { IdToScrollService } from '../../services/id-to-scroll.service';
 
 @Component({
@@ -31,7 +30,6 @@ export class MainContentComponent {
     public chatService: MessageService,
     public elementRef: ElementRef,
     public renderer: Renderer2,
-    private scroller: ViewportScroller,
     private route: ActivatedRoute,
     public scroll: IdToScrollService,
   ) {}
@@ -41,7 +39,7 @@ export class MainContentComponent {
   ngOnDestroy() {
     if (this.unsubCurrentChannelMessages) {
       this.unsubCurrentChannelMessages.unsubscribe();
-    } // this.routeSub.unsubscribe();
+    } 
   }
   ngOnInit(): void {}
 
@@ -55,7 +53,7 @@ export class MainContentComponent {
         this.chatService.subChannelThreads(params['id']);
       }
     });
-    this.scrollTo()
+    // this.scrollTo()
   }
 
   @HostListener('document:click', ['$event'])
@@ -80,18 +78,7 @@ export class MainContentComponent {
     }
   }
 
-  scrollTo() {
-    if (this.scroll.id.length > 0){
-      if('id found'){
-        this.scroller.scrollToAnchor(this.scroll.id)
-        this.scroll.deleteId()
-      } else {
-        setTimeout(() => {
-          this.scrollTo()
-        }, 100);
-      }
-   
-  }}
+
 
   scrollDown(id:string) {
     if (this.chatService.sortedMessages.length > 0) {

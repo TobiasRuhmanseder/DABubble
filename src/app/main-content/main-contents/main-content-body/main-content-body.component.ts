@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, ViewportScroller } from '@angular/common';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MessageContentComponent } from './message-content/message-content.component';
 import { UsersService } from '../../../../services/users.service';
 import { MessageService } from '../../../../services/message.service';
@@ -8,6 +8,7 @@ import { Channel } from '../../../../models/channel.class';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUserInfoComponent } from '../../private-chat/dialog-user-info/dialog-user-info.component';
 import { ChannelPopUpComponent } from '../../channel/channel-pop-up/channel-pop-up.component';
+import { IdToScrollService } from '../../../../services/id-to-scroll.service';
 
 @Component({
   selector: 'app-main-content-body',
@@ -22,8 +23,12 @@ export class MainContentBodyComponent {
     public dialog: MatDialog,
     public chatService: MessageService,
     public users: UsersService,
-  ) {}
-
+    private scroller: ViewportScroller,
+    public scrollService: IdToScrollService
+  ) {} 
+  ngAfterViewInit() {
+    this.getScrollToIdObservable();
+  }
   getDirectMessageUser(currentChannel: Channel) {
     if (currentChannel) {
       let directUserId = currentChannel.users.filter(
@@ -88,4 +93,26 @@ export class MainContentBodyComponent {
     }
     return '';
   }
+  @ViewChild('scrollTarget', { static: true }) scrollTarget!: ElementRef;
+
+  getScrollToIdObservable() {
+    this.scrollService.idToScroll$.subscribe((id) => {
+      if (id) {
+        this.scrollTo(id)
+      }
+    });
+  }
+  
+scrollTo(id:string){
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+    this.scrollService.deleteId();
+  } else {
+    setTimeout(() => {
+      this.scrollTo(id);
+    }, 100);
+  }
+}
+
 }
