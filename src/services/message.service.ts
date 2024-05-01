@@ -264,7 +264,6 @@ export class MessageService {
       this.currentChannel.users = JSON.parse(this.currentChannel.users);
     }
     if (this.currentChannel === undefined) {
-      debugger;
       this.currentChannel = await this.fire.getDirectMessagesChannel(id);
     }
   }
