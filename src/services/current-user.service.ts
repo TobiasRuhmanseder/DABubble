@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, OnInit, inject } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged, signOut, updateProfile, updateEmail } from "firebase/auth";
 import { Subject } from 'rxjs';
@@ -56,18 +56,23 @@ export class CurrentUserService implements OnDestroy {
 
   editUserDetails(userName: string, userEmail: string | any) {
     const auth = getAuth();
+
     if (auth.currentUser) {
-      updateProfile(auth.currentUser, {
+      const currentUser = auth.currentUser;
+
+      updateProfile(currentUser, {
         displayName: userName
-      }).then(() => {
-        console.log('Profile updated')
       }).catch((error) => {
         console.log(error.code);
       });
-    } 
-    if (auth.currentUser) {
-      updateEmail(auth.currentUser, userEmail).then(() => {
-        console.log('Email updated')
+
+      updateEmail(currentUser, userEmail).catch((error) => {
+        console.log(error.code);
+      });
+
+      updateDoc(doc(this.firestore, 'users', currentUser.uid), {
+        name: userName,
+        email: userEmail
       }).catch((error) => {
         console.log(error.code);
       });

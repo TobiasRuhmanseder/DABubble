@@ -36,6 +36,8 @@ export class CurrentUserProfileComponent {
     const userName = this.activeUser.displayName;
     const userEmail = this.activeUser.email;
     this.currentUserService.editUserDetails(userName, userEmail);
-
+    setTimeout(() => {
+      this.closeEdit();
+    }, 1000); 
   }
 }
