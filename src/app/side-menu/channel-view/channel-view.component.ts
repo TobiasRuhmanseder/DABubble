@@ -132,7 +132,8 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
       else if (channel.users.includes(this.activeUserId)) {
         let channelWithUserArray = new Channel(channel);
         let users = channel.users;
-        let usersArr = JSON.parse(users);
+        let usersArr = [];
+        if (typeof users === 'string') usersArr= JSON.parse(users);
         channelWithUserArray.users = usersArr;
         this.allowedChannels.push(channelWithUserArray);
       }
