@@ -177,17 +177,18 @@ export class MainContentHeaderComponent {
     if (this.chatService.currentChannel.users.length === 0) {
       return this.users.allUsers.length;
     }
-    return this.chatService.currentChannel.users.length;
+    return JSON.parse(this.chatService.currentChannel.users).length;
   }
 
   getChannelUsers() {
     if (this.chatService.currentChannel === undefined) {
       return '';
     }
+    
     if (this.chatService.currentChannel.users.length === 0) {
       return this.allUsersId();
     }
-    return this.chatService.currentChannel.users;
+    return JSON.parse(this.chatService.currentChannel.users);
   }
 
   allUsersId() {
@@ -204,7 +205,7 @@ export class MainContentHeaderComponent {
     if (this.chatService.currentChannel.users.length === 0) {
       userList = this.allUsersId();
     } else {
-      userList = this.chatService.currentChannel.users;
+      userList = JSON.parse(this.chatService.currentChannel.users);
     }
     checkIfUserInChannel = userList.find((users: string) => users === user);
     if (checkIfUserInChannel) {
