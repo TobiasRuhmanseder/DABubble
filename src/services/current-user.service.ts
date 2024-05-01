@@ -58,24 +58,27 @@ export class CurrentUserService implements OnDestroy {
     const auth = getAuth();
 
     if (auth.currentUser) {
-      const currentUser = auth.currentUser;
+        const currentUser = auth.currentUser;
 
-      updateProfile(currentUser, {
-        displayName: userName
-      }).catch((error) => {
-        console.log(error.code);
-      });
+        updateProfile(currentUser, {
+            displayName: userName
+        }).catch((error) => {
+            console.log(error.code);
+        });
 
-      updateEmail(currentUser, userEmail).catch((error) => {
-        console.log(error.code);
-      });
+        updateEmail(currentUser, userEmail).catch((error) => {
+            console.log(error.code);
+        });
 
-      updateDoc(doc(this.firestore, 'users', currentUser.uid), {
-        name: userName,
-        email: userEmail
-      }).catch((error) => {
-        console.log(error.code);
-      });
+        updateDoc(doc(this.firestore, 'users', currentUser.uid), {
+            name: userName,
+            email: userEmail
+        }).then(() => {
+            this.currentUser.next(currentUser);
+        }).catch((error) => {
+            console.log(error.code);
+        });
     }
-  }
+}
+
 }
