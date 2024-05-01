@@ -10,7 +10,7 @@ import { DialogNewChannelComponent } from '../dialog-new-channel/dialog-new-chan
 import { CurrentUserService } from '../../../services/current-user.service';
 import { ActiveUser } from '../../../interfaces/active-user.interface';
 import { UsersService } from '../../../services/users.service';
-import { user } from '@angular/fire/auth';
+import { Channel } from '../../../models/channel.class';
 
 
 @Component({
@@ -41,31 +41,47 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.users = this.usersService.users;
-    this.unsubCurrentUser = this.currentUserService.currentUser.subscribe(user => {
-      let currentUser;
-      currentUser = this.setActiceUser(user);
-      this.activeUser = currentUser;
-      this.loadAll();
-    });
+    this.unsubCurrentUser = this.subCurrentUser();
     this.currentUserService.activeUser();
-    this.unsubParams = this.activeRoute.params.subscribe(params => {
-      this.currentCollectionId = params['id'];
-      this.loadAll();
-    });
-    this.unsubChannels = this.firebaseService.$channels.subscribe(channels => {
-      this.getAllowedChannels(channels);
-      this.loadAll();
-    })
+    this.unsubParams = this.subParam();
+    this.unsubChannels = this.subChannels();
+    this.unsubUsers = this.subUsers();
+  }
 
-    this.unsubUsers = this.usersService.users$.subscribe((users: any) => {
-      this.users = users;
-      this.loadAll();
+  loadAllowedChannel() {
+    this.getAllowedChannels(this.firebaseService.channels);
+
+  }
+
+  subChannels() {
+    return this.firebaseService.$channels.subscribe(channels => {
+      this.getAllowedChannels(channels);
+      this.loadAllowedChannel();
     })
   }
 
-  loadAll() {
-    this.getAllowedChannels(this.firebaseService.channels);
-    this.getCurrentUserId();
+  subParam() {
+    return this.activeRoute.params.subscribe(params => {
+      this.currentCollectionId = params['id'];
+      this.loadAllowedChannel();
+    });
+  }
+
+  subCurrentUser() {
+    return this.currentUserService.currentUser.subscribe(user => {
+      let currentUser;
+      currentUser = this.setActiceUser(user);
+      this.activeUser = currentUser;
+      this.getCurrentUserId();
+      this.loadAllowedChannel();
+    });
+  }
+
+  subUsers() {
+    return this.usersService.users$.subscribe((users: any) => {
+      this.users = users;
+      this.loadAllowedChannel();
+    })
   }
 
   setActiceUser(user: any): ActiveUser {
@@ -90,7 +106,6 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
   getCurrentUserId() {
     this.users.forEach((user: any) => {
       if (user.email === this.activeUser.email) this.activeUserId = user.id;
-
     });
   }
 
@@ -110,22 +125,17 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
   }
 
   getAllowedChannels(channels: any) {
-   // console.log(channels);
-
     this.allowedChannels = [];
-
-
     channels.forEach((channel: any) => {
-      //console.log(channel);
 
-      if (typeof channel.users === 'string') channels.users = JSON.parse(channels.users);
-
-      if (channel.users.length = 0) this.allowedChannels.push(channel);
-      else if (channel.users.includes(this.activeUserId)) this.allowedChannels.push(channel);
+      if (channel.users.length === 0) this.allowedChannels.push(channel);
+      else if (channel.users.includes(this.activeUserId)) {
+        let channelWithUserArray = new Channel(channel);
+        let users = channel.users;
+        let usersArr = JSON.parse(users);
+        channelWithUserArray.users = usersArr;
+        this.allowedChannels.push(channelWithUserArray);
+      }
     });
-   //console.log(this.allowedChannels);
-
-
-
   }
 }
