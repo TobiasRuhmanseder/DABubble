@@ -68,7 +68,7 @@ export class LoginService {
       })
       .catch((error) => {
         console.log(error.code);
-        if (error.code == 'auth/invalid-credential') {
+        if (error.code == 'auth/invalid-credential' || error.code == 'auth/wrong-password') {
           this.wrongMailOrPassword = 'Falsche E-Mail oder falsches Passwort.';
         }
       });
