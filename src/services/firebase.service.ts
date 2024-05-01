@@ -25,6 +25,7 @@ import {
 } from 'firebase/storage';
 import { Subject } from 'rxjs';
 import { LoginComponent } from '../app/start-screen/login/login.component';
+import { setActiveConsumer } from '@angular/core/primitives/signals';
 
 @Injectable({
   providedIn: 'root',
@@ -81,11 +82,9 @@ export class FirebaseService implements OnDestroy {
     return onSnapshot(this.getCollRef('channels'), async (list) => {
 
       this.channels = [];
-      list.forEach(async (element:any) => {
-      console.log(element.data());
-        this.channels.push(new Channel(element.data()));   
+      list.forEach(async (element: any) => {
+        this.channels.push(new Channel(element.data()));
       })
-      console.log(this.channels);   
       this.$channels.next(this.channels);
     });
   }
