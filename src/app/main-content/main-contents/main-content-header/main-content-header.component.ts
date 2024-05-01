@@ -177,7 +177,7 @@ export class MainContentHeaderComponent {
     if (this.chatService.currentChannel.users.length === 0) {
       return this.users.allUsers.length;
     }
-    return JSON.parse(this.chatService.currentChannel.users).length;
+    return this.chatService.currentChannel.users.length;
   }
 
   getChannelUsers() {
@@ -188,7 +188,7 @@ export class MainContentHeaderComponent {
     if (this.chatService.currentChannel.users.length === 0) {
       return this.allUsersId();
     }
-    return JSON.parse(this.chatService.currentChannel.users);
+    return this.chatService.currentChannel.users;
   }
 
   allUsersId() {
@@ -205,7 +205,7 @@ export class MainContentHeaderComponent {
     if (this.chatService.currentChannel.users.length === 0) {
       userList = this.allUsersId();
     } else {
-      userList = JSON.parse(this.chatService.currentChannel.users);
+      userList = this.chatService.currentChannel.users;
     }
     checkIfUserInChannel = userList.find((users: string) => users === user);
     if (checkIfUserInChannel) {
