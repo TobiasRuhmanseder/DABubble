@@ -25,7 +25,7 @@ export class MainContentBodyComponent {
     public users: UsersService,
     private scroller: ViewportScroller,
     public scrollService: IdToScrollService
-  ) {} 
+  ) {}
   ngAfterViewInit() {
     this.getScrollToIdObservable();
   }
@@ -98,21 +98,20 @@ export class MainContentBodyComponent {
   getScrollToIdObservable() {
     this.scrollService.idToScroll$.subscribe((id) => {
       if (id) {
-        this.scrollTo(id)
+        this.waitAndScroll(id);
       }
     });
   }
-  
-scrollTo(id:string){
-  const element = document.getElementById(id);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-    this.scrollService.deleteId();
-  } else {
-    setTimeout(() => {
-      this.scrollTo(id);
-    }, 100);
-  }
-}
 
+  waitAndScroll(id: string) {
+    requestAnimationFrame(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        this.scrollService.deleteId();
+      } else {
+        this.waitAndScroll(id);
+      }
+    });
+  }
 }
