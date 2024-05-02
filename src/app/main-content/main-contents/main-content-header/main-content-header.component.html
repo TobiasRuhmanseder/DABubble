@@ -141,6 +141,7 @@
             type="text"
             placeholder="Name eingeben"
             [(ngModel)]="inputAddUser"
+            (ngModelChange)="filterUserList()"
           />
           <div >
             <div

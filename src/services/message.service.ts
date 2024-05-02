@@ -260,11 +260,11 @@ export class MessageService {
 
   async getChannelFromId(id: string) {
     this.currentChannel = await this.fire.getChannel(id);
-    if (this.currentChannel.users.length != 0) {
-      this.currentChannel.users = JSON.parse(this.currentChannel.users);
-    }
     if (this.currentChannel === undefined) {
       this.currentChannel = await this.fire.getDirectMessagesChannel(id);
+    } 
+    else if (this.currentChannel.users.length != 0) {
+      this.currentChannel.users = JSON.parse(this.currentChannel.users)
     }
   }
 
@@ -329,7 +329,10 @@ export class MessageService {
   }
 
   async saveChannel() {
-    let updateChannel = new Channel(this.currentChannel);
+    let newChannel = this.currentChannel;
+    newChannel.users = JSON.stringify(this.currentChannel.users);
+    let updateChannel = new Channel(newChannel);
     await this.fire.updateChannel(updateChannel);
   }
+
 }
