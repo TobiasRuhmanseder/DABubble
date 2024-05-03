@@ -12,6 +12,7 @@ export class CurrentUserService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
   router: Router = inject(Router);
   currentUser = new Subject;
+  confirmationMail: string = '';
 
   constructor() { }
 
@@ -59,37 +60,50 @@ export class CurrentUserService implements OnDestroy {
 
     if (auth.currentUser) {
       const currentUser = auth.currentUser;
+      const currentEmail = currentUser.email;
 
-      updateDoc(doc(this.firestore, 'users', currentUser.uid), {
-        name: userName,
-        email: userEmail
-      }).catch((error) => {
-        console.log(error.code);
-      });
+      this.updateFirestoreUserDetails(currentUser, userName, userEmail);
+      this.updateUserProfile(currentUser, userName);
 
-      updateProfile(currentUser, {
-        displayName: userName
-      }).catch((error) => {
-        console.log(error.code);
-      });
-
-      updateEmail(currentUser, userEmail).then(() => {
-        this.currentUser.next(currentUser);
-        this.sendConfirmationMail(currentUser);
-      }).catch((error) => {
-        console.log(error.code);
-      });
+      if (currentEmail !== userEmail) {
+        this.handleEmailUpdate(currentUser, userEmail);
+      }
     }
+  }
+
+  updateFirestoreUserDetails(currentUser: any, userName: string, userEmail: string) {
+    updateDoc(doc(this.firestore, 'users', currentUser.uid), {
+      name: userName,
+      email: userEmail
+    }).catch((error) => {
+      console.log(error.code);
+    });
+  }
+
+  updateUserProfile(currentUser: any, userName: string) {
+    updateProfile(currentUser, {
+      displayName: userName
+    }).then(() => {
+      this.currentUser.next(currentUser);
+    }).catch((error) => {
+      console.log(error.code);
+    });
+  }
+
+  handleEmailUpdate(currentUser: any, userEmail: string) {
+    updateEmail(currentUser, userEmail).then(() => {
+      this.currentUser.next(currentUser);
+      this.sendConfirmationMail(currentUser);
+    }).catch((error) => {
+      console.log(error.code);
+    });
   }
 
   sendConfirmationMail(currentUser: any) {
     const auth = getAuth();
-    sendEmailVerification(currentUser)
-      .then(() => {
-        console.log('Mail sent');
-      }).catch((error) => {
-        console.log(error.code);
-      });
+    sendEmailVerification(currentUser).catch((error) => {
+      console.log(error.code);
+    });
 
   }
 }
