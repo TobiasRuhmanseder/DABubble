@@ -60,41 +60,64 @@ export class MainContentHeaderComponent {
 
   async search() {
     if (this.searchInput.includes('#')) {
-      this.searching = this.allChannels;
-      const filteredChannels = this.searching.filter((channel) =>
-        channel.name
-          .toLowerCase()
-          .includes(this.searchInput.toLowerCase().replace('#', ''))
-      );
-      this.searching = filteredChannels;
-      return;
+      return this.searchChannel();
     }
     if (this.searchInput.includes('@')) {
-      this.searching = this.users.allUsers;
-      const filteredUsers = this.searching.filter(
-        (user) =>
-          user.name
-            .toLowerCase()
-            .includes(this.searchInput.toLowerCase().replace('@', '')) ||
-          user.email
-            .toLowerCase()
-            .includes(this.searchInput.toLowerCase().replace('@', ''))
-      );
-      this.searching = filteredUsers;
-      return;
+      return this.searchUser();
     }
     this.searching = [];
   }
 
+  private searchUser() {
+    this.searching = this.users.allUsers;
+    const filteredUsers = this.searching.filter(
+      (user) => user.name
+        .toLowerCase()
+        .includes(this.searchInput.toLowerCase().replace('@', '')) ||
+        user.email
+          .toLowerCase()
+          .includes(this.searchInput.toLowerCase().replace('@', ''))
+    );
+    this.searching = filteredUsers;
+    return;
+  }
+
+  private searchChannel() {
+    this.searching = this.allChannels;
+    const filteredChannels = this.searching.filter((channel) => channel.name
+      .toLowerCase()
+      .includes(this.searchInput.toLowerCase().replace('#', ''))
+    );
+    this.searching = filteredChannels;
+    return;
+  }
+
   filterUserList() {
+    this.setCurrentUser();
     let allUserList = this.users.users;
-    let list = allUserList.filter((user: { id: any }) => {
-      return !this.chatService.currentChannel.users.includes(user.id);
-    });
-    let filterList = list.filter((user: { name: string }) => {
+    let list = this.filterAllUser(allUserList);
+    list = this.filterSelectedUser(list);   
+    list = this.filterInput(list);
+    this.addUserList = list;
+  }
+
+  private filterInput(list: any) {
+    return list.filter((user: { name: string; }) => {
       return user.name.toLowerCase().includes(this.inputAddUser.toLowerCase());
     });
-    this.addUserList = filterList;
+  }
+
+  private filterSelectedUser(list: any) {
+    list = list.filter((user: { id: any; }) => {
+      return !this.selectedUser.some((selectedUser) => selectedUser.id === user.id);
+    });
+    return list;
+  }
+
+  private filterAllUser(allUserList: any) {
+    return allUserList.filter((user: { id: any; }) => {
+      return !this.chatService.currentChannel.users.includes(user.id);
+    });
   }
 
   selectUser(user: any) {
@@ -122,7 +145,7 @@ export class MainContentHeaderComponent {
   addUserToChannel() {
     for (let i = 0; i < this.selectedUser.length; i++) {
       this.users.users.find((user: any) => {
-        if (user === this.selectedUser[i]) {
+        if (user.id === this.selectedUser[i].id) {
           this.chatService.currentChannel.users.push(user.id);
         }
       });
@@ -147,11 +170,20 @@ export class MainContentHeaderComponent {
   }
 
   addUser() {
+    this.setCurrentUser();
     if (this.chatService.currentChannel.users.length != 0) {
       this.showBg = !this.showBg;
       this.addUserDialog = true;
       this.filterUserList();
     }
+  }
+
+  private setCurrentUser() {
+    try {
+      this.chatService.currentChannel.users = JSON.parse(
+        this.chatService.currentChannel.users
+      );
+    } catch {}
   }
 
   goToAddUser() {
@@ -165,26 +197,31 @@ export class MainContentHeaderComponent {
   }
 
   openChannelData() {
+    this.setCurrentUser();
     this.channelDetails.open(ChannelPopUpComponent, {
       data: { channel: this.chatService.currentChannel },
     });
   }
 
   getChannelUsersLength() {
+    this.setCurrentUser();
     if (this.chatService.currentChannel === undefined) {
       return '';
     }
     if (this.chatService.currentChannel.users.length === 0) {
       return this.users.allUsers.length;
     }
-    return this.chatService.currentChannel.users.length;
+    try {
+      return this.chatService.currentChannel.users.length;
+    } catch {}
   }
 
   getChannelUsers() {
+    this.setCurrentUser();
     if (this.chatService.currentChannel === undefined) {
       return '';
     }
-    
+
     if (this.chatService.currentChannel.users.length === 0) {
       return this.allUsersId();
     }
@@ -200,6 +237,7 @@ export class MainContentHeaderComponent {
   }
 
   getUserPicFromChannel(user: string) {
+    this.setCurrentUser();
     let checkIfUserInChannel;
     let userList;
     if (this.chatService.currentChannel.users.length === 0) {
@@ -227,6 +265,7 @@ export class MainContentHeaderComponent {
   }
 
   getDirectMessageUser() {
+    this.setCurrentUser();
     let directUserId = this.chatService.currentChannel.users.filter(
       (user: any) => user !== this.chatService.currentUser
     );

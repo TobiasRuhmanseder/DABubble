@@ -390,11 +390,11 @@
     flex-direction: row;
     gap: 10px;
     padding: 3px 10px;
+    border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s;
     &:hover {
       background-color: #eceefe;
-      border-radius: 30px;
       color: #535af1;
     }
   }

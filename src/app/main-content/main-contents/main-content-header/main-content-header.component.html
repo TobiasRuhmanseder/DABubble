@@ -4,7 +4,7 @@
     <input
       class="search-input"
       [(ngModel)]="searchInput"
-      (input)="search()"
+      (ngModelChange)="search()"
       type="text"
       placeholder="An: #channel, @jemand oder E-Mail addresse"
     />
