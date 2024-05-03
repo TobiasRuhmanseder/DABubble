@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, OnInit, inject } from '@angular/core';
 import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { getAuth, onAuthStateChanged, signOut, updateProfile, updateEmail } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut, updateProfile, updateEmail, sendEmailVerification } from "firebase/auth";
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
