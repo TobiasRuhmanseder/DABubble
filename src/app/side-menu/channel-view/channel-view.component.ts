@@ -11,6 +11,8 @@ import { CurrentUserService } from '../../../services/current-user.service';
 import { ActiveUser } from '../../../interfaces/active-user.interface';
 import { UsersService } from '../../../services/users.service';
 import { Channel } from '../../../models/channel.class';
+import { Subject } from 'rxjs';
+import { AllowedChannelsService } from '../../../services/allowed-channels.service';
 
 
 @Component({
@@ -18,7 +20,8 @@ import { Channel } from '../../../models/channel.class';
   standalone: true,
   imports: [IconHoverChangeImageComponent, ChannelListElementComponent, CommonModule, NewChannelListElementComponent],
   templateUrl: './channel-view.component.html',
-  styleUrl: './channel-view.component.scss'
+  styleUrl: './channel-view.component.scss',
+  providers: [ChannelViewComponent]
 })
 export class ChannelViewComponent implements OnDestroy, OnInit {
   dropdownOpen = true;
@@ -26,6 +29,7 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
   activeRoute: ActivatedRoute = inject(ActivatedRoute);
   currentUserService: CurrentUserService = inject(CurrentUserService);
   usersService: UsersService = inject(UsersService);
+  allowedChannelService: AllowedChannelsService = inject(AllowedChannelsService);
   currentCollectionId = '';
   allowedChannels: any[] = [];
   channels: any;
@@ -33,6 +37,7 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
   unsubChannels: any;
   unsubCurrentUser: any;
   unsubUsers: any;
+  unsubAllowedChannel: any;
   dialog: MatDialog = inject(MatDialog);
   activeUser: any;
   activeUserId: string = '';
@@ -40,17 +45,27 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
 
 
   ngOnInit(): void {
-    this.users = this.usersService.users;
-    this.unsubCurrentUser = this.subCurrentUser();
-    this.currentUserService.activeUser();
-    this.unsubParams = this.subParam();
-    this.unsubChannels = this.subChannels();
-    this.unsubUsers = this.subUsers();
+    // this.users = this.usersService.users;
+    // this.unsubCurrentUser = this.subCurrentUser();
+    // this.currentUserService.activeUser();
+    // this.unsubParams = this.subParam();
+    // this.unsubChannels = this.subChannels();
+    //this.unsubUsers = this.subUsers();
+    this.unsubAllowedChannel = this.subAllowChannel();
+
   }
+
+  subAllowChannel() {
+    return this.allowedChannelService.getAllowedChannels().subscribe(channels => {
+     // this.allowedChannels = this.getAllowedChannels(channels);
+      this.allowedChannels = this.allowedChannelService.getUsersWithParse(channels);
+    })
+  }
+
+
 
   loadAllowedChannel() {
     this.getAllowedChannels(this.firebaseService.channels);
-
   }
 
   subChannels() {
@@ -63,7 +78,6 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
   subParam() {
     return this.activeRoute.params.subscribe(params => {
       this.currentCollectionId = params['id'];
-      this.loadAllowedChannel();
     });
   }
 
@@ -114,10 +128,11 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
-    this.unsubParams.unsubscribe();
-    this.unsubChannels.unsubscribe();
-    this.unsubCurrentUser.unsubscribe();
-    this.unsubUsers.unsubscribe();
+    // this.unsubParams.unsubscribe();
+    // this.unsubChannels.unsubscribe();
+    // this.unsubCurrentUser.unsubscribe();
+    // this.unsubUsers.unsubscribe();
+    this.unsubAllowedChannel.unsubscribe();
   }
 
   toggleDropdownMenu() {
@@ -125,18 +140,19 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
   }
 
   getAllowedChannels(channels: any) {
-    this.allowedChannels = [];
+    let allowedChannels: any = [];
     channels.forEach((channel: any) => {
-
-      if (channel.users.length === 0) this.allowedChannels.push(channel);
+      if (channel.users.length === 0) allowedChannels.push(channel);
       else if (channel.users.includes(this.activeUserId)) {
         let channelWithUserArray = new Channel(channel);
         let users = channel.users;
         let usersArr = [];
-        if (typeof users === 'string') usersArr= JSON.parse(users);
+        if (typeof users === 'string') usersArr = JSON.parse(users);
         channelWithUserArray.users = usersArr;
-        this.allowedChannels.push(channelWithUserArray);
+        allowedChannels.push(channelWithUserArray);
       }
     });
+
+    return allowedChannels;
   }
 }

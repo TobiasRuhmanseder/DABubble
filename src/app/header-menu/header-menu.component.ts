@@ -22,12 +22,16 @@ export class HeaderMenuComponent implements OnInit, OnDestroy {
   drownDownMenuOpen = false;
 
   ngOnInit(): void {
-    this.unsubCurrentUser = this.currentUserService.currentUser.subscribe(user => {
+    this.unsubCurrentUser = this.subCurrentUser();
+    this.currentUserService.activeUser();
+  }
+
+  subCurrentUser(){
+   return this.currentUserService.currentUser.subscribe(user => {
       let currentUser;
       currentUser = this.setActiceUser(user);
       this.activeUser = currentUser;
     });
-    this.currentUserService.activeUser();
   }
 
   ngOnDestroy(): void {

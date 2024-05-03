@@ -23,7 +23,7 @@ import {
   ref,
   uploadBytes,
 } from 'firebase/storage';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { LoginComponent } from '../app/start-screen/login/login.component';
 import { setActiveConsumer } from '@angular/core/primitives/signals';
 
@@ -33,7 +33,7 @@ import { setActiveConsumer } from '@angular/core/primitives/signals';
 export class FirebaseService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
   channels: Channel[] = [];
-  $channels = new Subject;
+  $channels = new BehaviorSubject<Channel[]>([]);
   unsubChannels;
 
   constructor() {
@@ -79,10 +79,10 @@ export class FirebaseService implements OnDestroy {
   }
 
   subChannelsList() {
-    return onSnapshot(this.getCollRef('channels'), async (list) => {
+    return onSnapshot(this.getCollRef('channels'),(list) => {
 
       this.channels = [];
-      list.forEach(async (element: any) => {
+      list.forEach((element: any) => {
         this.channels.push(new Channel(element.data()));
       })
       this.$channels.next(this.channels);

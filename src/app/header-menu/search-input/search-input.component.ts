@@ -11,6 +11,10 @@ import { collection } from '@firebase/firestore';
 import { DirectMessagesService } from '../../../services/direct-messages.service';
 import { Router } from '@angular/router';
 import { IdToScrollService } from '../../../services/id-to-scroll.service';
+import { AllowedChannelsService } from '../../../services/allowed-channels.service';
+import { Channel } from '../../../models/channel.class';
+import { Message } from '../../../models/message.class';
+
 
 @Component({
   selector: 'app-search-input',
@@ -35,43 +39,55 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   firestore: Firestore = inject(Firestore);
   diMeService: DirectMessagesService = inject(DirectMessagesService);
   idToScrollService: IdToScrollService = inject(IdToScrollService);
+  allowedChannelService: AllowedChannelsService = inject(AllowedChannelsService);
   router: Router = inject(Router);
   currentUser: any = [];
   unsubCurrentUser: any;
+  unsubAllowedChannel: any;
   unsubInput: any;
   loadMessages = false;
-  constructor() {
-    this.subInput();
-  }
+  allowedChannels: any = [];
+
 
   ngOnInit(): void {
-    this.unsubCurrentUser = this.currentUserService.currentUser.subscribe(user => {
-      this.currentUser = user;
-    });
-    this.currentUserService.activeUser();
+    this.unsubCurrentUser = this.subCurrentUser();
+    this.unsubAllowedChannel = this.subAllowChannel();
+    this.unsubInput = this.subInput();
   }
 
   ngOnDestroy(): void {
     this.unsubCurrentUser.unsubscribe();
     this.unsubInput.unsubscribe();
+    this.unsubAllowedChannel.unsubscribe();
+  }
+
+  subCurrentUser() {
+    return this.currentUserService.currentUser.subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
   subInput() {
-    this.unsubInput =
-      this.input$.pipe(debounceTime(200)).subscribe(async search => {
+    return this.input$.pipe(debounceTime(200)).subscribe(async search => {
+      if (search.length >= 2) {
+        this.filteredUsers = this.filterUser(search);
+        this.filteredChannel = this.filterChannel(search);
+        this.checkHits();
+        this.filterMessages(search);
+        this.checkHits();
+      } else {
+        this.dropDownList = false;
         this.clearAllArrays();
-        if (search.length >= 2) {
-          this.filteredUsers = this.filterUser(search);
-          this.filteredChannel = this.filterChannel(search);
-          this.checkHits();
-          if (!this.loadMessages) await this.messagesIntoChannel();
-          this.filterMessages(search);
-          this.checkHits();
-        } else {
-          this.dropDownList = false;
-          this.clearAllArrays();
-        }
-      })
+      }
+    })
+  }
+
+  subAllowChannel() {
+    return this.allowedChannelService.getAllowedChannels().subscribe(channels => {
+      this.allowedChannels = this.allowedChannelService.getUsersWithParse(channels);
+      this.clearAllArrays();
+      if(!this.loadMessages)this.messagesIntoChannel();
+    })
   }
 
   checkHits() {
@@ -91,15 +107,12 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   }
 
   filterChannel(search: string) {
-    let filterChannel = this.FirebaseService.channels.filter(((el: any) => el.name.toLowerCase().includes(search.toLowerCase())));
+    let filterChannel = this.allowedChannels.filter(((el: any) => el.name.toLowerCase().includes(search.toLowerCase())));
     return filterChannel;
   }
 
   filterMessages(search: string) {
     for (let i = 0; i < this.channelMessages.length; i++) {
-      for (let x = 0; x < this.channelMessages[i].messages.length; x++) {
-      }
-
       let filtered = this.channelMessages[i].messages.filter(((el: any) => el.message.toLowerCase().includes(search.toLowerCase())));
       for (let z = 0; z < filtered.length; z++) {
         this.filteredMessages.push({ message: filtered[z], channelname: this.channelMessages[i].name, channelId: this.channelMessages[i].id })
@@ -112,27 +125,25 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     if (index != -1) filteredUser.splice(index, 1);
     return filteredUser;
   }
-
   async messagesIntoChannel() {
     this.loadMessages = true;
     this.channelMessages = [];
-    for (let i = 0; i < this.FirebaseService.channels.length; i++) {
-      let channel: any = [];
-      channel.push(this.FirebaseService.channels[i]);
-
-      let ref = await getDocs(collection(this.firestore, 'channels', this.FirebaseService.channels[i].id, 'messages'));
+    for (let i = 0; i < this.allowedChannels.length; i++) {
+      let channel = new Channel(this.allowedChannels[i]);
+      let ref = await getDocs(collection(this.firestore, 'channels', this.allowedChannels[i].id, 'messages'));
       ref.forEach((element: any) => {
-        let ref = element.data();
+        let ref = new Message(element.data()); 
         let messages = [
           {
             id: ref.id,
             message: ref.content
           }
         ];
-        channel[0].messages.push(messages[0]);
+        channel.messages.push(messages[0]);
       });
-      this.channelMessages.push(channel[0]);
+      this.channelMessages.push(channel);
     }
+    this.loadMessages = false;
   }
 
   clearInput() {
