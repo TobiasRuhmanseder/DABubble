@@ -58,27 +58,51 @@ export class CurrentUserService implements OnDestroy {
     const auth = getAuth();
 
     if (auth.currentUser) {
-        const currentUser = auth.currentUser;
+      const currentUser = auth.currentUser;
+      const currentEmail = currentUser.email;
 
-        updateProfile(currentUser, {
-            displayName: userName
-        }).catch((error) => {
-            console.log(error.code);
-        });
+      this.updateFirestoreUserDetails(currentUser, userName, userEmail);
+      this.updateUserProfile(currentUser, userName);
 
-        updateEmail(currentUser, userEmail).catch((error) => {
-            console.log(error.code);
-        });
-
-        updateDoc(doc(this.firestore, 'users', currentUser.uid), {
-            name: userName,
-            email: userEmail
-        }).then(() => {
-            this.currentUser.next(currentUser);
-        }).catch((error) => {
-            console.log(error.code);
-        });
+      if (currentEmail !== userEmail) {
+        this.handleEmailUpdate(currentUser, userEmail);
+      }
     }
-}
+  }
 
+  updateFirestoreUserDetails(currentUser: any, userName: string, userEmail: string) {
+    updateDoc(doc(this.firestore, 'users', currentUser.uid), {
+      name: userName,
+      email: userEmail
+    }).catch((error) => {
+      console.log(error.code);
+    });
+  }
+
+  updateUserProfile(currentUser: any, userName: string) {
+    updateProfile(currentUser, {
+      displayName: userName
+    }).then(() => {
+      this.currentUser.next(currentUser);
+    }).catch((error) => {
+      console.log(error.code);
+    });
+  }
+
+  handleEmailUpdate(currentUser: any, userEmail: string) {
+    updateEmail(currentUser, userEmail).then(() => {
+      this.currentUser.next(currentUser);
+      this.sendConfirmationMail(currentUser);
+    }).catch((error) => {
+      console.log(error.code);
+    });
+  }
+
+  sendConfirmationMail(currentUser: any) {
+    const auth = getAuth();
+    sendEmailVerification(currentUser).catch((error) => {
+      console.log(error.code);
+    });
+
+  }
 }
