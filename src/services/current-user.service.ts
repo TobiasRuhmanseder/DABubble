@@ -12,7 +12,6 @@ export class CurrentUserService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
   router: Router = inject(Router);
   currentUser = new Subject;
-  confirmationMail: string = '';
 
   constructor() { }
 
