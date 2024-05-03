@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, OnInit, inject } from '@angular/core';
 import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { getAuth, onAuthStateChanged, signOut, updateProfile, updateEmail } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut, updateProfile, updateEmail, sendEmailVerification } from "firebase/auth";
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -58,27 +58,38 @@ export class CurrentUserService implements OnDestroy {
     const auth = getAuth();
 
     if (auth.currentUser) {
-        const currentUser = auth.currentUser;
+      const currentUser = auth.currentUser;
 
-        updateProfile(currentUser, {
-            displayName: userName
-        }).catch((error) => {
-            console.log(error.code);
-        });
+      updateDoc(doc(this.firestore, 'users', currentUser.uid), {
+        name: userName,
+        email: userEmail
+      }).catch((error) => {
+        console.log(error.code);
+      });
 
-        updateEmail(currentUser, userEmail).catch((error) => {
-            console.log(error.code);
-        });
+      updateProfile(currentUser, {
+        displayName: userName
+      }).catch((error) => {
+        console.log(error.code);
+      });
 
-        updateDoc(doc(this.firestore, 'users', currentUser.uid), {
-            name: userName,
-            email: userEmail
-        }).then(() => {
-            this.currentUser.next(currentUser);
-        }).catch((error) => {
-            console.log(error.code);
-        });
+      updateEmail(currentUser, userEmail).then(() => {
+        this.currentUser.next(currentUser);
+        this.sendConfirmationMail(currentUser);
+      }).catch((error) => {
+        console.log(error.code);
+      });
     }
-}
+  }
 
+  sendConfirmationMail(currentUser: any) {
+    const auth = getAuth();
+    sendEmailVerification(currentUser)
+      .then(() => {
+        console.log('Mail sent');
+      }).catch((error) => {
+        console.log(error.code);
+      });
+
+  }
 }
