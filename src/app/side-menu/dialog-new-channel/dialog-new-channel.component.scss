@@ -40,22 +40,51 @@
         margin-right: 20px;
     }
 
-    input {      
+    input {
         margin-top: 20px;
         margin-bottom: 20px;
     }
 }
 
-.input-tag{
+.input-tag {
     padding: 15px 63px;
 }
 
-.optional{
+.optional {
     color: #686868 !important;
     font-weight: 400 !important;
 }
 
-.button-container{
+.button-container {
     display: flex;
     justify-content: flex-end;
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .add-channel-dialog {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .content {
+        padding: 25px !important;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+    .add-channel-dialog {
+        width: calc(572px - 80px);
+        height: calc(560px - 80px);
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

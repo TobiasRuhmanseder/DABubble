@@ -3,5 +3,21 @@
     <div class="button" (click)="userProfileOpen = true">Profil</div>
     <div class="button" (click)="signOutUser()">Log out</div>
 </div>
-<app-current-user-profile *ngIf="userProfileOpen" (currentUserProfileClosed)="userProfileOpen = $event"
-    [activeUser]="this.activeUser"></app-current-user-profile>
+<div>
+    <div class="background-mobile" (click)="mobileCloseDialog()"></div>
+    <div [class.mobile-menu]="!slideOut" [class.slide-out]="slideOut">
+        <div class="line"></div>
+        <div class="button-container">
+            <div class="button-element">
+                <img src="../../../assets/img/account_circle.svg" alt="">
+                <div class="button" (click)="userProfileOpen = true">Profil</div>
+            </div>
+            <div class="button-element">
+                <img src="../../../assets/img/logout.svg" alt="">
+                <div class="button" (click)="signOutUser()">Log out</div>
+            </div>
+
+        </div>
+    </div>
+    <app-current-user-profile *ngIf="userProfileOpen" (currentUserProfileClosed)="userProfileOpen = $event"
+        [activeUser]="this.activeUser"></app-current-user-profile>

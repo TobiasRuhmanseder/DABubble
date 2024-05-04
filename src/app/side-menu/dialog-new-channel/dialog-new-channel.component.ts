@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef, matDialogAnimations } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,10 +31,12 @@ export class DialogNewChannelComponent {
     this.dialogRef.close();
   }
 
-  nextUserChoose(){
-    this.dialog.open(DialogNewChannelAddUserComponent,{
+  nextUserChoose() {
+    this.dialog.open(DialogNewChannelAddUserComponent, {
       height: 'auto',
-      data:{
+      position: { bottom: '0px' },
+
+      data: {
         channelName: this.channelForm.get('channelName')?.value,
         channelDescription: this.channelForm.get('channelDescription')?.value
       }

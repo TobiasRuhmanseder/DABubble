@@ -1,6 +1,5 @@
 .add-channel-user-dialog {
     width: calc(710px - 80px);
-    //height: calc(279px - 80px);
     border-radius: 100px;
 }
 
@@ -123,11 +122,11 @@ input[type='radio'] {
     position: relative;
 }
 
-.drop-down-container{
-height: 225px;
-width: 630px;
-overflow: hidden;
-position: fixed;
+.drop-down-container {
+    height: 225px;
+    width: 630px;
+    overflow: hidden;
+    position: fixed;
 }
 
 .drop-down-list {
@@ -137,12 +136,12 @@ position: fixed;
     border-radius: 20px;
     overflow: auto;
 
-    &::-webkit-scrollbar{
+    &::-webkit-scrollbar {
         height: 90%;
     }
 }
 
-.drop-down-list::-webkit-scrollbar-track{
+.drop-down-list::-webkit-scrollbar-track {
     margin-top: 5px;
     margin-bottom: 22px;
 }
@@ -173,3 +172,40 @@ position: fixed;
     margin-right: 15px;
     margin-left: 0px;
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .content {
+        padding: 25px !important;
+    }
+
+    .add-channel-user-dialog {
+        width: 100vw;
+    }
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 599px) and (max-width: 1200px) {
+    .add-channel-user-dialog {
+        width: calc(572px - 80px);
+        border-radius: 100px;
+    }
+
+    .drop-down-container {
+        width: 492px;
+    }
+
+    .drop-down-list {
+        width: 492px;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

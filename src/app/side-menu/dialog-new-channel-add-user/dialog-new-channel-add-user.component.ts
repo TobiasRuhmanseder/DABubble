@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, inject, ViewChild, ElementRef, OnChanges, SimpleChanges, AfterViewChecked, AfterContentChecked, AfterContentInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -40,6 +40,7 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy, Afte
   unsubInput: any;
   @ViewChild('userfield') private scrollDown?: ElementRef;
 
+
   form = new FormGroup({
     users: new FormControl(''),
   })
@@ -47,6 +48,8 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy, Afte
   constructor(public dialogRef: MatDialogRef<DialogNewChannelAddUserComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.subInput();
   }
+
+
 
   subInput() {
     this.unsubInput =
