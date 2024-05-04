@@ -48,7 +48,7 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
     // this.users = this.usersService.users;
     // this.unsubCurrentUser = this.subCurrentUser();
     // this.currentUserService.activeUser();
-    // this.unsubParams = this.subParam();
+    this.unsubParams = this.subParam();
     // this.unsubChannels = this.subChannels();
     //this.unsubUsers = this.subUsers();
     this.unsubAllowedChannel = this.subAllowChannel();
@@ -57,7 +57,7 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
 
   subAllowChannel() {
     return this.allowedChannelService.getAllowedChannels().subscribe(channels => {
-     // this.allowedChannels = this.getAllowedChannels(channels);
+      // this.allowedChannels = this.getAllowedChannels(channels);
       this.allowedChannels = this.allowedChannelService.getUsersWithParse(channels);
     })
   }
