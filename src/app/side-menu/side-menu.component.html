@@ -1,4 +1,4 @@
-<div class=" card side-menu" [class.d-none]="!menuOpen">
+<div class=" card side-menu">
     <div class="workspace-section">
         <div class="workspace-description">
             <img class="logo" src="../../assets/img/workspace_logo.svg" alt="">
@@ -12,9 +12,4 @@
         <app-channel-view></app-channel-view>
         <app-direct-message-view></app-direct-message-view>
     </div>
-</div>
-<div class="slide-button" (click)="toggle()">
-    <span [class.d-none]="!menuOpen">Workspace-Menü schließen</span>
-    <span [class.d-none]="menuOpen">Workspace-Menü öffnen</span>
-    <div class="icon" [class.in]="!menuOpen" [class.out]="menuOpen"></div>
 </div>

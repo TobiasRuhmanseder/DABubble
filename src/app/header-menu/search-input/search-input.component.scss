@@ -174,7 +174,6 @@
         z-index: 98;
 
         input {
-
             height: 100%;
             border: 0.5px solid #ADB0D9;
             border-style: solid;
@@ -182,8 +181,8 @@
     }
 
     .dropdown-menu {
-        top: 52px;
-        max-height: calc(100vh - 210px);
+        top: 58px;
+        max-height: calc(100vh - 216px);
         border-radius: 24px 24px 24px 24px;
     }
 }
@@ -195,4 +194,19 @@
 @media only screen and (min-width: 992px) {}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}
+@media only screen and (min-width: 1200px) {
+    .input-container {
+        height: 100%;
+
+        input {
+            height: 70px;
+            border: none;
+        }
+    }
+
+    .dropdown-menu {
+        top: 44px;
+        max-height: calc(100vh - 216px);
+        border-radius: 0px 0px 35px 35px;
+    }
+}

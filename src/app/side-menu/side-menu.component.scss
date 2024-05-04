@@ -33,62 +33,11 @@
     width: 0px;
 }
 
-.slide-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: calc(100vh / 2 + 100px);
-    left: -150px;
-    rotate: 270deg;
-    width: 350px;
-    height: 60px;
-    border-radius: 0px 0px 30px 30px;
-    background-color: white;
-    box-shadow: -4px 4px 7px 0px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-
-    &:hover {
-        color: #535AF1;
-
-        span {
-            font-weight: 700 !important;
-        }
-    }
-
-    span {
-        font-weight: 500;
-        font-size: 20px;
-    }
-
-    .icon {
-        margin-left: 15px;
-        width: 32px;
-        height: 32px;
-        background-image: url(../../assets/img/slide.svg);
-        background-position: center;
-        background-size: contain;
-        transition: all 125ms ease-in-out;
-
-    }
-
-    .in {
-        rotate: -90deg;
-    }
-
-    .out {
-        rotate: 90deg;
-    }
-}
-
-.slide-button:hover .icon {
-    background-image: url(../../assets/img/slide_hover.svg) !important;
-}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .side-menu {
-        width: calc(100% - 60px);
+        width: calc(100vw - 60px);
         min-width: none;
         height: 100vh;
         padding: 30px;
@@ -115,14 +64,13 @@
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
     .side-menu {
-        width: calc(100% - 60px);
+        width: calc(100vw - 100px);
         min-width: none;
-
         padding: 30px;
     }
 
     .workspace-section {
-        height: none
+        height: none;
     }
 
     .workspace-description {
@@ -132,14 +80,44 @@
     .app-icon {
         display: none;
     }
-    
+
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {}
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {}
+@media only screen and (min-width: 992px) {
+    .side-menu {
+        min-width: calc(350px - 30px - 30px);
+        height: calc(100% - 30px - 30px);
+        //padding: 15px;
+    }
+
+}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}
+@media only screen and (min-width: 1200px) {
+    .side-menu {
+        width: calc(366px - 30px - 30px);
+        padding: 30px;
+    }
+
+    .workspace-description {
+        display: flex;
+    }
+
+    .app-icon {
+        display: block;
+    }
+
+    .scroll-window {
+        height: calc(100vh - 300px);
+    }
+
+    .workspace-section {
+        height: none;
+    }
+
+
+}

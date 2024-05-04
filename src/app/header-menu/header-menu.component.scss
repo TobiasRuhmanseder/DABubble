@@ -117,7 +117,6 @@
 
         img {
             width: 180px;
-
         }
     }
 
@@ -148,7 +147,120 @@
 @media only screen and (min-width: 768px) {}
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {}
+@media only screen and (min-width: 992px) {
+    .header-menu {
+        padding-left: 30px;
+        padding-top: 5px;
+        padding-bottom: 30px;
+        padding-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .left-container {
+        display: flex;
+        align-items: center;
+        width: calc(100% - 505px);
+    }
+
+    .right-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        margin-right: 111px;
+    }
+
+    .input-container {
+        position: absolute;
+        top: 140px;
+        margin-left: -25px;
+        width: calc(100vw - 40px);
+    }
+
+    .arrow-down {
+        display: block;
+        cursor: pointer;
+        margin-right: 30px;
+
+        &:hover {
+            scale: 1.1;
+        }
+    }
+
+    .username {
+        display: block;
+        font-size: 32px;
+        font-weight: 700;
+    }
+
+    .user-pic-size {
+        height: 70px;
+        width: 70px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        inset: 0;
+    }
+}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}
+@media only screen and (min-width: 1200px) {
+    .input-container {
+        position: initial;
+        top: 0px;
+        margin-left: 0px;
+        width: calc(100% - 243px);
+    }
+
+    .header-menu {
+        height: auto;
+        padding-left: 30px;
+        padding-top: 5px;
+        padding-bottom: 30px;
+        padding-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .left-container {
+        display: flex;
+        align-items: center;
+        width: calc(100% - 400px);
+
+        img {
+            width: auto;
+            height: auto;
+        }
+    }
+
+    .logo {
+        margin-right: 40px;
+    }
+
+    .username {
+        font-size: 22px;
+        font-weight: 700;
+    }
+}
+
+@media only screen and (min-width: 1500px) {
+
+    .left-container {
+        width: calc(100% - 490px) !important;
+    }
+
+    .logo {
+        margin-right: 111px;
+    }
+
+    .username {
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+}

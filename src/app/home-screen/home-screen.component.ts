@@ -15,11 +15,14 @@ import { UsersService } from '../../services/users.service';
   styleUrl: './home-screen.component.scss',
 })
 export class HomeScreenComponent {
+
+  menuOpen = true;
+
   constructor(
     private login: CurrentUserService,
     private chatService: MessageService,
     private users: UsersService
-  ) {}
+  ) { }
   ngAfterViewInit() {
     this.setCurrentUser();
   }
@@ -45,5 +48,9 @@ export class HomeScreenComponent {
         'Die Benutzerdaten konnten nicht geladen werden. Maximale Anzahl an Versuchen erreicht.'
       );
     }
+  }
+
+  toggle() {
+    this.menuOpen = !this.menuOpen;
   }
 }
