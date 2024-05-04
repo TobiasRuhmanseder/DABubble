@@ -30,6 +30,13 @@ body {
   border-radius: 30px;
 }
 
+@media only screen and (max-width: 600px) {
+  .card {
+    background-color: white;
+    border-radius: 0px;
+  }
+}
+
 .d-none {
   display: none;
 }
@@ -285,6 +292,7 @@ body {
 
 // responsive
 @media(max-width: 768px) {
+
   .login-container,
   .legal-container {
     font-size: 17px;
@@ -331,6 +339,7 @@ body {
 }
 
 @media(max-width: 480px) {
+
   .login-container,
   .legal-container {
     width: 90%;

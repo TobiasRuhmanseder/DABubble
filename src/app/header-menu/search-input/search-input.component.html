@@ -1,6 +1,6 @@
 <div class="input-container">
-    <input class="input-search" #searchInput (input)="input$.next(searchInput.value)" [(ngModel)]="inputValue"
-        type="text" autocomplete="off">
+    <input #searchInput (input)="input$.next(searchInput.value)" [(ngModel)]="inputValue" type="text"
+        autocomplete="off">
     <div class="search-logo">
         <img src="../../assets/img/magnifying_glass.svg" alt="">
     </div>

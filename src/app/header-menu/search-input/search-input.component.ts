@@ -70,8 +70,10 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   subInput() {
     return this.input$.pipe(debounceTime(200)).subscribe(async search => {
       if (search.length >= 2) {
+        this.clearAllArrays();
         this.filteredUsers = this.filterUser(search);
         this.filteredChannel = this.filterChannel(search);
+        if (!this.loadMessages) await this.messagesIntoChannel();
         this.checkHits();
         this.filterMessages(search);
         this.checkHits();
@@ -85,8 +87,7 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   subAllowChannel() {
     return this.allowedChannelService.getAllowedChannels().subscribe(channels => {
       this.allowedChannels = this.allowedChannelService.getUsersWithParse(channels);
-      this.clearAllArrays();
-      if(!this.loadMessages)this.messagesIntoChannel();
+      if (!this.loadMessages) this.messagesIntoChannel();
     })
   }
 
@@ -127,12 +128,14 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   }
   async messagesIntoChannel() {
     this.loadMessages = true;
+    console.log(this.allowedChannels);
+
     this.channelMessages = [];
     for (let i = 0; i < this.allowedChannels.length; i++) {
       let channel = new Channel(this.allowedChannels[i]);
       let ref = await getDocs(collection(this.firestore, 'channels', this.allowedChannels[i].id, 'messages'));
       ref.forEach((element: any) => {
-        let ref = new Message(element.data()); 
+        let ref = new Message(element.data());
         let messages = [
           {
             id: ref.id,

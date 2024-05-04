@@ -120,6 +120,7 @@
 
 .messages {
     margin-left: 40px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -144,3 +145,54 @@
         }
     }
 }
+
+@media only screen and (max-width: 600px) {
+
+    .input-container {
+        height: 48px;
+        z-index: 97;
+
+        input {
+
+            height: 100%;
+            border: 0.5px solid #ADB0D9;
+            border-style: solid;
+        }
+    }
+
+    .dropdown-menu {
+        top: 52px;
+        max-height: calc(100vh - 210px);
+        border-radius: 24px 24px 24px 24px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .input-container {
+        height: 54px;
+        z-index: 98;
+
+        input {
+
+            height: 100%;
+            border: 0.5px solid #ADB0D9;
+            border-style: solid;
+        }
+    }
+
+    .dropdown-menu {
+        top: 52px;
+        max-height: calc(100vh - 210px);
+        border-radius: 24px 24px 24px 24px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
