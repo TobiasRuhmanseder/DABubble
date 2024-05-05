@@ -13,11 +13,11 @@ import { Observable, Subscription, interval, take, timeInterval } from 'rxjs';
   templateUrl: './current-user-dropdown-menu.component.html',
   styleUrl: './current-user-dropdown-menu.component.scss'
 })
-export class CurrentUserDropdownMenuComponent implements OnDestroy {
+export class CurrentUserDropdownMenuComponent {
   @Output() dropDownMenuClosed: EventEmitter<boolean> = new EventEmitter();
   @Input() activeUser!: ActiveUser;
   currentUserService: CurrentUserService = inject(CurrentUserService);
-  userProfileOpen = false;
+  userProfileIsOpen = false;
   intervalClose = interval(350);
   unsubInterval: any;
   slideOut = false;
@@ -34,6 +34,11 @@ export class CurrentUserDropdownMenuComponent implements OnDestroy {
     this.unsubInterval = this.subInterval();
   }
 
+  userProfilOpen() {
+    this.userProfileIsOpen = true;
+    this.slideOut = true;
+  }
+
   subInterval() {
     this.slideOut = true;
     return this.intervalClose.pipe(timeInterval(), take(1)).subscribe(() => {
@@ -42,8 +47,9 @@ export class CurrentUserDropdownMenuComponent implements OnDestroy {
     )
   }
 
-  ngOnDestroy(): void {
-
+  closeUserProfil(event: boolean) {
+    this.userProfileIsOpen = event;
+    this.slideOut = event;
   }
 
   signOutUser() {

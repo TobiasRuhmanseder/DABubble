@@ -79,20 +79,9 @@
     margin-bottom: 45px;
 }
 
-.mail-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 20px;
-
-    span {
-        font-size: 20px;
-        font-weight: 700;
-    }
-
-    img {
-        margin-right: 20px;
-    }
+.mail-container-edit {
+    flex-direction: column !important;
+    align-items: flex-start !important;
 
     input {
         width: calc(100% - 40px);
@@ -104,6 +93,22 @@
         padding: 15px 20px 15px 20px;
         border-radius: 26px;
         margin-bottom: 10px;
+    }
+}
+
+.mail-container {
+    display: flex;
+    // flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+
+    span {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    img {
+        margin-right: 20px;
     }
 }
 
@@ -121,8 +126,133 @@
     margin-top: 40px;
 }
 
-.edit-head{
+.edit-head {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 400px) {
+
+    .btn-edit {
+        font-size: 14px !important;
+        border-radius: 25px !important;
+        padding: 8px 18px !important;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .dialog {
+        padding: 20px 20px 20px 20px;
+        height: 470px !important;
+        width: auto !important;
+        margin-left: 20px !important;
+        margin-right: 20px !important;
+    }
+
+    .user-pic-size {
+        height: 180px;
+        width: 180px;
+    }
+
+    .user-name-container {
+        margin-bottom: 15px;
+    }
+
+    .active-container {
+        margin-bottom: 30px;
+    }
+
+    .mail-container {
+        margin-bottom: 16px;
+
+
+        span {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        img {
+            margin-right: 10px;
+        }
+
+        input {
+            width: calc(100% - 40px);
+            font-size: 18px;
+            color: #686868;
+            outline: none;
+            border: 1px solid #ADB0D9;
+            height: 18px;
+            padding: 15px 20px 15px 20px;
+            border-radius: 26px;
+            margin-bottom: 10px;
+        }
+    }
+
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+
+    .dialog {
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        height: 500px;
+        width: 450px;
+        border-radius: 30px 30px 30px 30px;
+    }
+
+    .headline {
+        margin-bottom: 20px;
+    }
+
+    .background {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .user-name-container {
+        margin-bottom: 18px;
+    }
+
+    .mail-container-edit {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+
+        span {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        img {
+            margin-right: 20px;
+        }
+
+        input {
+            width: calc(100% - 40px);
+            font-size: 16px;
+            color: #686868;
+            outline: none;
+            border: 1px solid #ADB0D9;
+            height: 16px;
+            padding: 15px 20px 15px 20px;
+            border-radius: 26px;
+            margin-bottom: 0px;
+        }
+    }
+
+    .user-pic-container {
+        margin-bottom: 20px;
+    }
+
+    .user-pic-size-edit {
+        height: 100px !important;
+        width: 100px;
+    }
+
 }

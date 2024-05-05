@@ -1,5 +1,5 @@
-<div class="background" (click)="currentUserProfileClosed.emit(false)"></div>
-<div class="dialog" *ngIf="!this.editCurrentUser">
+<div class="background" (click)="closeDialog()"></div>
+<div class="dialog" (click)="doNotClose($event)" *ngIf="!this.editCurrentUser">
     <div class="headline">
         <span>Profil</span>
         <div class="close-button" (click)="currentUserProfileClosed.emit(false)"></div>
@@ -33,11 +33,11 @@
         <div class="close-button" (click)="currentUserProfileClosed.emit(false)"></div>
     </div>
     <div class="user-pic-container">
-        <app-user-pic class="user-pic-size" [status]="false" [online]="false"
+        <app-user-pic class="user-pic-size user-pic-size-edit" [status]="false" [online]="false"
             [userImageName]="this.activeUser.photoURL"></app-user-pic>
     </div>
 
-    <div class="mail-container">
+    <div class="mail-container mail-container-edit">
         <div class="edit-head">
             <img src="../../../assets/img/account_circle.svg" alt="">
             <span>Vollständiger Name</span>
@@ -45,7 +45,7 @@
         <input [(ngModel)]="activeUser.displayName" placeholder="Vollständiger Name" />
     </div>
 
-    <div class="mail-container">
+    <div class="mail-container mail-container-edit">
         <div class="edit-head">
             <img src="../../../assets/icons/mail.png" alt="">
             <span>E-Mail-Adresse</span>
@@ -53,7 +53,7 @@
         <input [(ngModel)]="activeUser.email" placeholder="E-Mail-Adresse" />
     </div>
     <div class="submit-btns">
-        <button class="btn-white" (click)="closeEdit()">Abbrechen</button>
-        <button class="btn-blue" (click)="saveEdit()">Speichern</button>
+        <button class="btn-white btn-edit" (click)="closeEdit()">Abbrechen</button>
+        <button class="btn-blue btn-edit" (click)="saveEdit()">Speichern</button>
     </div>
 </div>

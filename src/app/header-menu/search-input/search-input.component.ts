@@ -128,8 +128,6 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   }
   async messagesIntoChannel() {
     this.loadMessages = true;
-    console.log(this.allowedChannels);
-
     this.channelMessages = [];
     for (let i = 0; i < this.allowedChannels.length; i++) {
       let channel = new Channel(this.allowedChannels[i]);

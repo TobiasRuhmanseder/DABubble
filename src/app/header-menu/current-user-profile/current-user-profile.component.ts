@@ -31,6 +31,9 @@ export class CurrentUserProfileComponent {
   closeEdit() {
     this.editCurrentUser = false;
   }
+  doNotClose(event: any) {
+    event.stopPropagation();
+  }
 
   saveEdit() {
     const userName = this.activeUser.displayName;
