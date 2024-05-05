@@ -14,5 +14,4 @@ import { DirectMessageViewComponent } from './direct-message-view/direct-message
 })
 export class SideMenuComponent {
 
-
 }

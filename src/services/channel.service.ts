@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
-import { onSnapshot, addDoc } from '@angular/fire/firestore';
+import { addDoc } from '@angular/fire/firestore';
 import { DocumentReference, collection, updateDoc } from '@firebase/firestore';
 import { Channel } from '../models/channel.class';
 
@@ -19,6 +19,11 @@ export class ChannelService {
     return collection(this.firestore, colId);
   }
 
+  /**
+   * add a new Channel and transfer it into the firebase 
+   * 
+   * @param channelData new channel data
+   */
   async addNewChannel(channelData: Channel) {
     try {
       const docRef = await addDoc(this.getCollRef('channels'), channelData.toJSON());
@@ -29,6 +34,11 @@ export class ChannelService {
     }
   }
 
+  /**
+   * add the Id to the channel
+   * 
+   * @param docRef 
+   */
   addIdToNewChannel(docRef: DocumentReference) {
     updateDoc(docRef, { id: docRef.id });
   }

@@ -78,9 +78,12 @@ export class FirebaseService implements OnDestroy {
     return { fileURL, metaData };
   }
 
+  /**
+   * 
+   * @returns return a snapshot on Firebase channel collection
+   */
   subChannelsList() {
-    return onSnapshot(this.getCollRef('channels'),(list) => {
-
+    return onSnapshot(this.getCollRef('channels'), (list) => {
       this.channels = [];
       list.forEach((element: any) => {
         this.channels.push(new Channel(element.data()));
@@ -233,30 +236,21 @@ export class FirebaseService implements OnDestroy {
     return setDoc(doc(this.firestore, 'users', user.id), user.toJSON());
   }
 
-  // Add the id for the local Array Channels by onSnapshot
-
-  idToChannel(obj: any, id: string): Channel {
-    let usersParse;
-    if (typeof obj.users === 'string') {
-      usersParse = JSON.parse(obj.users);
-    }
-    let channel: any = {
-      id: id,
-      name: obj.name || '',
-      description: obj.description || '',
-      creator: obj.creator || '',
-      users: usersParse || [],
-      messages: obj.messages || [],
-    };
-    console.log(channel);
-
-    return channel;
-  }
-
+  /**
+   * 
+   * @param colId collection id
+   * @returns returns the firebase collection path
+   */
   getCollRef(colId: string) {
     return collection(this.firestore, colId);
   }
 
+  /**
+   * 
+   * @param colId collection id
+   * @param docId document id
+   * @returns returns the firebase documents path
+   */
   getDocRef(colId: string, docId: string) {
     return doc(this.getCollRef(colId), docId);
   }

@@ -40,7 +40,7 @@ export class DialogNewChannelComponent {
   nextUserChoose() {
     this.dialog.open(DialogNewChannelAddUserComponent, {
       height: 'auto',
-      position: { bottom: '0px' },
+      // position: { bottom: '0px' },
 
       data: {
         channelName: this.channelForm.get('channelName')?.value,

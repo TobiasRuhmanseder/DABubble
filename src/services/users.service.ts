@@ -13,7 +13,7 @@ export class UsersService implements OnDestroy {
   allUsers: any[] = [];
 
   constructor(private fire: FirebaseService) {
-    this.unsubUsers = this.subUsers(); // Tobias
+    this.unsubUsers = this.subUsers();
   }
 
   async getAllUsers(): Promise<any[]> {
@@ -47,6 +47,7 @@ export class UsersService implements OnDestroy {
 
   ///Tobias 
 
+
   users: any = [];
   users$: any = new Subject;
   firestore: Firestore = inject(Firestore);
@@ -59,6 +60,10 @@ export class UsersService implements OnDestroy {
     this.unsubUsers();
   }
 
+  /**
+   * 
+   * @returns returns a firebase snapshot on the collection users
+   */
   subUsers() {
     return onSnapshot(this.getCollRef('users'), (list) => {
       this.users = [];
@@ -66,11 +71,16 @@ export class UsersService implements OnDestroy {
         let user = new User(element.data(), element.id)
         this.users.push(user);
       });
-      this.users$.next(this.users); 
+      this.users$.next(this.users);
     });
 
   }
 
+  /**
+   * 
+   * @param colId collection id
+   * @returns returns the firebase collection path
+   */
   getCollRef(colId: string) {
     return collection(this.firestore, colId);
   }

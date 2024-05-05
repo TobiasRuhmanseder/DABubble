@@ -22,7 +22,9 @@ export class DirectMessagesService implements OnDestroy {
   unsubCurrentUser: any;
   activeDirectMessaging!: DirectMessages;
 
-
+  /**
+   * starts with the constructor
+   */
   init(): void {
     this.unsubCurrentUser = this.currentUserService.currentUser.subscribe(user => {
       this.currentUser = user;
@@ -40,11 +42,10 @@ export class DirectMessagesService implements OnDestroy {
     this.unsubCurrentUser.unsubscribe();
   }
 
-  getActiveMessaging(paramsId: string) {
-    if (this.allDirectMessages.paramsId)
-      return this.allDirectMessages.paramsId
-  }
-
+  /**
+   * 
+   * @returns return a firebase collection snapshot direct_messages
+   */
   subDirectMessages() {
     return onSnapshot(this.getCollRef('direct_messages'), (list) => {
       this.allDirectMessages = [];
@@ -55,10 +56,19 @@ export class DirectMessagesService implements OnDestroy {
     });
   }
 
+  /**
+   * fire the allDirectMessages Subject to add current data
+   */
   async getCurrentDirectMessages() {
     if (this.allDirectMessages) this.allDirectMessages$.next(this.allDirectMessages);
   }
 
+  /**
+   * 
+   * @param doc message
+   * @param id id
+   * @returns returns a DirectMessages object
+   */
   addIdToList(doc: any, id: any): DirectMessages {
     return {
       id: id || "",
@@ -66,14 +76,28 @@ export class DirectMessagesService implements OnDestroy {
     }
   }
 
+  /**
+   * 
+   * @param colId collection id
+   * @returns returns the firebase collection path
+   */
   getCollRef(colId: string) {
     return collection(this.firestore, colId);
   }
 
+  /**
+   * 
+   * @returns returns the firebase collection directmessages
+   */
   getDirectMessagingRef() {
     return collection(this.firestore, 'direct_messages');
   }
 
+  /**
+   * 
+   * @param uid user id
+   * @returns returns the current Id from the opening direct messages
+   */
   async getDocIdFromTheDirectMessaging(uid: string) {
     let docId: any = null;
     this.allDirectMessages.forEach((doc: any) => {
@@ -89,6 +113,11 @@ export class DirectMessagesService implements OnDestroy {
     }
   }
 
+  /**
+   * 
+   * @param uid user id
+   * @returns returns the ref on the new added direct messaging or log err
+   */
   async addNewDocDirectMessaging(uid: string) {
     let newDoc = this.getEmtyDirectMessaging(uid);
     let docId;
@@ -104,12 +133,22 @@ export class DirectMessagesService implements OnDestroy {
     }
   }
 
+  /**
+   * 
+   * @param uid user id
+   * @returns returns a new DirectMessages object
+   */
   getEmtyDirectMessaging(uid: string): DirectMessages {
     return {
       users: [this.currentUser.uid, uid],
     }
   }
 
+  /**
+   * transmit the new doc direkt_messages to the firebase to save
+   * 
+   * @param docRefId new document ref id
+   */
   async addMessageCollection(docRefId: any) {
     let path = 'direct_messages/' + docRefId + '/messages'
     let ref = collection(this.firestore, path);

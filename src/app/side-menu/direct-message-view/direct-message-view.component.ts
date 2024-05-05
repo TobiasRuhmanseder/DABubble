@@ -44,10 +44,10 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-/**
- * 
- * @returns 
- */
+  /**
+   * 
+   * @returns returns the current user subscribe
+   */
   subCurrentUser() {
     return this.currentUserService.currentUser.subscribe(user => {
       let currentUser;
@@ -56,6 +56,11 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * 
+   * @param user current user
+   * @returns returns the current user in a ActiveUser object
+   */
   setActiceUser(user: any): ActiveUser {
     let activeUser = user;
     if (activeUser == null) {
@@ -75,7 +80,10 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
     return activeUser;
   }
 
-
+  /**
+   * 
+   * @returns returns the users subscribe
+   */
   subAllUsers() {
     return this.userService.users$.subscribe((obj: any[]) => {
       let users: any = [];
@@ -86,6 +94,11 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * 
+   * @param users all users
+   * @returns returns the filtered the loged in user out of the users
+   */
   withoutActiveUser(users: any[]) {
     let index;
     let indexGuest;

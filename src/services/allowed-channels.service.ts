@@ -15,6 +15,11 @@ export class AllowedChannelsService {
 
   constructor() { }
 
+  /**
+   * This function returns an observable in which the allowed channels are filtered depending on the logged user
+   * 
+   * @returns Observable
+   */
   getAllowedChannels(): Observable<any> {
     return this.currentUserService.currentUser.pipe(
       switchMap(user => {
@@ -25,6 +30,11 @@ export class AllowedChannelsService {
     );
   }
 
+  /**
+   * 
+   * @param channels channels
+   * @returns return the channel Array with the parsed string users 
+   */
   getUsersWithParse(channels: any) {
     let parsedUserChannels: any = [];
     channels.forEach((channel: any) => {
