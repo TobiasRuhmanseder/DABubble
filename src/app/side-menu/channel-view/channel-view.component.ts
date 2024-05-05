@@ -1,19 +1,13 @@
-import { Component, Inject, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { IconHoverChangeImageComponent } from '../../icon-hover-change-image/icon-hover-change-image.component';
 import { ChannelListElementComponent } from './channel-list-element/channel-list-element.component';
 import { NewChannelListElementComponent } from './new-channel-list-element/new-channel-list-element.component';
-import { FirebaseService } from '../../../services/firebase.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogNewChannelComponent } from '../dialog-new-channel/dialog-new-channel.component';
-import { CurrentUserService } from '../../../services/current-user.service';
-import { ActiveUser } from '../../../interfaces/active-user.interface';
-import { UsersService } from '../../../services/users.service';
 import { Channel } from '../../../models/channel.class';
-import { Subject } from 'rxjs';
 import { AllowedChannelsService } from '../../../services/allowed-channels.service';
-
 
 @Component({
   selector: 'app-channel-view',
@@ -25,120 +19,65 @@ import { AllowedChannelsService } from '../../../services/allowed-channels.servi
 })
 export class ChannelViewComponent implements OnDestroy, OnInit {
   dropdownOpen = true;
-  firebaseService: FirebaseService = inject(FirebaseService);
   activeRoute: ActivatedRoute = inject(ActivatedRoute);
-  currentUserService: CurrentUserService = inject(CurrentUserService);
-  usersService: UsersService = inject(UsersService);
   allowedChannelService: AllowedChannelsService = inject(AllowedChannelsService);
   currentCollectionId = '';
   allowedChannels: any[] = [];
-  channels: any;
-  unsubParams: any;
-  unsubChannels: any;
-  unsubCurrentUser: any;
-  unsubUsers: any;
+  unsubParams: any;;
   unsubAllowedChannel: any;
   dialog: MatDialog = inject(MatDialog);
-  activeUser: any;
   activeUserId: string = '';
-  users: any;
-
 
   ngOnInit(): void {
-    // this.users = this.usersService.users;
-    // this.unsubCurrentUser = this.subCurrentUser();
-    // this.currentUserService.activeUser();
     this.unsubParams = this.subParam();
-    // this.unsubChannels = this.subChannels();
-    //this.unsubUsers = this.subUsers();
     this.unsubAllowedChannel = this.subAllowChannel();
-
   }
 
+  ngOnDestroy(): void {
+    this.unsubAllowedChannel.unsubscribe();
+  }
+
+  /**
+   * 
+   * @returns return the subscribe for allowed channel - the subject can be found in allowed-channel.service
+   */
   subAllowChannel() {
     return this.allowedChannelService.getAllowedChannels().subscribe(channels => {
-      // this.allowedChannels = this.getAllowedChannels(channels);
       this.allowedChannels = this.allowedChannelService.getUsersWithParse(channels);
     })
   }
 
-
-
-  loadAllowedChannel() {
-    this.getAllowedChannels(this.firebaseService.channels);
-  }
-
-  subChannels() {
-    return this.firebaseService.$channels.subscribe(channels => {
-      this.getAllowedChannels(channels);
-      this.loadAllowedChannel();
-    })
-  }
-
+  /**
+   * 
+   * @returns return the subscribe for the params 
+   */
   subParam() {
     return this.activeRoute.params.subscribe(params => {
       this.currentCollectionId = params['id'];
     });
   }
 
-  subCurrentUser() {
-    return this.currentUserService.currentUser.subscribe(user => {
-      let currentUser;
-      currentUser = this.setActiceUser(user);
-      this.activeUser = currentUser;
-      this.getCurrentUserId();
-      this.loadAllowedChannel();
-    });
-  }
-
-  subUsers() {
-    return this.usersService.users$.subscribe((users: any) => {
-      this.users = users;
-      this.loadAllowedChannel();
-    })
-  }
-
-  setActiceUser(user: any): ActiveUser {
-    let activeUser = user;
-    if (activeUser == null) {
-      activeUser = {
-        displayName: "noUser",
-        photoURL: "male1.svg",
-        email: ""
-      }
-    }
-    else {
-      activeUser = {
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        email: user.email
-      }
-    }
-    return activeUser;
-  }
-
-  getCurrentUserId() {
-    this.users.forEach((user: any) => {
-      if (user.email === this.activeUser.email) this.activeUserId = user.id;
-    });
-  }
-
+  /**
+   * open the new channel dialog
+   */
   openDialog() {
     this.dialog.open(DialogNewChannelComponent);
   }
 
-  ngOnDestroy(): void {
-    // this.unsubParams.unsubscribe();
-    // this.unsubChannels.unsubscribe();
-    // this.unsubCurrentUser.unsubscribe();
-    // this.unsubUsers.unsubscribe();
-    this.unsubAllowedChannel.unsubscribe();
-  }
-
+  /**
+   * toggle the dropdown menu
+   */
   toggleDropdownMenu() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
+  /**
+   * filters based on channel.users whether the logged in user with the id can be found there. 
+   * If channel.users is empty, then it is a public and therefore authorized channel
+   * 
+   * @param channels channels
+   * @returns return the allowed channel for the logged in user
+   */
   getAllowedChannels(channels: any) {
     let allowedChannels: any = [];
     channels.forEach((channel: any) => {
@@ -152,7 +91,6 @@ export class ChannelViewComponent implements OnDestroy, OnInit {
         allowedChannels.push(channelWithUserArray);
       }
     });
-
     return allowedChannels;
   }
 }

@@ -13,7 +13,10 @@ export class NewChannelListElementComponent {
 
   dialog: MatDialog = inject(MatDialog);
 
+  /**
+   * open the dialog new Channel
+   */
   openDialog() {
-this.dialog.open(DialogNewChannelComponent);
+    this.dialog.open(DialogNewChannelComponent);
   }
 }

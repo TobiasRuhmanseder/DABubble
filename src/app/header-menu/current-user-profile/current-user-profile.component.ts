@@ -20,21 +20,39 @@ export class CurrentUserProfileComponent {
   currentUser: any;
   editCurrentUser = false;
 
+  /**
+   * close the current user dialog
+   */
   closeDialog() {
     this.currentUserProfileClosed.emit(false);
   }
 
+  /**
+   *  open editable area by the logged in user 
+   */
   editButtonCurrentUser() {
     this.editCurrentUser = true;
   }
 
+  /**
+   * close editable area by the logged in user
+   */
   closeEdit() {
     this.editCurrentUser = false;
   }
+
+  /**
+   * The dialog doesn't close when you click on it because this happens when you click on the background
+   * 
+   * @param event stop the click event
+   */
   doNotClose(event: any) {
     event.stopPropagation();
   }
 
+  /**
+   * saves the new data entered by the logged in user
+   */
   saveEdit() {
     const userName = this.activeUser.displayName;
     const userEmail = this.activeUser.email;

@@ -22,23 +22,32 @@ export class CurrentUserDropdownMenuComponent {
   unsubInterval: any;
   slideOut = false;
 
-  constructor() {
-
-  }
-
+  /**
+   * close the dropdown menu from the current user 
+   */
   closeDialog() {
     this.dropDownMenuClosed.emit(false);
   }
 
+  /**
+   * close or slidedown the mobile menu on the bottom - starts a rxjs interval to show the slide down
+   */
   mobileCloseDialog() {
     this.unsubInterval = this.subInterval();
   }
 
+  /**
+   * open the current user profil
+   */
   userProfilOpen() {
     this.userProfileIsOpen = true;
     this.slideOut = true;
   }
 
+  /**
+   * 
+   * @returns return the rxjs interval 
+   */
   subInterval() {
     this.slideOut = true;
     return this.intervalClose.pipe(timeInterval(), take(1)).subscribe(() => {
@@ -47,11 +56,19 @@ export class CurrentUserDropdownMenuComponent {
     )
   }
 
+  /**
+   * close the current user profil and slinde in the dropup menu in the mobile and tablet view
+   * 
+   * @param event toggle with boolean
+   */
   closeUserProfil(event: boolean) {
     this.userProfileIsOpen = event;
     this.slideOut = event;
   }
 
+  /**
+   * current user logout - and goes back to the start screen / login screen
+   */
   signOutUser() {
     this.currentUserService.signOut();
   }

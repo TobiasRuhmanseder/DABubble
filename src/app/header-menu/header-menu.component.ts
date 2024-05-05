@@ -25,9 +25,12 @@ export class HeaderMenuComponent implements OnInit, OnDestroy {
     this.unsubCurrentUser = this.subCurrentUser();
     this.currentUserService.activeUser();
   }
-
-  subCurrentUser(){
-   return this.currentUserService.currentUser.subscribe(user => {
+  /**
+   * 
+   * @returns return the subscribe for the current user - the subject can be found in current-user.service
+   */
+  subCurrentUser() {
+    return this.currentUserService.currentUser.subscribe(user => {
       let currentUser;
       currentUser = this.setActiceUser(user);
       this.activeUser = currentUser;
@@ -38,11 +41,11 @@ export class HeaderMenuComponent implements OnInit, OnDestroy {
     this.unsubCurrentUser.unsubscribe();
   }
 
-  filterImgName(path: string) {
-    let name = path.split("/");
-    return name[name.length - 1];
-  }
-
+  /**
+   * 
+   * @param user logged in user
+   * @returns returns the logged in user in a ActiveUser object
+   */
   setActiceUser(user: any): ActiveUser {
     let activeUser = user;
     if (activeUser == null) {

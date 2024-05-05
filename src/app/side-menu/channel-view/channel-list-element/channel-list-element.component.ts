@@ -18,7 +18,9 @@ export class ChannelListElementComponent {
 
   router: Router = inject(Router);
 
-
+/**
+ * routes to the selected channel with the channel id
+ */
   chooseChannel() {
     this.router.navigateByUrl('/home/' + this.channel.id);
   }

@@ -49,33 +49,6 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy, Afte
     this.subInput();
   }
 
-
-
-  subInput() {
-    this.unsubInput =
-      this.input$.pipe(debounceTime(200)).subscribe(search => {
-        if (search.length >= 2) {
-          this.filteredUsers = this.filterUser(search);
-          this.filteredUsers = this.filterActiveUser(this.filteredUsers);
-          if (this.filteredUsers.length >= 1) this.dropDownList = true; else this.dropDownList = false;
-        } else {
-          this.dropDownList = false;
-          this.filteredUsers = [];
-        }
-      })
-  }
-
-  filterUser(search: string) {
-    const filterUser = this.choosingUsers.filter(((el: any) => el.name.toLowerCase().includes(search.toLowerCase())));
-    return filterUser;
-  }
-
-  filterActiveUser(filteredUser: any) {
-    let index = filteredUser.findIndex((user: any) => user.id === this.currentUser.uid);
-    if (index != -1) filteredUser.splice(index, 1);
-    return filteredUser;
-  }
-
   ngOnInit(): void {
     this.unsubCurrentUser = this.currentUserService.currentUser.subscribe(user => {
       this.currentUser = user;
@@ -93,18 +66,68 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy, Afte
     this.unsubInput.unsubscribe();
   }
 
+  /**
+   * filters out accordingly based on the user search entered and opens the dropdown menu if necessary
+   */
+  subInput() {
+    this.unsubInput =
+      this.input$.pipe(debounceTime(200)).subscribe(search => {
+        if (search.length >= 2) {
+          this.filteredUsers = this.filterUser(search);
+          this.filteredUsers = this.filterActiveUser(this.filteredUsers);
+          if (this.filteredUsers.length >= 1) this.dropDownList = true; else this.dropDownList = false;
+        } else {
+          this.dropDownList = false;
+          this.filteredUsers = [];
+        }
+      })
+  }
+
+  /**
+   * 
+   * @param search current user search input
+   * @returns the filtered users based on the user search
+   */
+  filterUser(search: string) {
+    const filterUser = this.choosingUsers.filter(((el: any) => el.name.toLowerCase().includes(search.toLowerCase())));
+    return filterUser;
+  }
+
+  /**
+   * 
+   * @param filteredUser filtered users based on the user search
+   * @returns the filterd users without the logged in user
+   */
+  filterActiveUser(filteredUser: any) {
+    let index = filteredUser.findIndex((user: any) => user.id === this.currentUser.uid);
+    if (index != -1) filteredUser.splice(index, 1);
+    return filteredUser;
+  }
+
+  /**
+   * close the dialog
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * toggles which areas should be displayed in the UI
+   */
   allUsersSelect() {
     this.allUsersChoose = true;
   }
 
+  /**
+   * toggles which areas should be displayed in the UI - here would be open the user search field and the shows the users that was selected
+   */
   costumUsersSelect() {
     this.allUsersChoose = false;
   }
 
+  /**
+   * create the new Channel based on the user inputs
+   */
   async createChannel() {
     this.buttonDisable = true;
     const channel = new Channel({
@@ -119,6 +142,11 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy, Afte
     this.dialogRef.close();
   }
 
+  /**
+   * put all selected users into a Array, if all users selected the array remains emty
+   * 
+   * @returns returns a empty array or selected user array as string
+   */
   getSelectedUser() {
     if (this.allUsersChoose) return [];
     else {
@@ -131,6 +159,9 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy, Afte
     }
   }
 
+  /**
+   * scrolls down in the input field as soon as your new user is added
+   */
   scrollDownUsers(): void {
     this.scrollDown?.nativeElement.scroll({
       top: this.scrollDown?.nativeElement.scrollHeight,
@@ -139,6 +170,12 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy, Afte
     });
   }
 
+  /**
+   * select user and push it into the selectedUsers Array
+   * and splice them in the choosingUsers Array
+   * 
+   * @param userId user id
+   */
   selectUser(userId: any) {
     const index = this.choosingUsers.findIndex(((el: any) => el.id == userId));
     this.clearInput();
@@ -146,12 +183,22 @@ export class DialogNewChannelAddUserComponent implements OnInit, OnDestroy, Afte
     this.choosingUsers.splice(index, 1);
   }
 
+  /**
+   * delete the user from the selected user list.
+   * splice it from the selectedUsers Array
+   * push it into the choosingUserd Array
+   * 
+   * @param userId user id
+   */
   deleteUserFromList(userId: any) {
     const index = this.selectedUsers.findIndex(((el: any) => el.id == userId));
     this.choosingUsers.push(this.selectedUsers[index]);
     this.selectedUsers.splice(index, 1);
   }
 
+  /**
+   * clear the user search input
+   */
   clearInput() {
     this.inputValue = '';
     this.input$.next("");

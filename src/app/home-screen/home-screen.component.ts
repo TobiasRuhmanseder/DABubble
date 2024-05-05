@@ -50,6 +50,9 @@ export class HomeScreenComponent {
     }
   }
 
+  /**
+   * toggle the sidemenu 
+   */
   toggle() {
     this.menuOpen = !this.menuOpen;
   }

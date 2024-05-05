@@ -37,8 +37,23 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
     this.userService.unsubUsers();
   }
 
+  /**
+   * toggle the dropdown menu
+   */
   toggleDropdownMenu() {
     this.dropdownOpen = !this.dropdownOpen;
+  }
+
+/**
+ * 
+ * @returns 
+ */
+  subCurrentUser() {
+    return this.currentUserService.currentUser.subscribe(user => {
+      let currentUser;
+      currentUser = this.setActiceUser(user);
+      this.activeUser = currentUser;
+    });
   }
 
   setActiceUser(user: any): ActiveUser {
@@ -60,14 +75,6 @@ export class DirectMessageViewComponent implements OnInit, OnDestroy {
     return activeUser;
   }
 
-  subCurrentUser() {
-    return this.currentUserService.currentUser.subscribe(user => {
-      let currentUser;
-      currentUser = this.setActiceUser(user);
-      this.activeUser = currentUser;
-
-    });
-  }
 
   subAllUsers() {
     return this.userService.users$.subscribe((obj: any[]) => {

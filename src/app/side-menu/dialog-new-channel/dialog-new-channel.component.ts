@@ -27,10 +27,16 @@ export class DialogNewChannelComponent {
 
   constructor(public dialogRef: MatDialogRef<DialogNewChannelComponent>) { }
 
+  /**
+   * close the dialog 
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * transfers the entered data to the add user dialog
+   */
   nextUserChoose() {
     this.dialog.open(DialogNewChannelAddUserComponent, {
       height: 'auto',

@@ -61,12 +61,21 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     this.unsubAllowedChannel.unsubscribe();
   }
 
+  /**
+   * 
+   * @returns return the subscribe for the current user - the subject can be found in current-user.service
+   */
   subCurrentUser() {
     return this.currentUserService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
   }
 
+  /**
+   * Here all users, channels and messages are filtered out after the input has been entered and these are displayed in the dropdown menu
+   * 
+   * @returns return the subscribe for the input search field 
+   */
   subInput() {
     return this.input$.pipe(debounceTime(200)).subscribe(async search => {
       if (search.length >= 2) {
@@ -84,6 +93,10 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     })
   }
 
+  /**
+   * 
+   * @returns return the subscribe for allowed channel - the subject can be found in allowed-channel.service
+   */
   subAllowChannel() {
     return this.allowedChannelService.getAllowedChannels().subscribe(channels => {
       this.allowedChannels = this.allowedChannelService.getUsersWithParse(channels);
@@ -91,27 +104,49 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     })
   }
 
+  /**
+   * searches for matches depending on which opens the dropdown menu
+   */
   checkHits() {
     if (this.filteredUsers.length >= 1 || this.filteredChannel.length >= 1 || this.filteredMessages.length >= 1) this.dropDownList = true; else this.dropDownList = false;
   }
 
+  /**
+   * clear all old filtered arrays
+   */
   clearAllArrays() {
     this.filteredMessages = [];
     this.filteredUsers = [];
     this.filteredChannel = [];
   }
 
+  /**
+   * 
+   * @param search search input
+   * @returns returns the filtered users based on the search input
+   */
   filterUser(search: string) {
     let filterUser = this.usersService.users.filter(((el: any) => el.name.toLowerCase().includes(search.toLowerCase())));
     filterUser = this.filterActiveUser(filterUser);
     return filterUser;
   }
 
+  /**
+   * 
+   * @param search search input
+   * @returns returns the filtered users based on the search input
+   */
   filterChannel(search: string) {
     let filterChannel = this.allowedChannels.filter(((el: any) => el.name.toLowerCase().includes(search.toLowerCase())));
     return filterChannel;
   }
 
+
+  /**
+   * filter the messages based on the search input and push it into the filteredMessage array
+   * 
+   * @param search search input
+   */
   filterMessages(search: string) {
     for (let i = 0; i < this.channelMessages.length; i++) {
       let filtered = this.channelMessages[i].messages.filter(((el: any) => el.message.toLowerCase().includes(search.toLowerCase())));
@@ -121,11 +156,21 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * 
+   * @param filteredUser all filtered users based on the search input
+   * @returns the the filtered users without the logged in user
+   */
   filterActiveUser(filteredUser: any) {
     let index = filteredUser.findIndex((user: any) => user.id === this.currentUser.uid);
     if (index != -1) filteredUser.splice(index, 1);
     return filteredUser;
   }
+
+
+  /**
+   * add the messages from the firebase subcollection into the channels 
+   */
   async messagesIntoChannel() {
     this.loadMessages = true;
     this.channelMessages = [];
@@ -147,11 +192,19 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     this.loadMessages = false;
   }
 
+  /**
+   * clear the search input
+   */
   clearInput() {
     this.inputValue = '';
     this.dropDownList = false;
   }
 
+  /**
+   * routes and starts direct messaging with the clicked user
+   * 
+   * @param userUid user id
+   */
   async onClickUser(userUid: string) {
     if (userUid != undefined) {
       let directMessageDocId = await this.diMeService.getDocIdFromTheDirectMessaging(userUid);
@@ -160,11 +213,21 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * routes and starts messaging in the selected channel
+   * 
+   * @param channelId channel id
+   */
   onClickChannel(channelId: string) {
     this.router.navigateByUrl('/home/' + channelId);
     this.clearInput();
   }
 
+  /**
+   * routes to the channel that contains the message
+   * 
+   * @param channel 
+   */
   onClickMessage(channel: any) {
     this.router.navigateByUrl('/home/' + channel.channelId);
     this.idToScrollService.addId(channel.message.id);
