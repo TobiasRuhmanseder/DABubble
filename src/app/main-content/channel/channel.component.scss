@@ -1,7 +1,5 @@
 section {
   height: 100%;
-  min-width: 485px;
-  max-width: 485px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -18,3 +16,5 @@ app-channel-channel-message {
   display: flex;
   flex-direction: column-reverse;
 }
+
+

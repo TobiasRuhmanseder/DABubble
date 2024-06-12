@@ -1,4 +1,10 @@
-import { Component, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { MessageService } from '../../services/message.service';
 import { MainContentBodyComponent } from './main-contents/main-content-body/main-content-body.component';
 import { MainContentFooterComponent } from './main-contents/main-content-footer/main-content-footer.component';
@@ -31,7 +37,7 @@ export class MainContentComponent {
     public elementRef: ElementRef,
     public renderer: Renderer2,
     private route: ActivatedRoute,
-    public scroll: IdToScrollService,
+    public scroll: IdToScrollService
   ) {}
 
   unsubCurrentChannelMessages: any;
@@ -39,7 +45,7 @@ export class MainContentComponent {
   ngOnDestroy() {
     if (this.unsubCurrentChannelMessages) {
       this.unsubCurrentChannelMessages.unsubscribe();
-    } 
+    }
   }
   ngOnInit(): void {}
 
@@ -67,7 +73,7 @@ export class MainContentComponent {
       this.chatService.editThreadFlaggIndex = -1;
       this.chatService.editFlaggIndex = -1;
     }
-    if (!(event.target as HTMLElement).closest('.user-list')){
+    if (!(event.target as HTMLElement).closest('.user-list')) {
       this.chatService.mention = false;
     }
     if ((event.target as HTMLElement).closest('#sendConfirm')) {
@@ -78,12 +84,9 @@ export class MainContentComponent {
     }
   }
 
-
-
-  scrollDown(id:string) {
+  scrollDown(id: string) {
     if (this.chatService.sortedMessages.length > 0) {
-      const element =
-        this.elementRef.nativeElement.querySelector(id);
+      const element = this.elementRef.nativeElement.querySelector(id);
       if (element) {
         element.scrollTop = element.scrollHeight;
       }

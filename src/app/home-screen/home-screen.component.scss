@@ -8,6 +8,7 @@
     width: 100%;
     height: calc(100vh - 99px - 40px); // 99px is the height from the content-top section
     display: flex;
+    gap: 20px;
 }
 
 .slide-button {
@@ -83,7 +84,7 @@
 
 @media only screen and (min-width: 600px) {
     .container {
-        padding: 15pxpx;
+        padding: 15px;
     }
 
     .content-bottom {

@@ -1,5 +1,4 @@
 .main-content {
-  margin-left: 20px;
   height: 100%;
   width: 100%;
   display: flex;
@@ -21,4 +20,25 @@ app-main-content-body {
   flex-direction: row;
   gap: 20px;
   height: 100%;
+}
+
+app-channel {
+  display: block;
+  height: 100%;
+  min-width: 485px;
+}
+@media only screen and (max-width: 599px) {
+  app-main-content-header {
+    padding-top: 100px;
+  }
+  app-channel {
+    min-width: 0px;
+  }
+}
+
+@media only screen and (max-width: 1499px) {
+  app-channel {
+    min-width: 100%;
+    order: -1;
+  }
 }
