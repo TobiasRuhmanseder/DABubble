@@ -3,12 +3,12 @@
         <app-header-menu></app-header-menu>
     </div>
     <div class="content-bottom">
-        <app-side-menu [class.d-none]="!menuOpen" class="app-side-menu"></app-side-menu>
+        <app-side-menu [class.d-none]="!SidemenuService.menuOpen" class="app-side-menu"></app-side-menu>
         <app-main-content class="main-content"></app-main-content>
     </div>
 </div>
-<div class="slide-button" (click)="toggle()">
-    <span [class.d-none]="!menuOpen">Workspace-Menü schließen</span>
-    <span [class.d-none]="menuOpen">Workspace-Menü öffnen</span>
-    <div class="icon" [class.in]="!menuOpen" [class.out]="menuOpen"></div>
+<div class="slide-button" (click)="SidemenuService.toggle()">
+    <span [class.d-none]="!SidemenuService.menuOpen">Workspace-Menü schließen</span>
+    <span [class.d-none]="SidemenuService.menuOpen">Workspace-Menü öffnen</span>
+    <div class="icon" [class.in]="!SidemenuService.menuOpen" [class.out]="SidemenuService.menuOpen"></div>
 </div>

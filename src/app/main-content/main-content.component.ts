@@ -3,7 +3,7 @@ import {
   ElementRef,
   HostListener,
   Renderer2,
-  ViewChild,
+  inject,
 } from '@angular/core';
 import { MessageService } from '../../services/message.service';
 import { MainContentBodyComponent } from './main-contents/main-content-body/main-content-body.component';
@@ -15,6 +15,7 @@ import { PrivateChatComponent } from './private-chat/private-chat.component';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { IdToScrollService } from '../../services/id-to-scroll.service';
+import { SidemenuService } from '../../services/sidemenu.service';
 
 @Component({
   selector: 'app-main-content',
@@ -39,7 +40,7 @@ export class MainContentComponent {
     private route: ActivatedRoute,
     public scroll: IdToScrollService
   ) {}
-
+  SidemenuService: SidemenuService = inject(SidemenuService);
   unsubCurrentChannelMessages: any;
 
   ngOnDestroy() {
@@ -57,6 +58,13 @@ export class MainContentComponent {
         this.chatService.getMessagesFromChannel(params['id']);
         this.chatService.subChannelMessages(params['id']);
         this.chatService.subChannelThreads(params['id']);
+        if (window.innerWidth < 1200) {
+          this.SidemenuService.menuOpen = false;
+        }
+      } else {
+        if (window.innerWidth < 1200) {
+          this.SidemenuService.menuOpen = true;
+        }
       }
     });
     // this.scrollTo()

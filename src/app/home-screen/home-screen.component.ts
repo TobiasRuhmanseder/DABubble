@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderMenuComponent } from '../header-menu/header-menu.component';
 import { SideMenuComponent } from '../side-menu/side-menu.component';
 import { MainContentComponent } from '../main-content/main-content.component';
@@ -6,6 +6,7 @@ import { CurrentUserService } from '../../services/current-user.service';
 import { MessageService } from '../../services/message.service';
 import { getAuth } from 'firebase/auth';
 import { UsersService } from '../../services/users.service';
+import { SidemenuService } from '../../services/sidemenu.service';
 
 @Component({
   selector: 'app-home-screen',
@@ -15,8 +16,7 @@ import { UsersService } from '../../services/users.service';
   styleUrl: './home-screen.component.scss',
 })
 export class HomeScreenComponent {
-
-  menuOpen = true;
+  SidemenuService: SidemenuService = inject(SidemenuService);
 
   constructor(
     private login: CurrentUserService,
@@ -53,7 +53,7 @@ export class HomeScreenComponent {
   /**
    * toggle the sidemenu 
    */
-  toggle() {
-    this.menuOpen = !this.menuOpen;
-  }
+  // toggle() {
+  //   this.SidemenuService.menuOpen = !this.SidemenuService.menuOpen;
+  // }
 }
