@@ -50,6 +50,9 @@ export class MainContentComponent {
   }
   ngOnInit(): void {}
 
+  /**
+ * @description Loads the respective data using the provided ID after the view has been initialized.
+ */
   ngAfterViewInit() {
     this.routeSub = this.route.params.subscribe((params) => {
       if (params['id']) {
@@ -67,9 +70,16 @@ export class MainContentComponent {
         }
       }
     });
-    // this.scrollTo()
   }
 
+
+
+  /**
+ * Handles the click event on the document.
+ * Closes the open window if the click occurs outside of it.
+ *
+ * @param {MouseEvent} event - The mouse event object.
+ */
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     if (
@@ -92,6 +102,11 @@ export class MainContentComponent {
     }
   }
 
+  /**
+ * Scrolls down to a specific element or anchor point on the page.
+ *
+ * @param {string} id - The ID of the element or anchor to scroll to.
+ */
   scrollDown(id: string) {
     if (this.chatService.sortedMessages.length > 0) {
       const element = this.elementRef.nativeElement.querySelector(id);
