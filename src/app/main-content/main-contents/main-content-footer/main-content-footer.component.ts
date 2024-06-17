@@ -55,12 +55,15 @@ export class MainContentFooterComponent {
 
   allUsers: any = {};
 
-
   ngOnInit(): void {
     this.allUsers = this.users.allUsers;
   }
 
   @HostListener('document:click', ['$event'])
+  /**
+   * Handles the click event on the document.
+   * @param {MouseEvent} event - The mouse event object.
+   */
   onDocumentClick(event: MouseEvent) {
     if (
       !(event.target as HTMLElement).closest('.message-text-edit') &&
@@ -71,11 +74,20 @@ export class MainContentFooterComponent {
     }
   }
 
+  /**
+   * Automatically grows the height of a text area element based on its content.
+   * @param {any} e - The event object, which should contain the target element (text area).
+   */
   autoGrowTextZone(e: any) {
     e.target.style.height = '0px';
     e.target.style.height = e.target.scrollHeight + 25 + 'px';
   }
 
+  /**
+   * Checks if the '@' symbol is pressed and sets the appropriate mention flag.
+   * @param {KeyboardEvent} event - The keyboard event object.
+   * @param {boolean} mainChat - A flag indicating whether the chat is the main chat or a thread.
+   */
   checkForAtSymbol(event: KeyboardEvent, mainChat: boolean) {
     if (event.key === '@') {
       if (mainChat) {
@@ -89,6 +101,11 @@ export class MainContentFooterComponent {
     }
   }
 
+  /**
+   * Highlights usernames in the given text by wrapping them with <span class="tag"></span>.
+   * @param {string} text - The input text to highlight usernames in.
+   * @returns {string} The text with usernames highlighted.
+   */
   highlightUsernames(text: string) {
     let highlightedText = text;
     let indices: any[] = [];
@@ -127,6 +144,10 @@ export class MainContentFooterComponent {
     return highlightedText;
   }
 
+  /**
+   * Inserts an '@' symbol at the current cursor position in the text area,
+   * allowing the user to tag other persons in the chat or thread.
+   */
   tagPersons() {
     if (this.mainChat) {
       const textArea = this.textAreaInput.nativeElement;
@@ -164,6 +185,10 @@ export class MainContentFooterComponent {
     }
   }
 
+  /**
+   * Tags a user in the chat input area.
+   * @param {string} user - The username to be tagged.
+   */
   tagUser(user: string) {
     if (this.mainChat) {
       const textArea = this.textAreaInput.nativeElement;
@@ -212,6 +237,9 @@ export class MainContentFooterComponent {
     }
   }
 
+  /**
+   * Uploads files to the server.
+   */
   uploadFile() {
     let files;
     if (this.mainChat) {
@@ -224,6 +252,11 @@ export class MainContentFooterComponent {
     });
   }
 
+  /**
+   * Checks if any of the provided files are not image files.
+   * @param {any[]} files - An array of file objects.
+   * @returns {boolean} Returns true if any of the files are not image files, false otherwise.
+   */
   checkIsFileImg(files: any[]) {
     for (let i = 0; i < files.length; i++) {
       if (!files[i].file.type.startsWith('image/')) {
@@ -233,6 +266,10 @@ export class MainContentFooterComponent {
     return false;
   }
 
+  /**
+   * Adds a new file to the current chat or thread.
+   * @param {any} event - The event object containing the file data.
+   */
   addFile(event: any) {
     let newFile = event.target.files[0];
     let id = this.generateRandomId(20);
@@ -246,6 +283,10 @@ export class MainContentFooterComponent {
     }
   }
 
+  /**
+   * Renders an image from a file.
+   * @param {any} file - The file object representing the image.
+   */
   renderImage(file: any) {
     let reader = new FileReader();
     reader.onload = (e: any) => {
@@ -265,6 +306,12 @@ export class MainContentFooterComponent {
     };
     reader.readAsDataURL(file);
   }
+
+  /**
+   * Generates a random string of characters with a specified length.
+   * @param {number} length - The desired length of the random string.
+   * @returns {string} A random string of characters with the specified length.
+   */
   generateRandomId(length: number) {
     let result = '';
     const characters =
@@ -276,6 +323,13 @@ export class MainContentFooterComponent {
     return result;
   }
 
+  /**
+   * Adds an emoji to the text area content or thread content based on the provided parameters.
+   * @param {Object} event - An object containing the emoji information.
+   * @param {Object} event.emoji - An object containing the emoji data.
+   * @param {any} event.emoji.native - The native representation of the emoji.
+   * @param {any} mainChat - A flag indicating whether the emoji should be added to the main chat or thread.
+   */
   addEmoji(event: { emoji: { native: any } }, mainChat: any) {
     if (mainChat) {
       this.textAreaContent = `${this.textAreaContent}${event.emoji.native}`;
@@ -285,6 +339,10 @@ export class MainContentFooterComponent {
     this.isEmojiPickerVisible = false;
   }
 
+  /**
+   * Returns the placeholder text for the chat input field based on the current channel and chat context.
+   * @returns {string} The placeholder text for the chat input field.
+   */
   getPlaceholderText(): string {
     if (!this.chatService.currentChannel) {
       return 'Starte eine neue Nachricht';
@@ -297,22 +355,36 @@ export class MainContentFooterComponent {
         : 'Antworten...';
     } else {
       return this.mainChat
-      ? `Nachricht an ${this.getDirectMessageUser().name}`
-      : 'Antworten...';
+        ? `Nachricht an ${this.getDirectMessageUser().name}`
+        : 'Antworten...';
     }
-  }
-  getDirectMessageUser(){
-    let directUserId = this.chatService.currentChannel.users.filter((user: any) => user !== this.chatService.currentUser);    
-    if (directUserId.length === 0 && this.chatService.currentChannel.users.length === 2) {
-      directUserId.push(this.chatService.currentChannel.users[0])
-    } 
-    let directUser = this.users.getUserFromId(directUserId[0])
-    if (!directUser) {
-      return 'User not found'
-    }
-    return directUser
   }
 
+  /**
+   * Retrieves the direct message user from the current channel.
+   * @returns {string|User} Returns the direct message user object or 'User not found' if the user is not found.
+   */
+  getDirectMessageUser() {
+    let directUserId = this.chatService.currentChannel.users.filter(
+      (user: any) => user !== this.chatService.currentUser
+    );
+    if (
+      directUserId.length === 0 &&
+      this.chatService.currentChannel.users.length === 2
+    ) {
+      directUserId.push(this.chatService.currentChannel.users[0]);
+    }
+    let directUser = this.users.getUserFromId(directUserId[0]);
+    if (!directUser) {
+      return 'User not found';
+    }
+    return directUser;
+  }
+
+  /**
+   * Retrieves an array of file IDs from either the main chat or the current thread.
+   * @returns {any[]} An array of file IDs.
+   */
   getFilesId() {
     let listOfId: any[] = [];
     let files;
@@ -327,6 +399,10 @@ export class MainContentFooterComponent {
     return listOfId;
   }
 
+  /**
+   * Clears the content of the image container or image thread container.
+   * @returns {void}
+   */
   clearContent() {
     if (this.mainChat) {
       return this.renderer.setProperty(
@@ -343,6 +419,10 @@ export class MainContentFooterComponent {
     );
   }
 
+  /**
+   * Sends a message to the chat.
+   * It handles the sending of a message to the chat.
+   */
   sendMessage() {
     let fileIdList: string[] = this.getFilesId();
     if (fileIdList.length > 0) {
