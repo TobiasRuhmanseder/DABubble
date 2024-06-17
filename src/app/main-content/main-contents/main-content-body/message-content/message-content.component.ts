@@ -52,6 +52,12 @@ export class MessageContentComponent {
     'Samstag',
   ];
 
+  /**
+   * Formats a given timestamp into a readable date string.
+   * @param {number} timestamp - The timestamp to be formatted (in milliseconds).
+   * @param {number} index - The index of the date in the list (used for rendering).
+   * @returns {string} The formatted date string.
+   */
   getFormattedDate(timestamp: number, index: number) {
     let date = new Date(timestamp);
     let day = this.days[date.getDay()];
@@ -61,6 +67,16 @@ export class MessageContentComponent {
     return this.renderDate(index, date, day, dateOfMonth, month, year);
   }
 
+  /**
+   * Renders the date in a specific format based on the provided parameters.
+   * @param {number} index - The index of the current message.
+   * @param {Date} date - The date object to be rendered.
+   * @param {string} day - The day of the week (e.g., "Monday", "Tuesday").
+   * @param {number} dateOfMonth - The day of the month (e.g., 1, 2, 3, ..., 31).
+   * @param {string} month - The name of the month (e.g., "January", "February").
+   * @param {number} year - The year (e.g., 2023, 2024).
+   * @returns {string} The formatted date string.
+   */
   renderDate(
     index: number,
     date: Date,
@@ -85,6 +101,12 @@ export class MessageContentComponent {
     return `${day} ${dateOfMonth}. ${month}`;
   }
 
+  /**
+   * Checks if the current timestamp is the next day compared to the previous timestamp.
+   * @param {number} index - The index of the current item in the list.
+   * @param {any[]} list - The list containing objects with a 'timestamp' property.
+   * @returns {boolean} True if the current timestamp is the next day, false otherwise.
+   */
   checkNextDay(index: number, list: any) {
     if (index === 0) {
       return true;
@@ -94,6 +116,12 @@ export class MessageContentComponent {
     return this.checkNextTime(currentTimestamp, previousTimestamp);
   }
 
+  /**
+   * Checks if the current timestamp is after the previous timestamp.
+   * @param {Date} currentTimestamp - The current timestamp to be checked.
+   * @param {Date} previousTimestamp - The previous timestamp to compare against.
+   * @returns {boolean} Returns true if the current timestamp is after the previous timestamp, false otherwise.
+   */
   checkNextTime(currentTimestamp: Date, previousTimestamp: Date) {
     return (
       currentTimestamp.getFullYear() > previousTimestamp.getFullYear() ||
@@ -101,5 +129,4 @@ export class MessageContentComponent {
       currentTimestamp.getDate() > previousTimestamp.getDate()
     );
   }
-
 }
