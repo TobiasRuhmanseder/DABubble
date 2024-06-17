@@ -27,11 +27,18 @@ export class MessageTitleComponent {
   @Input() isHover: any;
   @Input() list: any;
   @Input() mainChat: any;
-  openUserDetails(id:string) {
+
+  openUserDetails(id: string) {
     this.dialog.open(DialogUserInfoComponent, {
-      data: { id: id }
+      data: { id: id },
     });
   }
+
+  /**
+   * Edits a message at the specified index.
+   * @param {number} index - The index of the message to be edited.
+   * @returns {void}
+   */
   editMessage(index: number) {
     setTimeout(() => {
       if (this.mainChat) {
