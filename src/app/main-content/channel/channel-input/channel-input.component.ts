@@ -12,6 +12,12 @@ import { FormsModule } from '@angular/forms';
 export class ChannelInputComponent {
   textareaThreadContent: string = '';
   constructor(private chatService: MessageService) {}
+
+  /**
+ * Clears the input field and sends the message.
+ * @function sendMessage
+ * @returns {void}
+ */
   sendMessage() {
     let message = this.chatService.setMessage(this.textareaThreadContent);
     this.textareaThreadContent = '';

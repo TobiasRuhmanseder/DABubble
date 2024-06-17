@@ -46,6 +46,11 @@ export class ChannelPopUpComponent {
     this.channelDescriptionInput = this.channelData.description;
   }
 
+  /**
+   * Edits the channel name or description.
+   *
+   * @param {string} property - The property to edit ('name' or 'description').
+   */
   editChannel(property: string) {
     if (property === 'name') {
       this.channelNameInput = this.channelData.name;
@@ -57,6 +62,10 @@ export class ChannelPopUpComponent {
     }
   }
 
+  /**
+   * Saves the edited property (name or description) of a channel
+   * @param {string} property - The property to be edited ('name' or 'description').
+   */
   saveEdit(property: string) {
     if (property === 'name') {
       this.channelData.name = this.channelNameInput;
@@ -68,18 +77,32 @@ export class ChannelPopUpComponent {
     }
     this.saveAndUpdateChannel(this.channelData);
   }
+
+  /**
+   * Saves the changes and exits the dialog window.
+   * Removes the current user from the channel's user list and updates the channel data.
+   */
   leaveChannel() {
     this.channelData.users = this.channelData.users.filter(
-      (user: string ) => user !== this.chatService.currentUser
+      (user: string) => user !== this.chatService.currentUser
     );
     this.saveAndUpdateChannel(this.channelData);
     this.onNoClick();
   }
 
+  /**
+    Saves and updates the channel data in Firestore
+    @param {Channel} channelData - The channel data object to be saved/updated.
+    */
   saveAndUpdateChannel(channelData: Channel) {
     let newData = new Channel(channelData);
     this.fire.updateChannel(newData);
   }
+
+  /**
+ * Closes the dialog.
+ * @returns {void} This method does not return anything.
+ */
   onNoClick(): void {
     this.dialogRef.close();
   }
