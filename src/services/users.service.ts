@@ -16,6 +16,11 @@ export class UsersService implements OnDestroy {
     this.unsubUsers = this.subUsers();
   }
 
+  /**
+ * Retrieves a list of all users from the Firebase database.
+ * @returns That resolves an array of user objects.
+ * @throws {Error} If there is an error retrieving the user list from Firebase.
+ */
   async getAllUsers(): Promise<any[]> {
     try {
       this.allUsers = await this.fire.getUserList();
@@ -26,9 +31,20 @@ export class UsersService implements OnDestroy {
     }
   }
 
+  /**
+ * Retrieves a user object from the allUsers array based on the provided userId.
+ * @param {string} userId - The unique identifier of the user to retrieve.
+ * @returns The user object with the matching userId, or undefined if not found.
+ */
   getUserFromId(userId: string) {
     return this.allUsers.find((u) => u.id === userId);
   }
+
+  /**
+ * Retrieves the username for a given user ID.
+ * @param {string} userId - The ID of the user whose username is to be retrieved.
+ * @returns {string} The username of the user, or 'User dont found' if the user is not found.
+ */
   getUserName(userId: string) {
     let user = this.allUsers.find((u) => u.id === userId);
     if (user) {
@@ -36,6 +52,12 @@ export class UsersService implements OnDestroy {
     }
     return 'User dont found'
   }
+
+  /**
+ * Retrieves the user's profile picture URL based on the provided user ID.
+ * @param {any} userId - The ID of the user whose profile picture is to be retrieved.
+ * @returns {string} The URL of the user's profile picture, or a default image URL if the user is not found.
+ */
   getUserPic(userId: any) {
     let user = this.getUserFromId(userId);
     if (user) {
