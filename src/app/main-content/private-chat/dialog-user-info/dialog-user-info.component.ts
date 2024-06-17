@@ -19,7 +19,7 @@ import { FirebaseService } from '../../../../services/firebase.service';
 @Component({
   selector: 'app-dialog-user-info',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, FormsModule,ReactiveFormsModule],
+  imports: [CommonModule, MatButtonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './dialog-user-info.component.html',
   styleUrl: './dialog-user-info.component.scss',
 })
@@ -45,6 +45,12 @@ export class DialogUserInfoComponent {
       this.editable = false;
     }
   }
+
+  /**
+   * @description A FormGroup representing the profile form.
+   * @property {FormControl} name - The name field of the form.
+   * @property {FormControl} email - The email field of the form.
+   */
   profileForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -52,18 +58,35 @@ export class DialogUserInfoComponent {
     ]),
     email: new FormControl('', [Validators.required, Validators.email]),
   });
+
+  /**
+   * Enables the edit mode for the user data and populates the input fields
+   * with the current user's name and email.
+   */
   editUser() {
     this.edit = true;
     this.userNameInput = this.userData.name;
     this.userEmailInput = this.userData.email;
   }
 
+  /**
+   * Opens the default email client with the provided email address in the "To" field.
+   * @param {string} email - The email address to send the email to.
+   */
   sendEmail(email: string) {
     window.open('mailto:' + email);
   }
+
+  /**
+   * Aborts the current editing operation.
+   */
   abort() {
     this.edit = false;
   }
+
+  /**
+   * Saves the user data after validating the form.
+   */
   save() {
     if (this.profileForm.valid) {
       let editData = this.userData;
@@ -75,6 +98,11 @@ export class DialogUserInfoComponent {
       this.abort();
     }
   }
+
+  /**
+   * Navigates to the private channel of the specified user.
+   * @param {string} userId - The ID of the user whose private channel to navigate to.
+   */
   async goToPrivateChannel(userId: string) {
     if (userId != undefined) {
       let directMessageDocId =
