@@ -15,6 +15,10 @@ export class DialogChanelAddMemberComponent {
     public dialogRef: MatDialogRef<DialogChanelAddMemberComponent>,
   ) { }
 
+    /**
+ * Closes the dialog.
+ * @returns {void} This method does not return anything.
+ */
   onNoClick(): void {
     this.dialogRef.close();
   }
