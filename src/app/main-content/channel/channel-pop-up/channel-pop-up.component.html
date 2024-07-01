@@ -46,6 +46,6 @@
         </div>
     </div>
 </div>
-<div mat-dialog-actions class="actions-container">
+<div mat-dialog-actions class="actions-container" *ngIf="this.channelData.users.length != 0">
     <button mat-button cdkFocusInitial class="leave-channel-btn" (click)="leaveChannel()">Channel verlassen</button>
 </div>
