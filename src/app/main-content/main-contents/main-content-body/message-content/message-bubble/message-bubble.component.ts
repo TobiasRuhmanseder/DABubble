@@ -88,7 +88,6 @@ export class MessageBubbleComponent {
    * @returns {void}
    */
   handleClick(userId: string) {
-    console.log('Clicked on user ID:', userId);
     this.dialog.open(DialogUserInfoComponent, {
       data: { id: userId },
     });

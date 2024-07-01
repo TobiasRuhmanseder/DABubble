@@ -114,7 +114,6 @@ export class DialogUserInfoComponent {
       editData.photoURL = this.userPhotoURL;
       let newUserData = new User(editData);
       newUserData.id = this.userData.id;
-      console.log('von ' + JSON.stringify(this.userData), 'zu ' + JSON.stringify(newUserData))
       this.fire.updateUser(newUserData);
       this.abort();
     }
