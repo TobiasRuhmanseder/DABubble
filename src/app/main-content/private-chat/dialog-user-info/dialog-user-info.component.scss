@@ -2,10 +2,11 @@
   border-radius: 30px;
   padding: 40px;
 }
-
+.relative{
+  position: relative;
+}
 .headline-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   position: relative;
   font-size: 24px;
@@ -22,6 +23,25 @@ input {
   border: none;
   font-size: 18px;
   width: 100%;
+}
+
+.edit-user-img{
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  height: 24px;
+  width: 24px;
+  border: none;
+  cursor: pointer;
+  background-image: url(/assets/img/edit.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.3s ease;
+  &:hover {
+    background-image: url(/assets/img/edit_hover.svg);
+    transform: scale(1.1);
+  }
 }
 .input-border {
   padding: 20px;
@@ -88,7 +108,7 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  gap: 15px;
   width: 420px;
   margin-top: 40px;
 
@@ -104,7 +124,7 @@ input {
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-    gap: 15px;
+    gap: 10px;
     .user-info-container-header {
       display: flex;
       flex-direction: row;
@@ -172,7 +192,7 @@ input {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 10px;
   width: 100%;
 
   .dialog-footer-btn {

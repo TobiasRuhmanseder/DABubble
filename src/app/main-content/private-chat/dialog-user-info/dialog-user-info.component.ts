@@ -1,4 +1,4 @@
-import { Component, Inject, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UsersService } from '../../../../services/users.service';
@@ -15,15 +15,20 @@ import {
 import { MessageService } from '../../../../services/message.service';
 import { User } from '../../../../models/user.class';
 import { FirebaseService } from '../../../../services/firebase.service';
+import {ChangeDetectionStrategy} from '@angular/core';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { DialogEditUserImgComponent } from './dialog-edit-user-img/dialog-edit-user-img.component';
 
 @Component({
   selector: 'app-dialog-user-info',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatDialogModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dialog-user-info.component.html',
   styleUrl: './dialog-user-info.component.scss',
 })
 export class DialogUserInfoComponent {
+  readonly dialog = inject(MatDialog);
   userData: any;
   edit: boolean = false;
   editable: boolean = false;
@@ -31,7 +36,9 @@ export class DialogUserInfoComponent {
   router: Router = inject(Router);
   userNameInput: string = '';
   userEmailInput: string = '';
+  userPhotoURL: string = '';
   constructor(
+    private cd: ChangeDetectorRef,
     public users: UsersService,
     public dialogRef: MatDialogRef<DialogUserInfoComponent>,
     public fire: FirebaseService,
@@ -44,6 +51,17 @@ export class DialogUserInfoComponent {
     } else {
       this.editable = false;
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogEditUserImgComponent, {
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userPhotoURL = result;
+        this.cd.detectChanges();
+      }
+    });
   }
 
   /**
@@ -67,6 +85,7 @@ export class DialogUserInfoComponent {
     this.edit = true;
     this.userNameInput = this.userData.name;
     this.userEmailInput = this.userData.email;
+    this.userPhotoURL = this.userData.photoURL;
   }
 
   /**
@@ -92,8 +111,10 @@ export class DialogUserInfoComponent {
       let editData = this.userData;
       editData.name = this.userNameInput;
       editData.email = this.userEmailInput;
+      editData.photoURL = this.userPhotoURL;
       let newUserData = new User(editData);
       newUserData.id = this.userData.id;
+      console.log('von ' + JSON.stringify(this.userData), 'zu ' + JSON.stringify(newUserData))
       this.fire.updateUser(newUserData);
       this.abort();
     }

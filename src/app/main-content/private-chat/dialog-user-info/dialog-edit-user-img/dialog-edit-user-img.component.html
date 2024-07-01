@@ -1,0 +1,25 @@
+<div>
+    <img class="arrow-back" src="./../../../assets/img/arrow_back.svg" (click)="onNoClick()">
+    <div class="headline-title">Wähle einen neuen Avatar aus</div>
+    <div class="avatars-container">
+        <span>Aus der Liste wählen</span>
+        <div class="image-container">
+            <div *ngFor="let avatar of avatars, index as i">
+                <img [src]="avatar" class="profil-images" (click)="chooseAvatar(avatar)">
+            </div>
+        </div>
+        <div class="upload-container">
+            <span>eigenes Bild verwenden</span>
+            <div>
+                <label class="btn-white">
+                    <input class="btn-white" type="file" id="fileInput" (change)="uploadFile($event)"
+                        [disabled]="this.loadAvatarBtnDisabled">
+                    Datei hochladen
+                </label>
+            </div>
+        </div>
+        <div class="alert">
+            {{ this.invalidImgType }}
+        </div>
+    </div>
+</div>

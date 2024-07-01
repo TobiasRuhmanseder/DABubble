@@ -1,0 +1,65 @@
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.headline-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.arrow-back {
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: scale(1.1);
+        background-color: #eceefe;
+    }
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.upload-container {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+        padding-right: 8px;
+    }
+
+    span,
+    div {
+        width: 50%;
+        box-sizing: border-box;
+    }
+}
+
+.alert {
+    font-size: 14px;
+    color: #ed1e79;
+}
+
+.profil-images {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.avatars-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}

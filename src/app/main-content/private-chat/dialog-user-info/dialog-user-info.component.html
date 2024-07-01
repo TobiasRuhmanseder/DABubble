@@ -6,7 +6,12 @@
 
 <div mat-dialog-content>
   <div class="content-container">
-    <img class="user-img" src="{{ userData.photoURL }}" alt="" />
+    <div class="relative">
+      <img *ngIf="!edit" class="user-img" src="{{ userData.photoURL }}" alt="" />
+      <img *ngIf="edit" class="user-img" src="{{ userPhotoURL }}" alt="" />
+      <div *ngIf="edit" class="edit-user-img" mat-button (click)="openDialog()"></div>
+    </div>
+
 
     <div class="user-info-container" *ngIf="edit" [formGroup]="profileForm">
       <div class="edit-user">
@@ -35,10 +40,7 @@
         <div (click)="editUser()" class="edit" *ngIf="editable">Bearbeiten</div>
       </div>
       <div class="active-container">
-        <span
-          class="point"
-          [ngClass]="{ active: userData.status, disabled: !userData.status }"
-        ></span>
+        <span class="point" [ngClass]="{ active: userData.status, disabled: !userData.status }"></span>
         <span *ngIf="userData.status">Aktive</span>
         <span *ngIf="!userData.status">Abwesend</span>
       </div>
@@ -50,18 +52,14 @@
         </div>
         <span class="mail" (click)="sendEmail(userData.email)">{{
           userData.email
-        }}</span>
+          }}</span>
       </div>
     </div>
   </div>
 
-  <div mat-dialog-actions>
-    <div class="user-dialog-footer-container" *ngIf="!edit">
-      <button
-        class="dialog-footer-btn"
-        mat-button
-        (click)="goToPrivateChannel(userData.id)"
-      >
+  <div mat-dialog-actions *ngIf="!edit">
+    <div class="user-dialog-footer-container" >
+      <button class="dialog-footer-btn" mat-button (click)="goToPrivateChannel(userData.id)">
         <div class="flex-container">
           <img src="assets/icons/comment_white.png" alt="" />
           <span>Nachricht</span>
