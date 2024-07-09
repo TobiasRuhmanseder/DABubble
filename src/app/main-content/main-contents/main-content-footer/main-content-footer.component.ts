@@ -53,10 +53,8 @@ export class MainContentFooterComponent {
   currentFiles: any[] = [];
   currentThreadFiles: any[] = [];
 
-  allUsers: any = {};
 
   ngOnInit(): void {
-    this.allUsers = this.users.allUsers;
   }
 
   @HostListener('document:click', ['$event'])

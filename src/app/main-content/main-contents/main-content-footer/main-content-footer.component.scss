@@ -3,31 +3,36 @@
   align-items: center;
   text-align: center;
 }
-.mention-pic{
+
+.mention-pic {
   border-radius: 50%;
   height: 30px;
   width: 30px;
 }
-.main-input-box{
+
+.main-input-box {
   position: relative;
   min-height: 77px;
   height: auto;
 }
 
-.file-img{
+.file-img {
   padding: 24px;
   max-width: 250px;
   max-height: 200px;
 }
-.file-container{
+
+.file-container {
   display: flex;
   flex-wrap: wrap;
+
   .file {
     height: 50px;
     padding: 12px;
   }
 }
-.user-list{
+
+.user-list {
   position: absolute;
   border: 1px solid #444df2;
   border-radius: 25px;
@@ -35,7 +40,10 @@
   left: 24px;
   background-color: #ffff;
   padding: 12px;
+  overflow: scroll;
+  height: 45vh;
 }
+
 .user {
   display: flex;
   flex-direction: row;
@@ -45,11 +53,13 @@
   border-radius: 35px;
   gap: 15px;
   cursor: pointer;
+
   &:hover {
     background-color: #eceefe;
     color: #535af1;
   }
 }
+
 .user-pic {
   position: relative;
 
@@ -64,9 +74,11 @@
   border-radius: 20px;
   border: 1px solid #adb0d9;
   min-height: 145px;
+
   &:focus-within {
     border-color: #444df2;
   }
+
   .emojis {
     position: absolute;
     bottom: 20px;
@@ -91,6 +103,7 @@
     font-weight: 400;
     line-height: normal;
   }
+
   .main-inputfield-container {
     display: flex;
     justify-content: space-between;
@@ -98,6 +111,7 @@
     align-items: center;
     padding: 0 20px 20px 20px;
   }
+
   .main-input-confirm {
     right: 0;
     bottom: 64px;
@@ -105,10 +119,12 @@
     background-image: url("/assets/icons/send.png");
     cursor: pointer;
     transition: all 0.3s;
+
     &:hover {
       background-image: url("/assets/icons/send_hover.png");
     }
   }
+
   .main-input-icons-nav {
     left: 65px;
     bottom: 63px;
@@ -117,11 +133,13 @@
     align-items: center;
     gap: 5px;
   }
+
   .stroke-icons-nav {
     width: 0;
     height: 40px;
     border: 0.5px solid #adb0d9;
   }
+
   .inputfield-icon {
     height: 24px;
     width: 24px;
@@ -129,7 +147,8 @@
     background-repeat: no-repeat;
     background-position: center;
   }
-  .inputfield-data{
+
+  .inputfield-data {
     display: block;
     height: 24px;
     width: 24px;
@@ -138,27 +157,33 @@
     background-position: center;
 
   }
+
   .icon-add {
     background-image: url("/assets/icons/add.png");
     transition: all 0.3s;
+
     &:hover {
       background-image: url("/assets/icons/add_hover.png");
       border-radius: 50%;
       background-color: #eceefe;
     }
   }
+
   .icon-smile {
     background-image: url("/assets/icons/sentiment_satisfied.png");
     transition: all 0.3s;
+
     &:hover {
       background-image: url("/assets/icons/sentiment_satisfied_hover.png");
       border-radius: 50%;
       background-color: #eceefe;
     }
   }
+
   .icon-ad {
     background-image: url("/assets/icons/alternate_email.png");
     transition: all 0.3s;
+
     &:hover {
       background-image: url("/assets/icons/alternate_email_hover.png");
       border-radius: 50%;
@@ -166,15 +191,24 @@
     }
   }
 }
+
 button {
   border: none;
   background-color: transparent;
 }
+
 .icon {
   transition: all 0.3s;
   cursor: pointer;
   border-radius: 50%;
+
   &:hover {
     background-color: #eceefe;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .main-input-container {
+    margin: 0 15px 40px 15px;
   }
 }

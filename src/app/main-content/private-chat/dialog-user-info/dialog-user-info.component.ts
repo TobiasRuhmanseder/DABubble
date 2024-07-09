@@ -18,6 +18,7 @@ import { FirebaseService } from '../../../../services/firebase.service';
 import {ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { DialogEditUserImgComponent } from './dialog-edit-user-img/dialog-edit-user-img.component';
+import { CurrentUserService } from '../../../../services/current-user.service';
 
 @Component({
   selector: 'app-dialog-user-info',
@@ -38,6 +39,7 @@ export class DialogUserInfoComponent {
   userEmailInput: string = '';
   userPhotoURL: string = '';
   constructor(
+    private currentUser: CurrentUserService,
     private cd: ChangeDetectorRef,
     public users: UsersService,
     public dialogRef: MatDialogRef<DialogUserInfoComponent>,
@@ -115,6 +117,7 @@ export class DialogUserInfoComponent {
       let newUserData = new User(editData);
       newUserData.id = this.userData.id;
       this.fire.updateUser(newUserData);
+      this.currentUser.editUserDetails(editData.name, editData.email);
       this.abort();
     }
   }

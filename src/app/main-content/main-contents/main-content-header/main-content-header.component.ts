@@ -94,7 +94,7 @@ export class MainContentHeaderComponent {
    * @returns {void}
    */
   private searchUser() {
-    this.searching = this.users.allUsers;
+    this.searching = this.users.users;
     const filteredUsers = this.searching.filter(
       (user) =>
         user.name
@@ -292,7 +292,7 @@ export class MainContentHeaderComponent {
       return '';
     }
     if (this.chatService.currentChannel.users.length === 0) {
-      return this.users.allUsers.length;
+      return this.users.users.length;
     }
     try {
       return this.chatService.currentChannel.users.length;
