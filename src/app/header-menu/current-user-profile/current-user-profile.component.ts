@@ -19,6 +19,7 @@ export class CurrentUserProfileComponent {
   currentUserService: CurrentUserService = inject(CurrentUserService);
   currentUser: any;
   editCurrentUser = false;
+  errorMessage = false;
 
   /**
    * close the current user dialog
@@ -53,10 +54,20 @@ export class CurrentUserProfileComponent {
   /**
    * saves the new data entered by the logged in user
    */
+  /**
+   * saves the new data entered by the logged in user
+   */
   saveEdit() {
-    const userName = this.activeUser.displayName;
-    const userEmail = this.activeUser.email;
-    this.currentUserService.editUserDetails(userName, userEmail);
-    this.closeEdit();
+    const userName = this.activeUser?.displayName?.trim() ?? '';
+    const userEmail = this.activeUser?.email?.trim() ?? '';
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (userName && emailPattern.test(userEmail)) {
+      this.currentUserService.editUserDetails(userName, userEmail);
+      this.closeDialog();
+      this.errorMessage = false;
+    } else {
+      this.errorMessage = true;
+    }
   }
 }

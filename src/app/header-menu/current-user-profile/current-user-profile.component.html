@@ -52,6 +52,9 @@
         </div>
         <input [(ngModel)]="activeUser.email" placeholder="E-Mail-Adresse" />
     </div>
+    <div class="alert-message" *ngIf="this.errorMessage">
+        Bitte geben Sie einen gültigen Namen und eine gültige E-Mail-Adresse ein.
+    </div>
     <div class="submit-btns">
         <button class="btn-white btn-edit" (click)="closeEdit()">Abbrechen</button>
         <button class="btn-blue btn-edit" (click)="saveEdit()">Speichern</button>
