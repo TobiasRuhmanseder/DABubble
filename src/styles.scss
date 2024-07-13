@@ -11,13 +11,14 @@ body {
   font-family: "Nunito", sans-serif;
   font-size: 18px;
 }
-
+.tagChannel,
 .tag {
   border-radius: 25px;
   color: #444df2;
   background-color: #ffff;
   transition: all ease 0.3s;
   text-wrap: nowrap;
+  padding: 0 4px;
 
   &:hover {
     cursor: pointer;

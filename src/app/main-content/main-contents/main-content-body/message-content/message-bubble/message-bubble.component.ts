@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
+  inject,
   Input,
   QueryList,
   ViewChildren,
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../../../../../services/users.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUserInfoComponent } from '../../../../private-chat/dialog-user-info/dialog-user-info.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-message-bubble',
@@ -32,6 +34,7 @@ export class MessageBubbleComponent {
     private users: UsersService
   ) {}
   isEmojiPickerVisible: boolean = false;
+  router: Router = inject(Router);
 
   @Input() flagg: any;
   @Input() msg: any;
@@ -58,28 +61,36 @@ export class MessageBubbleComponent {
    */
   ngAfterViewInit() {
     this.getFiles(this.msg.files);
-    const elements = this.elementRef.nativeElement.querySelectorAll('.tag');
-
-    elements.forEach((element: any) => {
+    const elementsUser = this.elementRef.nativeElement.querySelectorAll('.tag');
+    const elementsChannel = this.elementRef.nativeElement.querySelectorAll('.tagChannel');
+    elementsUser.forEach((element: any) => {
       element.addEventListener('click', () => {
-        this.handleClick(this.getUserIdFromClass(element));
+        this.handleClick(this.getIdFromClass(element));
+      });
+    });
+    elementsChannel.forEach((element: any) => {
+      element.addEventListener('click', () => {
+        this.chooseChannel(this.getIdFromClass(element))
+        // this.handleClick(this.getIdFromClass(element));
       });
     });
   }
-
+  chooseChannel(id: string) {
+    this.router.navigateByUrl('/home/' + id);
+  }
   /**
    * Retrieves the user ID from the class attribute of an HTML element.
    * @param {HTMLElement} element - The HTML element from which to retrieve the user ID.
    * @returns {string} The user ID extracted from the class attribute, or 'user.id not found' if no user ID is found.
    */
-  getUserIdFromClass(element: HTMLElement) {
+  getIdFromClass(element: HTMLElement) {
     const classes = Array.from(element.classList);
     for (let className of classes) {
-      if (className !== 'tag') {
+      if (className !== 'tag' && className !== 'tagChannel') {
         return className;
       }
     }
-    return 'user.id nicht gefunden';
+    return 'id nicht gefunden';
   }
 
   /**
@@ -218,6 +229,7 @@ export class MessageBubbleComponent {
   toHTML(content: string): string {
     let text = content;
     text = this.highlightUsernames(text);
+    text = this.highlightChannelnames(text);
     return text;
   }
 
@@ -274,4 +286,49 @@ export class MessageBubbleComponent {
 
     return highlightedText;
   }
+  highlightChannelnames(text: string): string {
+    let highlightedText = text;
+    let indices: number[] = [];
+  
+    // Finde alle '#' Zeichen
+    for (let i = text.length; i > -1; i--) {
+      if (text[i] === '#') {
+        indices.push(i);
+      }
+    }
+  
+    indices.forEach((atIndex) => {
+      const nextChar = text[atIndex + 1];
+  
+      if (nextChar !== ' ' && nextChar !== undefined) {
+        let endIndex = text.length;
+        const possibleEndChars = [' ', '\n', ',', '.', '!', '?', ';', ':'];
+  
+        // Finde das nächste Zeichen, das das Ende des Kanalnamens markieren könnte
+        for (let char of possibleEndChars) {
+          let index = text.indexOf(char, atIndex + 1);
+          if (index !== -1 && index < endIndex) {
+            endIndex = index;
+          }
+        }
+  
+        const potentialChannelName = text.substring(atIndex + 1, endIndex).trim();
+  
+        // Überprüfe, ob der potenzielle Kanalname in der Liste der Kanäle existiert
+        const channel = this.chatService.allChannels.find((c: any) => c.name === potentialChannelName);
+  
+        if (channel) {
+          highlightedText =
+            highlightedText.substring(0, atIndex) +
+            `<span class="tagChannel ${channel.id}">` +
+            highlightedText.substring(atIndex, endIndex) +
+            '</span>' +
+            highlightedText.substring(endIndex);
+        }
+      }
+    });
+  
+    return highlightedText;
+  }
+  
 }

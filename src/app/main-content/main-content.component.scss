@@ -26,12 +26,12 @@ app-channel {
   display: block;
   height: 100%;
   min-width: 350px;
-  width: -moz-available;
+  width: 100%;
   max-width: 485px;
 }
 
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1199px) {
   app-channel {
     min-width: calc(100vw - 35px);
     width: auto;

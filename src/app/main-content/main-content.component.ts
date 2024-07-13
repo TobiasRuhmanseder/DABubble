@@ -54,6 +54,7 @@ export class MainContentComponent {
    * Loads the respective data using the provided ID after the view has been initialized.
    */
   ngAfterViewInit() {
+    this.chatService.getChannels()
     this.routeSub = this.route.params.subscribe((params) => {
       if (params['id']) {
         this.chatService.resetValues(params['id']);

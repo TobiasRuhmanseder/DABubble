@@ -9,8 +9,9 @@ import { Firestore, onSnapshot } from '@angular/fire/firestore';
   providedIn: 'root',
 })
 export class MessageService {
-  constructor(private fire: FirebaseService) {}
+  constructor(private fire: FirebaseService) { }
   currentChannel: any;
+  allChannels: any[] = [];
 
   currentThreadChannel: any;
   currentThread: any;
@@ -38,6 +39,10 @@ export class MessageService {
   unsubMessages: Unsubscribe | undefined;
   unsubThreads: Unsubscribe | undefined;
 
+  ngOnInit() {
+    this.getChannels()
+  }
+
   ngOnDestroy() {
     if (this.unsubMessages) {
       this.unsubMessages();
@@ -45,6 +50,11 @@ export class MessageService {
     if (this.unsubThreads) {
       this.unsubThreads();
     }
+  }
+  async getChannels() {
+    this.allChannels = await this.fire.getAllChannels()
+    console.log('Alle Channels', this.allChannels)
+    return this.allChannels
   }
 
   /**
@@ -353,11 +363,19 @@ export class MessageService {
     this.currentChannel = await this.fire.getChannel(id);
     if (this.currentChannel === undefined) {
       this.currentChannel = await this.fire.getDirectMessagesChannel(id);
-    } 
-    else if (this.currentChannel.users.length != 0) {
-      this.currentChannel.users = JSON.parse(this.currentChannel.users)
     }
+    else if (this.currentChannel.users && typeof this.currentChannel.users === 'string') {
+      try {
+        this.currentChannel.users = JSON.parse(this.currentChannel.users);
+      } catch (error) {
+        console.error('Error parsing users:', error);
+        // Fallback: Wenn das Parsen fehlschlägt, behandeln wir es als Array von Strings
+        this.currentChannel.users = this.currentChannel.users.split(',').map((user: string) => user.trim());
+      }
+    }
+    // Wenn this.currentChannel.users bereits ein Array ist, müssen wir nichts tun
   }
+
 
   /**
  * Retrieves messages from a specific channel and sorts them by time.
