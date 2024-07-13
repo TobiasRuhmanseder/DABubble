@@ -90,6 +90,9 @@ export class MainContentComponent {
     }
     if (!(event.target as HTMLElement).closest('.user-list')) {
       this.chatService.mention = false;
+      this.chatService.threadMention = false;
+      this.chatService.mentionChannel = false;
+      this.chatService.threadChannelMention = false;
     }
     if ((event.target as HTMLElement).closest('#sendConfirm')) {
       this.scrollDown('#messagesContent');

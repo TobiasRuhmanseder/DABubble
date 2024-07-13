@@ -29,6 +29,8 @@ export class MessageService {
 
   mention: boolean = false;
   threadMention: boolean = false;
+  mentionChannel: boolean = false;
+  threadChannelMention: boolean = false;
   currentUser: string = 'h4w3Cntmu2BmDuWSxKqt';
 
   firestore: Firestore = inject(Firestore);

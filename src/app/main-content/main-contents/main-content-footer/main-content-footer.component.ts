@@ -17,6 +17,7 @@ import { UsersService } from '../../../../services/users.service';
 import { UserPicComponent } from '../../../user-pic/user-pic.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { FirebaseService } from '../../../../services/firebase.service';
 @Component({
   selector: 'app-main-content-footer',
   standalone: true,
@@ -44,14 +45,18 @@ export class MainContentFooterComponent {
     private renderer: Renderer2,
     public chatService: MessageService,
     public mainContent: MainContentComponent,
-    public users: UsersService
-  ) {}
+    public users: UsersService,
+    public fire: FirebaseService
+  ) {
+    this.getAllChannels();
+  }
   tagText: string = '';
   textAreaContent: string = '';
   textAreaThreadContent: string = '';
   isEmojiPickerVisible: boolean = false;
   currentFiles: any[] = [];
   currentThreadFiles: any[] = [];
+  allChannels: any[] = [];
 
 
   ngOnInit(): void {
@@ -86,7 +91,7 @@ export class MainContentFooterComponent {
    * @param {KeyboardEvent} event - The keyboard event object.
    * @param {boolean} mainChat - A flag indicating whether the chat is the main chat or a thread.
    */
-  checkForAtSymbol(event: KeyboardEvent, mainChat: boolean) {
+  checkForSymbol(event: KeyboardEvent, mainChat: boolean) {
     if (event.key === '@') {
       if (mainChat) {
         this.chatService.mention = true;
@@ -96,6 +101,16 @@ export class MainContentFooterComponent {
     } else {
       this.chatService.mention = false;
       this.chatService.threadMention = false;
+    }
+    if (event.key === '#') {
+      if (mainChat) {
+        this.chatService.mentionChannel = true;
+      } else {
+        this.chatService.threadChannelMention = true;
+      }
+    } else {
+      this.chatService.mentionChannel = false;
+      this.chatService.threadChannelMention = false;
     }
   }
 
@@ -200,6 +215,8 @@ export class MainContentFooterComponent {
 
       this.chatService.mention = false;
       this.chatService.threadMention = false;
+      this.chatService.mentionChannel = false;
+      this.chatService.threadChannelMention = false;
 
       setTimeout(() => {
         textArea.focus();
@@ -224,6 +241,8 @@ export class MainContentFooterComponent {
 
       this.chatService.mention = false;
       this.chatService.threadMention = false;
+      this.chatService.mentionChannel = false;
+      this.chatService.threadChannelMention = false;
 
       setTimeout(() => {
         textArea.focus();
@@ -234,6 +253,7 @@ export class MainContentFooterComponent {
       });
     }
   }
+
 
   /**
    * Uploads files to the server.
@@ -416,7 +436,9 @@ export class MainContentFooterComponent {
       ''
     );
   }
-
+  async getAllChannels() {
+    this.allChannels = await this.fire.getAllChannels();
+  }
   /**
    * Sends a message to the chat.
    * It handles the sending of a message to the chat.

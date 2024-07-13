@@ -215,7 +215,7 @@ export class MessageBubbleComponent {
    * @param {string} content - The input string to be converted to HTML.
    * @returns {string} The HTML-formatted string with highlighted usernames.
    */
-  toHTML(content: string) {
+  toHTML(content: string): string {
     let text = content;
     text = this.highlightUsernames(text);
     return text;
@@ -228,7 +228,7 @@ export class MessageBubbleComponent {
    * @param {Object[]} users - An array of user objects with `name` and `id` properties.
    * @returns {string} The highlighted text with user names wrapped in `<span>` tags.
    */
-  highlightUsernames(text: string) {
+  highlightUsernames(text: string): string {
     let highlightedText = text;
     let indices: any[] = [];
 

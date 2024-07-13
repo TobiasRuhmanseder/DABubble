@@ -23,10 +23,15 @@
           {{ user.name }}
         </div>
       </div>
+      <div class="user-list" *ngIf="chatService.mentionChannel">
+        <div *ngFor="let channel of allChannels" class="user" (click)="tagUser(channel.name)">
+          # {{ channel.name }}
+        </div>
+      </div>
       <textarea
         #textAreaInput
         (keyup)="autoGrowTextZone($event)"
-        (keydown)="checkForAtSymbol($event, mainChat)"
+        (keydown)="checkForSymbol($event, mainChat)"
         [(ngModel)]="textAreaContent"
         class="main-input-field"
         [placeholder]="getPlaceholderText()"
@@ -57,10 +62,15 @@
           {{ user.name }}
         </div>
       </div>
+      <div class="user-list" *ngIf="chatService.threadChannelMention">
+        <div *ngFor="let channel of allChannels" class="user" (click)="tagUser(channel.name)">
+          # {{ channel.name }}
+        </div>
+      </div>
       <textarea
         #textThreadAreaInput
         (keyup)="autoGrowTextZone($event)"
-        (keydown)="checkForAtSymbol($event, mainChat)"
+        (keydown)="checkForSymbol($event, mainChat)"
         [(ngModel)]="textAreaThreadContent"
         class="main-input-field"
         [placeholder]="getPlaceholderText()"
