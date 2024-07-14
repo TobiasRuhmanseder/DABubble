@@ -16,6 +16,7 @@ export class MessageService {
   currentThreadChannel: any;
   currentThread: any;
   currentOpenMessageThreadId: any;
+  currentMsgThread: any;
 
   messagesList: any[] = [];
   sortedMessages: any[] = [];
@@ -403,6 +404,8 @@ export class MessageService {
         let newThread = { messageId: messageId, threadList: [] };
         this.threadList.push(newThread);
       }
+      this.currentMsgThread = []
+      this.currentMsgThread.push(this.sortedMessages[index]);
       this.currentThread = this.getSortMessagesByTime(
         this.threadList[index].threadList
       );
